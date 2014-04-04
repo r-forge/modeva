@@ -1,0 +1,49 @@
+\name{evaluate}
+\alias{evaluate}
+\title{
+Evaluate a GLM based on the elements of a confusion matrix.
+}
+\description{
+This functions evaluates the discrimination performance of a model based on the values of a confusion matrix obtained at a particular threshold.
+}
+\usage{
+evaluate(a, b, c, d, N = NULL, measure = "CCR")
+}
+\arguments{
+  \item{a}{number of correctly predicted presences}
+  \item{b}{number of absences incorrectly predicted as presences}
+  \item{c}{number of presences incorrectly predicted as absences
+}
+  \item{d}{number of correctly predicted absences}
+  \item{N}{total number of cases. If NULL (the dafault) it is calculated automatically by adding up a, b, c and d.)}
+  \item{measure}{a character vector of length 1 indicating the the evaluation measure to use. Type \code{modEvAmethods("threshMeasures")} for available options.}
+}
+\details{
+A number of measures can be used to evaluate continuous model predictions against observed binary occurrence data (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013). The \code{evaluate} function can calculate a few threshold-based discrimination measures from the values of a confusion matrix obtained at a particular threshold. The \code{evaluate} function is used internally by \code{\link{threshMeasures}}. It can also be accessed directly by the user, but it is usually more practical to use \code{\link{threshMeasures}}, which calculates the confusion matrix automatically.
+}
+\value{
+The value of the specified evaluation measure.
+}
+\references{
+Barbosa A.M., Real R., Munoz A.R. & Brown J.A. (2013) New measures for assessing model equilibrium and prediction mismatch in species distribution models. Diversity and Distributions, 19: 1333-1338
+
+Fielding A.H. & Bell J.F. (1997) A review of methods for the assessment of prediction errors in conservation presence/absence models. Environmental Conservation 24: 38-49
+
+Liu C., White M., & Newell G. (2011) Measuring and comparing the accuracy of species distribution models with presence-absence data. Ecography, 34, 232-243.
+}
+\author{
+A. Marcia Barbosa
+}
+\note{
+}
+\seealso{
+\code{\link{threshMeasures}}
+}
+\examples{
+evaluate(23, 44, 21, 34)
+
+evaluate(23, 44, 21, 34, measure = "TSS")
+}
+\keyword{ model evaluation }
+\keyword{ model performance }
+\keyword{ discrimination }
