@@ -48,9 +48,19 @@ echo $contents; } ?>
 
 <br />
 
+<h2> Install and load </h2>
+<code>
+install.packages("modEvA", repos="http://R-Forge.R-project.org")<br />
+library(modEvA)<br />
+help("modEvA")
+</code>
+<br />
+<br />
+<br />
+
 <h2> References </h2>
 
-<p>To find out how to <b>cite <i>modEvA</i></b>, please load the <i>modEvA</i> package in R and type <code>citation(package = "modEvA")</code></p>
+<p>To see how to <b>cite</b> the <b><i>modEvA</i></b> package, please load it <font color="darkgrey">[by typing</font> <code>library(modEvA)</code><font color="darkgrey">]</font> in R and type <code>citation(package="modEvA")</code></p>
 
 <h3> Papers introducing <i>modEvA</i>:</h3>
 
@@ -58,35 +68,14 @@ echo $contents; } ?>
 
 <p>Barbosa A.M.,  Brown J.A., Jim&eacute;nez-Valverde A., Acevedo P., Lobo J.M. & Real R. (in prep.) The ABC of model evaluation: a visual method for a clearer assessment of model accuracy</p>
 
-
-<h3> Papers citing <i>modEvA</i>:</h3>
-
-<p>De Araújo, C.B., Marcondes-Machado, L.O. & Costa, G.C. (2014) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. <i>Journal of Biogeography</i> 41: 513-523 (DOI: <a href="http://onlinelibrary.wiley.com/doi/10.1111/jbi.12234/abstract">10.1111/ddi.12100</a>)</p>
-
 <br />
-
-<h2>Usage examples</h2>
-<p>
-An illustrated manual is under preparation; for now, here are some examples:</p>
-<code>library(modEvA)
-<br />data(rotif.env)
-<br />names(rotif.env)
-<br />mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, step = FALSE, trim = TRUE)
-<br />head(mods$predictions)
-<br />Dsquared(mods$models[[1]])
-<br />plotGLM(model = mods$models[[1]])
-<br />AUC(model = mods$models[[1]])
-<br />threshMeasures(model = mods$models[[1]], thresh = "preval")
-<br />optiThresh(model = mods$models[[1]])
-<br />optiPair(model = mods$models[[1]], measures = c("Omission", "Commission"))
-<br />HLfit(model = mods$models[[1]])
-</code><br /><br />
 
 <h2>Find out more</h2>
 
+<p> Click <a href="http://modtools.wordpress.com/packages/modeva/">here</a> for <b>further info</b> on the package, including some <b>user guidelines</b>. </p>
+
 <p> The R-Forge project summary page you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/">here</a>. </p>
 
-<p> You can get <b>further info</b> on the package <a href="http://modtools.wordpress.com/packages/modeva/">here</a>. </p>
 
 </body>
 </html>
