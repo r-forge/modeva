@@ -44,11 +44,13 @@ echo $contents; } ?>
 
 
 
-<p> It includes functions for <b>variation partitioning</b>, assessing the <b>false discovery rate</b>, calculating several measures of <b>model discrimination and calibration</b>, <b>optimizing prediction thresholds</b> based on a number of criteria, and displaying various <b>analytical plots</b>. Includes also a <b>sample data set</b> with species occurrences and predictor variables.</p>
+<p> It includes functions for <b>variation partitioning</b>, assessing the <b>false discovery rate</b>, calculating several measures of <b>model discrimination and calibration</b>, <b>optimizing prediction thresholds</b> based on a number of criteria, performing multivariate environmental similarity 
+surface (MESS) analysis, and displaying various <b>analytical plots</b>. Includes also a <b>sample data set</b> with species occurrences and predictor variables.</p>
 
 <br />
 
 <h2> Install and load </h2>
+<p>Paste the following commands in the R console (when connected to the internet):</p>
 <code>
 install.packages("modEvA", repos="http://R-Forge.R-project.org")<br />
 library(modEvA)<br />
