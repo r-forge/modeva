@@ -16,7 +16,7 @@ OA(response, predictors)
 \details{
 Overlap Analysis is one of the simplest forms of modelling species' distributions. It assesses the ranges of values of the given environmental variables at the sites where a species has been recorded present, and predicts where that species should be able to occur based on those presence data (e.g. Brito et al. 1999, Arntzen & Teixeira 2006).
 
-OA can also be useful when extrapolating models outside their original scope (geographical area, time period or spatial resolution), as it can identify which localities are within the model's domain - i.e., within the analysed ranges of values of the variables, outside which the model may not be reliable (e.g. Barbosa et al. 2009). In this case, the response is not a species' presence, but rather the sites that have been included in the model.
+OA can also be useful when extrapolating models outside their original scope (geographical area, time period or spatial resolution), as it can identify which localities are within the model's domain - i.e., within the analysed ranges of values of the variables, outside which the model may not be reliable (e.g. Barbosa et al. 2009). In this case, the response is not a species' presence, but rather the sites that have been included in the model. See also the \code{\link{MESS}} function for a comparison between modelled and extrapolation environments.
 
 Input data for the \code{OA} function are a vector or column with ones and zeros (presences vs. absences of a species if we want to model its occurrence, or modelled vs. non-modelled sites if we want to know which non-modelled sites are within the modelled range), and a matrix or data frame with the corresponding values of the environmental variables to consider (one variable in each column, values in rows).
 }
@@ -36,7 +36,7 @@ A. Marcia Barbosa
 \note{
 }
 \seealso{
-\code{\link{multGLM}}
+\code{\link{multGLM}}, \code{\link{MESS}}
 }
 \examples{
 data(rotif.env)
@@ -46,4 +46,4 @@ names(rotif.env)
 OA(rotif.env$Abrigh, rotif.env[ , 5:17])
 }
 \keyword{ models }
-\keyword{ species distribtuions }
+\keyword{ species distributions }

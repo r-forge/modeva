@@ -35,7 +35,7 @@ Diversity and Distributions 19: 1333-1338 (DOI: 10.1111/ddi.12100)
 }
 \keyword{ package }
 \seealso{
-\code{\link{PresenceAbsence}}, \code{\link{ROCR}}, \code{\link{verification}}, \code{\link{dismo}}
+\code{\pkg{PresenceAbsence}}, \code{\pkg{ROCR}}, \code{\pkg{verification}}, \code{\pkg{dismo}}
 }
 \examples{
 data(rotif.env)
