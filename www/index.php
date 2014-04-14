@@ -45,7 +45,7 @@ echo $contents; } ?>
 
 
 <p> It includes functions for <b>variation partitioning</b>, assessing the <b>false discovery rate</b>, calculating several measures of <b>model discrimination and calibration</b>, <b>optimizing prediction thresholds</b> based on a number of criteria, performing multivariate environmental similarity 
-surface (MESS) analysis, and displaying various <b>analytical plots</b>. Includes also a <b>sample data set</b> with species occurrences and predictor variables.</p>
+surface (<b>MESS</b>) <b>analysis</b>, and displaying various <b>analytical plots</b>. Includes also a <b>sample data set</b> with species occurrences and predictor variables.</p>
 
 <br />
 
@@ -62,7 +62,11 @@ help("modEvA")
 
 <h2> References </h2>
 
-<p>To see how to <b>cite</b> the <b><i>modEvA</i></b> package, please load it <font color="darkgrey">[by typing</font> <code>library(modEvA)</code><font color="darkgrey">]</font> in R and type <code>citation(package="modEvA")</code></p>
+<h3> Citation for the <i>modEvA</i> package:</h3>
+
+<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 0.2</p>
+
+<p><small><i>NOTE: To get the citation for the version currently installed on your system, load the <i>modEvA</i> package <font color="darkgrey">[by typing</font> <code>library(modEvA)</code><font color="darkgrey"> in R]</font> and type <b><code>citation(package="modEvA")</code></b></i></small></p>
 
 <h3> Papers introducing <i>modEvA</i>:</h3>
 
