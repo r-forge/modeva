@@ -10,8 +10,8 @@ This function calculates generalized linear models for a set of species in a dat
 multGLM(data, sp.cols, var.cols, id.col = NULL, family = "binomial", test.sample = 0, FDR = FALSE, step = TRUE, trace = 0, start = "null.model", direction = "both", y = TRUE, P = TRUE, Favourability = TRUE, group.preds = TRUE, trim = TRUE, ...)
 }
 \arguments{
-  \item{data}{a data frame with your species (binary) data and variables.}
-  \item{sp.cols}{index numbers of the columns containing the species data to be modelled; should contain only binary data (0 or 1)}
+  \item{data}{a data frame with your species' binary (0/1) occurrence data and the predictor variables.}
+  \item{sp.cols}{index numbers of the columns containing the species data to be modelled}
   \item{var.cols}{index numbers of the columns containing the predictor variables to be used}
   \item{id.col}{(optional) index number of column containing the row identifiers (if defined, it will be included in \code{predictions} table)}
   \item{family}{argument to be passed to the \code{\link{glm}} function; only 'binomial' is implemented in \code{multGLM} so far}
