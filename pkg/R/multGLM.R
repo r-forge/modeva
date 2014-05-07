@@ -3,7 +3,7 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
                     start = "null.model", direction = "both", y = TRUE, P = TRUE,
                     Favourability = TRUE, group.preds = TRUE, trim = TRUE, ...) {
   
-  # version 2.9 (26 Mar 2014)
+  # version 3.0 (29 Apr 2014)
   # data: data frame with your species (binary) data and variables
   # sp.cols: index numbers of the columns containing the species data to be modelled; should contain only binary data (0 or 1)
   # var.cols: index numbers of the columns containing the predictor variables to be used
@@ -23,6 +23,12 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
   # ...: additional arguments to be passed to the 'modelTrim' function
   
   start.time <- proc.time()
+  
+  na.rm = TRUE
+  if(na.rm) {
+    mod.data <- data[ , c(sp.cols, var.cols)]
+    data <- data[complete.cases(mod.data), ]
+  }
   input.ncol <- ncol(data)
   n <- nrow(data)
   
@@ -141,8 +147,8 @@ as these make the number of variables differ among models. Set these 3
     if (trim)  model <- modelTrim(model, ...)
     
     if (step | trim) {
-      cat("Variables included in the model:", 
-          paste(names(model$coefficients)[-1], collapse = ", "))
+      sel.var.names <- names(model$coefficients)[-1]
+      cat(length(sel.var.names), " (out of ", length(var.cols), ") variables included in the model: ", paste(sel.var.names, collapse = ", "), sep = "")
     }
     
     models[[model.count]] <- model
