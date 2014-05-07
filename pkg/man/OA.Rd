@@ -1,17 +1,16 @@
 \name{OA}
 \alias{OA}
-\title{
-Overlap Analysis
-}
+\title{Overlap Analysis}
 \description{
 This function analyses the range of values of the given environmental variables at the sites where a species has been recorded present.
 }
 \usage{
-OA(response, predictors)
+OA(data, sp.cols, var.cols)
 }
 \arguments{
-  \item{response}{a binary vector of a species' presence/absence.}
-  \item{predictors}{the vectors of the predictor variables.}
+  \item{data}{a data frame with your species' occurrence data and the predictor variables.}
+  \item{sp.cols}{index number of the column containing the occurrence data of the species to be modelled. Currently only one species can be analysed at a time.}
+  \item{var.cols}{index numbers of the columns containing the predictor variables to be used.}
 }
 \details{
 Overlap Analysis is one of the simplest forms of modelling species' distributions. It assesses the ranges of values of the given environmental variables at the sites where a species has been recorded present, and predicts where that species should be able to occur based on those presence data (e.g. Brito et al. 1999, Arntzen & Teixeira 2006).
@@ -36,14 +35,14 @@ A. Marcia Barbosa
 \note{
 }
 \seealso{
-\code{\link{multGLM}}, \code{\link{MESS}}
+\code{\link{MESS}}
 }
 \examples{
 data(rotif.env)
 
 names(rotif.env)
 
-OA(rotif.env$Abrigh, rotif.env[ , 5:17])
+OA(rotif.env, sp.cols = 18, var.cols = 5:17)
 }
 \keyword{ models }
 \keyword{ species distributions }
