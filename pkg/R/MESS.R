@@ -1,7 +1,10 @@
 MESS <- function(V, P){   
-  # Alberto Jimenez Valverde, version 1.0, 20 March 2013
+  # version 1.1, 7 May 2014
   
-  if (NA %in% V | NA %in% P) stop("NA values are not allowed.")
+  if (NA %in% as.matrix(V) | NA %in% as.matrix(P)) stop("NA values are not allowed.")
+  
+  index.V <- 1:nrow(V)
+  index.P <- 1:nrow(P)
   
   n.vars <- ncol(V)
   n.varP <- ncol(P)
