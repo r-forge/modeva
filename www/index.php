@@ -57,14 +57,14 @@ library(modEvA)<br />
 help("modEvA")
 </code>
 <br />
-<br />
+<p>If you bump into problems, please go <a href="http://modtools.wordpress.com/packages/modeva/">here</a> for more complete download information.</p>
 <br />
 
 <h2> References </h2>
 
 <h3> Citation for the <i>modEvA</i> package:</h3>
 
-<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 0.2</p>
+<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 0.3</p>
 
 <p><small><i>NOTE: To get the citation for the version currently installed on your system, load the <i>modEvA</i> package <font color="darkgrey">[by typing</font> <code>library(modEvA)</code><font color="darkgrey"> in R]</font> and type <b><code>citation(package="modEvA")</code></b></i></small></p>
 
