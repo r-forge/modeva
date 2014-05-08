@@ -1,7 +1,7 @@
 \name{integerCols}
 \alias{integerCols}
 \title{
-Define integer columns
+Classify integer columns
 }
 \description{
 This function detects which columns in a data frame contain only whole numbers, 
