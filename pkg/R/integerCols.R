@@ -7,7 +7,8 @@ integerCols <- function(data) {
   for (i in all.cols) {
     x <- na.omit(data[ , i])
     if(!is.numeric(x)) next
+    if(!all(is.finite(x))) next
     if(min(is.wholenumber(x) == 1)) integer.cols[i] <- 1
   }
-  data <- multConvert(data, conversion = as.integer, cols = all.cols[integer.cols == 1])
+  multConvert(data, conversion = as.integer, cols = all.cols[integer.cols == 1])
 }
