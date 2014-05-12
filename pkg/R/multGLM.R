@@ -3,8 +3,8 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
                     start = "null.model", direction = "both", y = TRUE, P = TRUE,
                     Favourability = TRUE, group.preds = TRUE, trim = TRUE, ...) {
   
-  # version 3.0 (29 Apr 2014)
-  # data: data frame with your species (binary) data and variables
+  # version 3.1 (12 May 2014)
+  # data: data frame with your binary species data and variables
   # sp.cols: index numbers of the columns containing the species data to be modelled; should contain only binary data (0 or 1)
   # var.cols: index numbers of the columns containing the predictor variables to be used
   # id.col: (optional) index number of column containing the row identifiers (will be included in predictions table if defined)
@@ -24,16 +24,11 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
   
   start.time <- proc.time()
   
-  na.rm = TRUE
-  if(na.rm) {
-    mod.data <- data[ , c(sp.cols, var.cols)]
-    data <- data[complete.cases(mod.data), ]
-  }
   input.ncol <- ncol(data)
   n <- nrow(data)
   
   stopifnot (
-    as.vector(as.matrix(data[ , sp.cols])) %in% c(0,1),
+    as.vector(na.omit(as.matrix(data[ , sp.cols]))) %in% c(0,1),
     sp.cols %in% (1 : input.ncol),
     var.cols %in% (1 : input.ncol),
     is.null(id.col) | id.col %in% (1 : input.ncol),
@@ -62,31 +57,35 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
       if (!FDR & !step & !trim) {
         test.sample <- percentTestData(length(var.cols)) / 100
         n.test <- round(n * test.sample)
-      } else stop ("Sorry, Huberty rule cannot be used with FDR, step or trim, 
-as these make the number of variables differ among models. Set these 3 
-                   parameters to FALSE, or use a different test.sample option.")
+        message(
+          "Following Huberty's (1994) rule, ", test.sample * 100, "% of observations (", n.test, " out of ", n, ") set aside for model testing; ", 
+          n - n.test, " observations used for model training.\n")
+      } else stop ("
+Sorry, Huberty rule cannot be used with FDR, step or trim, as these make 
+the number of variables differ among models. Set these 3 parameters to FALSE, 
+or use a different test.sample option.")
     }  # end if Huberty
     else if (test.sample == 0) {
-      message("All ", n, " observations used for model training 
-              (none reserved for model testing).")
+      message("
+All ", n, " observations used for model training; none reserved for model testing.\n")
       n.test <- 0
     } else if (test.sample < 1) {
       n.test <- round(n * test.sample)
       message(
         test.sample * 100, "% of observations (", n.test, " out of ", n, ") set aside for model testing; ", 
-        n - n.test, " observations used for model training).")
+        n - n.test, " observations used for model training.\n")
     } else if (test.sample >= 1) {
       n.test <- test.sample
       message(
         n.test, " (out of ", n, ") observations set aside for model testing; ", 
-        n - n.test, " observations used for model training).")
+        n - n.test, " observations used for model training.\n")
     }
     test.sample <- sample(data.row, size = n.test, replace = FALSE)
     } else if (length(test.sample) > 1) {
       n.test <- length(test.sample)
       message(
         n.test, " (out of ", n, ") observations set aside for model testing; ", 
-        n - n.test, " observations used for model training).")
+        n - n.test, " observations used for model training.\n")
     }
   
   data$sample[data.row %in% test.sample] <- "test"
@@ -168,8 +167,8 @@ as these make the number of variables differ among models. Set these 3
       data[ , ncol(data) + 1] <- Fav(n1n0 = c(n1, n0), pred = data[ , ncol(data)])
       colnames(data)[ncol(data)] <- paste(response, "F", sep = "_")
       if (!keeP) data <- data[ , -(ncol(data) - 1)]
-    } # end if Fav
-    }  # end for s
+      } # end if Fav
+  }  # end for s
   
   detach(train.data)
   models <- models[!sapply(models, is.null)]
@@ -204,6 +203,8 @@ as these make the number of variables differ among models. Set these 3
     
   }  # end if pred.types 0 else
   
+  #if (test.sample == 0)  predictions <- predictions[ , - charmatch("sample", colnames(predictions))]
+
   end.time <- proc.time()
   duration <- (end.time - start.time)[3]
   if (duration < 60) {
