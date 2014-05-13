@@ -4,7 +4,7 @@
 Get model predictions
 }
 \description{
-This function allows getting the predictions of multiple models when applied to a new dataset. It can be useful if you have a list of model objects (e.g. resulting from \code{\link{multGLM}}) and want to apply them to a new data set (e.g. with variables from another region or time period), with options to include the logit link (y) and/or Favourability(see \code{\link{Fav}}), in just one step.
+This function allows getting the predictions of multiple models when applied to a new dataset. It can be useful if you have a list of model objects (e.g. resulting from \code{\link{multGLM}}) and want to apply them to a new data set (e.g. with variables from another region or time period), with options to include the logit link (y) and/or Favourability (see \code{\link{Fav}}), in just one step.
 }
 \usage{
 getPreds(data, models, y = FALSE, P = TRUE, Favourability = FALSE)

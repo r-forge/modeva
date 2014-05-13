@@ -81,7 +81,7 @@ Ecography, 35: 174-182.
 \references{
 }
 \seealso{
-\code{\link{fuzzySim}}
+\pkg{fuzzySim}
 }
 \examples{
 data(rotif.env)
