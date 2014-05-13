@@ -18,8 +18,8 @@ a sample data set with species occurrences and predictor variables.
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 0.4\cr
-Date: \tab 2014-05-08\cr
+Version: \tab 0.5\cr
+Date: \tab 2014-05-13\cr
 License: \tab GPL-3\cr
 }
 }
@@ -35,7 +35,7 @@ Diversity and Distributions 19: 1333-1338 (DOI: 10.1111/ddi.12100)
 }
 \keyword{ package }
 \seealso{
-\code{\pkg{PresenceAbsence}}, \code{\pkg{ROCR}}, \code{\pkg{verification}}, \code{\pkg{dismo}}
+\pkg{PresenceAbsence}, \pkg{ROCR}, \pkg{verification}, \pkg{dismo}
 }
 \examples{
 data(rotif.env)
