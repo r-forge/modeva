@@ -1,27 +1,11 @@
 multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
                     test.sample = 0, FDR = FALSE, step = TRUE, trace = 0, 
-                    start = "null.model", direction = "both", y = TRUE, P = TRUE,
-                    Favourability = TRUE, group.preds = TRUE, trim = TRUE, ...) {
+                    start = "null.model", direction = "both", y = FALSE, 
+                    P = TRUE, Favourability = TRUE, group.preds = TRUE, 
+                    trim = TRUE, ...) {
   
-  # version 3.2 (13 May 2014)
-  # data: data frame with your binary species data and variables
-  # sp.cols: index numbers of the columns containing the species data to be modelled; should contain only binary data (0 or 1)
-  # var.cols: index numbers of the columns containing the predictor variables to be used
-  # id.col: (optional) index number of column containing the row identifiers (will be included in predictions table if defined)
-  # family: argument to be passed to the glm function; only 'binomial' is implemented so far
-  # test.sample: subset of data to set aside for model testing. Can be a value between 0 and 1 for a proportion of the data to choose randomly (e.g. 0.2 for 20%), or an  integer number for a particular number of cases, or a vector of integers for the concrete cases to set aside, or "Huberty" for his rule of thumb based on the number of variables (see Fielding & Bell 1997)
-  # FDR: logical, whether or not to do a preliminary exclusion of variables based on their bivariate relationship with the response and the false discovery rate
-  # step: logical, whether or not use the step function to perform a first stepwise variable selection based on AIC
-  # trace: arg to be pased to step (see ?step for details)
-  # start: (used if step = TRUE) whether to start with the 'null.model' (so variable selection starts forward) or with the 'full.model' (so selection starts backward)
-  # direction: (used if step = TRUE) argument to be passed to the 'step' function specifying the direction of variable selection ('forward', 'backward' or 'both')
-  # y: logical, whether or not to include in the output the response in the scale of the predictor variables (logit)
-  # P: logical, whether or not to include in the output the response in the probability scale (response)
-  # Favourability: logical, whether or not to apply the favourability function (Real et al. 2006) and include its results in the output; requires the 'Fav' function
-  # group.preds: logical, whether or not to group together predictions of similar type (y, P or F) in the output predictions table (e.g. if FALSE: sp1_y, sp1_P, sp1_F, sp2_y, sp2_P, sp2_F; if TRUE: sp1_y, , sp2_y, sp1_P, sp2_P, sp1_F, sp2_F)
-  # trim: logical, whether or not to trim non-significant variables off the models (requires the 'modelTrim' function); can be used whether or not step is TRUE; works as a backward variable elimination procedure based on significance
-  # ...: additional arguments to be passed to the 'modelTrim' function
-  
+  # version 3.3 (13 May 2014)
+ 
   start.time <- proc.time()
   input.ncol <- ncol(data)
   
@@ -50,6 +34,8 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
   data$sample <- "train"
   n <- nrow(data)
   data.row <- 1:n
+  
+  test.sample.input <- test.sample
   
   if (length(test.sample) == 1) {
     if (test.sample == "Huberty") {
@@ -113,20 +99,17 @@ n - n.test, " observations used for model training.")
     response <- colnames(train.data)[s]
     message("\nBuilding model ", model.count, " of ", n.models, 
             " (", response, ")...")
+    cat(length(var.cols), "input predictor variable(s)\n\n")
     
     if (FDR) {
-      fdr <- FDR(data = train.data, sp.cols = s, var.cols = var.cols, model.type = "GLM")
+      fdr <- FDR(data = train.data, sp.cols = s, var.cols = var.cols, model.type = "GLM", verbose = FALSE)
       if (nrow(fdr$select) == 0) {
-        warning(paste0(
-"No variables passed the FDR test (so no model calculated) for\n"
-, response, "; consider using FDR = FALSE?"))
+        cat("All variables excluded by 'FDR' function, so no model calculated")
+        warning(paste(
+"No variables passed the FDR test (so no model calculated) for\n", response, "(consider using FDR = FALSE?)"))
         next
-      }
-      else if (nrow(fdr$select) < length(var.cols)) {
-        cat("FDR-excluded variables:", 
-            paste(row.names(fdr$exclude), collapse = ", "), "\n\n")
-        cat("FDR-selected variables (starting with most significant):", 
-            paste(row.names(fdr$select), collapse = ", "), "\n\n")
+      } else {
+        cat(length(var.cols) - nrow(fdr$select), "variable(s) excluded by 'FDR' function -", paste(row.names(fdr$exclude), collapse = ", "), "\n\n")
       }
       sel.var.cols <- which(colnames(train.data) %in% rownames(fdr$select))
     } else sel.var.cols <- var.cols
@@ -137,6 +120,7 @@ n - n.test, " observations used for model training.")
     model.expr <- expression(glm(model.formula, family = binomial))
     
     if (step) {
+      n.vars.start <- length(sel.var.cols)
       if (start == "full.model") {
         model <- step(eval(model.expr), direction = direction, trace = trace)          
       } else if (start == "null.model") {
@@ -145,19 +129,24 @@ n - n.test, " observations used for model training.")
         model <- step(glm(null.formula, family = binomial), 
                       direction = direction, scope = model.scope, trace = trace)
       } else stop("'start' must be either 'full.model' or 'null.model'")
+      n.vars.step <- length(model$coefficients) - 1
+      excluded.vars <- setdiff(rownames(fdr$select), names(model$coefficients)[-1])
+      cat(n.vars.start - n.vars.step, "variable(s) excluded by 'step' function -", paste(excluded.vars, collapse = ", "), "\n\n")
     } else model <- eval(model.expr)
     
-    if (trim)  model <- modelTrim(model, ...)
+    if (trim) {
+      n.vars.start <- length(model$coefficients) - 1
+      names.vars.start <- names(model$coefficients)[-1]
+      model <- modelTrim(model, ...)
+      n.vars.trim <- length(model$coefficients) - 1
+        excluded.vars <- setdiff(names.vars.start, names(model$coefficients)[-1])
+        cat(n.vars.start - n.vars.trim, "variable(s) excluded by 'modelTrim' function -", paste(excluded.vars, collapse = ", "), "\n\n")
+    }
     
     if (step | trim) {
-      cat("Multivariate variable selection performed with:")
-      if (step) cat(" step")
-      if (step & trim) cat(" +")
-      if (trim) cat(" modelTrim")
-      cat("\n\n")
       sel.var.names <- names(model$coefficients)[-1]
-      cat(length(sel.var.names), " (out of ", length(var.cols), " input) variables included in the final model: ", 
-          paste(sel.var.names, collapse = ", "), sep = "")
+      cat(length(sel.var.names), "variable(s) INCLUDED IN THE FINAL MODEL -", 
+          paste(sel.var.names, collapse = ", "))
     }
     
     models[[model.count]] <- model
@@ -181,7 +170,7 @@ n - n.test, " observations used for model training.")
   }  # end for s
   
   detach(train.data)
-  models <- models[!sapply(models, is.null)]
+  #models <- models[!sapply(models, is.null)]
   n.pred.types = sum(y, keeP, Favourability)  # sums logical values of function arguments
   
   if (n.pred.types == 0) {
@@ -213,8 +202,8 @@ n - n.test, " observations used for model training.")
     
   }  # end if pred.types 0 else
   
-  #if (test.sample == 0) 
-  #   predictions <- predictions[ , - match("sample", colnames(predictions))]
+  if (test.sample.input == 0) 
+     predictions <- predictions[ , - match("sample", colnames(predictions))]
 
 end.time <- proc.time()
   duration <- (end.time - start.time)[3]

@@ -18,7 +18,7 @@ a sample data set with species occurrences and predictor variables.
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 0.5\cr
+Version: \tab 0.5.1\cr
 Date: \tab 2014-05-13\cr
 License: \tab GPL-3\cr
 }

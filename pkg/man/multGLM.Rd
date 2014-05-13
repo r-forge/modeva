@@ -7,17 +7,25 @@ Multiple GLMs
 This function calculates generalized linear models for a set of species in a data frame.
 }
 \usage{
-multGLM(data, sp.cols, var.cols, id.col = NULL, family = "binomial", test.sample = 0, FDR = FALSE, step = TRUE, trace = 0, start = "null.model", direction = "both", y = TRUE, P = TRUE, Favourability = TRUE, group.preds = TRUE, trim = TRUE, ...)
+multGLM(data, sp.cols, var.cols, id.col = NULL, family = "binomial", test.sample = 0, FDR = FALSE, step = TRUE, trace = 0, start = "null.model", direction = "both", y = FALSE, P = TRUE, Favourability = TRUE, group.preds = TRUE, trim = TRUE, ...)
 }
 \arguments{
-  \item{data}{a data frame with your species' binary (0/1) occurrence data and the predictor variables.}
-  \item{sp.cols}{index numbers of the columns containing the species data to be modelled}
-  \item{var.cols}{index numbers of the columns containing the predictor variables to be used}
-  \item{id.col}{(optional) index number of column containing the row identifiers (if defined, it will be included in \code{predictions} table)}
-  \item{family}{argument to be passed to the \code{\link{glm}} function; only 'binomial' is implemented in \code{multGLM} so far}
-  \item{test.sample}{a subset of data to set aside for subsequent model testing. Can be a value between 0 and 1 for a proportion of the data to choose randomly (e.g. 0.2 for 20\%), or an  integer number for a particular number of cases to choose randomly among the records in \code{data}, or a vector of integers for the index numbers of the particular rows to set aside, or "Huberty" for his rule of thumb based on the number of variables (Huberty 1994, Fielding & Bell 1997).}
-  \item{FDR}{logical, whether to do a preliminary exclusion of variables based on their bivariate relationship with the response and the false discovery rate (see \code{\link{FDR}}).}
-  \item{step}{logical, whether to use the \code{\link{step}} function to perform a first stepwise variable selection based on AIC.}
+  \item{data}{a data frame containing your species' binary (0/1) occurrence data and the predictor variables.}
+  \item{sp.cols}{index numbers of the columns containing the species data to be modelled.}
+  \item{var.cols}{index numbers of the columns containing the predictor variables to be used.}
+  \item{id.col}{(optional) index number of column containing the row identifiers (if defined, it will be included in the output \code{predictions} data frame).}
+  \item{family}{argument to be passed to the \code{\link{glm}} function; only 'binomial' is implemented in \code{multGLM} so far.}
+  \item{test.sample}{a subset of data to set aside for subsequent model testing. 
+  Can be a value between 0 and 1 for a proportion of the data to choose randomly 
+  (e.g. 0.2 for 20\%), or an  integer number for a particular number of cases to 
+  choose randomly among the records in \code{data}, or a vector of integers for 
+  the index numbers of the particular rows to set aside, or "Huberty" for his rule 
+  of thumb based on the number of variables (Huberty 1994, Fielding & Bell 1997).}
+  \item{FDR}{logical, whether to do a preliminary exclusion of variables based on 
+  their bivariate relationship with the response and the false discovery rate 
+  (see \code{\link{FDR}}).}
+  \item{step}{logical, whether to use the \code{\link{step}} function to perform 
+  a first stepwise variable selection based on AIC.}
   \item{trace}{if positive, information is printed during the running of \code{\link{step}}. Larger values may give more detailed information.}
   \item{start}{logical, whether to start with the 'null.model' (so variable selection starts forward) or with the 'full.model' (so selection starts backward). Used only if \code{step = TRUE}.}
   \item{direction}{argument to be passed to \code{\link{step}} specifying the direction of variable selection ('forward', 'backward' or 'both'). Used only if \code{step = TRUE}.}

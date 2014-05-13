@@ -60,7 +60,7 @@ Alberto Jimenez-Valverde
 \note{
 }
 \seealso{
-\code{\link{mess}} in package \pkg{dismo}; \code{\link{OA}}
+\code{mess} in package \pkg{dismo}; \code{\link{OA}}
 }
 \examples{
 # load the sample data:

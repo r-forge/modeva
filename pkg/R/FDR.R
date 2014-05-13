@@ -1,6 +1,6 @@
 FDR <-
 function(data = NULL, sp.cols = NULL, var.cols = NULL, pvalues = NULL, model.type, 
-         family = "binomial", correction = "fdr", q = 0.05) {
+         family = "binomial", correction = "fdr", q = 0.05, verbose = TRUE) {
   
   if (length(sp.cols) > 1) stop ("Sorry, FDR is currently implemented for only one response variable at a time, so 'sp.cols' must indicate only one column")
   if (missing(model.type)) stop ("'model.type' is missing; specify either 'LM' or 'GLM'")
@@ -58,7 +58,7 @@ Type 'p.adjust.methods' for available options.")
   
   exclude <- subset(results, p.adjusted > q)
   select <- subset(results, p.adjusted <= q)
-  cat("\nBivariate p-values adjusted with '", correction, 
+  if (verbose) cat("\nBivariate p-values adjusted with '", correction, 
       "' correction;\n", nrow(exclude), " variables excluded, ", 
       nrow(select), " selected\n\n", sep = "")
   

@@ -8,7 +8,7 @@ Calculate the false discovery rate (type I error) under repeated testing and det
 }
 \usage{
 FDR(data = NULL, sp.cols = NULL, var.cols = NULL, pvalues = NULL, model.type, 
-family = "binomial", correction = "fdr", q = 0.05)
+family = "binomial", correction = "fdr", q = 0.05, verbose = TRUE)
 }
 \arguments{
   \item{data}{a data frame containing the response and predictor variables 
@@ -31,6 +31,7 @@ family = "binomial", correction = "fdr", q = 0.05)
   for more information. The default is "fdr".}
   \item{q}{the threshold value of FDR-corrected significance above which to 
   reject variables. Defaults to 0.05.}
+  \item{verbose}{logical, whether to report a short description of the results.}
 }
 \details{
 It is common in ecology to search for statistical relationships between species' 

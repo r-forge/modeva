@@ -50,7 +50,7 @@ names(mods$predictions)
 
 # calculate some evaluation measures for these models:
 
-eval <- multModEv(obs.data = rotif.env[ , 18:20], pred.data = mods$predictions[ , 9:11], thresh = "preval")
+eval <- multModEv(obs.data = rotif.env[ , 18:20], pred.data = mods$predictions[ , c("Abrigh_P", "Afissa_P", "Apriod_P")], thresh = "preval")
 
 head(eval)
 
