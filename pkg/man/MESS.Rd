@@ -30,7 +30,7 @@ locality in the projection dataset and the localities in the reference
 (training) dataset (Elith et al. 2010).
 
 MESS analysis is implemented in the MAXENT software (Phillips et al. 
-2006) and in the \code{\pkg{dismo}} R package, but there it requires input 
+2006) and in the \pkg{dismo} R package, but there it requires input 
 variables in raster format. This implies not only the use of complex spatial 
 data structures, but also that the units of analysis are rectangular pixels, 
 whereas we often need to model distribution data recorded on irregular 
@@ -60,7 +60,7 @@ Alberto Jimenez-Valverde
 \note{
 }
 \seealso{
-\code{\link{mess}} in package \code{\pkg{dismo}}; \code{\link{OA}}
+\code{\link{mess}} in package \pkg{dismo}; \code{\link{OA}}
 }
 \examples{
 # load the sample data:

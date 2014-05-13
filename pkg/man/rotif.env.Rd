@@ -4,7 +4,19 @@
 \title{
 Rotifers and environmental variables on TDWG level 4 regions of the world}
 \description{
-These data were extracted from a database of monogonont rotifer species presence records on the geographical units used by the Biodiversity Information Standards (formerly Taxonomic Database Working Group, TDWG; base maps available at http://www.kew.org/science-research-data/kew-in-depth/gis/resources-and-publications/data/tdwg/index.htm) and a few environmental (including human and spatial) variables on the same spatial units. The original data were compiled and published by Fontaneto et al. (2012) in long (narrow, stacked) format. Here they are presented in wide or unstacked format (presence-absence table, obtained with the \code{splist2presabs} function in the \code{\pkg{fuzzySim}} package), reduced to the species recorded in at least 100 different TDWG level 4 units, and with abbreviations of the species' names (obtained with the \code{spCodes} function in the \code{fuzzySim} package). Mind that this is not a complete picture of these species' distributions, due to insufficient sampling in many regions.
+These data were extracted from a database of monogonont rotifer species presence 
+records on the geographical units used by the Biodiversity Information Standards 
+(formerly Taxonomic Database Working Group, TDWG; base maps available at 
+http://www.kew.org/science-research-data/kew-in-depth/gis/
+resources-and-publications/data/tdwg/index.htm) and a few environmental 
+(including human and spatial) variables on the same spatial units. The original 
+data were compiled and published by Fontaneto et al. (2012) in long (narrow, 
+stacked) format. Here they are presented in wide or unstacked format (presence
+-absence table, obtained with the \code{splist2presabs} function in the \pkg{fuzzySim} 
+package), reduced to the species recorded in at least 100 different TDWG level 4 
+units, and with abbreviations of the species' names (obtained with the \code{spCodes} 
+function in the \pkg{fuzzySim} package). Mind that this is not a complete picture 
+of these species' distributions, due to insufficient sampling in many regions.
 }
 \usage{data(rotif.env)}
 \format{
@@ -62,7 +74,9 @@ These data were extracted from a database of monogonont rotifer species presence
 \details{
 }
 \source{
-Fontaneto D., Barbosa A.M., Segers H. & Pautasso M. (2012) The 'rotiferologist' effect and other global correlates of species richness in monogonont rotifers. Ecography, 35: 174-182.
+Fontaneto D., Barbosa A.M., Segers H. & Pautasso M. (2012) The 'rotiferologist' 
+effect and other global correlates of species richness in monogonont rotifers. 
+Ecography, 35: 174-182.
 }
 \references{
 }

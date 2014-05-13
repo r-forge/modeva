@@ -3,7 +3,7 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
                     start = "null.model", direction = "both", y = TRUE, P = TRUE,
                     Favourability = TRUE, group.preds = TRUE, trim = TRUE, ...) {
   
-  # version 3.1 (12 May 2014)
+  # version 3.2 (13 May 2014)
   # data: data frame with your binary species data and variables
   # sp.cols: index numbers of the columns containing the species data to be modelled; should contain only binary data (0 or 1)
   # var.cols: index numbers of the columns containing the predictor variables to be used
@@ -23,9 +23,7 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
   # ...: additional arguments to be passed to the 'modelTrim' function
   
   start.time <- proc.time()
-  
   input.ncol <- ncol(data)
-  n <- nrow(data)
   
   stopifnot (
     as.vector(na.omit(as.matrix(data[ , sp.cols]))) %in% c(0,1),
@@ -50,7 +48,8 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
   )
   
   data$sample <- "train"
-  data.row <- 1:nrow(data)
+  n <- nrow(data)
+  data.row <- 1:n
   
   if (length(test.sample) == 1) {
     if (test.sample == "Huberty") {
@@ -58,34 +57,36 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
         test.sample <- percentTestData(length(var.cols)) / 100
         n.test <- round(n * test.sample)
         message(
-          "Following Huberty's (1994) rule, ", test.sample * 100, "% of observations (", n.test, " out of ", n, ") set aside for model testing; ", 
-          n - n.test, " observations used for model training.\n")
+"Following Huberty's rule, ", test.sample * 100, "% of observations 
+(", n.test, " out of ", n, ") set aside for model testing; ", 
+n - n.test, " observations used for model training.")
       } else stop ("
-Sorry, Huberty rule cannot be used with FDR, step or trim, as these make 
+Sorry, Huberty's rule cannot be used with FDR, step or trim, as these make 
 the number of variables differ among models. Set these 3 parameters to FALSE, 
-or use a different test.sample option.")
+or use a different 'test.sample' option.")
     }  # end if Huberty
     else if (test.sample == 0) {
       message("
-All ", n, " observations used for model training; none reserved for model testing.\n")
+All ", n, " observations used for model training; 
+none reserved for model testing.")
       n.test <- 0
     } else if (test.sample < 1) {
       n.test <- round(n * test.sample)
       message(
-        test.sample * 100, "% of observations (", n.test, " out of ", n, ") set aside for model testing; ", 
-        n - n.test, " observations used for model training.\n")
+test.sample * 100, "% of observations (", n.test, " out of ", n, ") set aside for model testing; ", 
+n - n.test, " observations used for model training.")
     } else if (test.sample >= 1) {
       n.test <- test.sample
       message(
         n.test, " (out of ", n, ") observations set aside for model testing; ", 
-        n - n.test, " observations used for model training.\n")
+        n - n.test, " observations used for model training.")
     }
     test.sample <- sample(data.row, size = n.test, replace = FALSE)
     } else if (length(test.sample) > 1) {
       n.test <- length(test.sample)
       message(
         n.test, " (out of ", n, ") observations set aside for model testing; ", 
-        n - n.test, " observations used for model training.\n")
+        n - n.test, " observations used for model training.")
     }
   
   data$sample[data.row %in% test.sample] <- "test"
@@ -97,7 +98,7 @@ All ", n, " observations used for model training; none reserved for model testin
       warning("Favourability is only applicable to binomial responses, 
               so it could not be calculated")
     }  # end if family != binomial (for when other families are implemented)
-    }  # end if Fav
+  }  # end if Fav
   
   keeP <- P  # keep P only if the user wants it
   if (Favourability)  P <- TRUE  # P is necessary to calculate Fav
@@ -110,26 +111,29 @@ All ", n, " observations used for model training; none reserved for model testin
   for (s in sp.cols) {
     model.count <- model.count + 1
     response <- colnames(train.data)[s]
-    message("Building model ", model.count, " of ", n.models, 
+    message("\nBuilding model ", model.count, " of ", n.models, 
             " (", response, ")...")
     
     if (FDR) {
-      fdr <- FDR(train.data[ , s], train.data[ , var.cols], model.type = "GLM")
+      fdr <- FDR(data = train.data, sp.cols = s, var.cols = var.cols, model.type = "GLM")
       if (nrow(fdr$select) == 0) {
-        warning(paste("No variables passed the FDR test (so no model calculated) 
-                      for", response, sep = " "))
+        warning(paste0(
+"No variables passed the FDR test (so no model calculated) for\n"
+, response, "; consider using FDR = FALSE?"))
         next
       }
-      else {
-        cat("FDR-selected variables:", 
+      else if (nrow(fdr$select) < length(var.cols)) {
+        cat("FDR-excluded variables:", 
+            paste(row.names(fdr$exclude), collapse = ", "), "\n\n")
+        cat("FDR-selected variables (starting with most significant):", 
             paste(row.names(fdr$select), collapse = ", "), "\n\n")
       }
       sel.var.cols <- which(colnames(train.data) %in% rownames(fdr$select))
     } else sel.var.cols <- var.cols
     
     model.formula <- as.formula(paste(response, "~", 
-                                      paste(colnames(train.data)[sel.var.cols], 
-                                            collapse = "+")))
+                    paste(colnames(train.data)[sel.var.cols], 
+                    collapse = "+")))
     model.expr <- expression(glm(model.formula, family = binomial))
     
     if (step) {
@@ -146,8 +150,14 @@ All ", n, " observations used for model training; none reserved for model testin
     if (trim)  model <- modelTrim(model, ...)
     
     if (step | trim) {
+      cat("Multivariate variable selection performed with:")
+      if (step) cat(" step")
+      if (step & trim) cat(" +")
+      if (trim) cat(" modelTrim")
+      cat("\n\n")
       sel.var.names <- names(model$coefficients)[-1]
-      cat(length(sel.var.names), " (out of ", length(var.cols), ") variables included in the model: ", paste(sel.var.names, collapse = ", "), sep = "")
+      cat(length(sel.var.names), " (out of ", length(var.cols), " input) variables included in the final model: ", 
+          paste(sel.var.names, collapse = ", "), sep = "")
     }
     
     models[[model.count]] <- model
@@ -203,9 +213,10 @@ All ", n, " observations used for model training; none reserved for model testin
     
   }  # end if pred.types 0 else
   
-  #if (test.sample == 0)  predictions <- predictions[ , - charmatch("sample", colnames(predictions))]
+  #if (test.sample == 0) 
+  #   predictions <- predictions[ , - match("sample", colnames(predictions))]
 
-  end.time <- proc.time()
+end.time <- proc.time()
   duration <- (end.time - start.time)[3]
   if (duration < 60) {
     units <- " second(s)."
@@ -218,6 +229,6 @@ All ", n, " observations used for model training; none reserved for model testin
   }
   
   message("Finished in ", round(duration), units)
-  return(list(predictions = data.frame(predictions), models = models))
+  return(list(predictions = predictions, models = models))
   
   }  # end multGLM function

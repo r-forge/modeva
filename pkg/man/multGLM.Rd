@@ -15,7 +15,7 @@ multGLM(data, sp.cols, var.cols, id.col = NULL, family = "binomial", test.sample
   \item{var.cols}{index numbers of the columns containing the predictor variables to be used}
   \item{id.col}{(optional) index number of column containing the row identifiers (if defined, it will be included in \code{predictions} table)}
   \item{family}{argument to be passed to the \code{\link{glm}} function; only 'binomial' is implemented in \code{multGLM} so far}
-  \item{test.sample}{a subset of data to set aside for subsequent model testing. Can be a value between 0 and 1 for a proportion of the data to choose randomly (e.g. 0.2 for 20\%), or an  integer number for a particular number of cases to choose randomly among the records in \code{data}, or a vector of integers for the concrete cases to set aside, or "Huberty" for his rule of thumb based on the number of variables (Huberty 1994, Fielding & Bell 1997).}
+  \item{test.sample}{a subset of data to set aside for subsequent model testing. Can be a value between 0 and 1 for a proportion of the data to choose randomly (e.g. 0.2 for 20\%), or an  integer number for a particular number of cases to choose randomly among the records in \code{data}, or a vector of integers for the index numbers of the particular rows to set aside, or "Huberty" for his rule of thumb based on the number of variables (Huberty 1994, Fielding & Bell 1997).}
   \item{FDR}{logical, whether to do a preliminary exclusion of variables based on their bivariate relationship with the response and the false discovery rate (see \code{\link{FDR}}).}
   \item{step}{logical, whether to use the \code{\link{step}} function to perform a first stepwise variable selection based on AIC.}
   \item{trace}{if positive, information is printed during the running of \code{\link{step}}. Larger values may give more detailed information.}
@@ -50,7 +50,6 @@ Real R., Barbosa A.M. & Vargas J.M. (2006) Obtaining environmental favourability
 A. Marcia Barbosa
 }
 \note{
-I couldn't get this to work without internally using 'attach', which is not very good practice - any ideas to avoid this would be welcome!
 }
 \seealso{
 \code{\link{glm}}, \code{\link{Fav}}, \code{\link{step}}, \code{\link{modelTrim}}
@@ -63,7 +62,7 @@ names(rotif.env)
 
 # make models for 3 of the species in rotif.env:
 
-mods <- multGLM(rotif.env, sp.cols = 18:20, var.cols = 5:17, id.col = 1, step = TRUE, FDR = TRUE, trim = TRUE)
+mods <- multGLM(rotif.env, sp.cols = 45:47, var.cols = 5:17, id.col = 1, step = TRUE, FDR = TRUE, trim = TRUE)
 
 names(mods)
 
