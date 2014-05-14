@@ -19,7 +19,7 @@ family = "binomial", correction = "fdr", q = 0.05, verbose = TRUE)
   \item{pvalues}{optionally, instead of \code{data}, \code{sp.cols} and \code{var.cols}, 
   a data frame with the names of the predictor variables in the first column and 
   their bivariate p-values (obtained elsewhere) in the second column. Dummy 
-  example: \code{pvalues <- data.frame(var = letters[1:5], pval = runif(5, 0, 0.06))}.}
+  example: \code{pvalues <- data.frame(var = letters[1:5], pval = c(0.02, 0.004, 0.07, 0.03, 0.05))}.}
   \item{model.type}{either "LM" (linear model, for continuous response variables) 
   or "GLM" (generalized linear models, for binary or other variables for which 
   such models are more appropriate)}
@@ -99,3 +99,4 @@ FDR(data = rotif.env, sp.cols = 18, var.cols = 5:17, model.type = "GLM")
 \keyword{ significance }
 \keyword{ p-values }
 \keyword{ type I error }
+\keyword{ multiple testing }

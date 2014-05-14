@@ -130,7 +130,7 @@ n - n.test, " observations used for model training.")
                       direction = direction, scope = model.scope, trace = trace)
       } else stop("'start' must be either 'full.model' or 'null.model'")
       n.vars.step <- length(model$coefficients) - 1
-      excluded.vars <- setdiff(rownames(fdr$select), names(model$coefficients)[-1])
+      excluded.vars <- setdiff(colnames(data[ , sel.var.cols]), names(model$coefficients)[-1])
       cat(n.vars.start - n.vars.step, "variable(s) excluded by 'step' function -", paste(excluded.vars, collapse = ", "), "\n\n")
     } else model <- eval(model.expr)
     
