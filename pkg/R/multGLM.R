@@ -4,7 +4,7 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
                     P = TRUE, Favourability = TRUE, group.preds = TRUE, 
                     trim = TRUE, ...) {
   
-  # version 3.3 (13 May 2014)
+  # version 3.4 (14 May 2014)
  
   start.time <- proc.time()
   input.ncol <- ncol(data)
@@ -92,7 +92,7 @@ n - n.test, " observations used for model training.")
   models <- vector("list", n.models)
   model.count <- 0
   
-  attach(train.data, warn.conflicts = FALSE)
+  attach(train.data, warn.conflicts = FALSE)  # couldn't avoid attach
   
   for (s in sp.cols) {
     model.count <- model.count + 1
@@ -161,8 +161,8 @@ n - n.test, " observations used for model training.")
       colnames(data)[ncol(data)] <- paste(response, "P", sep = "_")
     }
     if (Favourability) {
-      n1 <- sum(train.data[ , s] == 1)
-      n0 <- sum(train.data[ , s] == 0)
+      n1 <- sum(train.data[ , s] == 1, na.rm = TRUE)
+      n0 <- sum(train.data[ , s] == 0, na.rm = TRUE)
       data[ , ncol(data) + 1] <- Fav(n1n0 = c(n1, n0), pred = data[ , ncol(data)])
       colnames(data)[ncol(data)] <- paste(response, "F", sep = "_")
       if (!keeP) data <- data[ , -(ncol(data) - 1)]
