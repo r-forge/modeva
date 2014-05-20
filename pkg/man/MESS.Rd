@@ -40,10 +40,13 @@ poles. The MESS function computes this analysis for variables in a data frame,
 where localities (in rows) may be of various sizes and shapes.
 }
 \value{
-A matrix with the same input column names as \code{P}, plus a column named 
-\code{TOTAL}, quantifying the similarity between each point in the projection 
-dataset and those in the reference dataset. Negative values indicate localities 
-that are environmentally dissimilar from the reference region.
+The function returns a data frame with the same column names as \code{P}, 
+plus a column named \code{TOTAL}, quantifying the similarity between each 
+point in the projection dataset and those in the reference dataset. Negative 
+values indicate localities that are environmentally dissimilar from the 
+reference region. The last column, \code{MoD}, indicates which of the column 
+names of P corresponds to the most dissimilar variable, i.e., the limiting 
+factor or the variable that drives the MESS in that locality (Elith et al. 2010).
 }
 \references{
 Barbosa A.M., Real R. & Vargas J.M. (2009) Transferability of environmental favourability models in geographic space: the case of the Iberian desman (Galemys pyrenaicus) in Portugal and Spain. Ecological Modelling 220: 747-754
@@ -55,9 +58,10 @@ Phillips S.J., Anderson R.P. & Schapire R.E. (2006) Maximum entropy modeling
 of species geographic distributions. Ecological Modelling 190: 231-259
 }
 \author{
-Alberto Jimenez-Valverde
+Alberto Jimenez-Valverde, A. Marcia Barbosa
 }
 \note{
+A new, apparently more complete method for analysing environmental dissimilarities has recently become available (see https://www.climond.org/ExDet.aspx). We are planning on implementing a dataframe version of that too in the \pkg{modEvA} package.
 }
 \seealso{
 \code{mess} in package \pkg{dismo}; \code{\link{OA}}
