@@ -6,6 +6,8 @@ function(data, models, y = FALSE, P = TRUE, Favourability = FALSE) {
   # y: logical, whether to include the logit link (y) in the predictions
   # Favourability: logical, whether to include Favourability in the predictions; requires functions Fav and prevalence
   
+  start.time <- Sys.time()
+
   stopifnot(
     is.data.frame(data),
     is.list(models),
@@ -48,6 +50,10 @@ if all y, P and Favourability are set to FALSE.")
       if (!keeP) data <- data[ , -(ncol(data) - 1)]
     }  # end if Fav
   }  # end for m
-  message("Finished!")
+
+  duration <- difftime(start.time, Sys.time())
+  units <- attr(duration, "units")
+  duration <- round(abs(as.numeric(duration)), 1)
+  message("Finished in ", duration, " ", units)
   return(data)
 }

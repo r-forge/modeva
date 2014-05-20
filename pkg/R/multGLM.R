@@ -6,7 +6,7 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
   
   # version 3.4 (14 May 2014)
  
-  start.time <- proc.time()
+  start.time <- Sys.time()
   input.ncol <- ncol(data)
   
   stopifnot (
@@ -205,19 +205,10 @@ n - n.test, " observations used for model training.")
   if (test.sample.input == 0) 
      predictions <- predictions[ , - match("sample", colnames(predictions))]
 
-end.time <- proc.time()
-  duration <- (end.time - start.time)[3]
-  if (duration < 60) {
-    units <- " second(s)."
-  } else if (duration < 3600) {
-    duration <- duration / 60
-    units <- " minute(s)."
-  } else {
-    duration <- duration / 3600
-    units <- " hour(s)."
-  }
-  
-  message("Finished in ", round(duration), units)
+  duration <- difftime(start.time, Sys.time())
+  units <- attr(duration, "units")
+  duration <- round(abs(as.numeric(duration)), 1)
+  message("Finished in ", duration, " ", units)
   return(list(predictions = predictions, models = models))
   
   }  # end multGLM function

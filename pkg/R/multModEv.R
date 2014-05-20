@@ -10,7 +10,7 @@ function(obs.data = NULL, pred.data = NULL, models = NULL, Favourability = FALSE
   # standardize: logical, whether or not to standardize measures that vary between -1 and 1 to the 0-1 scale (see standardize function)
   # bin.method: method with which to divide the data into groups or bins (for H-L goodness-of-fit test and for ABCc); type modEvAmethods("getBins") for available options
   
-  start.time <- proc.time()
+  start.time <- Sys.time()
   
   for (i in measures) {
     if (!(i %in% modEvAmethods("multModEv"))) stop(i, " is not a valid measure; type modEvAmethods('multModEv') for available options.")
@@ -108,9 +108,9 @@ function(obs.data = NULL, pred.data = NULL, models = NULL, Favourability = FALSE
     colnames(results)[colnames(results) == "TSS"] <- "sTSS"
   }  # end if standardize
   
-  end.time <- proc.time()
-  duration <- (end.time - start.time)[3]
-  message("Finished in ", round(duration), " second(s).")
-  
+  duration <- difftime(start.time, Sys.time())
+  units <- attr(duration, "units")
+  duration <- round(abs(as.numeric(duration)), 1)
+  message("Finished in ", duration, " ", units)
   return(data.frame(results))
 }
