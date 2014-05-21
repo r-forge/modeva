@@ -10,6 +10,7 @@ timer(start.time)
 }
 \arguments{
   \item{start.time}{A date-time object of class \code{\link{POSIXct}}, e.g. as given by \code{\link{Sys.time}}.}
+}
 \details{
 }
 \value{
