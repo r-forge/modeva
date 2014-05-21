@@ -1,19 +1,17 @@
 MESS <- function(V, P){   
-  # version 1.3, 20 May 2014
+  # version 1.4, 21 May 2014
   
   start.time <- Sys.time()
-  
   index.V <- 1:nrow(V)
   index.P <- 1:nrow(P)
   n.vars <- ncol(V)
   n.varP <- ncol(P)
   if(n.vars != n.varP) stop("The number of variables in V and P does not match.")
   nrow.P <- nrow(P)
-  results <- matrix(nrow = nrow.P, ncol = n.vars + 1)
-  colnames(results) <- c(colnames(P), "TOTAL")
+  results <- matrix(nrow = nrow.P, ncol = n.vars, dimnames = list(NULL, colnames(P)))
   
   for (i in 1:n.vars){
-    message("MESSing variable ", i, " of ", n.vars, "...")
+    message("Comparing variable ", i, " of ", n.vars, "...")
     min.Vi <- min(V[, i], na.rm = TRUE)
     max.Vi <- max(V[, i], na.rm = TRUE)
     SIM <- vector("numeric", nrow.P)
@@ -30,21 +28,11 @@ MESS <- function(V, P){
     results[, i] <- SIM
   }
   
-  message("Calculating TOTAL MESS...")
-  for (t in 1:nrow.P){
-    results[t, "TOTAL"] <- min(results[t, 1:n.vars], na.rm = TRUE)
-  }
-  
-  message("Calculating MoD...")
-  results <- data.frame(results, MoD = vector("character", nrow(results)))
-  levels(results[ , "MoD"]) <- colnames(P[ , 1:n.vars])
-  for (r in 1:nrow.P) {
-    results[r, "MoD"] <- names(which.min(results[r, 1:n.vars]))
-  }
-  
-  duration <- difftime(start.time, Sys.time())
-  units <- attr(duration, "units")
-  duration <- round(abs(as.numeric(duration)), 1)
-  message("Finished in ", duration, " ", units)
+  message("Calculating MESS and MoD...")
+  results <- data.frame(results)
+  results$TOTAL <- apply(results[ , 1:n.vars], 1, min)
+  results$MoD <- as.factor(colnames(results)[apply(results[ , 1:n.vars], 1, which.min)])
+  message("Finished!") 
+  timer(start.time)  
   return(results)
 }

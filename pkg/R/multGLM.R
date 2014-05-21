@@ -204,11 +204,8 @@ n - n.test, " observations used for model training.")
   
   if (test.sample.input == 0) 
      predictions <- predictions[ , - match("sample", colnames(predictions))]
-
-  duration <- difftime(start.time, Sys.time())
-  units <- attr(duration, "units")
-  duration <- round(abs(as.numeric(duration)), 1)
-  message("Finished in ", duration, " ", units)
+  message("Finished!") 
+  timer(start.time)  
   return(list(predictions = predictions, models = models))
   
   }  # end multGLM function

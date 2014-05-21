@@ -108,9 +108,7 @@ function(obs.data = NULL, pred.data = NULL, models = NULL, Favourability = FALSE
     colnames(results)[colnames(results) == "TSS"] <- "sTSS"
   }  # end if standardize
   
-  duration <- difftime(start.time, Sys.time())
-  units <- attr(duration, "units")
-  duration <- round(abs(as.numeric(duration)), 1)
-  message("Finished in ", duration, " ", units)
+  message("Finished!") 
+  timer(start.time)  
   return(data.frame(results))
 }
