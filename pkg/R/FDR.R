@@ -1,6 +1,7 @@
 FDR <-
-function(data = NULL, sp.cols = NULL, var.cols = NULL, pvalues = NULL, model.type, 
-         family = "binomial", correction = "fdr", q = 0.05, verbose = TRUE) {
+function(data = NULL, sp.cols = NULL, var.cols = NULL, pvalues = NULL, 
+         model.type, family = "binomial", correction = "fdr", q = 0.05, 
+         verbose = TRUE) {
   
   if (length(sp.cols) > 1) stop ("Sorry, FDR is currently implemented for only one response variable at a time, so 'sp.cols' must indicate only one column")
   if (missing(model.type)) stop ("'model.type' is missing; specify either 'LM' or 'GLM'")
@@ -26,13 +27,13 @@ Type 'p.adjust.methods' for available options.")
     for (i in 1:length(p.bivar)) {
       if(model.type == "GLM") {
         model <- glm(response ~ predictors[ , i], family = family)
-        p.bivar[i] <- anova(model, test = "Chi") $ P[2]
+        p.bivar[i] <- anova(model, test = "Chi") [ , "Pr(>Chi)"] [2]
         coef.bivar[i] <- model $ coefficients[2]
       }  # end if GLM
       
       else if (model.type == "LM") {
         model <- lm(response ~ predictors[ , i])
-        p.bivar[i] <- anova(model, test = "Chi") $ P[1]
+        p.bivar[i] <- anova(model, test = "Chi") [ , "Pr(>F)"] [1]
         coef.bivar[i] <- model $ coefficients[2]
       }  # end if LM
       
