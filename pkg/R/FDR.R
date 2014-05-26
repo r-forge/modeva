@@ -55,7 +55,7 @@ Type 'p.adjust.methods' for available options.")
   } else {
     results <- data.frame(p.value = p.bivar, row.names = pvalues[ , 1])
     results <- data.frame(p.value = results[order(results[ , "p.value"]), ])
-    results$p.adjusted <- p.adjust(results[ , "p.value"], method = correction)
+    results[ , "p.adjusted"] <- p.adjust(results[ , "p.value"], method = correction)
   }  # end if coeffs else
   
   exclude <- subset(results, p.adjusted > q)
