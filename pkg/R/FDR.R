@@ -3,6 +3,8 @@ function(data = NULL, sp.cols = NULL, var.cols = NULL, pvalues = NULL,
          model.type, family = "binomial", correction = "fdr", q = 0.05, 
          verbose = TRUE) {
   
+  # version 3.0 (26 May 2014)
+  
   if (length(sp.cols) > 1) stop ("Sorry, FDR is currently implemented for only one response variable at a time, so 'sp.cols' must indicate only one column")
   if (missing(model.type)) stop ("'model.type' is missing; specify either 'LM' or 'GLM'")
   if (!(correction %in% p.adjust.methods)) stop("Invalid correction method. 
@@ -48,13 +50,12 @@ Type 'p.adjust.methods' for available options.")
     results <- data.frame(cbind(coef.bivar, p.bivar), 
                           row.names = names(predictors))
     names(results) <- c("bivariate.coeff", "p.value")
-    results <- results[order(results$p.value), ]
-    results$p.adjusted <- p.adjust(results$p.value, method = correction)
-  }  # end if coeffs
-  else {
+    results <- results[order(results[ , "p.value"]), ]
+    results$p.adjusted <- p.adjust(results[ , "p.value"], method = correction)
+  } else {
     results <- data.frame(p.value = p.bivar, row.names = pvalues[ , 1])
-    results <- data.frame(p.value = results[order(results$p.value), ])
-    results$p.adjusted <- p.adjust(results$p.value, method = correction)
+    results <- data.frame(p.value = results[order(results[ , "p.value"]), ])
+    results$p.adjusted <- p.adjust(results[ , "p.value"], method = correction)
   }  # end if coeffs else
   
   exclude <- subset(results, p.adjusted > q)
