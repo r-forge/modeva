@@ -1,16 +1,13 @@
 multModEv <-
-function(obs.data = NULL, pred.data = NULL, models = NULL, Favourability = FALSE, measures = modEvAmethods("multModEv"), thresh = 0.5, standardize = FALSE, bin.method = "quantiles", quiet = TRUE) {
-  # version 1.8 (24 Mar 2014)
-  # obs.data: a data frame with observed binary data
-  # pred.data: a data frame with the corresponding predicted probability values, with both rows and columns in the same order as in obs.data
-  # models: instead of (and overriding) obs.data and pred.data, a list of model objects of class "glm" applied to the same data set
-  # Favourability: logical, whether to convert predicted probability to favourability before calculating fixed-threshold measures; used only if model objects are provided (rather than obs.data + pred.data)
-  # measures: a character vector of the evaluation measures to calculate
-  # thresh: threshold value to use for calculating threshold-based measures (the ones in modEvAmethods("threshMeasures"))
-  # standardize: logical, whether or not to standardize measures that vary between -1 and 1 to the 0-1 scale (see standardize function)
-  # bin.method: method with which to divide the data into groups or bins (for H-L goodness-of-fit test and for ABCc); type modEvAmethods("getBins") for available options
+function(obs.data = NULL, pred.data = NULL, models = NULL, Favourability = FALSE, measures = modEvAmethods("multModEv"), thresh = "preval", standardize = FALSE, bin.method = "quantiles", quiet = TRUE) {
+  # version 1.9 (26 May 2014)
   
   start.time <- Sys.time()
+  
+  if (Favourability == TRUE & thresh == "preval") {
+    thresh <- 0.5
+    message("Threshold automatically set to 0.5, which corresponds to prevalence when Favourability is used.")
+  }
   
   for (i in measures) {
     if (!(i %in% modEvAmethods("multModEv"))) stop(i, " is not a valid measure; type modEvAmethods('multModEv') for available options.")

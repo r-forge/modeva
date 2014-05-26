@@ -32,7 +32,7 @@ MESS <- function(V, P){
   results <- data.frame(results)
   results$TOTAL <- apply(results[ , 1:n.vars], 1, min)
   results$MoD <- as.factor(colnames(results)[apply(results[ , 1:n.vars], 1, which.min)])
-  message("Finished!") 
-  timer(start.time)  
+  message("Finished!")
+  timer(start.time)
   return(results)
 }
