@@ -3,7 +3,7 @@ function(data = NULL, sp.cols = NULL, var.cols = NULL, pvalues = NULL,
          model.type, family = "binomial", correction = "fdr", q = 0.05, 
          verbose = TRUE) {
   
-  # version 3.0 (26 May 2014)
+  # version 3.2 (26 May 2014)
   
   if (length(sp.cols) > 1) stop ("Sorry, FDR is currently implemented for only one response variable at a time, so 'sp.cols' must indicate only one column")
   if (missing(model.type)) stop ("'model.type' is missing; specify either 'LM' or 'GLM'")
@@ -30,13 +30,13 @@ Type 'p.adjust.methods' for available options.")
       if(model.type == "GLM") {
         model <- glm(response ~ predictors[ , i], family = family)
         p.bivar[i] <- anova(model, test = "Chi") [ , "Pr(>Chi)"] [2]
-        coef.bivar[i] <- model $ coefficients[2]
+        coef.bivar[i] <- model[["coefficients"]][2]
       }  # end if GLM
       
       else if (model.type == "LM") {
         model <- lm(response ~ predictors[ , i])
         p.bivar[i] <- anova(model, test = "Chi") [ , "Pr(>F)"] [1]
-        coef.bivar[i] <- model $ coefficients[2]
+        coef.bivar[i] <- model[["coefficients"]][2]
       }  # end if LM
       
       else stop("'model.type' must be either 'LM' or 'GLM'")
@@ -51,7 +51,7 @@ Type 'p.adjust.methods' for available options.")
                           row.names = names(predictors))
     names(results) <- c("bivariate.coeff", "p.value")
     results <- results[order(results[ , "p.value"]), ]
-    results$p.adjusted <- p.adjust(results[ , "p.value"], method = correction)
+    results[ , "p.adjusted"] <- p.adjust(results[ , "p.value"], method = correction)
   } else {
     results <- data.frame(p.value = p.bivar, row.names = pvalues[ , 1])
     results <- data.frame(p.value = results[order(results[ , "p.value"]), ])
