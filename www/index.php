@@ -77,7 +77,7 @@ surface (<b>MESS</b>) <b>analysis</b>, and displaying various <b>analytical plot
 <h2>Find out more</h2>
 
 <p> Click <a href="http://modtools.wordpress.com/packages/modeva/">here</a> for <b>further info</b> on the package, including some <b>user guidelines</b>. </p>
-<p>An illustrated PDF tutorial will soon be made available <a href="http://modeva.r-forge.r-project.org/modEvA_manual.pdf">here</a>.</p>
+<p>An illustrated PDF tutorial will soon be made available <a href="modEvA_manual.pdf">here</a>.</p>
 <p> The R-Forge project summary page you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/">here</a>. </p>
 
  </font> 
