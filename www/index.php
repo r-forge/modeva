@@ -20,7 +20,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	<link href="http://<?php echo $themeroot; ?>styles/estilo1.css" rel="stylesheet" type="text/css" />
   </head>
 
-<body>
+<body bgcolor=#F0FFFF>
 
 <!-- R-Forge Logo -->
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -32,6 +32,8 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <!-- get project title  -->
 <!-- own website starts here, the following may be changed as you like -->
 
+<font face="helvetica, verdana, arial"> 
+
 <?php if ($handle=fopen('http://'.$domain.'/export/projtitl.php?group_name='.$group_name,'r')){
 $contents = '';
 while (!feof($handle)) {
@@ -42,31 +44,27 @@ echo $contents; } ?>
 
 <!-- end of project description -->
 
-
-
 <p> It includes functions for <b>variation partitioning</b>, assessing the <b>false discovery rate</b>, calculating several measures of <b>model discrimination and calibration</b>, <b>optimizing prediction thresholds</b> based on a number of criteria, performing multivariate environmental similarity 
 surface (<b>MESS</b>) <b>analysis</b>, and displaying various <b>analytical plots</b>. Includes also a <b>sample data set</b> with species occurrences and predictor variables.</p>
-
 <br />
 
 <h2> Install and load </h2>
-<p>Paste the following commands in the R console (when connected to the internet):</p>
-<code>
-install.packages("modEvA", repos="http://R-Forge.R-project.org")<br />
-library(modEvA)<br />
-help("modEvA")
-</code>
-<br />
-<p>If you bump into problems, please go <a href="http://modtools.wordpress.com/packages/modeva/">here</a> for more complete download information.</p>
-<br />
+<p>To <strong>install</strong> <i>modEvA</i> directly form R-Forge, paste the following command in the R console (when connected to the internet):</p>
+<code>install.packages("modEvA", repos="http://R-Forge.R-project.org")</code><br />
+<p>If the command above fails, producing a message like "<i>package 'modEvA' is not available for your R version</i>", you can download the compressed package source files to your disk (<i>.zip</i> or <i>.tar.gz</i> available <a href="https://r-forge.r-project.org/R/?group_id=1876">here</a>) and then install the package from there (R menu "<i>Packages - Install packages from local zip files</i>", or "<i>Tools - Install packages - Install from: Package Archive File</i>", or "Packages & Data - Package installer, Packages repository - Local binary package", ... depending on your R interface).</p>
+<p>You only need to install the package once, but then every time you re-open R you need to <strong>load</strong> it by typing:</p>
+<code>library(modEvA)</code><br />
+<p>You can then check out the package <strong>help</strong> files and try out some of the provided <strong>examples</strong>:</p>
+<code>help("modEvA")</code><br /><br />
+
 
 <h2> References </h2>
 
-<h3> Citation for the <i>modEvA</i> package:</h3>
+<h3> Citation of the <i>modEvA</i> package:</h3>
 
 <p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 0.3</p>
 
-<p><small><i>NOTE: To get the citation for the version currently installed on your system, load the <i>modEvA</i> package <font color="darkgrey">[by typing</font> <code>library(modEvA)</code><font color="darkgrey"> in R]</font> and type <b><code>citation(package="modEvA")</code></b></i></small></p>
+<p><small><i>NOTE: To get the citation for the version currently installed on your system, load the <i>modEvA</i> package in R and then type </i><b><code></small>citation(package="modEvA")</code></b></p>
 
 <h3> Papers introducing <i>modEvA</i>:</h3>
 
@@ -79,13 +77,9 @@ help("modEvA")
 <h2>Find out more</h2>
 
 <p> Click <a href="http://modtools.wordpress.com/packages/modeva/">here</a> for <b>further info</b> on the package, including some <b>user guidelines</b>. </p>
-
+<p>An illustrated PDF tutorial will soon be made available <a href="http://modeva.r-forge.r-project.org/modEvA_manual.pdf">here</a>.</p>
 <p> The R-Forge project summary page you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/">here</a>. </p>
 
-
-</body>
-</html>
-</body>
-</html>
+ </font> 
 </body>
 </html>
