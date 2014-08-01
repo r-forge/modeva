@@ -51,7 +51,7 @@ surface (<b>MESS</b>) <b>analysis</b>, and displaying various <b>analytical plot
 <h2> Install and load </h2>
 <p>To <strong>install</strong> <i>modEvA</i> directly form R-Forge, paste the following command in the R console (when connected to the internet):</p>
 <code>install.packages("modEvA", repos="http://R-Forge.R-project.org")</code><br />
-<p>If the command above fails, producing a message like "<i>package 'modEvA' is not available for your R version</i>", you can download the compressed package source files to your disk (<i>.zip</i> or <i>.tar.gz</i> available <a href="https://r-forge.r-project.org/R/?group_id=1876">here</a>) and then install the package from there (R menu "<i>Packages - Install packages from local zip files</i>", or "<i>Tools - Install packages - Install from: Package Archive File</i>", or "Packages & Data - Package installer, Packages repository - Local binary package", ... depending on your R interface).</p>
+<p>If the command above fails, producing a message like "<i>package 'modEvA' is not available for your R version</i>", you can download the compressed package source files to your disk (<i>.zip</i> or <i>.tar.gz</i> available <a href="https://r-forge.r-project.org/R/?group_id=1876">here</a>) and then install the package from there (R menu "<i>Packages - Install packages from local zip files</i>", or "<i>Tools - Install packages - Install from: Package Archive File</i>", or "<i>Packages & Data - Package installer, Packages repository - Local binary package</i>", ... depending on your R interface).</p>
 <p>You only need to install the package once, but then every time you re-open R you need to <strong>load</strong> it by typing:</p>
 <code>library(modEvA)</code><br />
 <p>You can then check out the package <strong>help</strong> files and try out some of the provided <strong>examples</strong>:</p>
@@ -77,7 +77,6 @@ surface (<b>MESS</b>) <b>analysis</b>, and displaying various <b>analytical plot
 <h2>Find out more</h2>
 
 <p> Click <a href="http://modtools.wordpress.com/packages/modeva/">here</a> for <b>further info</b> on the package, including some <b>user guidelines</b>. </p>
-<p>An illustrated PDF tutorial will soon be made available <a href="modEvA_manual.pdf">here</a>.</p>
 <p> The R-Forge project summary page you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/">here</a>. </p>
 
  </font> 
