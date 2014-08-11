@@ -20,7 +20,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	<link href="http://<?php echo $themeroot; ?>styles/estilo1.css" rel="stylesheet" type="text/css" />
   </head>
 
-<body bgcolor=#F0FFFF>
+<body bgcolor=#E6E6FA>
 
 <!-- R-Forge Logo -->
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -44,7 +44,7 @@ echo $contents; } ?>
 
 <!-- end of project description -->
 
-<p> It includes functions for <b>variation partitioning</b>, assessing the <b>false discovery rate</b>, calculating several measures of <b>model discrimination and calibration</b>, <b>optimizing prediction thresholds</b> based on a number of criteria, performing multivariate environmental similarity 
+<p> It includes functions for <b>variation partitioning</b>, assessing the <b>false discovery rate</b>, calculating several measures of model <b>discrimination</b> and <b>calibration</b>, <b>optimizing prediction thresholds</b> based on a number of criteria, performing multivariate environmental similarity 
 surface (<b>MESS</b>) <b>analysis</b>, and displaying various <b>analytical plots</b>. Includes also a <b>sample data set</b> with species occurrences and predictor variables.</p>
 <br />
 
@@ -71,13 +71,19 @@ surface (<b>MESS</b>) <b>analysis</b>, and displaying various <b>analytical plot
 
 <p><small><i>NOTE: To get the citation for the version currently installed on your system, load the <i>modEvA</i> package in R and then type </i><strong><code></small>citation(package="modEvA")</code></strong></p>
 
+
 <h3> Papers introducing <i>modEvA</i>:</h3>
 
 <p>Barbosa A.M., Real R., Mu&ntilde;oz A.R. & Brown J.A. (2013) New measures for assessing model equilibrium and prediction mismatch in species distribution models. <i>Diversity and Distributions</i> 19: 1333-1338 (DOI: <a href="http://onlinelibrary.wiley.com/doi/10.1111/ddi.12100/abstract">10.1111/ddi.12100</a>)</p>
 
 <p>Barbosa A.M.,  Brown J.A., Jim&eacute;nez-Valverde A., Acevedo P., Lobo J.M. & Real R. (in prep.) The ABC of model evaluation: a visual method for a clearer assessment of model accuracy</p>
 
-<br />
+
+<h3> Papers citing <i>modEvA</i>:</h3>
+
+De Araújo C.B., Marcondes-Machado L.O. & Costa G.C. (2014) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. Journal of Biogeography 41: 513-523 (DOI: <a href="http://onlinelibrary.wiley.com/doi/10.1111/jbi.12234/abstract">10.1111/jbi.12234)
+
+<br /><br />
 
 <h2>Find out more</h2>
 
