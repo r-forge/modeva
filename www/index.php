@@ -81,9 +81,9 @@ surface (<b>MESS</b>) <b>analysis</b>, and displaying various <b>analytical plot
 
 <h3> Papers citing <i>modEvA</i>:</h3>
 
-De Araújo C.B., Marcondes-Machado L.O. & Costa G.C. (2014) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. Journal of Biogeography 41: 513-523 (DOI: <a href="http://onlinelibrary.wiley.com/doi/10.1111/jbi.12234/abstract">10.1111/jbi.12234)
+De Araújo C.B., Marcondes-Machado L.O. & Costa G.C. (2014) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. Journal of Biogeography 41: 513-523 (DOI: <a href="http://onlinelibrary.wiley.com/doi/10.1111/jbi.12234/abstract">10.1111/jbi.12234</a>)</p>
 
-<br /><br />
+<br />
 
 <h2>Find out more</h2>
 
