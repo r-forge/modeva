@@ -8,18 +8,14 @@ Model Evaluation and Analysis
 \description{
 The modEvA package can build and analyse species distribution models and 
 evaluate their performance. Includes functions for performing variation 
-partitioning, assessing the false discovery rate, calculating several measures 
-of model discrimination and calibration, optimizing prediction thresholds 
-based on a number of criteria, performing multivariate environmental similarity 
-surface (MESS) analysis, and displaying various analytical plots. Includes also 
-a sample data set with species occurrences and predictor variables.
+partitioning, assessing the false discovery rate, analysing multicollinearity among variables, calculating several measures of model discrimination and calibration, optimizing prediction thresholds based on a number of criteria, performing multivariate environmental similarity surface (MESS) analysis, and displaying various analytical plots. Includes also a sample data set with species occurrences and predictor variables.
 }
 \details{
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 0.6\cr
-Date: \tab 2014-06-23\cr
+Version: \tab 0.7\cr
+Date: \tab 2014-09-12\cr
 License: \tab GPL-3\cr
 }
 }

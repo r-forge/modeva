@@ -87,6 +87,15 @@ function(obs.data = NULL, pred.data = NULL, models = NULL, Favourability = FALSE
     if ("HLp" %in% measures)
       results[i, "HLp"] <- HL $ p.value
     
+#    if (any(measures %in% c("MillerInt", "MillerSlope", "MillerTest")))
+#      Miller <- MillerCalib(obs = obs.data[ , i], pred = pred.data[ , i], plot = FALSE)
+#    if ("MillerInt" %in% measures)
+#      results[i, "MillerInt"] <- Miller["a.intercept", ]
+#    if ("MillerSlope" %in% measures)
+#      results[i, "MillerSlope"] <- Miller["b.slope", ]
+#    if ("MillerTest" %in% measures)
+#      results[i, "MillerTest"] <- Miller["p.a0b1", ]
+    
     #if (any(measures %in% c("ABCc", "rABCc", "unityRsq")))
     #  ABC <- ABCmodev(obs.data[ , i], pred.data[ , i], bin.method = bin.method, plot = FALSE, simplif = TRUE)
     #if ("ABCc" %in% measures)

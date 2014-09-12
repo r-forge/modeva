@@ -1,7 +1,7 @@
 getBins <-
 function(obs = NULL, pred = NULL, model = NULL, id = NULL, bin.method = "quantiles", n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE) {
   
-  # version 3.3 (17 July 2013)
+  # version 3.4 (11 Sep 2014)
   # obs: a vector of observed presences (1) and absences (0) or another binary response variable
   # pred: a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike
   # model: instead of (and overriding) obs and pred, you can provide a model object of class "glm"
@@ -41,7 +41,7 @@ function(obs = NULL, pred = NULL, model = NULL, id = NULL, bin.method = "quantil
   if (bin.method == "prob.bins") {  # flaw: may generate empty or very small bins
     message("Arguments n.bins and min.bin.size are ignored by this bin.method")
     bin.cuts <- seq(from = 0, to = 1, by = min.prob.interval)
-    prob.bin <- cut(pred, bin.cuts, include.lowest = TRUE, right = FALSE)
+    prob.bin <- findInterval(pred, bin.cuts)
   }  # end method prob.bins
   
   if (bin.method == "size.bins") {
@@ -54,7 +54,7 @@ function(obs = NULL, pred = NULL, model = NULL, id = NULL, bin.method = "quantil
   if (bin.method == "n.bins") {   # note: bins do not have constant size (and some get less than min size)
     message("Argument min.prob.interval is ignored by this bin.method")
     if (fixed.bin.size) {
-      prob.bin <- cut(pred, breaks = quantile(pred, probs = seq(from = 0, to = 1, by = 1 / n.bins)), include.lowest = T)  # adapted from hosmerlem function in http://www.stat.sc.edu/~hitchcock/diseaseoutbreakRexample704.txt
+      prob.bin <- findInterval(pred, quantile(pred, probs = seq(from = 0, to = 1, by = 1 / n.bins)))
     } else {
       prob.bin <- cut(pred, n.bins)
     }
@@ -63,7 +63,7 @@ function(obs = NULL, pred = NULL, model = NULL, id = NULL, bin.method = "quantil
   if (bin.method == "quantiles") {
     # quantile binning based on 'hosmerlem' function by Peter D. M. Macdonald (http://www.stat.sc.edu/~hitchcock/diseaseoutbreakRexample704.txt)
     cutpoints <- quantile(pred, probs = seq(0, 1, 1/n.bins))
-    prob.bin <- cut(pred, breaks = cutpoints, include.lowest = T)
+    prob.bin <- findInterval(pred, cutpoints)
   }
   
   prob.bins <- sort(unique(prob.bin))  # lists the probability bins in the model
