@@ -7,7 +7,10 @@ Hosmer-Lemeshow goodness of fit
 Calculate a model's calibration performance (reliability) with the Hosmer & Lemeshow goodness-of-fit statistic.
 }
 \usage{
-HLfit(obs = NULL, pred = NULL, model = NULL, bin.method = "quantiles", n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE, alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", ylab = "Observed prevalence", ...)
+HLfit(obs = NULL, pred = NULL, model = NULL, bin.method = "quantiles", n.bins = 10, 
+fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE, 
+alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, 
+xlab = "Predicted probability", ylab = "Observed prevalence", ...)
 }
 \arguments{
   \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable}
@@ -63,7 +66,8 @@ data(rotif.env)
 
 names(rotif.env)
 
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + HabitatDiversity + HumanPopulation, family = binomial))
+mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
+HabitatDiversity + HumanPopulation, family = binomial))
 
 prob <- predict(mod, data = rotif.env, type = "response")
 

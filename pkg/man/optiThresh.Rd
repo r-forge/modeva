@@ -6,7 +6,9 @@ Optimize threshold for model evaluation.
 \description{
 The \code{optiThresh} function calculates optimal thresholds for a number of model evaluation measures (see \code{\link{threshMeasures}}). Optimization is given for each measure, and/or for all measures according to particular criteria (e.g. Jimenez-Valverde & Lobo 2007, Nenzen & Araujo 2011). Results are given numerically and in plots.}
 \usage{
-optiThresh(obs = NULL, pred = NULL, model = NULL, interval = 0.01, measures = modEvAmethods("threshMeasures"), optimize = modEvAmethods("optiThresh"), simplif = FALSE, plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...)
+optiThresh(obs = NULL, pred = NULL, model = NULL, interval = 0.01, 
+measures = modEvAmethods("threshMeasures"), optimize = modEvAmethods("optiThresh"), 
+simplif = FALSE, plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...)
 }
 \arguments{
   \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable.}
@@ -48,14 +50,16 @@ data(rotif.env)
 
 names(rotif.env)
 
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + HabitatDiversity + HumanPopulation, family = binomial))
+mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
+HabitatDiversity + HumanPopulation, family = binomial))
 
 optiThresh(model = mod)
 
 
 # change some of the parameters:
 
-optiThresh(model = mod, pch = 20, measures = c("CCR", "Sensitivity", "pecificity", "UPR", "OPR", "kappa", "TSS"), ylim = c(0, 1))
+optiThresh(model = mod, pch = 20, measures = c("CCR", "Sensitivity", "Specificity", 
+"UPR", "OPR", "kappa", "TSS"), ylim = c(0, 1))
 
 
 # you can also use optiThresh with vectors of observed and predicted values

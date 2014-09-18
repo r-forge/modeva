@@ -91,7 +91,7 @@ n - n.test, " observations used for model training.")
   n.models <- length(sp.cols)
   models <- vector("list", n.models)
   model.count <- 0
-  
+  column.count <- 0
   attach(train.data, warn.conflicts = FALSE)  # couldn't avoid attach
   
   for (s in sp.cols) {
@@ -151,21 +151,21 @@ n - n.test, " observations used for model training.")
     
     models[[model.count]] <- model
     names(models)[[model.count]] <- response
-    
+
     if (y) {
-      data[ , ncol(data) + 1] <- predict(model, data)
-      colnames(data)[ncol(data)] <- paste(response, "y", sep = "_")
+      data[ , column.count + 1] <- predict(model, data)
+      colnames(data)[column.count] <- paste(response, "y", sep = "_")
     }
     if (P) {
-      data[ , ncol(data) + 1] <- predict(model, data, type = "response")
-      colnames(data)[ncol(data)] <- paste(response, "P", sep = "_")
+      data[ , column.count + 1] <- predict(model, data, type = "response")
+      colnames(data)[column.count] <- paste(response, "P", sep = "_")
     }
     if (Favourability) {
       n1 <- sum(train.data[ , s] == 1, na.rm = TRUE)
       n0 <- sum(train.data[ , s] == 0, na.rm = TRUE)
-      data[ , ncol(data) + 1] <- Fav(n1n0 = c(n1, n0), pred = data[ , ncol(data)])
-      colnames(data)[ncol(data)] <- paste(response, "F", sep = "_")
-      if (!keeP) data <- data[ , -(ncol(data) - 1)]
+      data[ , column.count + 1] <- Fav(n1n0 = c(n1, n0), pred = data[ , column.count])
+      colnames(data)[column.count] <- paste(response, "F", sep = "_")
+      if (!keeP) data <- data[ , -(column.count - 1)]
       } # end if Fav
   }  # end for s
   
@@ -176,7 +176,7 @@ n - n.test, " observations used for model training.")
   if (n.pred.types == 0) {
     predictions <- data.frame()
   } else {
-    predictions <- data[ , c(id.col, ((input.ncol + 1) : ncol(data)))]
+    predictions <- data[ , c(id.col, ((input.ncol + 1) : column.count))]
     
     if (n.pred.types == 1 | length(sp.cols) == 1)  group.preds <- FALSE
     

@@ -49,7 +49,8 @@ names(rotif.env)
 
 # build a stepwise model of a species' occurrence based on some of the variables:
 
-mod <- with(rotif.env, step(glm(Abrigh ~ Area + Altitude + AltitudeRange + HabitatDiversity + HumanPopulation, family = binomial)))
+mod <- with(rotif.env, step(glm(Abrigh ~ Area + Altitude + AltitudeRange + 
+HabitatDiversity + HumanPopulation, family = binomial)))
 
 
 # examine the model:

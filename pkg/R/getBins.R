@@ -2,10 +2,6 @@ getBins <-
 function(obs = NULL, pred = NULL, model = NULL, id = NULL, bin.method = "quantiles", n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE) {
   
   # version 3.4 (11 Sep 2014)
-  # obs: a vector of observed presences (1) and absences (0) or another binary response variable
-  # pred: a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike
-  # model: instead of (and overriding) obs and pred, you can provide a model object of class "glm"
-  # id: optional vector of row identifiers; must be of the same length and in the same order of 'obs' and 'pred' (or of the cases used to build 'model')
   
   if (!is.null(model)) {
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")

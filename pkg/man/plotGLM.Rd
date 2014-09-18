@@ -7,7 +7,8 @@ Plot a generalized linear model
 This function plots the observed (presence/absence) data and the predicted (probability) values of a generalized linear model against the y regression equation values. For now, it works only for logistic regression (binomial response, logit link). Optionally (if \code{plot.values = TRUE}) it can display in the plot the proportion of deviance explained (Weisberg 1980, Guisan & Zimmermann 2000), but this requires that a model object is provided (rather than just the observed and predicted values).
 }
 \usage{
-plotGLM(obs = NULL, pred = NULL, model = NULL, link = "logit", plot.values = FALSE, xlab = "Logit (y)", ylab = "Predicted probability", main = "Model plot", ...)
+plotGLM(obs = NULL, pred = NULL, model = NULL, link = "logit", plot.values = FALSE, 
+xlab = "Logit (y)", ylab = "Predicted probability", main = "Model plot", ...)
 }
 \arguments{
   \item{obs}{a vector of presence/absence or other binary (1-0) observed data.}
@@ -43,7 +44,8 @@ data(rotif.env)
 
 names(rotif.env)
 
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + HabitatDiversity + HumanPopulation, family = binomial))
+mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
+HabitatDiversity + HumanPopulation, family = binomial))
 
 plotGLM(model = mod)
 

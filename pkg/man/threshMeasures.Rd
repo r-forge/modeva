@@ -7,7 +7,9 @@ Threshold-based measures of model evaluation
 This function calculates a number of measures for evaluating the discrimination capacity of a species distribution (or ecological niche, or bioclimatic envelope...) model against observed presence-absence data (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013).
 }
 \usage{
-threshMeasures(obs = NULL, pred = NULL, model = NULL, thresh = 0.5, measures = modEvAmethods("threshMeasures"), simplif = FALSE, plot = TRUE, plot.ordered = FALSE, standardize = TRUE, messages = TRUE, ...)
+threshMeasures(obs = NULL, pred = NULL, model = NULL, thresh = 0.5, 
+measures = modEvAmethods("threshMeasures"), simplif = FALSE, plot = TRUE, 
+plot.ordered = FALSE, standardize = TRUE, messages = TRUE, ...)
 }
 \arguments{
   \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable.}
@@ -67,7 +69,8 @@ data(rotif.env)
 
 names(rotif.env)
 
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + HabitatDiversity + HumanPopulation, family = binomial))
+mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
+HabitatDiversity + HumanPopulation, family = binomial))
 
 threshMeasures(model = mod, simplif = TRUE)
 

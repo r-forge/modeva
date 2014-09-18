@@ -7,7 +7,9 @@ Get bins of data.
 Get continuous predicted values into bins according to specific criteria.
 }
 \usage{
-getBins(obs = NULL, pred = NULL, model = NULL, id = NULL, bin.method = "quantiles", n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE)
+getBins(obs = NULL, pred = NULL, model = NULL, id = NULL, bin.method = "quantiles", 
+n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, 
+simplif = FALSE)
 }
 \arguments{
   \item{obs}{
@@ -20,7 +22,7 @@ a vector of the corresponding predicted values.
 instead of (and overriding) \code{obs} and \code{pred}, a model object of class \code{"glm"}.
 }
   \item{id}{
-%%     ~~Describe \code{id} here~~
+optional vector of row identifiers; must be of the same length and in the same order of \code{obs} and \code{pred} (or of the cases used to build \code{model})
 }
   \item{bin.method}{
 the method with which to divide the values into bins. Type \code{modEvAmethods("getBins")} for available options.
@@ -42,7 +44,6 @@ logical, whether to calculate a simplified faster version (usd internally in oth
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
 The output of \code{getBins} is a list with the following components:
@@ -66,7 +67,8 @@ data(rotif.env)
 
 names(rotif.env)
 
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + HabitatDiversity + HumanPopulation, family = binomial))
+mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
+HabitatDiversity + HumanPopulation, family = binomial))
 
 getBins(model = mod)
 

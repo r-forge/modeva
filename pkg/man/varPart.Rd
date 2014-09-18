@@ -7,7 +7,9 @@ Variation partitioning
 This function performs variation partitioning (Borcard et al. 1992) among two factors (e.g. Ribas et al. 2006) or three factors (e.g. Real et al. 2003) for either multiple linear regression models (LM) or generalized linear models (GLM).
 }
 \usage{
-varPart(A, B, C = NULL, AB, BC = NULL, AC = NULL, ABC = NULL, model.type, A.name = "A", B.name = "B", C.name = "C", plot = TRUE, plot.digits = 3, cex.names = 1.2, cex.values = 1)
+varPart(A, B, C = NULL, AB, BC = NULL, AC = NULL, ABC = NULL, model.type, 
+A.name = "A", B.name = "B", C.name = "C", plot = TRUE, plot.digits = 3, 
+cex.names = 1.2, cex.values = 1)
 }
 \arguments{
   \item{A}{numeric value of the R-squared of the regression of the resonse variable on the variables related to factor 'A'}
@@ -56,6 +58,8 @@ A. Marcia Barbosa
 \seealso{
 }
 \examples{
-varPart(A = 0.857537, B = 0.078095, C = 0.499474, AB = 0.89933, BC = 0.492119, AC = 0.981672, model.type = "GLM", A.name = "Climatic", B.name = "Human", C.name = "Topographic", plot.digits = 3, cex.names = 1.2, cex.values = 1)
+varPart(A = 0.857537, B = 0.078095, C = 0.499474, AB = 0.89933, BC = 0.492119, 
+AC = 0.981672, model.type = "GLM", A.name = "Climatic", B.name = "Human", 
+C.name = "Topographic", plot.digits = 3, cex.names = 1.2, cex.values = 1)
 }
 \keyword{ regression }

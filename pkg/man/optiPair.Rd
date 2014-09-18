@@ -66,7 +66,8 @@ data(rotif.env)
 
 names(rotif.env)
 
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + HabitatDiversity + HumanPopulation, family = binomial))
+mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
+HabitatDiversity + HumanPopulation, family = binomial))
 
 optiPair(model = mod)
 
@@ -78,7 +79,8 @@ optiPair(model = mod, measures = c("UPR", "OPR"))
 
 prob <- predict(mod, data = rotif.env, type = "response")
 
-optiPair(obs = rotif.env$Abrigh, pred = prob, measures = c("Omission", "Commission"))
+optiPair(obs = rotif.env$Abrigh, pred = prob, measures = c("Omission", 
+"Commission"))
 }
 \keyword{ models }
 \keyword{ model performance }

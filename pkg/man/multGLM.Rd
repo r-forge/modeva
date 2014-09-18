@@ -7,7 +7,9 @@ Multiple GLMs
 This function calculates generalized linear models for a set of species in a data frame.
 }
 \usage{
-multGLM(data, sp.cols, var.cols, id.col = NULL, family = "binomial", test.sample = 0, FDR = FALSE, step = TRUE, trace = 0, start = "null.model", direction = "both", y = FALSE, P = TRUE, Favourability = TRUE, group.preds = TRUE, trim = TRUE, ...)
+multGLM(data, sp.cols, var.cols, id.col = NULL, family = "binomial", test.sample = 0, 
+FDR = FALSE, step = TRUE, trace = 0, start = "null.model", direction = "both", 
+y = FALSE, P = TRUE, Favourability = TRUE, group.preds = TRUE, trim = TRUE, ...)
 }
 \arguments{
   \item{data}{a data frame containing your species' binary (0/1) occurrence data and the predictor variables.}
@@ -70,7 +72,8 @@ names(rotif.env)
 
 # make models for 3 of the species in rotif.env:
 
-mods <- multGLM(rotif.env, sp.cols = 45:47, var.cols = 5:17, id.col = 1, step = TRUE, FDR = TRUE, trim = TRUE)
+mods <- multGLM(rotif.env, sp.cols = 45:47, var.cols = 5:17, id.col = 1, step = TRUE, 
+FDR = TRUE, trim = TRUE)
 
 names(mods)
 

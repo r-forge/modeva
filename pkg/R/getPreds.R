@@ -1,10 +1,6 @@
 getPreds <-
 function(data, models, id.col = NULL, y = FALSE, P = TRUE, Favourability = FALSE, incl.input = TRUE) {
-  # version 1.4 (25 Mar 2014)
-  # data: the data frame to which to add model predictions; must contain all variables (with the same names, case-sensitive) included in the models
-  # models: a list of model objects obtained e.g. with function 'multGLM'
-  # y: logical, whether to include the logit link (y) in the predictions
-  # Favourability: logical, whether to include Favourability in the predictions; requires functions Fav and prevalence
+  # version 1.5 (18 Set 2014)
   
   start.time <- Sys.time()
 

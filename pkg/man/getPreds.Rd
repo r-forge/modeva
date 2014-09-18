@@ -7,7 +7,8 @@ Get model predictions
 This function allows getting the predictions of multiple models when applied to a given dataset. It can be useful if you have a list of model objects (e.g. resulting from \code{\link{multGLM}}) and want to apply them to a new data set containing the same variables for another region or time period. There are options to include the logit link (\code{y}) and/or \code{Favourability} (see \code{\link{Fav}}).
 }
 \usage{
-getPreds(data, models, id.col = NULL, y = FALSE, P = TRUE, Favourability = FALSE, incl.input = TRUE)
+getPreds(data, models, id.col = NULL, y = FALSE, P = TRUE, Favourability = FALSE, 
+incl.input = TRUE)
 }
 \arguments{
   \item{data}{
