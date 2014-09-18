@@ -4,17 +4,20 @@
 Get model predictions
 }
 \description{
-This function allows getting the predictions of multiple models when applied to a new dataset. It can be useful if you have a list of model objects (e.g. resulting from \code{\link{multGLM}}) and want to apply them to a new data set (e.g. with variables from another region or time period), with options to include the logit link (y) and/or Favourability (see \code{\link{Fav}}), in just one step.
+This function allows getting the predictions of multiple models when applied to a given dataset. It can be useful if you have a list of model objects (e.g. resulting from \code{\link{multGLM}}) and want to apply them to a new data set containing the same variables for another region or time period. There are options to include the logit link (\code{y}) and/or \code{Favourability} (see \code{\link{Fav}}).
 }
 \usage{
-getPreds(data, models, y = FALSE, P = TRUE, Favourability = FALSE)
+getPreds(data, models, id.col = NULL, y = FALSE, P = TRUE, Favourability = FALSE, incl.input = TRUE)
 }
 \arguments{
   \item{data}{
-the data frame to which to add model predictions; must contain all variables (with the same names, case-sensitive) included in the \code{models}.
+the data frame to which to apply the \code{models} to get their predictions; must contain all variables (with the same names, case-sensitive) included in any of the \code{models}.
 }
   \item{models}{
 a list of model objects obtained e.g. with function \code{\link{glm}} or \code{\link{multGLM}}.
+}
+  \item{id.col}{
+optionally, the index number of a column of \code{data} containing row identifiers, to be included in the result. Ignored if \code{incl.input = TRUE}.
 }
   \item{y}{
 logical, whether to include the logit link (y) value in the predictions.
@@ -25,11 +28,14 @@ logical, whether to include the probability value in the predictions.
   \item{Favourability}{
 logical, whether to include Favourability in the predictions (see \code{\link{Fav}}).
 }
+  \item{incl.input}{
+logical, whether to include input columns in the output. The default is TRUE.
+}
 }
 \details{
 }
 \value{
-This functions returns a data frame containing the input \code{data} plus some new columns with the predictions.
+This function returns a data frame containing the model predictions, next to the \code{id.col} if provided, and to the input data if \code{incl.input = TRUE}.
 }
 \references{
 }

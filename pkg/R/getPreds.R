@@ -1,5 +1,5 @@
 getPreds <-
-function(data, models, y = FALSE, P = TRUE, Favourability = FALSE) {
+function(data, models, id.col = NULL, y = FALSE, P = TRUE, Favourability = FALSE, incl.input = TRUE) {
   # version 1.4 (25 Mar 2014)
   # data: the data frame to which to add model predictions; must contain all variables (with the same names, case-sensitive) included in the models
   # models: a list of model objects obtained e.g. with function 'multGLM'
@@ -11,13 +11,17 @@ function(data, models, y = FALSE, P = TRUE, Favourability = FALSE) {
   stopifnot(
     is.data.frame(data),
     is.list(models),
+    is.null(id.col) | id.col %in% (1 : ncol(data)),
     is.logical(y),
     is.logical(P),
-    is.logical(Favourability)
+    is.logical(Favourability),
+    is.logical(incl.input)
   )
   
   if (!y & !P & !Favourability) stop("There are no predictions to get 
 if all y, P and Favourability are set to FALSE.")
+  
+  input.data <- data
   
   keeP <- P  # keep P only if the user wants it
   if (Favourability)  P <- TRUE  # P is necessary to calculate Fav
@@ -50,6 +54,16 @@ if all y, P and Favourability are set to FALSE.")
       if (!keeP) data <- data[ , -(ncol(data) - 1)]
     }  # end if Fav
   }  # end for m
+  
+  if (incl.input) {
+    id.col <- NULL
+  } else {
+    data <- data[ , -(1:ncol(input.data))]
+    if (!is.null(id.col)) {
+      data <- data.frame(input.data[ , id.col], data)
+      names(data)[1] <- names(input.data)[id.col]
+    }
+  }
 
   duration <- difftime(start.time, Sys.time())
   units <- attr(duration, "units")
