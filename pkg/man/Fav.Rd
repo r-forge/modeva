@@ -7,7 +7,8 @@ Favourability
 Environmental (prevalence-independent) favourability for a species' presence
 }
 \usage{
-Fav(obs = NULL, pred = NULL, n1n0 = NULL, model = NULL, sample.preval = NULL, method = "RBV", true.preval = NULL)
+Fav(obs = NULL, pred = NULL, n1n0 = NULL, model = NULL, sample.preval = NULL, 
+method = "RBV", true.preval = NULL)
 }
 \arguments{
   \item{obs}{
