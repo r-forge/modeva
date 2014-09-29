@@ -6,10 +6,10 @@ model evaluation measures.
 }
 \description{
 The optiPair function can optimize a model's discrimination threshold based on 
-a pair of model evaluation measures that balance each other, such as sensitivity
--specificity, omission-commission, or underprediction-overprediction (Fielding & 
-Bell 1997; Liu et al. 2011; Barbosa et al. 2013). The function plots both 
-measures in the given pair against all thresholds with a given interval, and 
+a pair of model evaluation measures that balance each other, such as 
+sensitivity-specificity, omission-commission, or underprediction-overprediction 
+(Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013). The function plots 
+both measures in the given pair against all thresholds with a given interval, and 
 calculates the optimal sum, difference and mean of the two measures.
 }
 \usage{

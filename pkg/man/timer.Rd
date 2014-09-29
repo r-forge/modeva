@@ -3,7 +3,7 @@
 \title{Timer}
 \description{
 Reporting of time elapsed since a given start time. This function is used 
-intrenally by other functions in the \pkg{modEvA} package.
+internally by other functions in the \pkg{modEvA} package.
 }
 \usage{
 timer(start.time)

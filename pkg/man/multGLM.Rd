@@ -83,7 +83,7 @@ names(mods$models)
 
 mods$models[[1]]
 
-mods$models[["Abrigh"]]
+mods$models[["Tpatin"]]
 
 }
 \keyword{ models }
