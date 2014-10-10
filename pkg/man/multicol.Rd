@@ -2,32 +2,29 @@
 \alias{multicol}
 \title{Analyse the multicollinearity in a dataset, including tolerance and VIF}
 \description{
-This function analyses the multicollinearity in a dataset, including the R-squared, tolerance and variance inflation factor (VIF).
+This function analyses the multicollinearity in a set of 'independent' (predictor, explanatory, right hand side) variables, including the R-squared, tolerance and variance inflation factor (VIF).
 }
 \usage{
-multicol(data, var.cols = 1:ncol(data))
+multicol(vars)
 }
 \arguments{
-  \item{data}{
+  \item{vars}{
 A matrix or data frame containing the numeric variables for which to calculate multicollinearity.
-}
-  \item{var.cols}{
-Index numbers of the columns in \code{data} containing the numeric variables to analyse multicollinearity for.
 }
 }
 \details{
 The multicol function calculates the degree of multicollinearity in a set of 
-numeric variables, using three closely related measures: R-squared, tolerance and 
-the variance inflation factor (VIF). All three measures are calculated for each 
-covariate based on the coefficient of determination (R-squared) of a linear
-regression in which that covariate is used as the response and all other 
-covariates are set as explanatory variables (Marquardt 1970; Mansfield & Helms 
-1982). Such measures (especially the VIF) are widely used in ecological modelling 
-and a range of other research areas, and several packages already calculate the 
-VIF in R, but their results can be strikingly different (Estrada & Barbosa, 
-submitted). The \code{multicol} function calculates multicollinearity statistics 
-directly on the independent variables, producing the expected results and without 
-(so far) clashing with other packages.
+numeric variables, using three closely related measures: R squared (the coefficient 
+of determination of a linear regression of each variable on all the other variables, 
+i.e., the amount of variation in each variable that is accounted for by other 
+variables in the dataset); tolerance (1 - R squared); and the variance inflation 
+factor: VIF = 1 / (1 - R squared) for each variable (Marquardt 1970; Mansfield & Helms 
+1982). Such measures (especially the VIF) are widely used in ecological modelling and 
+a range of other research areas, and several packages already calculate the VIF in R, 
+but their results can be strikingly different (Estrada & Barbosa, submitted). The 
+\code{multicol} function calculates multicollinearity statistics directly on the 
+independent variables, producing the expected results and without (so far) clashing 
+with other packages.  Only 'independent' (predictor, right-side) variables should be entered, as the result obtained for each variable depends on all the other variables present in the analysed data set.
 }
 \value{
 The function returns a matrix with one row per analysed variable, the names of 
@@ -51,13 +48,21 @@ A. Marcia Barbosa
 \seealso{
 }
 \examples{
+data(rotif.env)
+names(rotif.env)
+
+# calculate multicollinearity among the independent variables:
+multicol(rotif.env[ , 5:17])
+
+
+# more examples uing R datasets:
 multicol(trees)
- 
+
 # you'll get a warning and some NA results if any of the variables is not numeric:
 multicol(OrchardSprays)
  
 # but you can define a subset of columns of 'data' to calculate 'multicol' for:
-multicol(OrchardSprays, var.cols = 1:3)
+multicol(OrchardSprays[ , 1:3])
 }
 \keyword{collinearity}
 \keyword{tolerance}
