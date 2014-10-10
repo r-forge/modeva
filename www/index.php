@@ -50,12 +50,15 @@ echo $contents; } ?>
 
 <h2> Install and load </h2>
 
-<p>To <strong>install</strong> <i>modEvA</i> directly form R-Forge, paste the following command in the R console (when connected to the internet):</p>
+<p>To <strong>install</strong> <i>modEvA</i> directly form R-Forge, paste the following command in the R console (while connected to the internet):</p>
+
 <code>install.packages("modEvA", repos="http://R-Forge.R-project.org")</code><br />
 
-<p>If the command above fails, producing a message like "<i>package 'modEvA' is not available for your R version</i>", you can either upgrade R to the latest version <i>or</i> download the compressed package source files to your disk (<i>.zip</i> or <i>.tar.gz</i> available <a href="https://r-forge.r-project.org/R/?group_id=1876">here</a>) and then install the package from there (R menu "<i>Packages - Install packages from local zip files</i>", or "<i>Tools - Install packages - Install from: Package Archive File</i>", or "<i>Packages & Data - Package installer, Packages repository - Local binary package</i>", ... depending on your R interface).</p>
+<p>This should work if you have the <b>latest version of R</b>; otherwise, it may either fail (producing a message like "<i>package 'modEvA' is not available for your R version</i>") or install an older version of <i>modEvA</i>. To <b>check the <i>modEvA</i> version that you have actually installed</b>, type <big><b><code>citation(package="modEvA")</code></b></big>.
 
-<p>You only need to install the package once, but then every time you re-open R you need to <strong>load</strong> it by typing:</p>
+To install the latest <i>modEvA</i> version, you can either upgrade R <i>or</i> download the compressed <i>modEvA</i> package source files to your disk (<i>.zip</i> or <i>.tar.gz</i> available <a href="https://r-forge.r-project.org/R/?group_id=1876">here</a>) and then install the package from there (R menu "<i>Packages - Install packages from local zip files</i>", or "<i>Tools - Install packages - Install from: Package Archive File</i>", or "<i>Packages & Data - Package installer, Packages repository - Local binary package</i>", ... depending on your R interface).</p>
+
+<p>You only need to install (each version of) the package once, but then every time you re-open R you need to <strong>load</strong> the package by typing:</p>
 <code>library(modEvA)</code><br />
 
 <p>You can then check out the package <strong>help</strong> files and try some of the provided <strong>examples</strong>:</p>
@@ -66,9 +69,9 @@ echo $contents; } ?>
 
 <h3> Citation of the <i>modEvA</i> package:</h3>
 
-<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 0.7</p>
+<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 0.7.1</p>
 
-<p><small><i>NOTE: To get the citation for the version currently installed on your system, load the <i>modEvA</i> package in R and then type </i><strong><code></small>citation(package="modEvA")</code></strong></p>
+<p><small><i>NOTE: To get the citation for the version currently installed on your system, load the <i>modEvA</i> package in R and then type </i></small><strong><code>citation(package="modEvA")</code></strong></p>
 
 <h3> Papers introducing <i>modEvA</i>:</h3>
 
