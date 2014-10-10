@@ -14,8 +14,8 @@ partitioning, assessing the false discovery rate, analysing multicollinearity am
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 0.7\cr
-Date: \tab 2014-09-12\cr
+Version: \tab 0.7.1\cr
+Date: \tab 2014-10-10\cr
 License: \tab GPL-3\cr
 }
 }

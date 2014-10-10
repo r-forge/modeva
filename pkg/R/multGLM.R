@@ -1,12 +1,12 @@
 multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
                     test.sample = 0, FDR = FALSE, step = TRUE, trace = 0, 
-                    start = "null.model", direction = "both", y = FALSE, 
-                    P = TRUE, Favourability = TRUE, group.preds = TRUE, 
+                    start = "null.model", direction = "both", Y = FALSE, 
+                    P = TRUE, Favourability = TRUE, sep = "_", group.preds = TRUE,
                     trim = TRUE, ...) {
   
-  # version 3.4 (14 May 2014)
+  # version 3.5 (06 Oct 2014)
   
-  start.time <- proc.time()
+  start.time <- Sys.time()
   input.ncol <- ncol(data)
   
   stopifnot (
@@ -22,7 +22,7 @@ multGLM <- function(data, sp.cols, var.cols, id.col = NULL, family = "binomial",
     is.logical(step),
     start %in% c("null.model", "full.model"),
     direction %in% c("both", "backward", "forward"),
-    is.logical(y),
+    is.logical(Y),
     is.logical(P),
     is.logical(Favourability),
     is.logical(group.preds),
@@ -89,10 +89,13 @@ Sorry, Huberty's rule cannot be used with FDR, step or trim, as these make
   keeP <- P  # keep P only if the user wants it
   if (Favourability)  P <- TRUE  # P is necessary to calculate Fav
   n.models <- length(sp.cols)
+  n.preds <- n.models * (Y + P + Favourability)  # sums logical values of function arguments
   models <- vector("list", n.models)
+  predictions <- matrix(NA, nrow = nrow(data), ncol = n.preds)  # new
+  colnames(predictions) <- rep("", n.preds)  # new
   model.count <- 0
-  
-  attach(train.data, warn.conflicts = FALSE)
+  pred.count <- 0
+  attach(train.data, warn.conflicts = FALSE)  # couldn't avoid attach
   
   for (s in sp.cols) {
     model.count <- model.count + 1
@@ -104,22 +107,22 @@ Sorry, Huberty's rule cannot be used with FDR, step or trim, as these make
     if (FDR) {
       fdr <- FDR(data = train.data, sp.cols = s, var.cols = var.cols, model.type = "GLM", verbose = FALSE)
       if (nrow(fdr$select) == 0) {
-        cat("All variables excluded by 'FDR' function, so no model calculated")
-        warning(paste(
-          "No variables passed the FDR test (so no model calculated) for\n", response, "(consider using FDR = FALSE?)"))
-        next
-      } else {
-        cat(length(var.cols) - nrow(fdr$select), "variable(s) excluded by 'FDR' function -", paste(row.names(fdr$exclude), collapse = ", "), "\n\n")
-      }
+        warning(paste0(
+          "No variables passed the FDR test (so no variables included in the model)\n for '", response, "'. Consider using FDR = FALSE?"))
+        #next
+      } #else {
+        cat(length(var.cols) - nrow(fdr$select), "variable(s) excluded by 'FDR' function\n", paste(row.names(fdr$exclude), collapse = ", "), "\n\n")
+      #}
       sel.var.cols <- which(colnames(train.data) %in% rownames(fdr$select))
     } else sel.var.cols <- var.cols
     
-    model.formula <- as.formula(paste(response, "~", 
-                                      paste(colnames(train.data)[sel.var.cols], 
-                                            collapse = "+")))
+    if (length(sel.var.cols) == 0)  model.vars <- 1  # new
+    else  model.vars <- colnames(train.data)[sel.var.cols]
+    model.formula <- as.formula(paste(response, "~", paste(model.vars,
+                                                           collapse = "+")))
     model.expr <- expression(glm(model.formula, family = binomial))
-    
-    if (step) {
+
+    if (step & length(sel.var.cols) > 0) {
       n.vars.start <- length(sel.var.cols)
       if (start == "full.model") {
         model <- step(eval(model.expr), direction = direction, trace = trace)          
@@ -131,52 +134,71 @@ Sorry, Huberty's rule cannot be used with FDR, step or trim, as these make
       } else stop("'start' must be either 'full.model' or 'null.model'")
       n.vars.step <- length(model$coefficients) - 1
       excluded.vars <- setdiff(colnames(data[ , sel.var.cols]), names(model$coefficients)[-1])
-      cat(n.vars.start - n.vars.step, "variable(s) excluded by 'step' function -", paste(excluded.vars, collapse = ", "), "\n\n")
+      cat(n.vars.start - n.vars.step, "variable(s) excluded by 'step' function\n", paste(excluded.vars, collapse = ", "), "\n\n")
     } else model <- eval(model.expr)
     
-    if (trim) {
+    if (trim & length(sel.var.cols) > 0) {
       n.vars.start <- length(model$coefficients) - 1
       names.vars.start <- names(model$coefficients)[-1]
       model <- modelTrim(model, ...)
       n.vars.trim <- length(model$coefficients) - 1
       excluded.vars <- setdiff(names.vars.start, names(model$coefficients)[-1])
-      cat(n.vars.start - n.vars.trim, "variable(s) excluded by 'modelTrim' function -", paste(excluded.vars, collapse = ", "), "\n\n")
+      cat(n.vars.start - n.vars.trim, "variable(s) excluded by 'modelTrim' function\n", paste(excluded.vars, collapse = ", "), "\n\n")
     }
     
     if (step | trim) {
       sel.var.names <- names(model$coefficients)[-1]
-      cat(length(sel.var.names), "variable(s) INCLUDED IN THE FINAL MODEL -", 
+      cat(length(sel.var.names), "variable(s) INCLUDED IN THE FINAL MODEL\n", 
           paste(sel.var.names, collapse = ", "))
     }
     
     models[[model.count]] <- model
     names(models)[[model.count]] <- response
     
-    if (y) {
-      data[ , ncol(data) + 1] <- predict(model, data)
-      colnames(data)[ncol(data)] <- paste(response, "y", sep = "_")
+    if (Y) {
+      #data[ , ncol(data) + 1] <- predict(model, data)
+      #colnames(data)[ncol(data)] <- paste(response, "y", sep = "_")
+      pred.count <- pred.count + 1  # new
+      colnames(predictions)[pred.count] <- paste(response, "Y", sep = sep)
+      predictions[ , pred.count] <- predict(model, data)  # new
     }
     if (P) {
-      data[ , ncol(data) + 1] <- predict(model, data, type = "response")
-      colnames(data)[ncol(data)] <- paste(response, "P", sep = "_")
+      #data[ , ncol(data) + 1] <- predict(model, data, type = "response")
+      #colnames(data)[ncol(data)] <- paste(response, "P", sep = "_")
+      pred.count <- pred.count + 1  # new
+      colnames(predictions)[pred.count] <- paste(response, "P", sep = sep)  # new
+      predictions[ , pred.count] <- predict(model, data, type = "response")  # new
     }
     if (Favourability) {
-      n1 <- sum(train.data[ , s] == 1)
-      n0 <- sum(train.data[ , s] == 0)
-      data[ , ncol(data) + 1] <- Fav(n1n0 = c(n1, n0), pred = data[ , ncol(data)])
-      colnames(data)[ncol(data)] <- paste(response, "F", sep = "_")
-      if (!keeP) data <- data[ , -(ncol(data) - 1)]
+      n1 <- sum(train.data[ , s] == 1, na.rm = TRUE)
+      n0 <- sum(train.data[ , s] == 0, na.rm = TRUE)
+      #data[ , ncol(data) + 1] <- Fav(n1n0 = c(n1, n0), pred = data[ , pred.count])
+      #colnames(data)[ncol(data)] <- paste(response, "F", sep = "_")
+      #if (!keeP) data <- data[ , -(pred.count - 1)]
+      pred.count <- pred.count + 1  # new
+      predictions[ , pred.count] <- Fav(n1n0 = c(n1, n0), pred = predictions[ , pred.count - 1])
+      colnames(predictions)[pred.count] <- paste(response, "F", sep = sep)
+      #if (!keeP) predictions <- predictions[ , -(pred.count - 1)]
+      #data[ , pred.count + 1] <- Fav(n1n0 = c(n1, n0), pred = data[ , pred.count])
     } # end if Fav
   }  # end for s
   
   detach(train.data)
-  #models <- models[!sapply(models, is.null)]
-  n.pred.types = sum(y, keeP, Favourability)  # sums logical values of function arguments
+  #if (rm.null.models) models <- models[!sapply(models, is.null)]
+
+  if (P & !keeP) {  # new block
+    n.char <- nchar(colnames(predictions))
+    pred.suffix <- substr(colnames(predictions), n.char - 1, n.char)
+    P.cols <- match("_P", pred.suffix)
+    predictions <- predictions[ , - P.cols]
+  }
   
+  n.pred.types <- sum(Y, keeP, Favourability)
   if (n.pred.types == 0) {
     predictions <- data.frame()
   } else {
-    predictions <- data[ , c(id.col, ((input.ncol + 1) : ncol(data)))]
+  #  predictions <- data[ , c(id.col, ((input.ncol + 1) : pred.count))]
+    predictions <- data.frame(data[ , id.col], sample = data[ , "sample"], predictions)  # new
     
     if (n.pred.types == 1 | length(sp.cols) == 1)  group.preds <- FALSE
     
@@ -204,20 +226,8 @@ Sorry, Huberty's rule cannot be used with FDR, step or trim, as these make
   
   if (test.sample.input == 0) 
     predictions <- predictions[ , - match("sample", colnames(predictions))]
-  
-  end.time <- proc.time()
-  duration <- (end.time - start.time)[3]
-  if (duration < 60) {
-    units <- " second(s)."
-  } else if (duration < 3600) {
-    duration <- duration / 60
-    units <- " minute(s)."
-  } else {
-    duration <- duration / 3600
-    units <- " hour(s)."
-  }
-  
-  message("Finished in ", round(duration), units)
+  message("Finished!")
+  timer(start.time)
   return(list(predictions = predictions, models = models))
   
   }  # end multGLM function
