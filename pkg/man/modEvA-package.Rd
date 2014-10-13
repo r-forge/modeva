@@ -34,26 +34,38 @@ Diversity and Distributions 19: 1333-1338 (DOI: 10.1111/ddi.12100)
 \pkg{PresenceAbsence}, \pkg{ROCR}, \pkg{verification}, \pkg{dismo}
 }
 \examples{
+# load sample data and see the column names:
 data(rotif.env)
-
 names(rotif.env)
 
+# analyse multicollinearity among predictor variables:
+multicol(rotif.env[ , 5:17])
+
+# build models for presence-absence of rotifer species:
 mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, 
 step = FALSE, trim = TRUE)
 
+# analyse the resulting predictions table:
 head(mods$predictions)
 
+# calculate the explained deviance for the 1st model:
 Dsquared(mods$models[[1]])
 
+# plot the 1st model:
 plotGLM(model = mods$models[[1]])
 
+# calculate the area under the ROC curve for the 1st model:
 AUC(model = mods$models[[1]])
 
+# calculate some more threshold-based measures for this model:
 threshMeasures(model = mods$models[[1]], thresh = "preval")
 
+# calculate optimal thresholds based on several criteria:
 optiThresh(model = mods$models[[1]])
 
+# calculate the optimal threshold balancing two evaluation measures:
 optiPair(model = mods$models[[1]], measures = c("Omission", "Commission"))
 
+# calculate the Hosmer-Lemeshow goodness-of-fit for the 1st model:
 HLfit(model = mods$models[[1]])
 }
