@@ -14,7 +14,8 @@ a non-ocurrence site.
 }
 \usage{
 AUC(obs = NULL, pred = NULL, model = NULL, interval = 0.01, simplif = FALSE, 
-plot = TRUE, plot.values = TRUE, xlab = c("False positive rate", "(1-specificity)"), 
+plot = TRUE, plot.values = TRUE, plot.preds = FALSE, grid = FALSE,
+xlab = c("False positive rate", "(1-specificity)"), 
 ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve", ...)
 }
 \arguments{
@@ -25,8 +26,10 @@ ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve", ...)
   \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm".}
   \item{interval}{interval at which to calculate the true positive:false positive ratio. Defaults to 0.01.}
   \item{simplif}{logical, whether to use a faster version that outputs only the AUC value (may be useful for calculating AUC for large numbers of species in a loop, for example). Note that the ROC plot is not drawn when simplif = TRUE.}
-  \item{plot}{logical, whether or not to plot the curve.}
-  \item{plot.values}{logical, whether or not to show in the plot some values associated to the curve.}
+  \item{plot}{logical, whether or not to plot the ROC curve. Defaults to TRUE.}
+  \item{plot.values}{logical, whether or not to show in the plot the values associated to the curve (e.g., the AUC). Defaults to TRUE.}
+  \item{plot.preds}{logical, whether or not to plot the proportion of analysed model predictions (through proportionally sized blue circles) at each threshold. Defaults to FALSE.}
+  \item{grid}{logical, whether or not to add a grid to the plot, marking the analysed thresholds. Defaults to FALSE.}
   \item{xlab}{label for the x axis.}
   \item{ylab}{label for the y axis.}
   \item{main}{title for the plot.}
@@ -54,11 +57,13 @@ directly to a model object of class \code{"glm"}.
 If \code{simplif = TRUE}, the function returns only the AUC value (a numeric value 
 between 0 and 1). Otherwise (the default), it plots the curve and returns a \code{list} 
 with the following components:
-\item{thresholds}{a data frame of the true and false positives, as well as the 
-sensitivity and specificity of the predictions, at each analysed threshold.}
+\item{thresholds}{a data frame of the true and false positives, the 
+sensitivity and specificity of the predictions, and the number of predicted values 
+at each analysed threshold.}
 \item{N}{the total number of obervations.}
 \item{prevalence}{the proportion of occurrences in the data (which affects the AUC).}
 \item{AUC}{the value of the AUC).}
+\item{AUCratio}{the ratio of the obtained AUC value to the null expectation (0.5).}
 }
 \references{
 Lobo, J.M., Jimenez-Valverde, A. & Real, R. (2008). AUC: a misleading measure 
@@ -89,6 +94,8 @@ HabitatDiversity + HumanPopulation, family = binomial))
 AUC(model = mod, simplif = TRUE)
 
 AUC(model = mod)
+
+AUC(model = mod, grid = TRUE, plot.preds = TRUE)
 
 
 # you can also use AUC with vectors of observed and predicted values
