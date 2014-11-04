@@ -4,13 +4,7 @@
 Area Under the ROC Curve
 }
 \description{
-This function calculates the Area Under the receiver operating characteristic 
-(ROC) Curve for either a model object of class \code{"glm"}, or two matching 
-vectors of observed (binary, 1 for occurrence vs. 0 for non-occurrence) and 
-predicted (continuous, e.g. occurrence probability) values, respectively. 
-The AUC is a measure of the overall discrimination power of the predictions, 
-or the probability that an occurrence site has a higher predicted value than 
-a non-ocurrence site.
+This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, for either a model object of class \code{"glm"}, or two matching vectors of observed (binary, 1 for occurrence vs. 0 for non-occurrence) and predicted (continuous, e.g. occurrence probability) values, respectively. The AUC is a measure of the overall discrimination power of the predictions, or the probability that an occurrence site has a higher predicted value than a non-ocurrence site.
 }
 \usage{
 AUC(obs = NULL, pred = NULL, model = NULL, interval = 0.01, simplif = FALSE, 
@@ -20,15 +14,14 @@ ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve", ...)
 }
 \arguments{
   \item{obs}{a vector of observed presences (1) and absences (0) or another 
-  binary response variable.
-}
-  \item{pred}{a vector with the corresponding predicted values of occurrence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as \code{obs}.}
+  binary response variable.}
+  \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as \code{obs}.}
   \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm".}
-  \item{interval}{interval at which to calculate the true positive:false positive ratio. Defaults to 0.01.}
+  \item{interval}{interval of threshold values at which to calculate the true and false positive and negative rates. Defaults to 0.01. Ignored if \code{simplif = TRUE}. Note that this does not affect the obtained AUC value (although it can affect the size of the plotted ROC curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney U statistic and is therefore threshold-independent.}
   \item{simplif}{logical, whether to use a faster version that outputs only the AUC value (may be useful for calculating AUC for large numbers of species in a loop, for example). Note that the ROC plot is not drawn when simplif = TRUE.}
   \item{plot}{logical, whether or not to plot the ROC curve. Defaults to TRUE.}
   \item{plot.values}{logical, whether or not to show in the plot the values associated to the curve (e.g., the AUC). Defaults to TRUE.}
-  \item{plot.preds}{logical, whether or not to plot the proportion of analysed model predictions (through proportionally sized blue circles) at each threshold. Defaults to FALSE.}
+  \item{plot.preds}{logical, whether or not to plot the proportion of analysed model predictions (through proportionally sized circles) at each threshold. Experimental. Defaults to FALSE.}
   \item{grid}{logical, whether or not to add a grid to the plot, marking the analysed thresholds. Defaults to FALSE.}
   \item{xlab}{label for the x axis.}
   \item{ylab}{label for the y axis.}
@@ -36,32 +29,14 @@ ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve", ...)
   \item{\dots}{further arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{
-Like the model evaluation measures calculated by the \code{\link{threshMeasures}} function, 
-the area under the ROC curve (AUC) assesses the discrimination performance of a 
-model; but unlike them, it does not require the choice of a particular threshold 
-above which to consider that a model predicts species presence, but rather 
-averages discrimination performance over all possible thresholds at a given 
-interval. Mind that there has been criticism to the AUC (Lobo et al. 2008, 
-Jimenez-Valverde et al. 2013), although it is still one of the most widely used 
-metrics in model evaluation. It is highly correlated with species prevalence, 
-so this value is also provided by the AUC function (if \code{simplif = FALSE}, 
-the default) for reference.
-
-Although there are functions to calculate the AUC in other R packages (such as 
-\pkg{ROCR}, \pkg{PresenceAbsence} and \pkg{verification}), the AUC function is 
-more compatible with the remaining functions in the \code{modEvA} package and 
-can be applied not only to a set of observed versus predicted values, but also 
-directly to a model object of class \code{"glm"}.
+Like the model evaluation measures calculated by the \code{\link{threshMeasures}} function, the area under the ROC curve (AUC) assesses the discrimination performance of a model; but unlike them, it does not require the choice of a particular threshold above which to consider that a model predicts species presence, but rather averages discrimination performance over all possible thresholds. Mind that the AUC has been widely criticized (e.g. Lobo et al. 2008, Jimenez-Valverde et al. 2013), yet it is still among the most widely used metrics in model evaluation. It is highly correlated with species prevalence, so this value is also provided by the AUC function (if \code{simplif = FALSE}, the default) for reference. Although there are functions to calculate the AUC in other R packages (e.g. \pkg{ROCR}, \pkg{PresenceAbsence}, \pkg{verification}, \pkg{Epi}), the \code{AUC} function is more compatible with the remaining functions in \pkg{modEvA} and can be applied not only to a set of observed versus predicted values, but also directly to a model object of class \code{"glm"}.
 }
 \value{
-If \code{simplif = TRUE}, the function returns only the AUC value (a numeric value 
-between 0 and 1). Otherwise (the default), it plots the curve and returns a \code{list} 
-with the following components:
+If \code{simplif = TRUE}, the function returns only the AUC value (a numeric value between 0 and 1). Otherwise (the default), it plots the curve and returns a \code{list} with the following components:
 \item{thresholds}{a data frame of the true and false positives, the 
-sensitivity and specificity of the predictions, and the number of predicted values 
-at each analysed threshold.}
+sensitivity and specificity of the predictions, and the number of predicted values at each analysed threshold.}
 \item{N}{the total number of obervations.}
-\item{prevalence}{the proportion of occurrences in the data (which affects the AUC).}
+\item{prevalence}{the proportion of occurrences in the data (which correlates with the AUC).}
 \item{AUC}{the value of the AUC).}
 \item{AUCratio}{the ratio of the obtained AUC value to the null expectation (0.5).}
 }

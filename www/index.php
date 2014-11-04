@@ -67,9 +67,7 @@ echo $contents; } ?>
 
 <h3> Citation of the <i>modEvA</i> package:</h3>
 
-<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 0.7.1</p>
-
-<p><small><i>NOTE: To get the citation for the version currently installed on your system, load the <i>modEvA</i> package in R and then type </i></small><strong><code>citation(package="modEvA")</code></strong></p>
+<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 0.7.2</p>
 
 <h3> Papers introducing <i>modEvA</i>:</h3>
 

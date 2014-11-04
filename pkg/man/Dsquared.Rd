@@ -4,24 +4,22 @@
 Proportion of deviance explained by a GLM
 }
 \description{
-\code{Dsquared} calculates the (adjusted) amount of deviance accounted for by a generalized linear model.
+This function calculates the (adjusted) amount of deviance accounted for by a generalized linear model.
 }
 \usage{
-Dsquared(model, adjust = FALSE)
+Dsquared(obs = NULL, pred = NULL, model = NULL, adjust = FALSE)
 }
 \arguments{
-  \item{model}{
-a model object of class \code{"glm"}.
-}
-  \item{adjust}{
-logical, whether or not to adjust the amount of explained deviance according to the number of observations and parameters in the model (see Details).
-}
+  \item{obs}{a vector of presence/absence or other binary (1-0) observed data.}
+  \item{pred}{a vector of the values predicted by a GLM of the binary observed data.}
+  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model object of class "glm".}
+  \item{adjust}{logical, whether or not to adjust the value for the number of observations and parameters in the model (see Details). Only works if a \code{model} object is provided, otherwise a message will be returned. Defaults to \code{FALSE}.}
 }
 \details{
 Linear models come with an R-squared value that measures the proportion of variation that the model accounts for. The R-squared is provided with \code{summary(model)} in R. For generalized linear models (GLMs), the equivalent is the amount of deviance accounted for (D-squared; Guisan & Zimmermann 2000), but this value is not normally provided with the model summary. The \code{Dsquared} function calculates it. There is also an option to calculate the adjusted D-squared, which takes into account the number of observations and the number of predictors, thus allowing direct comparison among different models (Weisberg 1980, Guisan & Zimmermann 2000).
 }
 \value{
-a numeric value indicating the proportion of deviance accounted for by \code{model}.
+a numeric value indicating the (adjusted) proportion of deviance accounted for by the model.
 }
 \references{
 Guisan, A. & Zimmermann, N.E. (2000) Predictive habitat distribution models in ecology. Ecological Modelling 135: 147-186
@@ -44,8 +42,19 @@ names(rotif.env)
 mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
 HabitatDiversity + HumanPopulation, family = binomial))
 
-Dsquared(mod)
+Dsquared(model = mod)
 
-Dsquared(mod, adjust = TRUE)
+Dsquared(model = mod, adjust = TRUE)
+
+
+# you can also use \code{Dsquared} with vectors of observed and predicted values
+# instead of with a model object
+# but in this case you won't obtain an adjusted D-squared value:
+
+prob <- predict(object = mod, data = rotif.env, type = "response")
+
+Dsquared(obs = rotif.env$Abrigh, pred = prob, adjust = TRUE)
+
+Dsquared(obs = rotif.env$Abrigh, pred = prob, adjust = FALSE)
 }
 \keyword{ models }

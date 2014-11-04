@@ -1,5 +1,5 @@
 getPreds <-
-function(data, models, id.col = NULL, y = FALSE, P = TRUE, Favourability = FALSE, incl.input = TRUE) {
+function(data, models, id.col = NULL, Y = FALSE, P = TRUE, Favourability = FALSE, incl.input = TRUE) {
   # version 1.5 (18 Set 2014)
   
   start.time <- Sys.time()
@@ -8,14 +8,14 @@ function(data, models, id.col = NULL, y = FALSE, P = TRUE, Favourability = FALSE
     is.data.frame(data),
     is.list(models),
     is.null(id.col) | id.col %in% (1 : ncol(data)),
-    is.logical(y),
+    is.logical(Y),
     is.logical(P),
     is.logical(Favourability),
     is.logical(incl.input)
   )
   
-  if (!y & !P & !Favourability) stop("There are no predictions to get 
-if all y, P and Favourability are set to FALSE.")
+  if (!Y & !P & !Favourability) stop("There are no predictions to get 
+if all Y, P and Favourability are set to FALSE.")
   
   input.data <- data
   
@@ -34,9 +34,9 @@ if all y, P and Favourability are set to FALSE.")
     mod.name <- names(models)[m]
     message("Predicting with model ", mod.count, " of " , n.models, 
             " (", mod.name, ")...")
-    if (y) {
+    if (Y) {
       data[ , ncol(data) + 1] <- predict(models[[mod.count]], data)
-      names(data)[ncol(data)] <- paste(mod.name, "y", sep = "_")
+      names(data)[ncol(data)] <- paste(mod.name, "Y", sep = "_")
     }
     if (P) {
       data[ , ncol(data) + 1] <- predict(models[[mod.count]], data, 

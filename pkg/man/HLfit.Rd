@@ -29,7 +29,7 @@ xlab = "Predicted probability", ylab = "Observed prevalence", ...)
   \item{xlab}{label for the x axis.}
   \item{ylab}{label for the y axis.
 }
-  \item{\dots}{further aeguments to pass to the \code{\link{plot}} function.}
+  \item{\dots}{further arguments to pass to the \code{\link{plot}} function.}
 }
 \details{
 Most of the commonly used measures for evaluating model performance focus on discrimination capacity, i.e., how well the model is capable of distinguishing presences from absences (after the model's continuous predictions of presence probability or alike are converted to binary predictions of presence or absence). However, there is another important facet of model evaluation: calibration or reliability, i.e., the relationship between predicted probability and observed prevalence (Pearce & Ferrier 2000; Jimenez-Valverde et al. 2013). The \code{HLfit} function measures model reliability with the Hosmer & Lemeshow goodness-of-fit statistic (Hosmer & Lemeshow 1980).
