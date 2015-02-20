@@ -7,8 +7,8 @@ Variation partitioning
 This function performs variation partitioning (Borcard et al. 1992) among two factors (e.g. Ribas et al. 2006) or three factors (e.g. Real et al. 2003) for either multiple linear regression models (LM) or generalized linear models (GLM).
 }
 \usage{
-varPart(A, B, C = NULL, AB, BC = NULL, AC = NULL, ABC = NULL, model.type, 
-A.name = "A", B.name = "B", C.name = "C", plot = TRUE, plot.digits = 3, 
+varPart(A, B, C = NULL, AB, BC = NULL, AC = NULL, ABC = NULL, model.type,
+A.name = "A", B.name = "B", C.name = "C", plot = TRUE, plot.digits = 3,
 cex.names = 1.2, cex.values = 1)
 }
 \arguments{
@@ -54,12 +54,13 @@ Ribas, A., Barbosa, A.M., Casanova, J.C., Real, R., Feliu, C. & Vargas, J.M. (20
 A. Marcia Barbosa
 }
 \note{
+This function had a bug up to modEvA version 0.8: a line break prevented the ABC overlap from being calculated correctly. Thanks to Jurica Levatic for pointing this out and helping to solve it!
 }
 \seealso{
 }
 \examples{
-varPart(A = 0.857537, B = 0.078095, C = 0.499474, AB = 0.89933, BC = 0.492119, 
-AC = 0.981672, model.type = "GLM", A.name = "Climatic", B.name = "Human", 
+varPart(A = 0.857537, B = 0.078095, C = 0.499474, AB = 0.89933, BC = 0.492119,
+AC = 0.981672, model.type = "GLM", A.name = "Climatic", B.name = "Human",
 C.name = "Topographic", plot.digits = 3, cex.names = 1.2, cex.values = 1)
 }
 \keyword{ regression }

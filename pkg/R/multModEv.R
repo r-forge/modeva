@@ -16,7 +16,7 @@ function(obs.data = NULL, pred.data = NULL, models = NULL, Favourability = FALSE
   if (!bin.method %in% modEvAmethods("getBins")) stop("Invalid bin.method; type modEvAmethods('getBins') for available options.")
   
   if (is.null(models)) {
-    if (is.null(obs.data) | is.null(pred.data)) stop("You must provide either a model object of class 'glm', or a set of obs.data + pred.data with matching dimensions.")
+    if (is.null(obs.data) | is.null(pred.data)) stop("You must provide either a list of model object(s) of class 'glm', or a set of obs.data + pred.data with matching dimensions.")
     if (Favourability) message("'pred.data' converted with the Fav function; set Favourability to FALSE if this is not what you wish.")
   }  # end if !models
   

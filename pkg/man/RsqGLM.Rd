@@ -8,7 +8,7 @@ This function calculates some (pseudo) R-squared statistics for binomial General
 RsqGLM(obs = NULL, pred = NULL, model = NULL)
 }
 \arguments{
-  \item{obs}{a vector of observed presences (1) and absences (0) or another 
+  \item{obs}{a vector of observed presences (1) and absences (0) or another
   binary response variable.}
   \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as \code{obs}.}
   \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm" and family "binomial".}
@@ -33,12 +33,11 @@ Tjur T. (2009) Coefficients of determination in logistic regression models - a n
 }
 \seealso{\code{\link{AUC}}, \code{\link{threshMeasures}}, \code{\link{HLfit}}}
 \examples{
-data(rotif.env)
+# load sample models:
+data(rotif.mods)
 
-names(rotif.env)
-
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
-HabitatDiversity + HumanPopulation, family = binomial))
+# choose a particular model to play with:
+mod <- rotif.mods$models[[1]]
 
 RsqGLM(model = mod)
 
@@ -46,9 +45,7 @@ RsqGLM(model = mod)
 # you can also use RsqGLM with vectors of observed and predicted values
 # instead of a model object:
 
-prob <- predict(mod, data = rotif.env, type = "response")
-
-RsqGLM(obs = rotif.env$Abrigh, pred = prob)
+RsqGLM(obs = mod$y, pred = mod$fitted.values)
 }
 \keyword{ model evaluation }
 \keyword{ predictive performance }

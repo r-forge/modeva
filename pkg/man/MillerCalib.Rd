@@ -5,10 +5,12 @@
 This function calculates Miller's (1991) calibration statistics for a generalized linear model with binomial distribution and logistic link, namely the intercept and slope of the regression of the response variable on the logit of predicted probabilities. Optionally and by default, it also plots the corresponding regression line (black) over the reference diagonal (grey).
 }
 \usage{
-MillerCalib(obs = NULL, pred = NULL, model = NULL, plot = TRUE, plot.values = TRUE, digits = 4, xlab = "", ylab = "", main = "Miller calibration", ...)
+MillerCalib(obs = NULL, pred = NULL, model = NULL, plot = TRUE,
+plot.values = TRUE, digits = 4, xlab = "", ylab = "",
+main = "Miller calibration", ...)
 }
 \arguments{
-  \item{obs}{a vector of observed presences (1) and absences (0) or another 
+  \item{obs}{a vector of observed presences (1) and absences (0) or another
   binary response variable.}
   \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as \code{obs}.}
   \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm" and family "binomial".}
@@ -45,12 +47,11 @@ Wintle B.A., Elith J. & Potts J.M. (2005) Fauna habitat modelling and mapping: A
 \code{\link{HLfit}}, \code{\link{RsqGLM}}
 }
 \examples{
-data(rotif.env)
+# load sample models:
+data(rotif.mods)
 
-names(rotif.env)
-
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
-HabitatDiversity + HumanPopulation, family = binomial))
+# choose a particular model to play with:
+mod <- rotif.mods$models[[1]]
 
 MillerCalib(model = mod)
 
@@ -58,9 +59,7 @@ MillerCalib(model = mod)
 # you can also use MillerCalib with vectors of observed and predicted values
 # instead of a model object:
 
-prob <- predict(mod, data = rotif.env, type = "response")
-
-MillerCalib(obs = rotif.env$Abrigh, pred = prob)
+MillerCalib(obs = mod$y, pred = mod$fitted.values)
 }
 \keyword{ model evaluation }
 \keyword{ model calibration }

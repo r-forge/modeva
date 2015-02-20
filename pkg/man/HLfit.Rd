@@ -7,9 +7,9 @@ Hosmer-Lemeshow goodness of fit
 Calculate a model's calibration performance (reliability) with the Hosmer & Lemeshow goodness-of-fit statistic.
 }
 \usage{
-HLfit(obs = NULL, pred = NULL, model = NULL, bin.method = "quantiles", n.bins = 10, 
-fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE, 
-alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, 
+HLfit(obs = NULL, pred = NULL, model = NULL, bin.method = "quantiles", n.bins = 10,
+fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE,
+alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE,
 xlab = "Predicted probability", ylab = "Observed prevalence", ...)
 }
 \arguments{
@@ -62,18 +62,15 @@ The 4 lines of code from "observed" to "p.value" were adapted from the 'hosmerle
 \code{\link{getBins}}, \code{\link{threshMeasures}}, \code{\link{AUC}}
 }
 \examples{
-data(rotif.env)
+# load sample models:
+data(rotif.mods)
 
-names(rotif.env)
-
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
-HabitatDiversity + HumanPopulation, family = binomial))
-
-prob <- predict(mod, data = rotif.env, type = "response")
+# choose a particular model to play with:
+mod <- rotif.mods$models[[1]]
 
 HLfit(model = mod, bin.method = "n.bins", min.prob.interval = 0.1)
 
-HLfit(obs = rotif.env$Abrigh, pred = prob, bin.method = "round.prob", n.bins = 10)
+HLfit(obs = mod$y, pred = mod$fitted.values, bin.method = "round.prob", n.bins = 10)
 }
 \keyword{ models }
 \keyword{ calibration }

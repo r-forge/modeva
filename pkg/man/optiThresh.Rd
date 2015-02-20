@@ -6,8 +6,8 @@ Optimize threshold for model evaluation.
 \description{
 The \code{optiThresh} function calculates optimal thresholds for a number of model evaluation measures (see \code{\link{threshMeasures}}). Optimization is given for each measure, and/or for all measures according to particular criteria (e.g. Jimenez-Valverde & Lobo 2007, Nenzen & Araujo 2011). Results are given numerically and in plots.}
 \usage{
-optiThresh(obs = NULL, pred = NULL, model = NULL, interval = 0.01, 
-measures = modEvAmethods("threshMeasures"), optimize = modEvAmethods("optiThresh"), 
+optiThresh(obs = NULL, pred = NULL, model = NULL, interval = 0.01,
+measures = modEvAmethods("threshMeasures"), optimize = modEvAmethods("optiThresh"),
 simplif = FALSE, plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...)
 }
 \arguments{
@@ -46,28 +46,25 @@ Some measures cannot be calculated for thresholds at which there are zeros in th
 \code{\link{threshMeasures}}, \code{\link{optiPair}}
 }
 \examples{
-data(rotif.env)
+# load sample models:
+data(rotif.mods)
 
-names(rotif.env)
-
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
-HabitatDiversity + HumanPopulation, family = binomial))
+# choose a particular model to play with:
+mod <- rotif.mods$models[[1]]
 
 optiThresh(model = mod)
 
 
 # change some of the parameters:
 
-optiThresh(model = mod, pch = 20, measures = c("CCR", "Sensitivity", "Specificity", 
+optiThresh(model = mod, pch = 20, measures = c("CCR", "Sensitivity", "Specificity",
 "UPR", "OPR", "kappa", "TSS"), ylim = c(0, 1))
 
 
 # you can also use optiThresh with vectors of observed and predicted values
 # instead of with a model object:
 
-prob <- predict(mod, data = rotif.env, type = "response")
-
-optiThresh(obs = rotif.env$Abrigh, pred = prob, pch = ".")
+optiThresh(obs = mod$y, pred = mod$fitted.values, pch = ".")
 }
 \keyword{ models }
 \keyword{ model performance }

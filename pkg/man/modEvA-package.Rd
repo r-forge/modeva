@@ -4,14 +4,14 @@
 \docType{package}
 \title{Model Evaluation and Analysis}
 \description{
-The modEvA package can build and analyse species distribution models and evaluate their performance. Includes functions for performing variation partitioning, assessing the false discovery rate, analysing multicollinearity among variables, calculating several measures of model discrimination and calibration, optimizing prediction thresholds based on a number of criteria, performing multivariate environmental similarity surface (MESS) analysis, and displaying various analytical plots. Includes also a sample data set with species occurrences and predictor variables.
+The modEvA package can analyse species distribution models and evaluate their performance. It includes functions for performing variation partitioning, calculating several measures of model discrimination and calibration, optimizing prediction thresholds based on a number of criteria, performing multivariate environmental similarity surface (MESS) analysis, and displaying various analytical plots.
 }
 \details{
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 0.7.2\cr
-Date: \tab 2014-11-04\cr
+Version: \tab 0.9\cr
+Date: \tab 2015-02-20\cr
 License: \tab GPL-3\cr
 }
 }
@@ -25,46 +25,38 @@ Barbosa A.M., Real R., Munoz A.R. & Brown J.A. (2013) New measures for assessing
 }
 \keyword{ package }
 \seealso{
-\pkg{PresenceAbsence}, \pkg{ROCR}, \pkg{verification}, \pkg{dismo}
+\pkg{PresenceAbsence}, \pkg{ROCR}, \pkg{verification}, \pkg{dismo}, \pkg{fuzzySim}
 }
 \examples{
-# load sample data and see the column names:
-data(rotif.env)
-names(rotif.env)
+# load sample models:
+data(rotif.mods)
 
-# analyse multicollinearity among predictor variables:
-multicol(rotif.env[ , 5:17])
-
-# build models for presence-absence of rotifer species:
-mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, 
-step = FALSE, trim = TRUE)
-
-# analyse the resulting predictions table:
-head(mods$predictions)
+# choose a particular model to play with:
+mod <- rotif.mods$models[[1]]
 
 # plot the 1st model:
-plotGLM(model = mods$models[[1]])
+plotGLM(model = mod)
 
 # calculate the area under the ROC curve for the 1st model:
-AUC(model = mods$models[[1]])
+AUC(model = mod)
 
 # calculate some more threshold-based measures for this model:
-threshMeasures(model = mods$models[[1]], thresh = "preval")
+threshMeasures(model = mod, thresh = "preval")
 
 # calculate optimal thresholds based on several criteria:
-optiThresh(model = mods$models[[1]])
+optiThresh(model = mod)
 
 # calculate the optimal threshold balancing two evaluation measures:
-optiPair(model = mods$models[[1]], measures = c("Omission", "Commission"))
+optiPair(model = mod, measures = c("Omission", "Commission"))
 
-# calculate the explained deviance, Hosmer-Lemeshow goodness-of-fit, 
+# calculate the explained deviance, Hosmer-Lemeshow goodness-of-fit,
 # Miller's calibration stats, and (pseudo) R-squared values for the 1st model:
 
-Dsquared(model = mods$models[[1]])
+Dsquared(model = mod)
 
-HLfit(model = mods$models[[1]])
+HLfit(model = mod)
 
-MillerCalib(model = mods$models[[1]])
+MillerCalib(model = mod)
 
-RsqGLM(model = mods$models[[1]])
+RsqGLM(model = mod)
 }

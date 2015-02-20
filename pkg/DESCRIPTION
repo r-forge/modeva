@@ -1,10 +1,11 @@
 Package: modEvA
 Type: Package
 Title: Model Evaluation and Analysis
-Version: 0.7.2
-Date: 2014-10-10
+Version: 0.9
+Date: 2015-02-20
 Author: Barbosa A.M., Brown J.A., Jimenez-Valverde A., Real R.
 Maintainer: A. Marcia Barbosa <barbosa@uevora.pt>
-Description: The modEvA package can build and analyse species distribution models and evaluate their performance. Includes functions for performing variation partitioning, assessing the false discovery rate, analysing multicollinearity among variables, calculating several measures of model discrimination and calibration, optimizing prediction thresholds based on a number of criteria, performing multivariate environmental similarity surface (MESS) analysis, and displaying various analytical plots. Includes also a sample data set with species occurrences and predictor variables.
+Imports: fuzzySim (>= 1.0)
+Description: The modEvA package analyses species distribution models and evaluates their performance. It includes functions for performing variation partitioning, calculating several measures of model discrimination and calibration, optimizing prediction thresholds based on a number of criteria, performing multivariate environmental similarity surface (MESS) analysis, and displaying various analytical plots.
 License: GPL-3
-Packaged: 2014-11-04 16:21:35 UTC; marcia
+

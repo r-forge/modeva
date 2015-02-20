@@ -51,12 +51,11 @@ A. Marcia Barbosa
 \seealso{
 }
 \examples{
-data(rotif.env)
+# load sample models:
+data(rotif.mods)
 
-names(rotif.env)
-
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
-HabitatDiversity + HumanPopulation, family = binomial))
+# choose a particular model to play with:
+mod <- rotif.mods$models[[1]]
 
 getModEqn(mod)
 

@@ -7,7 +7,7 @@ Plot a generalized linear model
 This function plots the observed (presence/absence) data and the predicted (probability) values of a Generalized Linear Model against the y regression equation (logit) values. Only logistic regression (binomial response, logit link) is implemented. Optionally (if \code{plot.values = TRUE}) it can display in the plot the proportion of deviance explained (Weisberg 1980, Guisan & Zimmermann 2000).
 }
 \usage{
-plotGLM(obs = NULL, pred = NULL, model = NULL, link = "logit", plot.values = FALSE, 
+plotGLM(obs = NULL, pred = NULL, model = NULL, link = "logit", plot.values = FALSE,
 xlab = "Logit (Y)", ylab = "Predicted probability", main = "Model plot", ...)
 }
 \arguments{
@@ -41,12 +41,11 @@ A. Marcia Barbosa
 \code{\link{glm}}, \code{\link{Dsquared}}
 }
 \examples{
-data(rotif.env)
+# load sample models:
+data(rotif.mods)
 
-names(rotif.env)
-
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
-HabitatDiversity + HumanPopulation, family = binomial))
+# choose a particular model to play with:
+mod <- rotif.mods$models[[1]]
 
 plotGLM(model = mod)
 
@@ -56,9 +55,7 @@ plotGLM(model = mod, plot.values = TRUE)
 # you can also use \code{plotGLM} with vectors of observed and predicted values
 # instead of with a model object:
 
-prob <- predict(object = mod, data = rotif.env, type = "response")
-
-plotGLM(obs = rotif.env$Abrigh, pred = prob)
+plotGLM(obs = mod$y, pred = mod$fitted.values)
 }
 \keyword{ models }
 \keyword{ regression }

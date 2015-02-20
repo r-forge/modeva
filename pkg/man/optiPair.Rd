@@ -1,31 +1,31 @@
 \name{optiPair}
 \alias{optiPair}
 \title{
-Optimize the discrimination threshold for a pair of related 
+Optimize the discrimination threshold for a pair of related
 model evaluation measures.
 }
 \description{
-The optiPair function can optimize a model's discrimination threshold based on 
-a pair of model evaluation measures that balance each other, such as 
-sensitivity-specificity, omission-commission, or underprediction-overprediction 
-(Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013). The function plots 
-both measures in the given pair against all thresholds with a given interval, and 
+The optiPair function can optimize a model's discrimination threshold based on
+a pair of model evaluation measures that balance each other, such as
+sensitivity-specificity, omission-commission, or underprediction-overprediction
+(Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013). The function plots
+both measures in the given pair against all thresholds with a given interval, and
 calculates the optimal sum, difference and mean of the two measures.
 }
 \usage{
-optiPair(obs = NULL, pred = NULL, model = NULL, 
-measures = c("Sensitivity", "Specificity"), interval = 0.01, 
+optiPair(obs = NULL, pred = NULL, model = NULL,
+measures = c("Sensitivity", "Specificity"), interval = 0.01,
 plot = TRUE, plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, ...)
 }
 \arguments{
-  \item{obs}{a vector of observed presences (1) and absences (0) or another 
+  \item{obs}{a vector of observed presences (1) and absences (0) or another
   binary response variable.}
-  \item{pred}{a vector with the corresponding predicted values of presence 
+  \item{pred}{a vector with the corresponding predicted values of presence
   probability, habitat suitability, environmental favourability or alike.}
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model 
+  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model
   object of class "glm".}
-  \item{measures}{a character vector of length 2 indicating the pair of measures 
-  whose curves to plot and whose thresholds to optimize. The default is 
+  \item{measures}{a character vector of length 2 indicating the pair of measures
+  whose curves to plot and whose thresholds to optimize. The default is
   \code{c("Sensitivity", "Specificity")}.}
   \item{interval}{the interval of thresholds at which to calculate the measures. The default is 0.01.}
   \item{plot}{logical indicating whether or not to plot the pair of measures.}
@@ -62,12 +62,11 @@ A. Marcia Barbosa
 \code{\link{optiThresh}}, \code{\link{threshMeasures}}
 }
 \examples{
-data(rotif.env)
+# load sample models:
+data(rotif.mods)
 
-names(rotif.env)
-
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
-HabitatDiversity + HumanPopulation, family = binomial))
+# choose a particular model to play with:
+mod <- rotif.mods$models[[1]]
 
 optiPair(model = mod)
 
@@ -77,9 +76,7 @@ optiPair(model = mod, measures = c("UPR", "OPR"))
 # you can also use optiPair with vectors of observed and predicted values
 # instead of with a model object:
 
-prob <- predict(mod, data = rotif.env, type = "response")
-
-optiPair(obs = rotif.env$Abrigh, pred = prob, measures = c("Omission", 
+optiPair(obs = mod$y, pred = mod$fitted.values, measures = c("Omission",
 "Commission"))
 }
 \keyword{ models }

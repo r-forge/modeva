@@ -7,8 +7,8 @@ Get bins of data.
 Get continuous predicted values into bins according to specific criteria.
 }
 \usage{
-getBins(obs = NULL, pred = NULL, model = NULL, id = NULL, bin.method = "quantiles", 
-n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, 
+getBins(obs = NULL, pred = NULL, model = NULL, id = NULL, bin.method = "quantiles",
+n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1,
 simplif = FALSE)
 }
 \arguments{
@@ -63,12 +63,11 @@ A. Marcia Barbosa
 \seealso{
 \code{\link{HLfit}}}
 \examples{
-data(rotif.env)
+# load sample models:
+data(rotif.mods)
 
-names(rotif.env)
-
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
-HabitatDiversity + HumanPopulation, family = binomial))
+# choose a particular model to play with:
+mod <- rotif.mods$models[[1]]
 
 getBins(model = mod)
 

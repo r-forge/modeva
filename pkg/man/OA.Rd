@@ -38,11 +38,14 @@ A. Marcia Barbosa
 \code{\link{MESS}}
 }
 \examples{
+\dontrun{
+require(fuzzySim)
 data(rotif.env)
 
 names(rotif.env)
 
 OA(rotif.env, sp.cols = 18, var.cols = 5:17)
+}
 }
 \keyword{ models }
 \keyword{ species distributions }

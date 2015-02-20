@@ -35,12 +35,11 @@ A. Marcia Barbosa
 \code{\link{glm}}, \code{\link{plotGLM}}
 }
 \examples{
-data(rotif.env)
+# load sample models:
+data(rotif.mods)
 
-names(rotif.env)
-
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
-HabitatDiversity + HumanPopulation, family = binomial))
+# choose a particular model to play with:
+mod <- rotif.mods$models[[1]]
 
 Dsquared(model = mod)
 
@@ -51,10 +50,11 @@ Dsquared(model = mod, adjust = TRUE)
 # instead of with a model object
 # but in this case you won't obtain an adjusted D-squared value:
 
-prob <- predict(object = mod, data = rotif.env, type = "response")
+presabs <- mod$y
+prediction <- mod$fitted.values
 
-Dsquared(obs = rotif.env$Abrigh, pred = prob, adjust = TRUE)
+Dsquared(obs = presabs, pred = prediction, adjust = TRUE)
 
-Dsquared(obs = rotif.env$Abrigh, pred = prob, adjust = FALSE)
+Dsquared(obs = presabs, pred = prediction, adjust = FALSE)
 }
 \keyword{ models }

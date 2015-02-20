@@ -21,7 +21,7 @@ logical, whether the plotting window should be landscape/horizontal (number of c
 This function is used internally by \code{optiThresh}, but can also be useful outside it.
 }
 \value{
-An integer vector of the form c(nr, nc) indicating, respectively, the number of rows and of columns of plots to set in the graphics device. 
+An integer vector of the form c(nr, nc) indicating, respectively, the number of rows and of columns of plots to set in the graphics device.
 }
 \references{
 }
@@ -41,16 +41,16 @@ arrangePlots(10, landscape = TRUE)
 
 # a more practical example:
 
-data(rotif.env)
+data(iris)
 
-names(rotif.env)
+names(iris)
 
-# say you want to plot columns 5 to 9 in a nicely arranged plotting window:
+# say you want to plot all columns in a nicely arranged plotting window:
 
-par(mfrow = arrangePlots(length(5:9)))
+par(mfrow = arrangePlots(ncol(iris)))
 
-for (i in 5:9) {
-  plot(1:nrow(rotif.env), rotif.env[, i])
+for (i in 1:ncol(iris)) {
+  plot(1:nrow(iris), iris[, i])
 }
 }
 \keyword{ plot }

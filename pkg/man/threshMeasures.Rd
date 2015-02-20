@@ -7,8 +7,8 @@ Threshold-based measures of model evaluation
 This function calculates a number of measures for evaluating the discrimination capacity of a species distribution (or ecological niche, or bioclimatic envelope...) model against observed presence-absence data (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013).
 }
 \usage{
-threshMeasures(obs = NULL, pred = NULL, model = NULL, thresh = 0.5, 
-measures = modEvAmethods("threshMeasures"), simplif = FALSE, plot = TRUE, 
+threshMeasures(obs = NULL, pred = NULL, model = NULL, thresh = 0.5,
+measures = modEvAmethods("threshMeasures"), simplif = FALSE, plot = TRUE,
 plot.ordered = FALSE, standardize = TRUE, messages = TRUE, ...)
 }
 \arguments{
@@ -65,12 +65,11 @@ While most of these threshold-based measures range from 0 to 1, some of them - s
 \code{\link{optiThresh}}, \code{\link{optiPair}}, \code{\link{AUC}}, \code{\link{HLfit}}
 }
 \examples{
-data(rotif.env)
+# load sample models:
+data(rotif.mods)
 
-names(rotif.env)
-
-mod <- with(rotif.env, glm(Abrigh ~ Area + Altitude + AltitudeRange + 
-HabitatDiversity + HumanPopulation, family = binomial))
+# choose a particular model to play with:
+mod <- rotif.mods$models[[1]]
 
 threshMeasures(model = mod, simplif = TRUE)
 
@@ -86,9 +85,7 @@ threshMeasures(model = mod, plot.ordered = TRUE, thresh = "preval")
 # you can also use threshMeasures with vectors of observed and predicted values
 # instead of with a model object:
 
-prob <- predict(mod, data = rotif.env, type = "response")
-
-threshMeasures(obs = rotif.env$Abrigh, pred = prob)
+threshMeasures(obs = mod$y, pred = mod$fitted.values)
 }
 \keyword{ model performance }
 \keyword{ threshold }
