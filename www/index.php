@@ -80,7 +80,7 @@ echo $contents; } ?>
 <br />
 
 <h2>Find out more</h2>
-<p> A <b><a href="modEvA-manual.pdf">reference <big>manual</big></a></b> based on the package help files is available in PDF format.</p>
+<p> Here's a quick <b><a href="modEvA-tutorial.html">illustrated <big>tutorial</big></a></b>, also available in <b><a href="modEvA-tutorial.pdf">PDF</a></b> (updated 5 March 2015); and a <b><a href="modEvA-manual.pdf">reference <big>manual</big></a></b> based on the package help files.</p>
 <p> Click <a href="http://modtools.wordpress.com/packages/modeva/">here</a> for <b>further info</b> on the package and its origins. </p>
 <p> The R-Forge project summary page you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/">here</a>. </p>
 
