@@ -7,15 +7,14 @@ Multiple model evaluation
 If you have a list of models created e.g. with the \code{multGLM} function of the \pkg{fuzzySim} package, or a data frame with presence-absence data and the corresponding predicted values for a set of species, you can use the \code{multModEv} function to get a set of evaluation measures for all models simultaneously. Note that all models must have the same sample size.
 }
 \usage{
-multModEv(obs.data = NULL, pred.data = NULL, models = NULL, Favourability = FALSE,
+multModEv(models = NULL, obs.data = NULL, pred.data = NULL,
 measures = modEvAmethods("multModEv"), thresh = "preval", standardize = FALSE,
 bin.method = "quantiles", quiet = TRUE)
 }
 \arguments{
+  \item{models}{instead of (and overriding) \code{obs.data} and \code{pred.data}, a list of model object(s) of class "glm" applied to the same data set.}
   \item{obs.data}{a data frame with observed binary data.}
   \item{pred.data}{a data frame with the corresponding predicted probability values, with both rows and columns in the same order as in \code{obs.data}.}
-  \item{models}{instead of (and overriding) \code{obs.data} and \code{pred.data}, a list of model object(s) of class "glm" applied to the same data set.}
-  \item{Favourability}{logical, whether to convert predicted probability to \code{\link{Fav}}ourability before calculating fixed-threshold measures.}
   \item{measures}{character vector of the evaluation measures to calculate. The default is all implemented measures, which you can check by typing \code{modEvAmethods("multModEv")}.}
   \item{thresh}{the threshold value to use for calculating threshold-based measures (the ones in \code{modEvAmethods("threshMeasures")}). Can be "preval" (the default, for species prevalence) or any number between 0 and 1.}
   \item{standardize}{logical, whether to standardize measures that vary between -1 and 1 to the 0-1 scale (\code{\link{standard01}}).}
@@ -60,7 +59,4 @@ head(eval)
 }
 
 }
-\keyword{ models }
-\keyword{ evaluation }
-\keyword{ performance }
-
+\keyword{ }

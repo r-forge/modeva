@@ -33,7 +33,7 @@ cex.names = 1.2, cex.values = 1)
 \details{
 If you have linear models, input data for \code{varPart} are the coefficients of determination (R-squared values) of the linear regressions of the target variable on all the variables in the model, on the variables related to each particular factor, and (when there are 3 factors) on the variables related to each pair of factors. The outputs are the amounts of variance explained exclusively by each factor, the amounts explained exclusively by the overlapping effects of each pair of factors, and the amount explained by the overlap of the 3 factors if this is the case (e.g. Real et al. 2003). The amount of variation not explained by the complete model is also provided.
 
-If you have generalized linear models (GLMs) such as logistic regression (see \code{\link{glm}}) or the favourability function (see \code{\link{Fav}}), you have no R-squared values from these models; inputs are then the squared coefficients of (Spearman's) correlation between the model predictions given by each factor or pair of factors and the predictions of the complete model (e.g. Munoz & Real 2006), or the R-squared values of the corresponding logit (y) functions (Real et al. 2013), or an adjusted R-squared (De Araujo et al. 2013). Consequently, output values are not the total amounts of variance (of the target variable) explained by factors and overlaps, but rather their proportional contribution to the total variation explained by the model. The amount of unexplained variation is not available for GLMs.}
+If you have generalized linear models (GLMs) such as logistic regression (see \code{\link{glm}}), you have no R-squared values from these models; inputs are then the squared coefficients of (Spearman's) correlation between the model predictions given by each factor or pair of factors and the predictions of the complete model (e.g. Munoz & Real 2006), or the R-squared values of the corresponding logit (y) functions (Real et al. 2013), or an adjusted R-squared (De Araujo et al. 2013). Consequently, output values are not the total amounts of variance (of the target variable) explained by factors and overlaps, but rather their proportional contribution to the total variation explained by the model. The amount of unexplained variation is not available for GLMs.}
 \value{
 The output consists of a data frame indicating the proportion of variance accounted for by each of the factors, and (if \code{plot = TRUE} a Venn diagram of the contributions of each factor.)
 }
@@ -63,4 +63,4 @@ varPart(A = 0.857537, B = 0.078095, C = 0.499474, AB = 0.89933, BC = 0.492119,
 AC = 0.981672, model.type = "GLM", A.name = "Climatic", B.name = "Human",
 C.name = "Topographic", plot.digits = 3, cex.names = 1.2, cex.values = 1)
 }
-\keyword{ regression }
+\keyword{ }

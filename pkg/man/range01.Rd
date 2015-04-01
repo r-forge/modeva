@@ -34,4 +34,4 @@ range01(0:10)
 
 range01(-12.3 : 21.7)
 }
-\keyword{ rescaling }
+\keyword{ }

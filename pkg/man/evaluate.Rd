@@ -44,6 +44,4 @@ evaluate(23, 44, 21, 34)
 
 evaluate(23, 44, 21, 34, measure = "TSS")
 }
-\keyword{ model evaluation }
-\keyword{ model performance }
-\keyword{ discrimination }
+\keyword{ }

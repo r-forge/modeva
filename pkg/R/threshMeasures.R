@@ -1,18 +1,9 @@
 threshMeasures <-
-function(obs = NULL, pred = NULL, model = NULL, thresh = 0.5,
+function(model = NULL, obs = NULL, pred = NULL, thresh = 0.5,
          measures = modEvAmethods("threshMeasures"), simplif = FALSE,
          plot = TRUE, plot.ordered = FALSE, standardize = TRUE,
          messages = TRUE, ...) {
   # version 2.5 (20 Jan 2013)
-  # obs: a vector of observed presences (1) and absences (0) or another binary response variable
-  # pred: a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike
-  # model: instead of (and overriding) obs and pred, you can provide a model object of class "glm"
-  # thresh: threshold value to separate predicted presences from predicted absences in 'pred'; may be "preval" or any real number between 0 and 1
-  # measures: character vector of the evaluation measures to use
-  # plot: logical, whether or not to produce a barplot of the calculated measures
-  # plot.ordered: logical, whether to plot the measures in decreasing order rather than in input order
-  # standardize: logical, whether to change measures that may range between -1 and +1 (namely kappa and TSS) to their corresponding value in the 0-to-1 scale, so thet they can compare directly to other measures
-  # ...: arguments to be passed to the barplot function (if plot = TRUE)
 
   if(is.null(model)) {
     if (is.null(obs) | is.null(pred)) stop("You must provide either the 'obs'

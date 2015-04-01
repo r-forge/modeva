@@ -1,7 +1,6 @@
-MESS <- function(V, P){   
+MESS <- function(V, P){
   # version 1.4, 21 May 2014
-  
-  start.time <- Sys.time()
+
   index.V <- 1:nrow(V)
   index.P <- 1:nrow(P)
   n.vars <- ncol(V)
@@ -9,7 +8,7 @@ MESS <- function(V, P){
   if(n.vars != n.varP) stop("The number of variables in V and P does not match.")
   nrow.P <- nrow(P)
   results <- matrix(nrow = nrow.P, ncol = n.vars, dimnames = list(NULL, colnames(P)))
-  
+
   for (i in 1:n.vars){
     message("Comparing variable ", i, " of ", n.vars, "...")
     min.Vi <- min(V[, i], na.rm = TRUE)
@@ -27,12 +26,11 @@ MESS <- function(V, P){
     }
     results[, i] <- SIM
   }
-  
+
   message("Calculating MESS and MoD...")
   results <- data.frame(results)
   results$TOTAL <- apply(results[ , 1:n.vars], 1, min)
   results$MoD <- as.factor(colnames(results)[apply(results[ , 1:n.vars], 1, which.min)])
   message("Finished!")
-  timer(start.time)
   return(results)
 }

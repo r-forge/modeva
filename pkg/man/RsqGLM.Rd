@@ -5,13 +5,13 @@
 This function calculates some (pseudo) R-squared statistics for binomial Generalized Linear Models.
 }
 \usage{
-RsqGLM(obs = NULL, pred = NULL, model = NULL)
+RsqGLM(model = NULL, obs = NULL, pred = NULL)
 }
 \arguments{
+  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm" and family "binomial".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
   binary response variable.}
   \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as \code{obs}.}
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm" and family "binomial".}
 }
 \details{
 Implemented measures include the R-squareds of McFadden (1974), Cox-Snell (1989), Nagelkerke (1991, which corresponds to the corrected Cox-Snell, eliminating its upper bound), and Tjur (2009). See Allison (2014) for a brief review of these measures.
@@ -47,6 +47,4 @@ RsqGLM(model = mod)
 
 RsqGLM(obs = mod$y, pred = mod$fitted.values)
 }
-\keyword{ model evaluation }
-\keyword{ predictive performance }
-
+\keyword{ }

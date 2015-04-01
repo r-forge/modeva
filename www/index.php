@@ -20,7 +20,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 	<link href="http://<?php echo $themeroot; ?>styles/estilo1.css" rel="stylesheet" type="text/css" />
   </head>
 
-<body bgcolor=#CCFFFF>
+<body bgcolor=#FFFFFF>
 
 <!-- R-Forge Logo -->
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -46,7 +46,9 @@ echo $contents; } ?>
 
 <p> It includes functions for <b>variation partitioning</b>, calculating several measures of <b>model discrimination and calibration</b>, <b>optimizing prediction thresholds</b> based on a number of criteria, performing multivariate environmental similarity surface (<b>MESS</b>) <b>analysis</b>, and displaying various <b>analytical plots</b>. Includes also a <b>sample data set</b> with species occurrences and predictor variables.</p>
 
- <font color="blue">Please note that the modelling functions formerly included in <i>modEvA</i> have been moved to package <a href="http://fuzzysim.r-forge.r-project.org/"><i>fuzzySim</i></a> for operative and editorial reasons. These functions are: multGLM, modelTrim, Fav, getPreds, FDR, percentTestData, integerCols, multConvert and multicol. The rotif.env example dataset has also moved to fuzzySim. Package modEvA now has dataset rotif.mods, and keeps only functions strictly related to model evaluation and analysis.</font>
+<font color="blue">
+Please note that the modelling functions formerly included in <i>modEvA</i> have been moved to package <a href="http://fuzzysim.r-forge.r-project.org/"><i>fuzzySim</i></a> for operative and editorial reasons. These functions are: <i>multGLM</i>, <i>modelTrim</i>, <i>Fav</i>, <i>getPreds</i>, <i>FDR</i>, <i>percentTestData</i>, <i>integerCols</i>, <i>multConvert</i> and <i>multicol</i>. The <i>rotif.env</i> example dataset has also moved to <i>fuzzySim</i>. Package <i>modEvA</i> now has dataset <i>rotif.mods</i>, and keeps only functions strictly related to model evaluation and analysis. Not also that <i><b>model</b></i>, which was previously the third argument in many <i>modEvA</i> functions (after <i>obs</i> and <i>pred</i>), is <b>now the first argument</b> in these functions, to facilitate automation of model evaluation.
+</font>
 <br />
 
 
@@ -69,7 +71,7 @@ echo $contents; } ?>
 
 <h3> Citation of the <i>modEvA</i> package:</h3>
 
-<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 0.7.2</p>
+<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 1.0</p>
 
 <h3> Papers introducing <i>modEvA</i>:</h3>
 

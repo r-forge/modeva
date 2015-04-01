@@ -44,4 +44,4 @@ prevalence(y)
 
 prevalence(z)
 }
-\keyword{ binary data }
+\keyword{ }

@@ -7,16 +7,16 @@ Area Under the ROC Curve
 This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, for either a model object of class \code{"glm"}, or two matching vectors of observed (binary, 1 for occurrence vs. 0 for non-occurrence) and predicted (continuous, e.g. occurrence probability) values, respectively. The AUC is a measure of the overall discrimination power of the predictions, or the probability that an occurrence site has a higher predicted value than a non-ocurrence site.
 }
 \usage{
-AUC(obs = NULL, pred = NULL, model = NULL, simplif = FALSE, interval = 0.01,
+AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01,
 FPR.limits = c(0, 1), plot = TRUE, plot.values = TRUE, plot.preds = FALSE,
 grid = FALSE, xlab = c("False positive rate", "(1-specificity)"),
 ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve", ...)
 }
 \arguments{
+  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
   binary response variable.}
   \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as \code{obs}.}
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm".}
   \item{simplif}{logical, whether to use a faster version that outputs only the AUC value (may be useful for calculating AUC for large numbers of species in a loop, for example). Note that the ROC plot is not drawn when simplif = TRUE.}
   \item{FPR.limits}{(NOT YET IMPLEMENTED) numerical vector of length 2 indicating the limits of false positive rate between which to calculate a partial AUC. The default is c(0, 1), for considering the whole AUC.}
   \item{interval}{interval of threshold values at which to calculate the true and false positive and negative rates. Defaults to 0.01. Ignored if \code{simplif = TRUE}. Note that this does not affect the obtained AUC value (although it can affect the size of the plotted ROC curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney U statistic and is therefore threshold-independent.}
@@ -76,6 +76,4 @@ prediction <- mod$fitted.values
 
 AUC(obs = presabs, pred = prediction)
 }
-\keyword{ model evaluation }
-\keyword{ model performance }
-\keyword{ discrimination }
+\keyword{ }

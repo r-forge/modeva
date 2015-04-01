@@ -6,14 +6,14 @@ Optimize threshold for model evaluation.
 \description{
 The \code{optiThresh} function calculates optimal thresholds for a number of model evaluation measures (see \code{\link{threshMeasures}}). Optimization is given for each measure, and/or for all measures according to particular criteria (e.g. Jimenez-Valverde & Lobo 2007, Nenzen & Araujo 2011). Results are given numerically and in plots.}
 \usage{
-optiThresh(obs = NULL, pred = NULL, model = NULL, interval = 0.01,
+optiThresh(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
 measures = modEvAmethods("threshMeasures"), optimize = modEvAmethods("optiThresh"),
 simplif = FALSE, plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...)
 }
 \arguments{
+  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model object of class "glm".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable.}
   \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike.}
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model object of class "glm".}
   \item{interval}{numeric value between 0 and 1 indicating the interval between the thresholds at which to calculate the evaluation measures. Defaults to 0.01.}
   \item{measures}{character vector indicating the names of the model evaluation measures for which to calculate optimal thresholds. The default is using all measures available in \code{modEvAmethods("threshMeasures")}.}
   \item{optimize}{character vector indicating the threshold optimization criteria to use; "each" calculates the optimal threshold for each model evaluation measure, while the remaining options optimize all measures according to the specified criterion. The default is using all criteria available in \code{modEvAmethods("optiThresh")}.}
@@ -66,6 +66,4 @@ optiThresh(model = mod, pch = 20, measures = c("CCR", "Sensitivity", "Specificit
 
 optiThresh(obs = mod$y, pred = mod$fitted.values, pch = ".")
 }
-\keyword{ models }
-\keyword{ model performance }
-\keyword{ threshold }
+\keyword{ }

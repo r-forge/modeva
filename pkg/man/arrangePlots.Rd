@@ -53,5 +53,4 @@ for (i in 1:ncol(iris)) {
   plot(1:nrow(iris), iris[, i])
 }
 }
-\keyword{ plot }
-\keyword{ graphics }
+\keyword{ }

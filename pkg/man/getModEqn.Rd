@@ -63,5 +63,4 @@ getModEqn(mod, type = "P", digits = 3, suffix = "@mapset")
 
 getModEqn(mod, type = "F", digits = 2)
 }
-\keyword{ model }
-\keyword{ equation }
+\keyword{ }

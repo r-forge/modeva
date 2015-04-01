@@ -7,12 +7,12 @@ Proportion of deviance explained by a GLM
 This function calculates the (adjusted) amount of deviance accounted for by a generalized linear model.
 }
 \usage{
-Dsquared(obs = NULL, pred = NULL, model = NULL, adjust = FALSE)
+Dsquared(model = NULL, obs = NULL, pred = NULL, adjust = FALSE)
 }
 \arguments{
+  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model object of class "glm".}
   \item{obs}{a vector of presence/absence or other binary (1-0) observed data.}
   \item{pred}{a vector of the values predicted by a GLM of the binary observed data.}
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model object of class "glm".}
   \item{adjust}{logical, whether or not to adjust the value for the number of observations and parameters in the model (see Details). Only works if a \code{model} object is provided, otherwise a message will be returned. Defaults to \code{FALSE}.}
 }
 \details{
@@ -57,4 +57,4 @@ Dsquared(obs = presabs, pred = prediction, adjust = TRUE)
 
 Dsquared(obs = presabs, pred = prediction, adjust = FALSE)
 }
-\keyword{ models }
+\keyword{ }

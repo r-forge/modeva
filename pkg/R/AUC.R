@@ -1,4 +1,4 @@
-AUC <- function(obs = NULL, pred = NULL, model = NULL, simplif = FALSE,
+AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
                 interval = 0.01, FPR.limits = c(0, 1), plot = TRUE,
                 plot.values = TRUE, plot.preds = FALSE, grid = FALSE,
                 xlab = c("False positive rate", "(1-specificity)"),

@@ -1,4 +1,4 @@
-RsqGLM <- function(obs = NULL, pred = NULL, model = NULL) {
+RsqGLM <- function(model = NULL, obs = NULL, pred = NULL) {
   # version 1.2 (3 Jan 2015)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)

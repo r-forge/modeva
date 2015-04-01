@@ -39,6 +39,7 @@ A. Marcia Barbosa
 }
 \examples{
 \dontrun{
+# load package fuzzySim (currently available on R-Forge) and its sample data:
 require(fuzzySim)
 data(rotif.env)
 
@@ -47,5 +48,4 @@ names(rotif.env)
 OA(rotif.env, sp.cols = 18, var.cols = 5:17)
 }
 }
-\keyword{ models }
-\keyword{ species distributions }
+\keyword{ }

@@ -1,5 +1,5 @@
 Dsquared <-
-function(obs = NULL, pred = NULL, model = NULL, adjust = FALSE) {
+function(model = NULL, obs = NULL, pred = NULL, adjust = FALSE) {
   # version 1.3 (3 Jan 2015)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)

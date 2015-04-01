@@ -68,7 +68,7 @@ A new, apparently more complete method for analysing environmental dissimilariti
 }
 \examples{
 \dontrun{
-# load the sample data:
+# load package fuzzySim (currently available on R-Forge) and its sample data:
 require(fuzzySim)
 data(rotif.env)
 
@@ -98,5 +98,4 @@ head(mess)
 range(mess[ , "TOTAL"])
 }
 }
-\keyword{ models }
-\keyword{ extrapolation }
+\keyword{ }

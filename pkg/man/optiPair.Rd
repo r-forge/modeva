@@ -13,17 +13,17 @@ both measures in the given pair against all thresholds with a given interval, an
 calculates the optimal sum, difference and mean of the two measures.
 }
 \usage{
-optiPair(obs = NULL, pred = NULL, model = NULL,
-measures = c("Sensitivity", "Specificity"), interval = 0.01,
-plot = TRUE, plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, ...)
+optiPair(model = NULL, obs = NULL, pred = NULL,
+measures = c("Sensitivity", "Specificity"), interval = 0.01, plot = TRUE,
+plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, ...)
 }
 \arguments{
+  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model
+  object of class "glm".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
   binary response variable.}
   \item{pred}{a vector with the corresponding predicted values of presence
   probability, habitat suitability, environmental favourability or alike.}
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model
-  object of class "glm".}
   \item{measures}{a character vector of length 2 indicating the pair of measures
   whose curves to plot and whose thresholds to optimize. The default is
   \code{c("Sensitivity", "Specificity")}.}
@@ -79,5 +79,4 @@ optiPair(model = mod, measures = c("UPR", "OPR"))
 optiPair(obs = mod$y, pred = mod$fitted.values, measures = c("Omission",
 "Commission"))
 }
-\keyword{ models }
-\keyword{ model performance }
+\keyword{ }

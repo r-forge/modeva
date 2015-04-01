@@ -5,15 +5,15 @@
 This function calculates Miller's (1991) calibration statistics for a generalized linear model with binomial distribution and logistic link, namely the intercept and slope of the regression of the response variable on the logit of predicted probabilities. Optionally and by default, it also plots the corresponding regression line (black) over the reference diagonal (grey).
 }
 \usage{
-MillerCalib(obs = NULL, pred = NULL, model = NULL, plot = TRUE,
+MillerCalib(model = NULL, obs = NULL, pred = NULL, plot = TRUE,
 plot.values = TRUE, digits = 4, xlab = "", ylab = "",
 main = "Miller calibration", ...)
 }
 \arguments{
+  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm" and family "binomial".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
   binary response variable.}
   \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as \code{obs}.}
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm" and family "binomial".}
   \item{plot}{logical, whether to plot the regression line over the reference diagonal. Defaults to TRUE.}
   \item{plot.values}{logical value indicating whether to report the statistics in the plot. Defaults to TRUE.}
   \item{digits}{integer number indicating the number of digits to which the values in the plot should be rounded. Dafaults to 4. Ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}
@@ -61,5 +61,4 @@ MillerCalib(model = mod)
 
 MillerCalib(obs = mod$y, pred = mod$fitted.values)
 }
-\keyword{ model evaluation }
-\keyword{ model calibration }
+\keyword{ }

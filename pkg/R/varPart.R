@@ -1,21 +1,8 @@
 varPart <-
 function(A, B, C = NULL, AB, BC = NULL, AC = NULL, ABC = NULL,
-                    model.type, A.name = "A", B.name = "B", C.name = "C",
-                    plot = TRUE, plot.digits = 3, cex.names = 1.2,
-                    cex.values = 1) {
-  # at the moment, works for up to 3 factors
-  # instead of the default A, B and C, you can name your factors e.g. A.name = "Climatic", B.name = "Topographic"
-  # 'model.type' can be either "LM" (linear model) or "GLM" (generalised linear model)
-  # A, B and (optionally) C are the Rsquares of the regressions on the variables of each factor, respectively
-  # AB is the Rsquared of the regression on the variables of factors A and B simultaneously
-  # ABC is the Rsquared of the regression on the variables of factors A, B and C simultaneously
-  # plot.digits: the number of digits to which to round results in the circular plots
-  # cex.names: character size for the names of the circles in the circular plots
-  # cex.values: character size for the values in the circular plots
-  # for LM, Rsquared values come in the model summary statistics
-  # for GLM, the Rsquares are obtained either by squaring the correlation coefficients between the predictions of
-  # ...each factor or pair of factors and those of the complete model (e.g. Munoz & Real 2006),
-  # ... or by extracting the Rsquares of the logit (y) equations (Real et al. in press)
+         model.type, A.name = "A", B.name = "B", C.name = "C",
+         plot = TRUE, plot.digits = 3, cex.names = 1.2,
+         cex.values = 1) {
 
   twofactors <- is.null(C)
 

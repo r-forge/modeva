@@ -1,47 +1,32 @@
 HLfit <-
-function (obs = NULL, pred = NULL, model = NULL, bin.method = "quantiles", n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE, alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", ylab = "Observed prevalence", ...) {
+function (model = NULL, obs = NULL, pred = NULL, bin.method = "quantiles", n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE, alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", ylab = "Observed prevalence", ...) {
   # version 1.3 (19 July 2013)
-  # Hosmer-Lemeshow goodness-of-fit with optional plot
-  # obs: a vector of observed presences (1) and absences (0) or another binary response variable
-  # pred: a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike
-  # model: instead of (and overriding) obs and pred, you can provide a model object of class "glm"
-  # bin.method: the method for grouping the records into bins within which to compare predicted probability to observed prevalence; type .modEvAmethods("bin") for available options
-  # n.bins: the number of bins to use if bin.method = n.bins
-  # fixed.bin.size: logical, whether to force bins to have the same size whenever possible
-  # min.bin.size: minimum number of records in each bin (minimum for significant comparisons is at least 15)
-  # min.prob.interval: minimum interval of probability values within each bin
-  # simplif: logical, wheter to perform a faster version returning only the basis statistics
-  # alpha: alpha value for confidence intervals if plot = TRUE
-  # plot: logical, whether to plot the results
-  # plot.values: logical, whether to report the measure values in the plot
-  # plot.bin.size: logical, whether to report bin sizes in the plot
-  # ...: additional arguments to pass to the 'plot' function
-  
+
   if (!is.null(model)) {
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
     obs <- model$y
     pred <- model$fitted.values
   }  # end if model
-  
+
   stopifnot(
     length(obs) == length(pred),
     obs %in% c(0, 1),
     pred >= 0,
     pred <= 1
   )
-  
+
   bins <- getBins(obs = obs, pred = pred, bin.method = bin.method, n.bins = n.bins, fixed.bin.size = fixed.bin.size, min.bin.size = min.bin.size, min.prob.interval = min.prob.interval)
   n.bins <- nrow(bins$bins.table)
-  
+
   # next 4 lines: adapted from hosmerlem function in http://www.stat.sc.edu/~hitchcock/diseaseoutbreakRexample704.txt
   observed <- xtabs(cbind(1 - obs, obs) ~ bins$prob.bin)
   expected <- xtabs(cbind(1 - pred, pred) ~ bins$prob.bin)
   chi.sq <- sum((observed - expected) ^ 2 / expected)
   p.value <- 1 - pchisq(chi.sq, df = n.bins - 2)
-  
+
   if (simplif) return(list(chi.sq = chi.sq, p.value = p.value))
-  
+
   # plotting loosely based on calibration.plot function in package PresenceAbsence
   if (plot) {
     N.total <- tapply(obs, bins$prob.bin, length)  # N cases in each bin
@@ -71,9 +56,9 @@ function (obs = NULL, pred = NULL, model = NULL, bin.method = "quantiles", n.bin
       lines(rep(bin.centers[i], 2), c(Lower[i], Upper[i]))
     }
     points(bin.centers, OBS.proportion, pch = 20)
-    
+
     if (plot.bin.size)  text(bin.centers, Upper + 0.07, labels = N.total)
-    
+
     if (plot.values) {
       text(1, 0.2, adj = 1, substitute(paste(italic(HL) == a), list(a = round(chi.sq, 1))))
       if (p.value < 0.001) {
@@ -83,9 +68,9 @@ function (obs = NULL, pred = NULL, model = NULL, bin.method = "quantiles", n.bin
       }
     }  # end if plot values
   }
-  
+
   BinPred <- tapply(pred, bins$prob.bin, mean)
   bins.table <- data.frame(BinCenter = bin.centers, NBin = N.total, BinObs = OBS.proportion, BinPred = BinPred, BinObsCIlower = Lower, BinObsCIupper = Upper)
-  
+
   return(list(bins.table = bins.table, chi.sq = chi.sq, DF = n.bins - 2, p.value = p.value))
 }

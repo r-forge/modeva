@@ -3,21 +3,28 @@
 \docType{data}
 \title{Rotifer distribution models}
 \description{
-A set of generalized linear models of rotifer species distributions on TDWG level 4 regions of the world, together with their predicted values. Mind that these models are provided just as sample data and have limited application, due to limtations in the underlying distribution records. See Details for more information.
+A set of generalized linear models of rotifer species distributions on TDWG level 4 regions of the world (Fontaneto et al. 2012), together with their predicted values. Mind that these models are provided just as sample data and have limited application, due to limitations in the underlying distribution records. See Details for more information.
 }
 \usage{data(rotif.mods)}
 \format{
 A list of 2 elements:
- $ predictions: a data.frame with  291 observations of 60 variables, namely the presence probability (P) and environmental favourability (F) for each of 30 species of rotifers, obtained from the rotif.env dataset in the \pkg{fuzzySim} package
- $ models: a list of the 30 generalized linear model (\code{link{glm}}) objects which generated those predictions.
+
+$ predictions: a data.frame with  291 observations of 60 variables, namely the presence probability (P) and environmental favourability (F) for each of 30 species of rotifers, obtained from the rotif.env dataset in the \pkg{fuzzySim} package
+
+$ models: a list of the 30 generalized linear model (\code{link{glm}}) objects which generated those predictions.
 }
 \details{
-These models were obtained with the \code{multGLM} function and the \code{rotif.env} dataset from package \pkg{fuzzySim}, using the following command:
-\code{mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, step = FALSE, trim = TRUE)}
-See package \pkg{fuzzySim} (currently available on R-Forge) for more information source data.
+These models were obtained with the \code{multGLM} function and the \code{rotif.env} dataset from package \pkg{fuzzySim}, using the following code:
+
+\code{require(fuzzySim)}
+
+\code{data(rotif.env)}
+
+\code{rotif.mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, step = FALSE, trim = TRUE)}
+
+See package \pkg{fuzzySim} (currently available on R-Forge at \url{http://fuzzysim.r-forge.r-project.org}) for more information on the source data that were used to build these models.
 }
 \source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
 }
 \references{
 Fontaneto D., Barbosa A.M., Segers H. & Pautasso M. (2012) The 'rotiferologist' effect and other global correlates of species richness in monogonont rotifers. Ecography, 35: 174-182.

@@ -46,4 +46,4 @@ evenness(y)
 prevalence(z)
 evenness(z)
 }
-\keyword{ binary data }
+\keyword{ }

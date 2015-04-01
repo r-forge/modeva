@@ -7,13 +7,13 @@ Plot a generalized linear model
 This function plots the observed (presence/absence) data and the predicted (probability) values of a Generalized Linear Model against the y regression equation (logit) values. Only logistic regression (binomial response, logit link) is implemented. Optionally (if \code{plot.values = TRUE}) it can display in the plot the proportion of deviance explained (Weisberg 1980, Guisan & Zimmermann 2000).
 }
 \usage{
-plotGLM(obs = NULL, pred = NULL, model = NULL, link = "logit", plot.values = FALSE,
+plotGLM(model = NULL, obs = NULL, pred = NULL, link = "logit", plot.values = FALSE,
 xlab = "Logit (Y)", ylab = "Predicted probability", main = "Model plot", ...)
 }
 \arguments{
+  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model object of class "glm".}
   \item{obs}{a vector of presence/absence or other binary (1-0) observed data.}
   \item{pred}{a vector of the values predicted by a GLM of the binary observed data.}
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model object of class "glm".}
   \item{link}{the link function of the GLM; only 'logit' (the default) is implemented.}
   \item{plot.values}{logical, whether to report values associated with the model in the plot (see Details). Defaults to \code{FALSE}.}
   \item{xlab}{character string specifying the label for the x axis.}
@@ -57,5 +57,4 @@ plotGLM(model = mod, plot.values = TRUE)
 
 plotGLM(obs = mod$y, pred = mod$fitted.values)
 }
-\keyword{ models }
-\keyword{ regression }
+\keyword{ }

@@ -7,15 +7,15 @@ Hosmer-Lemeshow goodness of fit
 Calculate a model's calibration performance (reliability) with the Hosmer & Lemeshow goodness-of-fit statistic.
 }
 \usage{
-HLfit(obs = NULL, pred = NULL, model = NULL, bin.method = "quantiles", n.bins = 10,
+HLfit(model = NULL, obs = NULL, pred = NULL, bin.method = "quantiles", n.bins = 10,
 fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE,
 alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE,
 xlab = "Predicted probability", ylab = "Observed prevalence", ...)
 }
 \arguments{
+  \item{model}{instead of (and overriding) obs and pred, a model object of class "glm"}
   \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable}
   \item{pred}{a vector with the corresponding predicted probabilities as given e.g. by logistic regression}
-  \item{model}{instead of (and overriding) obs and pred, a model object of class "glm"}
   \item{bin.method}{the method for grouping the records into bins within which to compare predicted probability to observed prevalence; type modEvAmethods("getBins") for available options.}
   \item{n.bins}{the number of bins to use if \code{bin.method = n.bins}.}
   \item{fixed.bin.size}{logical, whether to force bins to have the same size whenever possible.}
@@ -72,7 +72,4 @@ HLfit(model = mod, bin.method = "n.bins", min.prob.interval = 0.1)
 
 HLfit(obs = mod$y, pred = mod$fitted.values, bin.method = "round.prob", n.bins = 10)
 }
-\keyword{ models }
-\keyword{ calibration }
-\keyword{ reliability }
-
+\keyword{ }

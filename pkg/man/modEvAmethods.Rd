@@ -34,4 +34,4 @@ modEvAmethods("optiThresh")
 
 modEvAmethods("getBins")
 }
-\keyword{ methods }
+\keyword{ }
