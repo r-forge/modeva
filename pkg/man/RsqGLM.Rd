@@ -30,8 +30,9 @@ Tjur T. (2009) Coefficients of determination in logistic regression models - a n
 }
 \author{A. Marcia Barbosa}
 \note{
+Tjur's R-squared can only be calculated for models with binomial response variable; otherwise, NA will be returned.
 }
-\seealso{\code{\link{AUC}}, \code{\link{threshMeasures}}, \code{\link{HLfit}}}
+\seealso{\code{\link{Dsquared}}, \code{\link{AUC}}, \code{\link{threshMeasures}}, \code{\link{HLfit}}}
 \examples{
 # load sample models:
 data(rotif.mods)
