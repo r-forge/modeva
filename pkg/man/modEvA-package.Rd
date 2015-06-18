@@ -54,7 +54,7 @@ optiPair(model = mod, measures = c("Omission", "Commission"))
 
 Dsquared(model = mod)
 
-HLfit(model = mod)
+HLfit(model = mod, bin.method = "quantiles")
 
 MillerCalib(model = mod)
 

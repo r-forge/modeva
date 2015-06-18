@@ -1,1 +1,3 @@
+#importFrom(caTools,trapz)
+#importFrom(miscTools,rSquared)
 exportPattern("^[[:alpha:]]+")
