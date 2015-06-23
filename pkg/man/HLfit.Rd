@@ -42,6 +42,7 @@ Note that this statistic has some limitations and caveats (see e.g. http://www.s
 \item{chi.sq}{the value of the Chi-squared test.}
 \item{DF}{the number of degrees of freedom.}
 \item{p.value}{the p-value of the Hosmer-Lemeshow test. Note that this is one of those tests for which higher p-values are better.}
+\item{RMSE}{the root mean squared error.}
 }
 \references{
 Hosmer D.W. & Lemeshow S. (1980) A goodness-of-fit test for the multiple logistic regression model. Communications in Statistics, A10: 1043-1069

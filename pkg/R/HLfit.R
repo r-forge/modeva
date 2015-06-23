@@ -24,8 +24,9 @@ function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.
   expected <- xtabs(cbind(1 - pred, pred) ~ bins$prob.bin)
   chi.sq <- sum((observed - expected) ^ 2 / expected)
   p.value <- 1 - pchisq(chi.sq, df = n.bins - 2)
+  rmse <- sqrt(mean((observed - expected) ^ 2))
 
-  if (simplif) return(list(chi.sq = chi.sq, p.value = p.value))
+  if (simplif) return(list(chi.sq = chi.sq, p.value = p.value, RMSE = rmse))
 
   # plotting loosely based on calibration.plot function in package PresenceAbsence
   if (plot) {
@@ -49,7 +50,8 @@ function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.
     TF <- N.presence < N.total
     Upper[TF] <- ((N.presence[TF] + 1) * qf(1 - alpha/2, df1.up[TF], df2.up[TF]))/(N.total[TF] - N.presence[TF] + ((N.presence[TF] + 1) * qf(1 - alpha/2, df1.up[TF], df2.up[TF])))
     Upper[Empty] <- NA
-    plot(c(-0.05, 1.05), c(-0.05, 1.05), type = "n", xlab = xlab, ylab = ylab, ...)
+    #plot(c(-0.05, 1.05), c(-0.05, 1.05), type = "n", xlab = xlab, ylab = ylab, ...)
+    plot(c(0, 1), c(0, 1), type = "n", xlab = xlab, ylab = ylab, ...)
     abline(a = 0, b = 1, lty = 2)
     bin.centers <- bins$bins.table$median.prob  # fui eue
     for (i in 1:N.bins) {
@@ -57,20 +59,29 @@ function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.
     }
     points(bin.centers, OBS.proportion, pch = 20)
 
-    if (plot.bin.size)  text(bin.centers, Upper + 0.07, labels = N.total)
+    if (plot.bin.size) {
+      text(bin.centers, Upper + 0.07, labels = N.total)
+      #par(new = TRUE)
+      #plot(x = bin.centers, y = N.total, type = "n", xlab = "", ylab = "", xaxt = "n", yaxt = "n")
+      #axis(4)
+      #mtext("Bin size", side = 4, line = 2, col = "darkgrey")
+      #barplot(height = N.total, xlim = c(0, 1), width = 0.1, border = NA, add = TRUE)
+      #abline(h = min.bin.size, col = "red")
+    }
 
     if (plot.values) {
-      text(1, 0.2, adj = 1, substitute(paste(italic(HL) == a), list(a = round(chi.sq, 1))))
+      text(1, 0.2, adj = 1, substitute(paste(HL == a), list(a = round(chi.sq, 1))))
       if (p.value < 0.001) {
-        text(1, 0, adj = 1, substitute(paste(italic(p) < a), list(a = 0.001)))
+        text(1, 0.1, adj = 1, substitute(paste(italic(p) < a), list(a = 0.001)))
       } else {
-        text(1, 0, adj = 1, substitute(paste(italic(p) == a), list(a = round(p.value, 3))))
+        text(1, 0.1, adj = 1, substitute(paste(italic(p) == a), list(a = round(p.value, 3))))
       }
+      text(1, 0.0, adj = 1, substitute(paste(RMSE == a), list(a = round(rmse, 1))))
     }  # end if plot values
   }
 
   BinPred <- tapply(pred, bins$prob.bin, mean)
   bins.table <- data.frame(BinCenter = bin.centers, NBin = N.total, BinObs = OBS.proportion, BinPred = BinPred, BinObsCIlower = Lower, BinObsCIupper = Upper)
 
-  return(list(bins.table = bins.table, chi.sq = chi.sq, DF = n.bins - 2, p.value = p.value))
+  return(list(bins.table = bins.table, chi.sq = chi.sq, DF = n.bins - 2, p.value = p.value, RMSE = rmse))
 }

@@ -1,5 +1,5 @@
 multModEv <-
-function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmethods("multModEv"), thresh = "preval", standardize = FALSE, bin.method = "quantiles", quiet = TRUE) {
+function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmethods("multModEv"), thresh = 0.5, standardize = FALSE, bin.method = "quantiles", quiet = TRUE) {
   # version 1.9 (26 May 2014)
 
 #  if (Favourability == TRUE & thresh == "preval") {
@@ -112,6 +112,8 @@ function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmeth
     colnames(results)[colnames(results) == "TSS"] <- "sTSS"
   }  # end if standardize
 
+  results <- data.frame(Model = rownames(results), results)
+  rownames(results) <- NULL
   message("Finished!")
   return(data.frame(results))
 }

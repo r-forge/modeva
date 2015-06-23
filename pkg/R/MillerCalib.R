@@ -20,9 +20,11 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot
   )
 
   logit <- log(pred / (1 - pred))
-  mod <- glm(obs ~ logit, family = "binomial")
-  intercept <- as.numeric(mod$coef[1])
-  slope <- as.numeric(mod$coef[2])
+  mod <- glm(obs ~ logit, family = binomial)
+  intercept <- mod$coef[[1]]
+  slope <- mod$coef[[2]]
+  std.err <- summary(mod)$coefficients["logit", "Std. Error"]
+  slope.p <- abs((slope - 1) / sqrt(std.err^2 + 0))  # Paternoster 98; http://stats.stackexchange.com/questions/55501/test-a-significant-difference-between-two-slope-values
 
   if (plot) {
     ymin <- min(0, intercept)
@@ -31,9 +33,9 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot
     abline(0, 1, col = "lightgrey", lty = 2)
     abline(intercept, slope)
     if (plot.values) {
-      plotext <- paste("intercept =" , round(intercept, digits), "\nslope =", round(slope, digits))
+      plotext <- paste("intercept =" , round(intercept, digits), "\nslope =", round(slope, digits), "\nslope p-value =", round(slope.p, digits))
       text(x = 0, y = ymax - 0.25, adj = 0, labels = plotext)
     }
   }
-  return(list(intercept = intercept, slope = slope))
+  return(list(intercept = intercept, slope = slope, slope.pvalue = slope.p))
 }  # end MillerCalib function

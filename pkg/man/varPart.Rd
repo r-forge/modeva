@@ -7,18 +7,18 @@ Variation partitioning
 This function performs variation partitioning (Borcard et al. 1992) among two factors (e.g. Ribas et al. 2006) or three factors (e.g. Real et al. 2003) for either multiple linear regression models (LM) or generalized linear models (GLM).
 }
 \usage{
-varPart(A, B, C = NULL, AB, BC = NULL, AC = NULL, ABC = NULL, model.type,
+varPart(A, B, C = NULL, AB, AC = NULL, BC = NULL, ABC = NULL, model.type,
 A.name = "A", B.name = "B", C.name = "C", plot = TRUE, plot.digits = 3,
 cex.names = 1.2, cex.values = 1)
 }
 \arguments{
-  \item{A}{numeric value of the R-squared of the regression of the resonse variable on the variables related to factor 'A'}
-  \item{B}{numeric value of the R-squared of the regression of the resonse variable on the variables related to factor 'B'}
+  \item{A}{numeric value of the R-squared of the regression of the response variable on the variables related to factor 'A'}
+  \item{B}{numeric value of the R-squared of the regression of the response variable on the variables related to factor 'B'}
   \item{C}{(optionally, if there are 3 factors) numeric value of the R-squared of the regression of the response on the variables related to factor 'C'}
   \item{AB}{numeric value of the R-squared of the regression of the response on the variables of factors 'A' and 'B' simultaneously}
+  \item{AC}{(if there are 3 factors) numeric value of the R-squared of the regression of the response on the variables of factors 'A' and 'C' simultaneously}
   \item{BC}{(if there are 3 factors) numeric value of the R-squared of the regression of the response on the variables of factors 'B' and 'C' simultaneously
 }
-  \item{AC}{(if there are 3 factors) numeric value of the R-squared of the regression of the response on the variables of factors 'A' and 'C' simultaneously}
   \item{ABC}{(if there are 3 factors) numeric value of the R-squared of the regression of the response on the variables of factors 'A', 'B' and 'C' simultaneously}
   \item{model.type}{character value, either "LM" (linear model) or "GLM" (generalised linear model) depending on your model type.}
   \item{A.name}{optional character indicating the name of factor 'A'}

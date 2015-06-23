@@ -1,5 +1,5 @@
 varPart <-
-function(A, B, C = NULL, AB, BC = NULL, AC = NULL, ABC = NULL,
+function(A, B, C = NULL, AB, AC = NULL, BC = NULL, ABC = NULL,
          model.type, A.name = "A", B.name = "B", C.name = "C",
          plot = TRUE, plot.digits = 3, cex.names = 1.2,
          cex.values = 1) {

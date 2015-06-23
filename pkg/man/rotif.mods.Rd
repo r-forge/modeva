@@ -20,7 +20,8 @@ These models were obtained with the \code{multGLM} function and the \code{rotif.
 
 \code{data(rotif.env)}
 
-\code{rotif.mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, step = FALSE, trim = TRUE)}
+\code{rotif.mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, 
+step = FALSE, trim = TRUE)}
 
 See package \pkg{fuzzySim} (currently available on R-Forge at \url{http://fuzzysim.r-forge.r-project.org}) for more information on the source data that were used to build these models.
 }

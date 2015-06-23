@@ -1,12 +1,12 @@
 getModEqn <-
-function(model, type = "y", digits = NULL, prefix = NULL, suffix = NULL) {
+function(model, type = "Y", digits = NULL, prefix = NULL, suffix = NULL) {
   # version 1.6 (14 Aug 2013)
 
   stopifnot(class(model) %in% c("lm", "glm"))
-  if(length(type) != 1 | !(type %in% c("y", "P", "F"))) stop("'type' must be either 'y', 'P', or 'F'")
-  if(!("glm" %in% class(model)) & type != "y") {
-    message("types 'P' and 'F' are only applicable to models of class 'glm', so type was reset to 'y'")
-    type <- "y"
+  if(length(type) != 1 | !(type %in% c("Y", "P", "F"))) stop("'type' must be either 'Y', 'P', or 'F'")
+  if(!("glm" %in% class(model)) & type != "Y") {
+    message("types 'P' and 'F' are only applicable to models of class 'glm', so type was reset to 'Y'")
+    type <- "Y"
   }
   coeffs <- summary(model)$coefficients[ , 1]
   if (type == "F" & !("(Intercept)") %in% names(coeffs)) {
@@ -25,7 +25,7 @@ function(model, type = "y", digits = NULL, prefix = NULL, suffix = NULL) {
   multips <- sub(x = multips, pattern = paste(prefix, "*(Intercept)", suffix, sep = ""), replacement = "", fixed = TRUE)
   eqn <- apply(X = as.matrix(multips), MARGIN = 2, FUN = paste, collapse = "")
   if (substring(eqn, 1, 1) == "+")  eqn <- substring(eqn, 2)
-  if (type == "y")  eqn <- paste("y=", eqn, sep = "")
+  if (type == "Y")  eqn <- paste("Y=", eqn, sep = "")
   if (type == "P")  eqn <- paste("P=1-(1/(1+exp(", eqn, ")))", sep = "")
   if (type == "F")  eqn <- paste("F=1-(1/(1+exp(", eqn, ")))", sep = "")
   cat(eqn)

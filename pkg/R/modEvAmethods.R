@@ -4,8 +4,7 @@ modEvAmethods <- function(fun) {
                          "Omission", "Commission", "PPP", "NPP", "UPR", "OPR",
                          "PPI", "PAI", "kappa", "TSS", "NMI", "OddsRatio")
     if (fun == "threshMeasures") return(thresh.measures)
-    else if (fun == "multModEv") return (c("Preval", "AUC", thresh.measures))
-    # "Evenness", "AUC", "MillerInt", "MillerSlope", "MillerTest", "HL", "HLp", "ABCc", "rABCc", "unityRsq"
+    else if (fun == "multModEv") return (c("Prevalence", "AUC", thresh.measures, "HL", "HLp", "MillerInt", "MillerSlope", "MillerTest"))  # "Evenness", "ABCc", "rABCc", "unityRsq"
   }
   else if (fun == "getBins") return(c("round.prob", "prob.bins", "size.bins",
                                   "n.bins", "quantiles"))
