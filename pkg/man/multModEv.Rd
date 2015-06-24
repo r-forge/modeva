@@ -12,9 +12,9 @@ measures = modEvAmethods("multModEv"), standardize = FALSE, thresh = 0.5,
 bin.method = "quantiles", quiet = TRUE)
 }
 \arguments{
-  \item{models}{instead of (and overriding) \code{obs.data} and \code{pred.data}, a list of model object(s) of class "glm" applied to the same data set.}
-  \item{obs.data}{a data frame with observed binary data.}
-  \item{pred.data}{a data frame with the corresponding predicted probability values, with both rows and columns in the same order as in \code{obs.data}.}
+  \item{models}{a \code{list} of model object(s) of class "glm", all applied to the same data set.}
+  \item{obs.data}{a data frame with observed binary data. Not necessary (and ignored) if \code{models} is provided.}
+  \item{pred.data}{a data frame with the corresponding predicted probability values, with both rows and columns in the same order as in \code{obs.data}. Not necessary (and ignored) if \code{models} is provided.}
   \item{measures}{character vector of the evaluation measures to calculate. The default is all implemented measures, which you can check by typing \code{modEvAmethods("multModEv")}.}
   \item{standardize}{logical, whether to standardize measures that vary between -1 and 1 to the 0-1 scale (see \code{\link{standard01}}).}
   \item{thresh}{the threshold value to use for calculating threshold-based measures (the ones in \code{modEvAmethods("threshMeasures")}). Can be "preval" (for species prevalence) or any number between 0 and 1. The default is 0.5.}

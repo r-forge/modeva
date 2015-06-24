@@ -1,6 +1,6 @@
 HLfit <-
 function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE, alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", ylab = "Observed prevalence", ...) {
-  # version 1.3 (19 July 2013)
+  # version 1.5 (24 Jun 2015)
 
   if (!is.null(model)) {
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")

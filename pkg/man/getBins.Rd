@@ -12,14 +12,13 @@ n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1,
 simplif = FALSE)
 }
 \arguments{
-  \item{model}{
-instead of (and overriding) \code{obs} and \code{pred}, a model object of class \code{"glm"}.
+  \item{model}{a model object of class \code{"glm"}.
 }
   \item{obs}{
-a vector of 1-0 values of a modelled binary variable.
+a vector of 1-0 values of a modelled binary variable. Not necessary (and ignored) if \code{model} is provided.
 }
   \item{pred}{
-a vector of the corresponding predicted values.
+a vector of the corresponding predicted values. Not necessary (and ignored) if \code{model} is provided.
   }
   \item{id}{
 optional vector of row identifiers; must be of the same length and in the same order of \code{obs} and \code{pred} (or of the cases used to build \code{model})

@@ -1,5 +1,5 @@
 MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot.values = TRUE, digits = 4, xlab = "", ylab = "", main = "Miller calibration", ...) {
-  # version 1.2 (3 Nov 2014)
+  # version 1.3 (24 Jun 2015)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 

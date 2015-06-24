@@ -18,12 +18,11 @@ measures = c("Sensitivity", "Specificity"), interval = 0.01, plot = TRUE,
 plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, ...)
 }
 \arguments{
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model
-  object of class "glm".}
+  \item{model}{a model object of class "glm".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
-  binary response variable.}
+  binary response variable. Not necessary (and ignored) if \code{model} is provided.}
   \item{pred}{a vector with the corresponding predicted values of presence
-  probability, habitat suitability, environmental favourability or alike.}
+  probability, habitat suitability, environmental favourability or alike. Not necessary (and ignored) if \code{model} is provided.}
   \item{measures}{a character vector of length 2 indicating the pair of measures
   whose curves to plot and whose thresholds to optimize. The default is
   \code{c("Sensitivity", "Specificity")}.}

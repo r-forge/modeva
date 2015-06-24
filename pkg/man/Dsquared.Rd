@@ -10,9 +10,9 @@ This function calculates the (adjusted) amount of deviance accounted for by a ge
 Dsquared(model = NULL, obs = NULL, pred = NULL, adjust = FALSE)
 }
 \arguments{
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model object of class "glm".}
-  \item{obs}{a vector of presence/absence or other binary (1-0) observed data.}
-  \item{pred}{a vector of the values predicted by a GLM of the binary observed data.}
+  \item{model}{a model object of class "glm".}
+  \item{obs}{a vector of presence/absence or other binary (1-0) observed data. Not necessary (and ignored) if \code{model} is provided.}
+  \item{pred}{a vector of the values predicted by a GLM of the binary observed data. Not necessary (and ignored) if \code{model} is provided.}
   \item{adjust}{logical, whether or not to adjust the value for the number of observations and parameters in the model (see Details). Only works if a \code{model} object is provided, otherwise a message will be returned. Defaults to \code{FALSE}.}
 }
 \details{

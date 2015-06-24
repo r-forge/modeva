@@ -10,10 +10,10 @@ plot.values = TRUE, digits = 4, xlab = "", ylab = "",
 main = "Miller calibration", ...)
 }
 \arguments{
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm" and family "binomial".}
+  \item{model}{a model object of class "glm" and family "binomial".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
-  binary response variable.}
-  \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as \code{obs}.}
+  binary response variable. Not necessary (and ignored) if \code{model} is provided.}
+  \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as \code{obs}. Not necessary (and ignored) if \code{model} is provided.}
   \item{plot}{logical, whether to plot the regression line over the reference diagonal. Defaults to TRUE.}
   \item{plot.values}{logical value indicating whether to report the statistics in the plot. Defaults to TRUE.}
   \item{digits}{integer number indicating the number of digits to which the values in the plot should be rounded. Dafaults to 4. Ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}

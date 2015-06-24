@@ -11,9 +11,9 @@ measures = modEvAmethods("threshMeasures"), optimize = modEvAmethods("optiThresh
 simplif = FALSE, plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...)
 }
 \arguments{
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model object of class "glm".}
-  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable.}
-  \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike.}
+  \item{model}{a model object of class "glm".}
+  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. Not necessary (and ignored) if \code{model} is provided.}
+  \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Not necessary (and ignored) if \code{model} is provided.}
   \item{interval}{numeric value between 0 and 1 indicating the interval between the thresholds at which to calculate the evaluation measures. Defaults to 0.01.}
   \item{measures}{character vector indicating the names of the model evaluation measures for which to calculate optimal thresholds. The default is using all measures available in \code{modEvAmethods("threshMeasures")}.}
   \item{optimize}{character vector indicating the threshold optimization criteria to use; "each" calculates the optimal threshold for each model evaluation measure, while the remaining options optimize all measures according to the specified criterion. The default is using all criteria available in \code{modEvAmethods("optiThresh")}.}

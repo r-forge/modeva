@@ -11,9 +11,9 @@ plotGLM(model = NULL, obs = NULL, pred = NULL, link = "logit", plot.values = FAL
 xlab = "Logit (Y)", ylab = "Predicted probability", main = "Model plot", ...)
 }
 \arguments{
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, a model object of class "glm".}
-  \item{obs}{a vector of presence/absence or other binary (1-0) observed data.}
-  \item{pred}{a vector of the values predicted by a GLM of the binary observed data.}
+  \item{model}{a model object of class "glm".}
+  \item{obs}{a vector of presence/absence or other binary (1-0) observed data. Not necessary (and ignored) if \code{model} is provided.}
+  \item{pred}{a vector of the values predicted by a GLM of the binary observed data. Not necessary (and ignored) if \code{model} is provided.}
   \item{link}{the link function of the GLM; only 'logit' (the default) is implemented.}
   \item{plot.values}{logical, whether to report values associated with the model in the plot (see Details). Defaults to \code{FALSE}.}
   \item{xlab}{character string specifying the label for the x axis.}

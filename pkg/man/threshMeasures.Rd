@@ -12,9 +12,9 @@ measures = modEvAmethods("threshMeasures"), simplif = FALSE, plot = TRUE,
 plot.ordered = FALSE, standardize = TRUE, messages = TRUE, ...)
 }
 \arguments{
-  \item{model}{instead of (and overriding) \code{obs} and \code{pred}, you can provide a model object of class "glm".}
-  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable.}
-  \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike.}
+  \item{model}{a model object of class "glm".}
+  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. Not necessary (and ignored) if \code{model} is provided.}
+  \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Not necessary (and ignored) if \code{model} is provided.}
   \item{thresh}{numeric value of the threshold to separate predicted presences from predicted absences in \code{pred}; can be \code{"preval"}, to use the prevalence of \code{obs} as the threshold, or any real number between 0 and 1. The default is 0.5 (but see Details).}
   \item{measures}{character vector of the evaluation measures to use. By default, all measures available in \code{modEvAmethods("threshMeasures")} are calculated.}
   \item{simplif}{logical, whether to calculate a faster, simplified version. Used internally by other functions in the package. Defaults to \code{FALSE}.}

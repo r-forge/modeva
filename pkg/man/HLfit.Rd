@@ -13,9 +13,9 @@ alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE,
 xlab = "Predicted probability", ylab = "Observed prevalence", ...)
 }
 \arguments{
-  \item{model}{instead of (and overriding) obs and pred, a model object of class "glm"}
-  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable}
-  \item{pred}{a vector with the corresponding predicted probabilities as given e.g. by logistic regression}
+  \item{model}{a model object of class "glm".}
+  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. Not necessary (and ignored) if \code{model} is provided.}
+  \item{pred}{a vector with the corresponding predicted probabilities as given e.g. by logistic regression. Not necessary (and ignored) if \code{model} is provided.}
   \item{bin.method}{the method for grouping the records into bins within which to compare predicted probability to observed prevalence; type modEvAmethods("getBins") for available options. See Details for more info.}
   \item{n.bins}{the number of bins to use if \code{bin.method = n.bins}.}
   \item{fixed.bin.size}{logical, whether to force bins to have the same size whenever possible.}
