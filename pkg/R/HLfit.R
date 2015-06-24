@@ -50,24 +50,23 @@ function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.
     TF <- N.presence < N.total
     Upper[TF] <- ((N.presence[TF] + 1) * qf(1 - alpha/2, df1.up[TF], df2.up[TF]))/(N.total[TF] - N.presence[TF] + ((N.presence[TF] + 1) * qf(1 - alpha/2, df1.up[TF], df2.up[TF])))
     Upper[Empty] <- NA
-    #plot(c(-0.05, 1.05), c(-0.05, 1.05), type = "n", xlab = xlab, ylab = ylab, ...)
-    plot(c(0, 1), c(0, 1), type = "n", xlab = xlab, ylab = ylab, ...)
-    abline(a = 0, b = 1, lty = 2)
+    #plot(c(0, 1), c(0, 1), type = "n", xlab = xlab, ylab = ylab, ...)
+    plot(c(-0.05, 1.05), c(-0.05, 1.05), type = "n", xlab = xlab, ylab = ylab, ...)
+    # the above is needed for some bin sizes when plotted as text
     bin.centers <- bins$bins.table$median.prob  # fui eue
+
+    if (plot.bin.size) {
+      #mtext("Proportional bin size", side = 4, line = 1, col = "darkgrey")
+      #abline(h = min.bin.size/length(pred), col = "red")
+      #barplot(height = N.total/length(pred), xlim = c(0, 1), width = 0.05, border = NA, add = TRUE, beside = TRUE)  # still need to place bars at bin centers
+      text(bin.centers, Upper + 0.07, labels = N.total)
+    }
+    
+    abline(a = 0, b = 1, lty = 2)
     for (i in 1:N.bins) {
       lines(rep(bin.centers[i], 2), c(Lower[i], Upper[i]))
     }
     points(bin.centers, OBS.proportion, pch = 20)
-
-    if (plot.bin.size) {
-      text(bin.centers, Upper + 0.07, labels = N.total)
-      #par(new = TRUE)
-      #plot(x = bin.centers, y = N.total, type = "n", xlab = "", ylab = "", xaxt = "n", yaxt = "n")
-      #axis(4)
-      #mtext("Bin size", side = 4, line = 2, col = "darkgrey")
-      #barplot(height = N.total, xlim = c(0, 1), width = 0.1, border = NA, add = TRUE)
-      #abline(h = min.bin.size, col = "red")
-    }
 
     if (plot.values) {
       text(1, 0.2, adj = 1, substitute(paste(HL == a), list(a = round(chi.sq, 1))))

@@ -8,7 +8,7 @@ If you have a list of models created e.g. with the \code{multGLM} function of th
 }
 \usage{
 multModEv(models = NULL, obs.data = NULL, pred.data = NULL,
-measures = modEvAmethods("multModEv"), thresh = 0.5, standardize = FALSE,
+measures = modEvAmethods("multModEv"), standardize = FALSE, thresh = 0.5,
 bin.method = "quantiles", quiet = TRUE)
 }
 \arguments{
@@ -16,8 +16,8 @@ bin.method = "quantiles", quiet = TRUE)
   \item{obs.data}{a data frame with observed binary data.}
   \item{pred.data}{a data frame with the corresponding predicted probability values, with both rows and columns in the same order as in \code{obs.data}.}
   \item{measures}{character vector of the evaluation measures to calculate. The default is all implemented measures, which you can check by typing \code{modEvAmethods("multModEv")}.}
+  \item{standardize}{logical, whether to standardize measures that vary between -1 and 1 to the 0-1 scale (see \code{\link{standard01}}).}
   \item{thresh}{the threshold value to use for calculating threshold-based measures (the ones in \code{modEvAmethods("threshMeasures")}). Can be "preval" (for species prevalence) or any number between 0 and 1. The default is 0.5.}
-  \item{standardize}{logical, whether to standardize measures that vary between -1 and 1 to the 0-1 scale (\code{\link{standard01}}).}
   \item{bin.method}{the method with which to divide the data into groups or bins (for calibration or reliability measures such as \code{\link{HLfit}}); type modEvAmethods("getBins") for available options).}
   \item{quiet}{logical, whether to be quiet or display messages.}
 }
@@ -40,7 +40,7 @@ A. Marcia Barbosa
 data(rotif.mods)
 
 eval <- multModEv(models = rotif.mods$models, thresh = "preval",
-measures = c("AUC", "CCR", "Sensitivity", "TSS"))
+measures = c("AUC", "CCR", "Sensitivity", "TSS", "HL.p"))
 
 head(eval)
 
