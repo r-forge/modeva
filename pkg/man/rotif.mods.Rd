@@ -17,9 +17,7 @@ $ models: a list of the 30 generalized linear model (\code{link{glm}}) objects w
 These models were obtained with the \code{multGLM} function and the \code{rotif.env} dataset from package \pkg{fuzzySim}, using the following code:
 
 \code{require(fuzzySim)}
-
 \code{data(rotif.env)}
-
 \code{rotif.mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, 
 step = FALSE, trim = TRUE)}
 

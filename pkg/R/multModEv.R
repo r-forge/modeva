@@ -7,6 +7,8 @@ function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmeth
 #    message("Threshold automatically set to 0.5, which corresponds to prevalence when Favourability is used.")
 #  }
 
+  if (!is.null(models) & !all(class(models) == "list")) stop ("'models' must be an object of class 'list' containing the model object(s).")
+  
   for (m in measures) {
     if (!(m %in% modEvAmethods("multModEv"))) stop(m, " is not a valid measure; type modEvAmethods('multModEv') for available options.")
   }
@@ -122,7 +124,7 @@ for (m in 1:n.models) {
     colnames(results)[colnames(results) == "TSS"] <- "sTSS"
   }  # end if standardize
 
-  results <- data.frame(Model = rownames(results), results, row.names = NULL)
+  if (!is.null(rownames(results))) results <- data.frame(Model = rownames(results), results, row.names = NULL)
   message("Finished!")
   return(results)
 }
