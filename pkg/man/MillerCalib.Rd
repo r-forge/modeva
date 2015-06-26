@@ -37,7 +37,7 @@ Franklin, J. (2010) Mapping Species Distributions: Spatial Inference and Predict
 
 Miller M.E., Hui S.L. & Tierney W.M. (1991) Validation techniques for logistic regression models. Statistics in Medicine, 10: 1213-1226
 
-Paternoster R., Brame R., Mazerolle P., & Piquero A.R. (1998) Using the correct statistical test for the equality of regression coefficients. Criminology, 36(4): 859–866
+Paternoster R., Brame R., Mazerolle P. & Piquero A.R. (1998) Using the correct statistical test for the equality of regression coefficients. Criminology, 36(4): 859-866
 
 Pearce J. & Ferrier S. (2000) Evaluating the predictive performance of habitat models developed using logistic regression. Ecological Modelling, 133: 225-245
 
@@ -47,7 +47,7 @@ Wintle B.A., Elith J. & Potts J.M. (2005) Fauna habitat modelling and mapping: A
 \note{
 }
 \seealso{
-\code{\link{HLfit}}, \code{\link{RsqGLM}}
+\code{\link{HLfit}}, \code{\link{Dsquared}}, \code{\link{RsqGLM}}
 }
 \examples{
 # load sample models:
