@@ -73,16 +73,19 @@ Please note that the modelling functions formerly included in <i>modEvA</i> have
 
 <p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 1.1</p>
 
+
 <h3> Papers introducing <i>modEvA</i>:</h3>
 
 <p>Barbosa A.M., Real R., Mu&ntilde;oz A.R. & Brown J.A. (2013) New measures for assessing model equilibrium and prediction mismatch in species distribution models. <i>Diversity and Distributions</i> 19: 1333-1338 (DOI: <a href="http://onlinelibrary.wiley.com/doi/10.1111/ddi.12100/abstract">10.1111/ddi.12100</a>)</p>
 
 <p>Barbosa A.M.,  Brown J.A., Jim&eacute;nez-Valverde A., Acevedo P., Lobo J.M. & Real R. (in prep.) The ABC of model evaluation: a visual method for a clearer assessment of model accuracy</p>
-
 <br />
 
+
 <h2>Find out more</h2>
-<p> Here's a quick <b><a href="modEvA-tutorial.html">illustrated <big>tutorial</big></a></b>, also available in <b><a href="modEvA-tutorial.pdf">PDF</a></b> (updated 7 May 2015); and a <b><a href="modEvA-manual.pdf">reference <big>manual</big></a></b> based on the package help files.</p>
+
+<p> Here's a quick <b><a href="modEvA-tutorial.html">illustrated <big>tutorial</big></a></b>, also available in <b><a href="modEvA-tutorial.pdf">PDF</a></b> (updated 7 May 2015); and a <b><a href="modEvA-manual.pdf">reference <big>manual</big></a></b> based on the package help files. There's also a <a href="http://modeva.r-forge.r-project.org/Guia_modelacion_fuzzySim_modEvA.html">course manual on model building with <i>fuzzySim</i> and model evaluation with <i>modEvA</i> (<b>in Spanish</b>)</a></p>
+
 <p> Click <a href="http://modtools.wordpress.com/packages/modeva/">here</a> for <b>further info</b> on the package and its origins. </p>
 <p> The R-Forge project summary page you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/">here</a>. </p>
 
