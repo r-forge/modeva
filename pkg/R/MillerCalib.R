@@ -8,8 +8,19 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     obs <- model$y
     pred <- model$fitted.values
+    
   } else { # if model not provided
-    if (is.null(obs) | is.null(pred)) stop("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'")
+    
+    if (is.null(obs) | is.null(pred))  stop ("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'.")
+    if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
+    # new (15 Sep 2015):
+    dat <- data.frame(obs, pred)
+    n.in <- nrow(dat)
+    dat <- na.omit(dat)
+    n.out <- nrow(dat)
+    if (n.out < n.in)  warning (n.in - n.out, " observations removed due to missing data; ", n.out, " observations actually evaluated.")
+    obs <- dat$obs
+    pred <- dat$pred
   }
 
   stopifnot(

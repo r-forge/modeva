@@ -4,9 +4,11 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
                 xlab = c("False positive rate", "(1-specificity)"),
                 ylab = c("True positive rate", "(sensitivity)"),
                 main = "ROC curve", ...) {
-  # version 1.5 (16 Oct 2014)
+  # version 1.6 (15 Sep 2015)
 
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
+
+  if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
 
   if (!is.null(model)) {
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
@@ -15,15 +17,23 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
     pred <- model$fitted.values
   }  # end if model
 
+  # new (15 Sep 2015):
+  dat <- data.frame(obs, pred)
+  n.in <- nrow(dat)
+  dat <- na.omit(dat)
+  n.out <- nrow(dat)
+  if (n.out < n.in)  warning (n.in - n.out, " observations removed due to missing data; ", n.out, " observations actually evaluated.")
+  obs <- dat$obs
+  pred <- dat$pred
+  
   stopifnot(
-    length(obs) == length(pred),
     obs %in% c(0,1),
     pred >= 0,
     pred <= 1,
     interval > 0,
     interval < 1
   )
-
+  
   n1 <- sum(obs == 1)
   n0 <- sum(obs == 0)
 

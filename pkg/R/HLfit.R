@@ -1,13 +1,28 @@
 HLfit <-
 function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE, alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", ylab = "Observed prevalence", ...) {
-  # version 1.5 (24 Jun 2015)
+  # version 1.6 (15 Sep 2015)
 
   if (!is.null(model)) {
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
     obs <- model$y
     pred <- model$fitted.values
-  }  # end if model
+
+  } else {  # if is.null model
+    
+    if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs'
+and 'pred' vectors, or a 'model' object of class 'glm'.")
+    if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
+    
+    # new (15 Sep 2015):
+    dat <- data.frame(obs, pred)
+    n.in <- nrow(dat)
+    dat <- na.omit(dat)
+    n.out <- nrow(dat)
+    if (n.out < n.in)  warning (n.in - n.out, " observations removed due to missing data; ", n.out, " observations actually evaluated.")
+    obs <- dat$obs
+    pred <- dat$pred
+  }  # end if is.null model
 
   stopifnot(
     length(obs) == length(pred),
@@ -26,7 +41,7 @@ function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.
   p.value <- 1 - pchisq(chi.sq, df = n.bins - 2)
   rmse <- sqrt(mean((observed - expected) ^ 2))
 
-  if (simplif) return(list(chi.sq = chi.sq, p.value = p.value, RMSE = rmse))
+  if (simplif) return (list(chi.sq = chi.sq, p.value = p.value, RMSE = rmse))
 
   # plotting loosely based on calibration.plot function in package PresenceAbsence
   if (plot) {

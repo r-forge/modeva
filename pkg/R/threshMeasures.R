@@ -3,14 +3,14 @@ function(model = NULL, obs = NULL, pred = NULL, thresh = 0.5,
          measures = modEvAmethods("threshMeasures"), simplif = FALSE,
          plot = TRUE, plot.ordered = FALSE, standardize = TRUE,
          messages = TRUE, ...) {
-  # version 2.5 (20 Jan 2013)
+  # version 2.6 (15 Sep 2015)
 
-  if(is.null(model)) {
-    if (is.null(obs) | is.null(pred)) stop("You must provide either the 'obs'
-and 'pred' vectors, or a 'model' object of class 'glm'")
+  if (is.null(model)) {
+    if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs'
+and 'pred' vectors, or a 'model' object of class 'glm'.")
   }  # end if null model
   else {
-    if (!all(class(model) %in% c("glm", "lm"))) stop("'model' must be a
+    if (!all(class(model) %in% c("glm", "lm"))) stop ("'model' must be a
 model object of class 'glm'")
     if (messages) {
       if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
@@ -20,11 +20,17 @@ model object of class 'glm'")
     pred <- model$fitted.values
   }  # end if !null model
 
-  if (NA %in% obs | NA %in% pred)
-    stop("Please remove (rows with) NA from your data")
-  if (length(obs) != length(pred))
-    stop("'obs' and 'pred' must have the same number of values
-         (and in the same order)")
+  if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
+
+  # new (15 Sep 2015):
+  dat <- data.frame(obs, pred)
+  n.in <- nrow(dat)
+  dat <- na.omit(dat)
+  n.out <- nrow(dat)
+  if (n.out < n.in)  warning (n.in - n.out, " observations removed due to missing data; ", n.out, " observations actually evaluated.")
+  obs <- dat$obs
+  pred <- dat$pred
+  
   if (!all(obs %in% c(0, 1)))
     stop ("'obs' must consist of binary observations of 0 or 1")
   #if (any(pred < 0 | pred > 1)) stop ("'pred' must range between 0 and 1")
