@@ -10,14 +10,15 @@ projection (extrapolation) data. It is applicable to variables in a matrix
 or data frame.
 }
 \usage{
-MESS(V, P)
+MESS(V, P, id.col = NULL)
 }
 \arguments{
   \item{V}{a matrix or data frame containing the variables (one in each column)
-in the reference (training) dataset.}
+in the training dataset.}
   \item{P}{a matrix or data frame containing the same variables in the area to
   which the model(s) will be projected. Variables (columns) must be in the same
   order as in \code{V}, and \code{colnames(P)} must exist.}
+  \item{id.col}{optionally, the index number of a column containing the row identifiers in P. If provided, this column will be excluded from MESS calculations but included in the output.}
 }
 \details{
 When model predictions are projected into regions, times or spatial resolutions
@@ -91,10 +92,19 @@ head(rotif.env)
 
 names(rotif.env)  # variables are in columns 5:17
 
-mess <- MESS(V = subset(rotif.env, HEMISPHERE == "Western", select = 5:17),
-P = subset(rotif.env, HEMISPHERE == "Eastern", select = 5:17))
+west <- subset(rotif.env, HEMISPHERE == "Western", select = 5:17)
+east <- subset(rotif.env, HEMISPHERE == "Eastern", select = 5:17)
+east.with.ID <- subset(rotif.env, HEMISPHERE == "Eastern", select = c(1, 5:17))
+
+head(east)
+head(east.with.ID)  # ID is in column 1
+
+mess <- MESS(V = west, P = east)
+mess.with.ID <- MESS(V = west, P = east.with.ID, id.col = 1)
 
 head(mess)
+head(mess.with.ID)
+
 range(mess[ , "TOTAL"])
 }
 }

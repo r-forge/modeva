@@ -1,11 +1,19 @@
-MESS <- function(V, P){
-  # version 1.4, 21 May 2014
+MESS <- function(V, P, id.col = NULL){
+  # version 1.5, 22 Sep 2014
 
   index.V <- 1:nrow(V)
   index.P <- 1:nrow(P)
+  
+  if (is.null(id.col)) {
+    if (ncol(V) != ncol(P))  stop ("The number of variables in V and P does not match.")
+  } else {  # if id.col
+    if (ncol(V) != ncol(P) - 1)  stop ("'id.col' should refer to a column in P; P should therefore have one more column than V.")
+    P.input <- P
+    P <- P[ , -id.col]
+  }
+  
   n.vars <- ncol(V)
   n.varP <- ncol(P)
-  if(n.vars != n.varP) stop("The number of variables in V and P does not match.")
   nrow.P <- nrow(P)
   results <- matrix(nrow = nrow.P, ncol = n.vars, dimnames = list(NULL, colnames(P)))
 
@@ -31,6 +39,10 @@ MESS <- function(V, P){
   results <- data.frame(results)
   results$TOTAL <- apply(results[ , 1:n.vars], 1, min)
   results$MoD <- as.factor(colnames(results)[apply(results[ , 1:n.vars], 1, which.min)])
+  if (!is.null(id.col)) {
+    results <- data.frame(P.input[ , id.col], results)
+    colnames(results)[1] <- colnames(P.input)[id.col]
+  }
   message("Finished!")
   return(results)
 }
