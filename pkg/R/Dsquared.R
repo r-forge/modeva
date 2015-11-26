@@ -4,7 +4,7 @@ Dsquared <- function(model = NULL,
                      family = NULL, # needed only when 'model' not provided
                      adjust = FALSE, 
                      npar = NULL) { # needed only when 'model' not provided
-  # version 1.5 (15 Sep 2015)
+  # version 1.6 (26 Nov 2015)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -21,6 +21,8 @@ Dsquared <- function(model = NULL,
     if (is.null(family)) stop ("With 'obs' and 'pred' arguments (rather than a model object), you must also specify one of two model family options: 'binomial' or 'poisson' (in quotes).")
     else if (!is.character(family)) stop ("Argument 'family' must be provided as character (i.e. in quotes: 'binomial' or 'poisson').")
     else if (length(family) != 1 | !(family %in% c("binomial", "poisson"))) stop ("'family' must be either 'binomial' or 'poisson' (in quotes).")
+    
+    pred[pred == 0] <- .Machine$double.xmin  # avoid NaN in log below
     
     # new (15 Sep 2015):
     dat <- data.frame(obs, pred)

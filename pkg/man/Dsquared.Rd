@@ -49,7 +49,7 @@ Dsquared(model = mod)
 Dsquared(model = mod, adjust = TRUE)
 
 
-# you can also use \code{Dsquared} with vectors of observed and predicted values
+# you can also use Dsquared with vectors of observed and predicted values
 # instead of with a model object:
 
 presabs <- mod$y

@@ -1,5 +1,5 @@
 RsqGLM <- function(model = NULL, obs = NULL, pred = NULL) {
-  # version 1.4 (15 Sep 2015)
+  # version 1.5 (26 Nov 2015)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -14,7 +14,9 @@ RsqGLM <- function(model = NULL, obs = NULL, pred = NULL) {
     
     if (is.null(obs) | is.null(pred)) stop ("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'.")
     if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
-
+    
+    pred[pred == 0] <- .Machine$double.xmin  # avoid NaN in log below
+    
     # new (15 Sep 2015):
     dat <- data.frame(obs, pred)
     n.in <- nrow(dat)

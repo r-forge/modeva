@@ -2,7 +2,7 @@ plotGLM <-
 function(model = NULL, obs = NULL, pred = NULL, link = "logit",
          plot.values = FALSE, xlab = "Logit (Y)",
          ylab = "Predicted probability", main = "Model plot", ...) {
-  # version 1.7 (28 Oct 2014)
+  # version 1.8 (28 Sep 2015)
   # obs: presence/absence or other binary (1-0) observed data
   # pred: values predicted by a GLM of the binary observed data
   # model: instead of (and overriding) obs & pred, you can provide a model object of class "glm"
@@ -20,13 +20,15 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
   }  else { # if model not provided
     if (is.null(obs) | is.null(pred)) stop("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'")
   }  # end if model
-
+  
   stopifnot(
     length(obs) == length(pred),
     obs %in% c(0, 1),
     pred >= 0,
     pred <= 1)
 
+  pred[pred==1] <- pred - 1e-7  # added 28Sep2015, otherwise obs~logit would cause error
+  
   logit <- log(pred / (1 - pred))
   if (!model.provided) model <- glm(obs ~ logit, family = "binomial")
 
