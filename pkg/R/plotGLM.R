@@ -19,6 +19,8 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
     pred <- model$fitted.values
   }  else { # if model not provided
     if (is.null(obs) | is.null(pred)) stop("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'")
+    pred[pred == 0] <- 2e-16  # avoid NaN in log below
+    pred[pred == 1] <- 1 - 2e-16  # avoid NaN in log below
   }  # end if model
   
   stopifnot(

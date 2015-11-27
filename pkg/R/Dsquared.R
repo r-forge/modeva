@@ -22,7 +22,8 @@ Dsquared <- function(model = NULL,
     else if (!is.character(family)) stop ("Argument 'family' must be provided as character (i.e. in quotes: 'binomial' or 'poisson').")
     else if (length(family) != 1 | !(family %in% c("binomial", "poisson"))) stop ("'family' must be either 'binomial' or 'poisson' (in quotes).")
     
-    pred[pred == 0] <- .Machine$double.xmin  # avoid NaN in log below
+    pred[pred == 0] <- 2e-16  # avoid NaN in log below
+    pred[pred == 1] <- 1 - 2e-16  # avoid NaN in log below
     
     # new (15 Sep 2015):
     dat <- data.frame(obs, pred)
