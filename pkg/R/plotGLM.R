@@ -19,8 +19,8 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
     pred <- model$fitted.values
   }  else { # if model not provided
     if (is.null(obs) | is.null(pred)) stop("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'")
-    pred[pred == 0] <- 2e-16  # avoid NaN in log below
-    pred[pred == 1] <- 1 - 2e-16  # avoid NaN in log below
+    pred[pred == 0] <- 2e-16  # avoid log 0 below
+    pred[pred == 1] <- 1 - 2e-16  # avoid division by 0 below
   }  # end if model
   
   stopifnot(
@@ -29,7 +29,8 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
     pred >= 0,
     pred <= 1)
 
-  pred[pred==1] <- pred - 1e-7  # added 28Sep2015, otherwise obs~logit would cause error
+  pred[pred == 0] <- 2e-16  # avoid log 0 below
+  pred[pred == 1] <- 1 - 2e-16  # avoid division by 0 below
   
   logit <- log(pred / (1 - pred))
   if (!model.provided) model <- glm(obs ~ logit, family = "binomial")

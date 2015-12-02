@@ -63,19 +63,19 @@ img {
 <div id="header">
 <h1 class="title">Construcción y evaluación de modelos de distribución con los paquetes R <em>fuzzySim</em> y <em>modEvA</em></h1>
 <h4 class="author"><em>A. Márcia Barbosa (<a href="mailto:barbosa@uevora.pt">barbosa@uevora.pt</a>) y José C. Guerrero (<a href="mailto:jguerrero@fcien.edu.uy">jguerrero@fcien.edu.uy</a>)</em></h4>
-<h4 class="date"><em>23 de junio de 2015</em></h4>
+<h4 class="date"><em>[actualizado el 2 de diciembre de 2015]</em></h4>
 </div>
 
 
-<p>En esta guía, en letra <em>monospace</em> están los comandos que hay que escribir (o copiar y pegar) en la consola de R (y después presionar <em>enter</em> para ejecutarlos). Nota que todos los <strong>comandos son sensibles a mayúsculas y minúsculas</strong>; que hay que utilizar siempre <strong>apóstrofes y comillas rectos</strong> (ej. “texto” y no “texto”); y que R sólo está listo para recibir un <strong>nuevo comando cuando hay un signo de <em>prompt</em> (&gt;)</strong> al final de la consola (atención a cierres de paréntesis y demás).</p>
+<p>Esta guía se hizo en el marco de un curso/taller impartido en Málaga en julio de 2015, y se fue actualizando con los avances de los paquetes. En letra <em>monospace</em> están los comandos que hay que escribir (o copiar y pegar) en la consola de R (y después presionar <em>enter</em> para ejecutarlos). Nota que todos los <strong>comandos son sensibles a mayúsculas y minúsculas</strong>; que hay que utilizar siempre <strong>apóstrofes y comillas rectos</strong> (ej. “texto” y no “texto”); y que R sólo está listo para recibir un <strong>nuevo comando cuando hay un signo de <em>prompt</em> (&gt;)</strong> al final de la consola (atención a cierres de paréntesis y demás).</p>
 <div id="instalar-los-programas-y-paquetes-necesarios" class="section level2">
 <h2>1. Instalar los programas y paquetes necesarios</h2>
 <p>Descargar <strong><em>R</em></strong> (<a href="http://cran.r-project.org" class="uri">http://cran.r-project.org</a>) e instalarlo.</p>
 <p>Descargar <strong><em>RStudio</em></strong> (interfaz amigable para <em>R</em>; <a href="http://www.rstudio.com/products/rstudio/download" class="uri">http://www.rstudio.com/products/rstudio/download</a>), instalarlo y abrirlo.</p>
-<p>Instalar los <strong>paquetes <em>fuzzySim</em></strong> (<a href="http://fuzzysim.r-forge.r-project.org" class="uri">http://fuzzysim.r-forge.r-project.org</a>) y <strong><em>modEvA</em></strong> (<a href="http://modeva.r-forge.r-project.org/" class="uri">http://modeva.r-forge.r-project.org/</a>), que de momento no están disponibles en el CRAN (el repositorio oficial de <em>R</em>), sino en R-Forge (una plataforma más experimental). Si tienes instalada la última versión de R, deberían funcionar los siguientes comandos:</p>
+<p>Instalar los <strong>paquetes <em>fuzzySim</em></strong> (<a href="http://fuzzysim.r-forge.r-project.org" class="uri">http://fuzzysim.r-forge.r-project.org</a>) y <strong><em>modEvA</em></strong> (<a href="http://modeva.r-forge.r-project.org/" class="uri">http://modeva.r-forge.r-project.org/</a>), que de momento no están disponibles en el CRAN (el repositorio oficial de <em>R</em>), sino en R-Forge (una plataforma más experimental). <strong>Si tienes instalada la última versión de R</strong>, deberían funcionar los siguientes comandos:</p>
 <pre class="r"><code>install.packages(&quot;fuzzySim&quot;, repos = &quot;http://R-Forge.R-project.org&quot;)
 install.packages(&quot;modEvA&quot;, repos = &quot;http://R-Forge.R-project.org&quot;)</code></pre>
-<p>Si sale un mensaje de error, puedes descargar los paquetes (<em>fuzzySim</em> de <a href="https://r-forge.r-project.org/R/?group_id=1853" class="uri">https://r-forge.r-project.org/R/?group_id=1853</a> y <em>modEvA</em> de <a href="https://r-forge.r-project.org/R/?group_id=1876" class="uri">https://r-forge.r-project.org/R/?group_id=1876</a>; versión <em>.tar.gz</em> para Linux y Mac, versión <em>.zip</em> para Windows), guardarlos en el disco e instalarlos desde allí. En <em>RStudio</em>, esto se hace con el menú <em>Tools - Install packages - Install from: Package Archive File</em>, buscando después en el disco dónde se ha guardado cada paquete.</p>
+<p>Si sale un mensaje de error, o para cerciorarte de que instalas la última versión de los paquetes, puedes descargarlos (<em>fuzzySim</em> de <a href="https://r-forge.r-project.org/R/?group_id=1853" class="uri">https://r-forge.r-project.org/R/?group_id=1853</a> y <em>modEvA</em> de <a href="https://r-forge.r-project.org/R/?group_id=1876" class="uri">https://r-forge.r-project.org/R/?group_id=1876</a>; versión <em>.tar.gz</em> para Linux y Mac, versión <em>.zip</em> para Windows), guardarlos en el disco e instalarlos desde allí. En <em>RStudio</em>, esto se hace con el menú <em>Tools - Install packages - Install from: Package Archive File</em>, buscando después en el disco dónde se ha guardado cada paquete.</p>
 <p>Para importar y exportar tablas en formato <em>.dbf</em>, también vas a necesitar el <strong>paquete <em>foreign</em></strong>. Éste está disponible en el CRAN, por tanto sólo tienes que darle al menú <em>Tools - Install packages</em>, <em>Install from: Repository (CRAN)</em>, escribir <em>foreign</em>, mantener <em>Install dependencies</em> seleccionado y darle a <em>Install</em>. Alternativamente, puedes instalar el paquete con el comando:</p>
 <pre class="r"><code>install.packages(&quot;foreign&quot;)</code></pre>
 </div>
@@ -89,10 +89,10 @@ library(foreign)</code></pre>
 <p>Para <strong>establecer el directorio de trabajo</strong> – es decir, la carpeta donde, por defecto, <em>R</em> va a buscar y guardar archivos – puedes utilizar el menú <em>Session - Set Working Directory - Choose Directory</em> y localizar la carpeta donde vas a trabajar, o utilizar el comando:</p>
 <pre class="r"><code>setwd(&quot;C:/Documents and settings/User/Escritorio/Proyecto_curso&quot;)</code></pre>
 <p>(Reemplazar por la ruta de acceso a la carpeta en tu ordenador, que puedes obtener pinchando con el ratón derecho el nombre de un archivo de esa carpeta y dándole a <em>Properties</em>; utilizar barras normales (/) y no barras hacia atrás como las que usa Windows.) Por defecto, si has creado un proyecto en <em>RStudio</em>, el directorio de trabajo ya se ha definido automáticamente como el mismo donde se guardó el proyecto.</p>
-<p><strong>Importar la tabla con los datos</strong> a <em>R</em>. La tabla puede estar, por ejemplo, en formato <em>.csv</em> o <em>.txt</em>, con los valores (columnas) separados por comas, espacios, punto y coma, o tabuladores. Los valores <strong>decimales</strong> tienen que ir <strong>separados por punto y no coma</strong> (ej. 0.999 y no 0,999). Nuestra tabla se llama ‘especiesmont10X10.csv’. En <em>RStudio</em> se puede utilizar el menú <em>Tools - Import Dataset - From Text File</em> y buscar la tabla en el disco. Otra opción es utilizar el comando:</p>
+<p><strong>Importar la tabla con los datos</strong> a <em>R</em>. La tabla puede estar, por ejemplo, en formato <em>.csv</em> o <em>.txt</em>, con los valores (columnas) separados por comas, espacios, punto y coma, o tabuladores. Los valores <strong>decimales</strong> tienen que ir <strong>separados por punto</strong> y no coma (ej. 0.999 y no 0,999). Nuestra tabla se llama ‘especiesmont10X10.csv’. En <em>RStudio</em> se puede utilizar el menú <em>Tools - Import Dataset - From Text File</em> y buscar la tabla en el disco. Otra opción es utilizar el comando:</p>
 <pre class="r"><code>datos &lt;- read.table(file = &quot;especiesmont10X10.csv&quot;, header = TRUE, sep = &quot;,&quot;)</code></pre>
-<p>El archivo (<em>file</em>) debe estar en la carpeta de trabajo y escribirse entre comillas rectas y respetando las mayúsculas y minúsculas. El argumento <em>header = TRUE</em> indica que la primera fila de la tabla contiene los nombres de las columnas. El argumento <em>sep</em> indica el caracter que separa las columnas en la tabla a importar – en este caso son comas, pero podemos especificar otro separador, como espacio (sep = &quot; “), punto y coma (sep =”;“) o tabulador (sep =”<code>\t</code>“), cuando sea apropiado. Como para cualquer función de R, puedes obtener información con <code>help(read.table)</code>.</p>
-<p>La función <em>read.table</em>, las funciones relacionadas <em>read.csv</em> y <em>read.delim</em> (que difieren de ésta en los valores de los argumentos por defecto), leen tablas en formato de texto (<em>.txt</em>, <em>.csv</em>). Si la tabla a importar estuviera en formato <em>.dbf</em>, tendríamos que utilizar la función <em>read.dbf</em> del paquete <em>foreign</em>:</p>
+<p>El archivo (<em>file</em>) debe estar en la carpeta de trabajo (o incluir la ruta de acceso, separada por barras ‘/’) y escribirse entre comillas rectas y respetando las mayúsculas y minúsculas. El argumento <em>header = TRUE</em> indica que la primera fila de la tabla contiene los nombres de las columnas. El argumento <em>sep</em> indica el caracter que separa las columnas en la tabla a importar – en este caso son comas, pero podemos especificar otro separador, como espacio (<code>sep = &quot; &quot;</code>), punto y coma (<code>sep = &quot;;&quot;</code>) o tabulador (<code>sep = &quot;\t&quot;</code>), cuando sea apropiado. Como para cualquer función de R, puedes obtener información con <code>help(read.table)</code>.</p>
+<p>La función <em>read.table</em>, las funciones relacionadas <em>read.csv</em> y <em>read.delim</em> (que difieren de ésta en los valores de los argumentos por defecto), leen tablas en formato de texto (<em>.txt</em>, <em>.csv</em>). Si la tabla a importar estuviera en formato <em>.dbf</em>, tendríamos que utilizar la función <code>read.dbf</code> del paquete <em>foreign</em>:</p>
 <pre class="r"><code>datos &lt;- read.dbf(file = &quot;especiesmont10X10.dbf&quot;)</code></pre>
 <p>Una vez importada la tabla, puedes visualizarla, o algunas de sus características:</p>
 <pre class="r"><code>head(datos)   # primeras filas de la tabla
@@ -104,7 +104,7 @@ names(datos)  # nombres de las columnas</code></pre>
 <h2>3. Realizar la modelación</h2>
 <div id="modelar-una-sola-especie" class="section level3">
 <h3>3.1. Modelar una sola especie</h3>
-<p>Para modelar una sola especie con un Modelo Lineal Generalizado, se puede utilizar la función <em>glm</em> de <em>R</em>. Ejemplo para un modelo univariante, i.e., con una sola variable (ej. la altitud) como predictora:</p>
+<p>Para modelar una sola especie con un modelo lineal generalizado (GLM), se puede utilizar la función <em>glm</em> de <em>R</em>. Ejemplo para un modelo univariante, i.e., con una sola variable (ej. la altitud) como predictora:</p>
 <pre class="r"><code>modelo.perdicera &lt;- glm(HIE_FAS ~ ALTI, family = binomial, data = datos)  # hace el modelo
 modelo.perdicera  # muestra el modelo</code></pre>
 <p>Podemos crear también un modelo multivariante, con varias variables predictoras. Atención que al crear un objeto con el mismo nombre que otro que ya existía (en este caso, ‘modelo.perdicera’), éste se sobreescribe sin aviso:</p>
@@ -121,9 +121,12 @@ modelo.perdicera  # muestra el modelo</code></pre>
 mult &lt;- multicol(subset(datos, select = 21:45))  # especificar sólo las columnas con variables!
 mult  # muestra la multicolinealidad
 subset(mult, VIF &gt; 10)  # muestra cuáles tienen VIF elevado</code></pre>
-<p>Se puede hacer también una <strong>pre-selección</strong> de variables que tengan una <strong>relación significativa con la presencia/ausencia especie</strong>, basada en el <em>False Discovery Rate</em> (FDR). Hay que especificar correctamente las columnas que contienen la especie y las variables:</p>
+<p>También se puede hacer una <strong>pre-selección</strong> de variables que tengan una <strong>relación significativa con la distribución de la especie</strong>, utilizando el <em>False Discovery Rate</em> (FDR). Hay que especificar correctamente las columnas que contienen la especie y las variables en nuestra tabla:</p>
 <pre class="r"><code>names(datos)  # ver en qué columnas están las especies y variables
-FDR(datos, sp.cols = 8, var.cols = 21:45, model.type = &quot;GLM&quot;)  </code></pre>
+FDR(datos, sp.cols = 8, var.cols = 21:45)</code></pre>
+<p>Con la función <em>corSelect</em> se puede también <strong>seleccionar, de cada par de variables correlacionadas</strong> por en cima de determinado umbral (por ejemplo, 0.8), la que tenga una <strong>relación más significativa con la distribución de la especie</strong>:</p>
+<pre class="r"><code>names(datos)  # ver en qué columnas están las especies y variables
+corSelect(datos, sp.cols = 8, var.cols = 21:45, cor.thresh = 0.8)  </code></pre>
 <p>Luego se hace el modelo sin las variables excluidas (por ejemplo, en el caso del FDR, las variables ‘ETR’, ‘U100’ y ‘PERM’). Sobre éstas, se puede aplicar también un procedimiento de <strong>selección por pasos</strong>, basado en el criterio de información de Akaike (AIC), con la función <em>step</em> de <em>R</em>:</p>
 <pre class="r"><code>modelo.perdicera &lt;- step(glm(HIE_FAS ~ ORS + ORW + ALTI + ALTI2 + PEND + 
                              PEND2 + DAUT + DIHE + DIPR + ESCO + ETP + HUEN + 
@@ -133,10 +136,8 @@ FDR(datos, sp.cols = 8, var.cols = 21:45, model.type = &quot;GLM&quot;)  </code>
 modelo.perdicera  # muestra el modelo
 summary(modelo.perdicera)  # muestra los estadísticos de los coeficientes</code></pre>
 <p>A menudo (como es el caso), la selección por AIC deja en el modelo <strong>variables no significativas</strong>. Éstas <strong>se pueden eliminar</strong>, también en un procedimiento por pasos hacia atrás, con la función <em>modelTrim</em> del paquete <em>fuzzySim</em>:</p>
-<pre class="r"><code>modelo.perdicera &lt;- modelTrim(modelo.perdicera)  # elimina las no significativas</code></pre>
-<pre><code>## 4 variable(s) excluded by 'modelTrim' function
-##  ALTI, DAUT, HUJU, RADS</code></pre>
-<pre class="r"><code>modelo.perdicera  # muestra el modelo
+<pre class="r"><code>modelo.perdicera &lt;- modelTrim(modelo.perdicera)  # elimina las no significativas
+modelo.perdicera  # muestra el modelo
 summary(modelo.perdicera)  # muestra los estadísticos de los coeficientes</code></pre>
 <p>Para <strong>obtener las predicciones del modelo y la favorabilidad</strong>:</p>
 <pre class="r"><code>Hiefas_P &lt;- modelo.perdicera$fitted.values
@@ -146,16 +147,16 @@ Hiefas_F</code></pre>
 </div>
 <div id="modelar-varias-especies-a-la-vez" class="section level3">
 <h3>3.2. Modelar varias especies a la vez</h3>
-<p>La función <em>multGLM</em> del paquete <em>fuzzySim</em> permite hacer <strong>modelos para una o más especies a la vez</strong>, con la posibilidad de <strong>selección de variables</strong> por FDR, AIC (<em>step</em>) y/o significación (<em>modelTrim</em>), y <strong>guarda los valores predichos automáticamente, incluida la favorabilidad</strong> y (si lo especificamos) la <em>Y</em>. En esta función las variables se especifican de forma distinta que en la función <em>glm</em>:</p>
+<p>La función <em>multGLM</em> del paquete <em>fuzzySim</em> permite hacer <strong>modelos para una o más especies a la vez</strong>, con la posibilidad de <strong>selección de variables</strong> por correlación (<em>corSelect</em>), <em>FDR</em>, AIC (<em>step</em>) y/o significación (<em>modelTrim</em>), y <strong>guarda los valores predichos automáticamente, incluida la favorabilidad</strong> y (si lo especificamos) la <em>Y</em>. En esta función las variables se especifican de forma distinta que en la función <em>glm</em>:</p>
 <pre class="r"><code>names(datos)  # ver en qué columnas están las especies y las variables
 mis.modelos &lt;- multGLM(data = na.omit(datos), sp.cols = 8:11, var.cols = 21:45, 
-                       id.col = 1, step = TRUE, FDR = TRUE, trim = TRUE, 
-                       Y = TRUE, Fav = TRUE)
-# si las variables o especies a modelar no estuvieran contiguas en la tabla:
-# mis.modelos &lt;- multGLM(datos, sp.cols = c(8, 10, 11), 
-#                        var.cols = c(21, 24:30, 41, 45), id.col = 1, 
-#                        step = TRUE, FDR = TRUE, trim = TRUE, 
-#                        Y = TRUE, Fav = TRUE)  </code></pre>
+                       id.col = 1, step = TRUE, FDR = TRUE, corSelect = FALSE, 
+                       trim = TRUE, Y = TRUE, Fav = TRUE)</code></pre>
+<p>Si las variables y/o especies a modelar no estuvieran contiguas en la tabla, se pueden especificar por separado:</p>
+<pre class="r"><code>mis.modelos.2 &lt;- multGLM(data = na.omit(datos), sp.cols = c(8, 10, 11), 
+                      var.cols = c(21, 24:30, 41, 45), id.col = 1, 
+                      step = TRUE, FDR = TRUE, corSelect = FALSE, trim = TRUE, 
+                      Y = TRUE, Fav = TRUE)  </code></pre>
 <p>El <strong>objeto resultante de <em>multGLM</em></strong> (‘mis.modelos’) es una <strong>lista que contiene dos objetos</strong>: otra lista llamada <strong>‘models’</strong> con los modelos, y una tabla llamada <strong>‘predictions’</strong> con sus predicciones:</p>
 <pre class="r"><code>mis.modelos$models  # muestra los modelos
 names(mis.modelos$models)  # muestra los nombres de los modelos
@@ -184,20 +185,19 @@ getModEqn(mod.hiefas)
 getModEqn(mod.hiefas, digits = 3)  # para redondear a menos dígitos
 getModEqn(mod.hiefas, digits = 3, type = &quot;P&quot;)
 getModEqn(mod.hiefas, digits = 3, type = &quot;F&quot;)</code></pre>
-<p>Se puede también <strong>visualizar la gráfica</strong> del modelo:</p>
+<p>Se puede también <strong>visualizar la gráfica</strong> del modelo. El argumento ‘main’ define el título principal de la gráfica:</p>
 <pre class="r"><code>plotGLM(mod.hiefas)</code></pre>
 <pre class="r"><code>plotGLM(mod.hiefas, main = &quot;Modelo perdicera&quot;)</code></pre>
 <pre class="r"><code>plotGLM(mod.cappyr, main = &quot;Modelo cabra&quot;)</code></pre>
 <pre class="r"><code>plotGLM(mod.alydic, main = &quot;Modelo partero&quot;)</code></pre>
 <pre class="r"><code>plotGLM(mod.viplat, main = &quot;Modelo víbora&quot;)</code></pre>
-<pre class="r"><code># el argumento 'main' cambia el título principal de la gráfica</code></pre>
 </div>
 <div id="medir-la-capacidad-explicativa-de-un-modelo" class="section level3">
 <h3>4.2. Medir la capacidad explicativa de un modelo</h3>
 <p>Calcular la cantidad de <strong>devianza explicada</strong> (D cuadrado):</p>
 <pre class="r"><code>Dsquared(mod.hiefas)
 Dsquared(mod.hiefas, adjust = TRUE)  # ajustado al nº de parámetros</code></pre>
-<p>Calcular distintos <strong>pseudo-R cuadrados</strong> del modelo:</p>
+<p>Calcular distintos <strong>pseudo R cuadrados</strong> del modelo:</p>
 <pre class="r"><code>RsqGLM(mod.hiefas)</code></pre>
 </div>
 <div id="analizar-la-capacidad-de-discriminacion-de-un-modelo" class="section level3">
@@ -224,7 +224,7 @@ optiPair(model = mod.hiefas, measures = c(&quot;Omission&quot;, &quot;Commission
 <pre class="r"><code>HLfit(model = mod.hiefas, bin.method = &quot;prob.bins&quot;)</code></pre>
 <pre class="r"><code>HLfit(model = mod.hiefas, bin.method = &quot;n.bins&quot;, n.bins = 20)</code></pre>
 <pre class="r"><code>HLfit(model = mod.hiefas, bin.method = &quot;quantiles&quot;)</code></pre>
-<p>También se puede calcular los estadísticos de <strong>calibración de Miller</strong> (intercepto y pendiente, que idealmente deben ser respectivamente 0 y 1), aunque estos no sirven para evaluar un modelo sobre los mismos datos utilizados en su construcción (el resultado siempre es bueno):</p>
+<p>También se puede calcular los estadísticos de <strong>calibración de Miller</strong> (intercepto y pendiente, que idealmente deben ser respectivamente 0 y 1), pero estos no sirven para evaluar un modelo sobre los mismos datos utilizados en su construcción (el resultado siempre sale bueno), sino para ver cómo se aplica a otro conjunto de datos distinto:</p>
 <pre class="r"><code>MillerCalib(model = mod.hiefas)</code></pre>
 <p>Consulta <code>help(HLfit)</code> y <code>help(MillerCalib)</code> para más información sobre estas funciones, las opciones disponibles y la interpretación de sus resultados.</p>
 </div>

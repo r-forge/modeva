@@ -1,0 +1,29 @@
+==========================================
+modEvA v1.2.2 (committed 2015-11-27)
+==========================================
+
+## Modified functions:
+
+* Dsquared, RsqGLM, plotGLM:
+- NaN-caused errors avoided by converting 0 and 1 in 'pred' to (1 -) 2e-16
+
+
+==========================================
+modEvA v1.2.1 (committed 2015-11-26)
+==========================================
+
+## Modified functions:
+
+* Dsquared, RsqGLM:
+- NaN-caused errors avoided by converting 0 in 'pred' to smallest computable positive number
+
+
+==========================================
+modEvA v1.2
+==========================================
+
+## Modified functions:
+
+* AUC, Dsquared, RsqGLM, threshMeasures, optiPair, HLfit & MillerCalib now omit NAs
+
+* Dsquared based on obs&pred now available also for Poisson GLMs
