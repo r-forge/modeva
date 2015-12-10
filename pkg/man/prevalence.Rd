@@ -7,11 +7,12 @@ Prevalence
 For building and evaluating species distribution models, the porportion of presences of the species may be issues to take into account (e.g. Jimenez-Valverde & Lobo 2006, Barbosa et al. 2013). The \code{prevalence} function calculates this measure.
 }
 \usage{
-prevalence(obs, event = 1)
+prevalence(obs, event = 1, na.rm = TRUE)
 }
 \arguments{
   \item{obs}{a vector of binary observations (e.g. 1 vs. 0, male vs. female, disease vs. no disease, etc.).}
   \item{event}{the value whose prevalence we want to calculate (e.g. 1, "present", etc.).}
+  \item{na.rm}{logical, whether NA values should be excluded. The default is TRUE.}
 }
 \details{
 }
