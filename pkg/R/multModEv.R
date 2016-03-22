@@ -18,6 +18,8 @@ function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmeth
   if (is.null(models)) {
     if (is.null(obs.data) | is.null(pred.data)) stop("You must provide either a list of model object(s) of class 'glm', or a set of obs.data + pred.data with matching dimensions.")
     #if (Favourability) message("'pred.data' converted with the Fav function; set Favourability to FALSE if this is not what you wish.")
+    calib.measures <- measures[measures %in% c("HL", "HL.p", "RMSE", "Miller.int", "Miller.slope", "Miller.p")]
+    if (length(calib.measures) > 0)  warning(paste0(calib.measures, ", "), "valid only if your input 'pred.data' represent presence probability; otherwise, please ignore these measures, or use probability as input instead.")
   }  # end if !models
 
   else {

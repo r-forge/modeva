@@ -4,7 +4,7 @@
 Hosmer-Lemeshow goodness of fit
 }
 \description{
-Calculate a model's calibration performance (reliability) with the Hosmer & Lemeshow goodness-of-fit statistic.
+This function calculates a model's calibration performance (reliability) with the Hosmer & Lemeshow goodness-of-fit statistic, which compares predicted probability to observed occurrence frequency at each portion of the probability range.
 }
 \usage{
 HLfit(model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10,

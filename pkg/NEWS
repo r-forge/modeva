@@ -1,4 +1,14 @@
 ==========================================
+modEvA v1.2.4 (committed 2016-03-22)
+==========================================
+
+## Modified functions:
+
+* multModEv:
+- warning now emitted, and help file updated, about calibration measures being valid only for probability (when input is obs.data + pred.data)
+
+
+==========================================
 modEvA v1.2.3 (committed 2015-12-10)
 ==========================================
 
