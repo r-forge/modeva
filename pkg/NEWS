@@ -5,13 +5,13 @@ modEvA v1.2.5 (committed 2016-03-30)
 ## Modified functions:
 
 * getBins:
-- eliminated error when pred values outside the [0, 1] interval
+- eliminated error when pred values outside the [0,1] interval
 
 * HLfit:
-- error replaced with warning on pred values outside the [0, 1] interval
+- error replaced with warning on pred values outside the [0,1] interval
 
 * MillerCalib:
-- error replaced with warning on pred values outside the [0, 1] interval
+- error replaced with warning on pred values outside the [0,1] interval
 - default digits (for plot.values) lowered to 2
 - slope p-value removed (values looked wrong)
 - NaNs avoided by converting 0 and 1 in 'pred' to (1 -) 2e-16

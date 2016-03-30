@@ -31,8 +31,10 @@ and 'pred' vectors, or a 'model' object of class 'glm'.")
     #pred <= 1
   )
   # new:
-  if (any(pred < 0) | any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval; are you sure these represent probabilities?")
-
+  if (any(pred < 0) | any(pred > 1)) {
+    warning("Some of your 'pred' values are outside the [0,1] interval; are you sure these represent probabilities? Unexpected or incorrect results may arise. Consider properly rescaling you 'pred' values, or obtaining real probabilities instead.")
+  }
+  
   bins <- getBins(obs = obs, pred = pred, bin.method = bin.method, n.bins = n.bins, fixed.bin.size = fixed.bin.size, min.bin.size = min.bin.size, min.prob.interval = min.prob.interval)
   n.bins <- nrow(bins$bins.table)
 
@@ -67,8 +69,10 @@ and 'pred' vectors, or a 'model' object of class 'glm'.")
     TF <- N.presence < N.total
     Upper[TF] <- ((N.presence[TF] + 1) * qf(1 - alpha/2, df1.up[TF], df2.up[TF]))/(N.total[TF] - N.presence[TF] + ((N.presence[TF] + 1) * qf(1 - alpha/2, df1.up[TF], df2.up[TF])))
     Upper[Empty] <- NA
-    #plot(c(0, 1), c(0, 1), type = "n", xlab = xlab, ylab = ylab, ...)
-    plot(c(-0.05, 1.05), c(-0.05, 1.05), type = "n", xlab = xlab, ylab = ylab, ...)
+
+    xymin <- min(-0.05, min(pred))
+    xymax <- max(1.05, max(pred))
+    plot(c(xymin, xymax), c(xymin, xymax), type = "n", xlab = xlab, ylab = ylab, ...)
     # the above is needed for some bin sizes when plotted as text
     bin.centers <- bins$bins.table$median.prob  # fui eue
 
