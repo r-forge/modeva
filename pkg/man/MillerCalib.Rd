@@ -2,42 +2,39 @@
 \alias{MillerCalib}
 \title{Miller's calibration satistics for logistic regression models}
 \description{
-This function calculates Miller's (1991) calibration statistics for a generalized linear model with binomial distribution and logistic link, namely the intercept and slope of the regression of the response variable on the logit of predicted probabilities. Optionally and by default, it also plots the corresponding regression line (black) over the reference diagonal (grey).
+This function calculates Miller's (1991) calibration statistics for a generalized linear model with binomial distribution and logistic link, namely the intercept and slope of the regression of the response variable on the logit of predicted probabilities. Optionally and by default, it also plots the corresponding regression line over the reference diagonal.
 }
 \usage{
 MillerCalib(model = NULL, obs = NULL, pred = NULL, plot = TRUE,
-plot.values = TRUE, digits = 4, xlab = "", ylab = "",
+plot.values = TRUE, digits = 2, xlab = "", ylab = "",
 main = "Miller calibration", ...)
 }
 \arguments{
   \item{model}{a model object of class "glm" and family "binomial".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
   binary response variable. Not necessary (and ignored) if \code{model} is provided.}
-  \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as \code{obs}. Not necessary (and ignored) if \code{model} is provided.}
-  \item{plot}{logical, whether to plot the regression line over the reference diagonal. Defaults to TRUE.}
-  \item{plot.values}{logical value indicating whether to report the statistics in the plot. Defaults to TRUE.}
-  \item{digits}{integer number indicating the number of digits to which the values in the plot should be rounded. Dafaults to 4. Ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}
+  \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as \code{obs}. A warning is emitted if it includes values outside the [0, 1] interval. Not necessary (and ignored) if \code{model} is provided.}
+  \item{plot}{logical, whether to produce a plot of the regression line over the reference diagonal. Defaults to TRUE.}
+  \item{plot.values}{logical value indicating whether to report the values of the intercept and slope on the plot. Defaults to TRUE.}
+  \item{digits}{integer number indicating the number of digits to which the values in the plot should be rounded. Dafaults to 2. Ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}
   \item{xlab}{label for the x axis.}
   \item{ylab}{label for the y axis.}
   \item{main}{title for the plot.}
   \item{\dots}{additional arguments to pass to \code{\link{plot}}.}
 }
 \details{
-Calibration or reliability measures how a model's predicted probabilities relate to observed species prevalence or proportion of presences in the modelled data (Pearce & Ferrier 2000; Wintle et al. 2005; Franklin 2010). If predictions are perfectly calibrated, the slope will equal 1 and the intercept will equal 0, so the model's calibation line will perfectly overlap with the reference diagonal. Note that Miller's statistics assess the model globally: a model is well calibrated if the average of all predicted probabilities equals the proportion of presences in the modelled data. Good calibration is always attained on the same data used for building the model (Miller 1991).
+Calibration or reliability measures how a model's predicted probabilities relate to observed species prevalence or proportion of presences in the modelled data (Pearce & Ferrier 2000; Wintle et al. 2005; Franklin 2010). If predictions are perfectly calibrated, the slope will equal 1 and the intercept will equal 0, so the model's calibation line will perfectly overlap with the reference diagonal. Note that Miller's statistics assess the model globally: a model is well calibrated if the average of all predicted probabilities equals the proportion of presences in the modelled data. Good calibration is always attained on the same data used for building the model (Miller 1991); Miller's calibration statistics are mainly useful when extrapolating a model outside those training data.
 }
 \value{
 This function returns a list of three integer values:
 \item{intercept}{the calibration intercept.}
 \item{slope}{the calibration slope.}
-\item{slope.pvalue}{the significance of the difference between our slope and the ideal slope of 1, calculated according to Paternoster et al. (1998).}
-If \code{plot = TRUE}, a plot will be produced with the model calibration line (black) over the reference diagonal (dashed grey), optionally (if \code{plot.values = TRUE}) with the values printed on it.
+If \code{plot = TRUE}, a plot will be produced with the model calibration line (black) over the reference diagonal (dashed grey), optionally (if \code{plot.values = TRUE}) with the intercept and slope values printed on it.
 }
 \references{
 Franklin, J. (2010) Mapping Species Distributions: Spatial Inference and Prediction. Cambridge University Press, Cambridge.
 
 Miller M.E., Hui S.L. & Tierney W.M. (1991) Validation techniques for logistic regression models. Statistics in Medicine, 10: 1213-1226
-
-Paternoster R., Brame R., Mazerolle P. & Piquero A.R. (1998) Using the correct statistical test for the equality of regression coefficients. Criminology, 36(4): 859-866
 
 Pearce J. & Ferrier S. (2000) Evaluating the predictive performance of habitat models developed using logistic regression. Ecological Modelling, 133: 225-245
 
@@ -57,6 +54,8 @@ data(rotif.mods)
 mod <- rotif.mods$models[[1]]
 
 MillerCalib(model = mod)
+MillerCalib(model = mod, plot.values = FALSE)
+MillerCalib(model = mod, plot.values = FALSE, main = "Model calibration line")
 
 
 # you can also use MillerCalib with vectors of observed and predicted values

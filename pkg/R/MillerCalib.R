@@ -1,4 +1,4 @@
-MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot.values = TRUE, digits = 4, xlab = "", ylab = "", main = "Miller calibration", ...) {
+MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot.values = TRUE, digits = 2, xlab = "", ylab = "", main = "Miller calibration", ...) {
   # version 1.3 (24 Jun 2015)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
@@ -25,28 +25,35 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot
 
   stopifnot(
     length(obs) == length(pred),
-    obs %in% c(0,1),
-    pred >= 0,
-    pred <= 1
+    obs %in% c(0,1)#,
+    #pred >= 0,
+    #pred <= 1
   )
-
+  # new:
+  if (any(pred < 0) | any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval; are you sure these represent probabilities?")
+  
+  pred[pred == 0] <- 2e-16  # avoid NaN in log below
+  pred[pred == 1] <- 1 - 2e-16  # avoid NaN in log below
+  
   logit <- log(pred / (1 - pred))
   mod <- glm(obs ~ logit, family = binomial)
   intercept <- mod$coef[[1]]
   slope <- mod$coef[[2]]
-  std.err <- summary(mod)$coefficients["logit", "Std. Error"]
-  slope.p <- abs((slope - 1) / sqrt(std.err^2 + 0))  # Paternoster 98; http://stats.stackexchange.com/questions/55501/test-a-significant-difference-between-two-slope-values
+#  std.err <- summary(mod)$coefficients["logit", "Std. Error"]
+#  slope.p <- abs((slope - 1) / sqrt(std.err^2 + 0))  # Paternoster 98; http://stats.stackexchange.com/questions/55501/test-a-significant-difference-between-two-slope-values
 
   if (plot) {
     ymin <- min(0, intercept)
-    ymax <- max(1, intercept + 0.1)
+    ymax <- max(1, intercept + 0.3)
     plot(c(0, 1), c(ymin, ymax), type = "n", xlab = xlab, ylab = ylab, main = main)
     abline(0, 1, col = "lightgrey", lty = 2)
     abline(intercept, slope)
     if (plot.values) {
-      plotext <- paste("intercept =" , round(intercept, digits), "\nslope =", round(slope, digits), "\nslope p-value =", round(slope.p, digits))
-      text(x = 0, y = ymax - 0.25, adj = 0, labels = plotext)
+#      plotext <- paste("intercept =" , round(intercept, digits), "\nslope =", round(slope, digits), "\nslope p-value =", round(slope.p, digits))
+      plotext <- paste0("intercept = " , round(intercept, digits), "\nslope = ", round(slope, digits))
+      text(x = 1, y = ymin + 0.1 * (ymax - ymin), adj = 1, labels = plotext)
     }
   }
-  return(list(intercept = intercept, slope = slope, slope.pvalue = slope.p))
+  #return(list(intercept = intercept, slope = slope, slope.pvalue = slope.p))
+  return(list(intercept = intercept, slope = slope))
 }  # end MillerCalib function

@@ -1,6 +1,6 @@
 HLfit <-
 function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE, alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", ylab = "Observed prevalence", ...) {
-  # version 1.6 (15 Sep 2015)
+  # version 1.7 (30 Mar 2016)
 
   if (!is.null(model)) {
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
@@ -26,10 +26,12 @@ and 'pred' vectors, or a 'model' object of class 'glm'.")
 
   stopifnot(
     length(obs) == length(pred),
-    obs %in% c(0, 1),
-    pred >= 0,
-    pred <= 1
+    obs %in% c(0, 1)#,
+    #pred >= 0,
+    #pred <= 1
   )
+  # new:
+  if (any(pred < 0) | any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval; are you sure these represent probabilities?")
 
   bins <- getBins(obs = obs, pred = pred, bin.method = bin.method, n.bins = n.bins, fixed.bin.size = fixed.bin.size, min.bin.size = min.bin.size, min.prob.interval = min.prob.interval)
   n.bins <- nrow(bins$bins.table)

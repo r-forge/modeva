@@ -10,9 +10,17 @@ min.prob.interval = 0.1, simplif = FALSE)
       obs <- model$y
       pred <- model$fitted.values
     }
-    stopifnot(length(obs) == length(pred), !(NA %in% obs), !(NA %in% pred), obs %in% c(0, 1), pred >= 0, pred <= 1, is.null(id) |
-                length(id) == length(pred), n.bins >= 2, min.bin.size >=
-                0, min.prob.interval > 0, min.prob.interval < 1)
+    stopifnot(length(obs) == length(pred), 
+              !(NA %in% obs), 
+              !(NA %in% pred), 
+              obs %in% c(0, 1), 
+              #pred >= 0, 
+              #pred <= 1, 
+              is.null(id) | length(id) == length(pred), 
+              n.bins >= 2, 
+              min.bin.size >= 0, 
+              min.prob.interval > 0, 
+              min.prob.interval < 1)
     if (!(bin.method %in% modEvAmethods("getBins")))
       stop("Invalid bin.method; type modEvAmethods('getBins') for available options.")
     N <- length(obs)
