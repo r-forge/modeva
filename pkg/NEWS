@@ -9,6 +9,7 @@ modEvA v1.2.5 (committed 2016-03-30)
 
 * HLfit:
 - error replaced with warning on pred values outside the [0,1] interval
+- plot now stretches if pred values exceed [0,1] interval
 
 * MillerCalib:
 - error replaced with warning on pred values outside the [0,1] interval
