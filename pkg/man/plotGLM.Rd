@@ -4,28 +4,29 @@
 Plot a generalized linear model
 }
 \description{
-This function plots the observed (presence/absence) data and the predicted (probability) values of a Generalized Linear Model against the y regression equation (logit) values. Only logistic regression (binomial response, logit link) is implemented. Optionally (if \code{plot.values = TRUE}) it can display in the plot the proportion of deviance explained (Weisberg 1980, Guisan & Zimmermann 2000).
+This function plots the observed (presence/absence) data and the predicted (probability) values of a Generalized Linear Model against the y regression equation (logit) values. Only logistic regression (binomial response, logit link) is currently implemented.
 }
 \usage{
-plotGLM(model = NULL, obs = NULL, pred = NULL, link = "logit", plot.values = FALSE,
-xlab = "Logit (Y)", ylab = "Predicted probability", main = "Model plot", ...)
+plotGLM(model = NULL, obs = NULL, pred = NULL, link = "logit", 
+plot.values = TRUE, plot.digits = 3, xlab = "Logit (Y)", 
+ylab = "Predicted probability", main = "Model plot", ...)
 }
 \arguments{
-  \item{model}{a model object of class "glm".}
+  \item{model}{a model object of class "\code{\link{glm}}".}
   \item{obs}{a vector of presence/absence or other binary (1-0) observed data. Not necessary (and ignored) if \code{model} is provided.}
   \item{pred}{a vector of the values predicted by a GLM of the binary observed data. Not necessary (and ignored) if \code{model} is provided.}
   \item{link}{the link function of the GLM; only 'logit' (the default) is implemented.}
-  \item{plot.values}{logical, whether to report values associated with the model in the plot (see Details). Defaults to \code{FALSE}.}
+  \item{plot.values}{logical, whether to include in the plot diagnostic values such as explained deviance (calculated with the \code{\link{Dsquared}} function) and pseudo-R-squared measures (calculated with the \code{\link{RsqGLM}} function). Defaults to \code{TRUE}.}
+    \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed (if \code{plot.values = TRUE}). Defaults to 3.}
   \item{xlab}{character string specifying the label for the x axis.}
   \item{ylab}{character string specifying the label for the y axis.}
   \item{main}{character string specifying the title for the plot.}
   \item{\dots}{additional arguments to pass to \code{\link{plot}}.}
 }
 \details{
-If \code{plot.values = TRUE}, the plot will also display values such as deviance (and adjusted deviance if \code{model} is provided). Deviance is calculated with the \code{\link{Dsquared}} function. Additional measures will be implemented in the future.
 }
 \value{
-This function outputs a plot of the provided model.
+This function outputs a plot of model predictions against observations.
 }
 \references{
 Guisan A. & Zimmermann N.E. (2000) Predictive habitat distribution models in ecology. Ecological Modelling 135: 147-186
@@ -49,7 +50,7 @@ mod <- rotif.mods$models[[1]]
 
 plotGLM(model = mod)
 
-plotGLM(model = mod, plot.values = TRUE)
+plotGLM(model = mod, plot.values = FALSE)
 
 
 # you can also use \code{plotGLM} with vectors of observed and predicted values

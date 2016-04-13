@@ -1,14 +1,8 @@
 plotGLM <-
 function(model = NULL, obs = NULL, pred = NULL, link = "logit",
-         plot.values = FALSE, xlab = "Logit (Y)",
+         plot.values = TRUE, plot.digits = 3, xlab = "Logit (Y)",
          ylab = "Predicted probability", main = "Model plot", ...) {
-  # version 1.8 (28 Sep 2015)
-  # obs: presence/absence or other binary (1-0) observed data
-  # pred: values predicted by a GLM of the binary observed data
-  # model: instead of (and overriding) obs & pred, you can provide a model object of class "glm"
-  # link: link function of the GLM; only 'logit' is implemented
-  # plot.values: logical, whether to report the values of deviance and adjusted deviance in the plot (requires the 'model' argument and the 'Dsquared' function)
-  # ...: arguments to pass to the 'plot' function
+  # version 1.9 (13 Apr 2016)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -23,10 +17,13 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
   
   stopifnot(
     length(obs) == length(pred),
-    obs %in% c(0, 1),
-    pred >= 0,
-    pred <= 1)
-
+    obs %in% c(0, 1)#,
+    #pred >= 0,
+    #pred <= 1
+    )
+  
+  warning("Some of your 'pred' values are outside the [0,1] interval; are you sure these represent probabilities? Unexpected or incorrect results may arise. Consider properly rescaling you 'pred' values, or obtaining real probabilities instead.")
+  
   pred[pred == 0] <- 2e-16  # avoid log 0 below
   pred[pred == 1] <- 1 - 2e-16  # avoid division by 0 below
   
@@ -41,14 +38,32 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
   points(pred ~ logit, pch = 20, cex = 0.6)
 
   if (plot.values) {
-    Dsq <- Dsquared(model = model, adjust = FALSE)
-    if (max(logit) > abs(min(logit)))  x.loc <- c(max(logit), 1)
-    else x.loc <- c(min(logit), 0)
-    text(x = x.loc[1], y = 0.6, adj = x.loc[2], labels = substitute(paste(D^2 == a), list(a = round(Dsq, 3))))
-    if (model.provided) {  # adjDsq needs n parameters in original model, not just our model created from obs~logit
-      adjDsq <- Dsquared(model = model, adjust = TRUE)
-      text(x = x.loc[1], y = 0.4, adj = x.loc[2], labels = substitute(paste('D'['adj']^2) == a, list(a = round(adjDsq, 3))))
+    Dsq <- round(Dsquared(model = model, adjust = FALSE), plot.digits)
+    Rsq <- RsqGLM(model = model)
+    CoxSnell <- round(Rsq$CoxSnell, plot.digits)
+    McFadden <- round(Rsq$McFadden, plot.digits)
+    Nagelkerke <- round(Rsq$Nagelkerke, plot.digits)
+    Tjur <- round(Rsq$Tjur, plot.digits)
 
-    }
-  }  # end if plot.val
+    #minX <- min(log(mod$fitted/(1 - mod$fitted)))
+    
+    #if (max(logit) > abs(min(logit)))  x.loc <- c(max(logit), 1)
+    #else x.loc <- c(min(logit), 0)
+    
+    if (max(logit) > abs(min(logit)))  x.loc <- max(logit)
+    else x.loc <- min(logit)
+
+    text(x.loc, 0.95, substitute(paste(D^2 == a), list(a = Dsq)), adj = 0)
+    text(x.loc, 0.8, substitute(paste(R[Cox-Snell]^2 == a), list(a = CoxSnell)), adj = 0)
+    text(x.loc, 0.6, substitute(paste(R[McFadden]^2 == a), list(a = McFadden)), adj = 0)
+    text(x.loc, 0.4, substitute(paste(R[Nagelkerke]^2 == a), list(a = Nagelkerke)), adj = 0)
+    text(x.loc, 0.2, substitute(paste(R[Tjur]^2 == a), list(a = Tjur)), adj = 0)
+    
+    #text(x = x.loc[1], y = 0.6, adj = x.loc[2], labels = substitute(paste(D^2 == a), list(a = round(Dsq, plot.digits))))
+    #if (model.provided) {  # adjDsq needs n parameters in original model, not just our model created from obs~logit
+    #  adjDsq <- Dsquared(model = model, adjust = TRUE)
+    #  text(x = x.loc[1], y = 0.4, adj = x.loc[2], labels = substitute(paste('D'['adj']^2) == a, list(a = round(adjDsq, plot.digits))))
+    #}  # end if model provided
+    
+  }  # end if plot values
 }

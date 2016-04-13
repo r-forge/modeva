@@ -7,9 +7,10 @@ Area Under the ROC Curve
 This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, for either a model object of class \code{"glm"}, or two matching vectors of observed (binary, 1 for occurrence vs. 0 for non-occurrence) and predicted (continuous, e.g. occurrence probability) values, respectively. The AUC is a measure of the overall discrimination power of the predictions, or the probability that an occurrence site has a higher predicted value than a non-ocurrence site.
 }
 \usage{
-AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01,
-FPR.limits = c(0, 1), plot = TRUE, plot.values = TRUE, plot.preds = FALSE,
-grid = FALSE, xlab = c("False positive rate", "(1-specificity)"),
+AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, 
+interval = 0.01, FPR.limits = c(0, 1), plot = TRUE, plot.values = TRUE, 
+plot.digits = 3, plot.preds = FALSE, grid = FALSE, 
+xlab = c("False positive rate", "(1-specificity)"),
 ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve", ...)
 }
 \arguments{
@@ -22,6 +23,7 @@ ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve", ...)
   \item{interval}{interval of threshold values at which to calculate the true and false positive and negative rates. Defaults to 0.01. Ignored if \code{simplif = TRUE}. Note that this does not affect the obtained AUC value (although it can affect the size of the plotted ROC curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney U statistic and is therefore threshold-independent.}
   \item{plot}{logical, whether or not to plot the ROC curve. Defaults to TRUE.}
   \item{plot.values}{logical, whether or not to show in the plot the values associated to the curve (e.g., the AUC). Defaults to TRUE.}
+  \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed. Defaults to 3. Ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}
   \item{plot.preds}{logical, whether or not to plot the proportion of analysed model predictions (through proportionally sized circles) at each threshold. Experimental. Defaults to FALSE.}
   \item{grid}{logical, whether or not to add a grid to the plot, marking the analysed thresholds. Defaults to FALSE.}
   \item{xlab}{label for the x axis.}

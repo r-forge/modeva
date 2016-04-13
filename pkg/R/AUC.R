@@ -1,10 +1,10 @@
 AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
                 interval = 0.01, FPR.limits = c(0, 1), plot = TRUE,
-                plot.values = TRUE, plot.preds = FALSE, grid = FALSE,
-                xlab = c("False positive rate", "(1-specificity)"),
+                plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, 
+                grid = FALSE,xlab = c("False positive rate", "(1-specificity)"),
                 ylab = c("True positive rate", "(sensitivity)"),
                 main = "ROC curve", ...) {
-  # version 1.6 (15 Sep 2015)
+  # version 1.7 (13 Apr 2016)
 
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
 
@@ -28,12 +28,12 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
   
   stopifnot(
     obs %in% c(0,1),
-    pred >= 0,
-    pred <= 1,
+#    pred >= 0,
+#    pred <= 1,
     interval > 0,
     interval < 1
   )
-  
+
   n1 <- sum(obs == 1)
   n0 <- sum(obs == 0)
 
@@ -43,6 +43,9 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
   AUC <- ((n0 * n1) + ((n0 * (n0 + 1))/2) - sum(rnk[1 : n0])) / (n0 * n1)
 
   if (simplif)  return(AUC)
+
+  # new:
+  if (any(pred < 0) | any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval within which thresholds are calculated.")
 
   N <- length(obs)
   preval <- prevalence(obs)
@@ -68,7 +71,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
     lines(x = false.pos.rate, y = sensitivity, lwd = 2)  # ROC curve
 
     if (plot.values) {
-      text(1.0, 0.1, adj = 1, substitute(paste(AUC == a), list(a = round(AUC, 3))))
+      text(1.0, 0.1, adj = 1, substitute(paste(AUC == a), list(a = round(AUC, plot.digits))))
     }  # end if plot.values
 
     if (plot.preds) {

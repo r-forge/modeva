@@ -1,8 +1,8 @@
 varPart <-
 function(A, B, C = NULL, AB, AC = NULL, BC = NULL, ABC = NULL,
          model.type, A.name = "A", B.name = "B", C.name = "C",
-         plot = TRUE, plot.digits = 3, cex.names = 1.2,
-         cex.values = 1) {
+         plot = TRUE, plot.digits = 3, cex.names = 1.5,
+         cex.values = 1.2, main = "", cex.main = 2) {
 
   twofactors <- is.null(C)
 
@@ -74,7 +74,7 @@ function(A, B, C = NULL, AB, AC = NULL, BC = NULL, ABC = NULL,
 
     if(twofactors) {
       plot(0, 0, ylim = c(-1, 10), xlim = c(-1, 7), type = "n", axes = FALSE,
-           ylab = "", xlab = "")
+           ylab = "", xlab = "", main = main, cex.main = cex.main)
       circle(3,3,3)
       circle(3,6,3)
       text(x = c(3, 3), y = c(9.5, -0.5), labels = c(A.name, B.name),
@@ -84,15 +84,13 @@ function(A, B, C = NULL, AB, AC = NULL, BC = NULL, ABC = NULL,
     }  # end if 2 factors
     else {
       plot(0, 0, ylim = c(-1, 10), xlim = c(-1, 10), type = "n", axes = FALSE,
-           ylab = "", xlab = "")
-      circle(3,6,3)
-      circle(6,6,3)
-      circle(4.5,3,3)
+           ylab = "", xlab = "", main = main, cex.main = cex.main)
+      circle(3, 6, 3)
+      circle(6, 6, 3)
+      circle(4.5, 3,  3)
       text(x = c(2.5, 6.5, 4.5), y = c(9.5, 9.5, -0.5),
            labels = c(A.name, B.name, C.name), cex = cex.names)
-      text(x = c(1.8, 7.2, 4.5, 4.5, 2.8, 6.2, 4.5), y = c(6.6, 6.6, 2, 7, 4, 4, 5),
-           labels = c(Apure, Bpure, Cpure, ABoverlap, ACoverlap, BCoverlap,
-                      ABCoverlap), cex = cex.values)
+      text(x = c(1.8, 7.2, 4.5, 4.5, 2.8, 6.2, 4.5), y = c(6.6, 6.6, 2, 7, 4, 4, 5), labels = c(Apure, Bpure, Cpure, ABoverlap, ACoverlap, BCoverlap, ABCoverlap), cex = cex.values)
     } # end else
   }  # end if plot
   return(results)

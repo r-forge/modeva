@@ -1,4 +1,26 @@
 ==========================================
+modEvA v1.2.6 (committed 2016-04-12) NOT YET!!!!!
+==========================================
+
+## Modified functions:
+
+* AUC:
+- error replaced with warning when pred values outside the [0,1] interval
+- added argument plot.digits = 3 (for plot.values)
+
+* varPart:
+- added arguments 'main' and 'cex.main'
+- slightly increased default cex values
+- updated help file to make GLM use a bit clearer
+
+* plotGLM:
+- error replaced with warning when pred values outside the [0,1] interval
+- added pseudo-R-squared measures to plot.values
+- changed plot.values default to TRUE
+- added argument plot.digits = 3 (for plot.values)
+
+
+==========================================
 modEvA v1.2.5 (committed 2016-03-30)
 ==========================================
 

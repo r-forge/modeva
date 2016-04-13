@@ -39,8 +39,11 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot
   mod <- glm(obs ~ logit, family = binomial)
   intercept <- mod$coef[[1]]
   slope <- mod$coef[[2]]
-#  std.err <- summary(mod)$coefficients["logit", "Std. Error"]
-#  slope.p <- abs((slope - 1) / sqrt(std.err^2 + 0))  # Paternoster 98; http://stats.stackexchange.com/questions/55501/test-a-significant-difference-between-two-slope-values
+  #std.err <- summary(mod)$coefficients["logit", "Std. Error"]
+  #slope.p <- abs((slope - 1) / sqrt(std.err^2 + 0))  # Paternoster 98; http://stats.stackexchange.com/questions/55501/test-a-significant-difference-between-two-slope-values
+  #slope.t <- (slope - 1) / std.err
+  #slope.p <- pt(slope.t, df = mod$df.residual)  # http://stats.stackexchange.com/questions/111559/test-model-coefficient-regression-slope-against-some-value
+  # both values look wrong...
 
   if (plot) {
     ymin <- min(0, intercept)
@@ -49,11 +52,12 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot
     abline(0, 1, col = "lightgrey", lty = 2)
     abline(intercept, slope)
     if (plot.values) {
-#      plotext <- paste("intercept =" , round(intercept, digits), "\nslope =", round(slope, digits), "\nslope p-value =", round(slope.p, digits))
+      #plotext <- paste("intercept =" , round(intercept, digits), "\nslope =", round(slope, digits), "\nslope p-value =", round(slope.p, digits))
       plotext <- paste0("intercept = " , round(intercept, digits), "\nslope = ", round(slope, digits))
       text(x = 1, y = ymin + 0.1 * (ymax - ymin), adj = 1, labels = plotext)
-    }
-  }
+    }  # end if plot.values
+  }  # end if plot
+
   #return(list(intercept = intercept, slope = slope, slope.pvalue = slope.p))
-  return(list(intercept = intercept, slope = slope))
+  list(intercept = intercept, slope = slope)
 }  # end MillerCalib function
