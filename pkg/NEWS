@@ -1,5 +1,18 @@
 ==========================================
-modEvA v1.2.6 (committed 2016-04-12) NOT YET!!!!!
+modEvA v1.2.7 (committed 2016-04-15)
+==========================================
+
+## Modified functions:
+
+* varPart:
+- added argument 'plot.unexpl = TRUE'
+- explicit error message for 3-factor LM with no ABC
+- help file now with both LM and GLM examples
+- help file now notes that wrong input = wrong result
+
+
+==========================================
+modEvA v1.2.6 (committed 2016-04-13)
 ==========================================
 
 ## Modified functions:

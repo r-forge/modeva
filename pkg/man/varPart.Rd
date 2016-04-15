@@ -9,7 +9,7 @@ This function performs variation partitioning (Borcard et al. 1992) among two fa
 \usage{
 varPart(A, B, C = NULL, AB, AC = NULL, BC = NULL, ABC = NULL, model.type,
 A.name = "A", B.name = "B", C.name = "C", plot = TRUE, plot.digits = 3,
-cex.names = 1.5, cex.values = 1.2, main = "", cex.main = 2)
+cex.names = 1.5, cex.values = 1.2, main = "", cex.main = 2, plot.unexpl = TRUE)
 }
 \arguments{
   \item{A}{numeric value of the R-squared of the regression of the response variable on the variables related to factor 'A'}
@@ -31,13 +31,14 @@ cex.names = 1.5, cex.values = 1.2, main = "", cex.main = 2)
   \item{cex.values}{numeric value indicating character expansion factor to define the size of the values displayed in the plot.}
   \item{main}{optional character string indicating the main title for the plot. The default is empty.}
   \item{cex.main}{numeric value indicating character expansion factor to define the font size of the plot title (if provided).}
+  \item{plot.unexpl}{logical value indicating whether the amount of unexplained variation should be included in the plot (if \code{model.type == "LM"}). The default is \code{TRUE}.}
 }
 \details{
 If you have linear models, input data for \code{varPart} are the coefficients of determination (R-squared values) of the linear regressions of the target variable on all the variables in the model, on the variables related to each particular factor, and (when there are 3 factors) on the variables related to each pair of factors. The outputs are the amounts of variance explained exclusively by each factor, the amounts explained exclusively by the overlapping effects of each pair of factors, and the amount explained by the overlap of the 3 factors if this is the case (e.g. Real et al. 2003). The amount of variation not explained by the complete model is also provided.
 
-If you have generalized linear models (GLMs) such as logistic regression (see \code{\link{glm}}), you have no R-squared values from these models; inputs are then the squared coefficients of correlation between the model predictions given by each factor or pair of factors and the predictions of the complete model (e.g. Munoz & Real 2006), or the R-squared values of the corresponding logit (y) functions (Real et al. 2013), or an adjusted R-squared (De Araujo et al. 2013). Consequently, output values are not the total amounts of variance (of the target variable) explained by factors and overlaps, but rather their proportional contribution to the total variation explained by the model. The amount of unexplained variation is not available for GLMs.}
+If you have generalized linear models (GLMs) such as logistic regression (see \code{\link{glm}}), you have no R-squared values from these models; inputs can be the squared coefficients of correlation between the model predictions given by each factor or pair of factors and the predictions of the complete model (e.g. Munoz & Real 2006), or the R-squared values of the corresponding logit (y) functions (Real et al. 2013), or an adjusted R-squared (De Araujo et al. 2013). Consequently, output values are not the total amounts of variance (of the target variable) explained by factors and overlaps, but rather their proportional contribution to the total variation explained by the model. The amount of unexplained variation is not available for GLMs.}
 \value{
-The output consists of a data frame indicating the proportion of variance accounted for by each of the factors, and (if \code{plot = TRUE} a Venn diagram of the contributions of each factor.)
+The output consists of a data frame indicating the proportion of variance accounted for by each of the factors, and (if \code{plot = TRUE}) a Venn diagram of the contributions of each factor.
 }
 \references{
 Borcard D, Legendre P, Drapeau P (1992) Partialling out the spatial component of ecological variation. Ecology 73: 1045-1055
@@ -56,13 +57,30 @@ Ribas, A., Barbosa, A.M., Casanova, J.C., Real, R., Feliu, C. & Vargas, J.M. (20
 A. Marcia Barbosa
 }
 \note{
-This function had a bug up to modEvA version 0.8: a line break prevented the ABC overlap from being calculated correctly. Thanks to Jurica Levatic for pointing this out and helping to solve it!
+These results derive from arithmetic operations between your input values, and they always sum up to 1; if your input is incorrect, the results will be incorrect as well.
+
+This function had a bug up to modEvA version 0.8: a badly placed line break prevented the ABC overlap from being calculated correctly. Thanks to Jurica Levatic for pointing this out and helping to solve it!
 }
 \seealso{
 }
 \examples{
-varPart(A = 0.857537, B = 0.078095, C = 0.499474, AB = 0.89933, BC = 0.492119,
-AC = 0.981672, model.type = "GLM", A.name = "Climatic", B.name = "Human",
-C.name = "Topographic", plot.digits = 3, cex.names = 1.2, cex.values = 1)
+# if you have a linear model (LM), use (non-adjusted) R-squared values 
+# for each factor and for their combinations as inputs:
+
+varPart(A = 0.456, B = 0.315, C = 0.281, AB = 0.051, BC = 0.444, 
+AC = 0.569, ABC = 0.624, model.type = "LM", A.name = "Spatial", 
+B.name = "Human", C.name = "Environmental", main = "Small whale")
+
+# (try also adding 'plot.unexpl = FALSE')
+
+
+# if you have a generalized linear model (GLM), 
+# you can use squared correlation coefficients 
+# of the predictions of each factor with those of the complete model:
+
+varPart(A = (-0.005)^2, B = 0.698^2, C = 0.922^2, AB = 0.696^2, 
+BC = 0.994^2, AC = 0.953^2, ABC = NULL, model.type = "GLM", 
+A.name = "Topographic", B.name = "Climatic", C.name = "Geographic", 
+main = "Big bird")
 }
 \keyword{ }

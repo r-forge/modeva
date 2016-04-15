@@ -2,11 +2,14 @@ varPart <-
 function(A, B, C = NULL, AB, AC = NULL, BC = NULL, ABC = NULL,
          model.type, A.name = "A", B.name = "B", C.name = "C",
          plot = TRUE, plot.digits = 3, cex.names = 1.5,
-         cex.values = 1.2, main = "", cex.main = 2) {
+         cex.values = 1.2, main = "", cex.main = 2, plot.unexpl = TRUE) {
+  
+  # version 1.5 (15 Apr 2016)
 
   twofactors <- is.null(C)
 
   if (model.type == "LM") {
+    if (is.finite(C) & is.null(ABC))  stop("ABC must be provided if there are three factors and model.type = 'LM'.")
     totalexpl <- ifelse(twofactors, AB, ABC)
     unexpl <- 1 - totalexpl
   }  # end if LM
@@ -23,7 +26,7 @@ function(A, B, C = NULL, AB, AC = NULL, BC = NULL, ABC = NULL,
     Bpure <- totalexpl - A
     ABoverlap <- totalexpl - Apure - Bpure
     output.names <- c(paste("Pure", A.name), paste("Pure", B.name),
-                      paste("Pure ", A.name, "-", B.name, " overlap", sep = ""),
+                      paste0("Pure ", A.name, "-", B.name, " overlap"),
                       "Unexplained variation")
     results <- data.frame(c(Apure, Bpure, ABoverlap, unexpl),
                           row.names = output.names)
@@ -39,10 +42,10 @@ function(A, B, C = NULL, AB, AC = NULL, BC = NULL, ABC = NULL,
     output.names <- c(paste("Pure", A.name),
                       paste("Pure", B.name),
                       paste("Pure", C.name),
-                      paste("Pure ", A.name, "-", B.name, " overlap", sep = ""),
-                      paste("Pure ", B.name, "-", C.name, " overlap", sep = ""),
-                      paste("Pure ", A.name,"-", C.name," overlap", sep = ""),
-                      paste(A.name,"-",B.name,"-",C.name," overlap", sep = ""),
+                      paste0("Pure ", A.name, "-", B.name, " overlap"),
+                      paste0("Pure ", B.name, "-", C.name, " overlap"),
+                      paste0("Pure ", A.name,"-", C.name," overlap"),
+                      paste0(A.name,"-",B.name,"-",C.name," overlap"),
                       "Unexplained variation")
     results <- data.frame(c(Apure, Bpure, Cpure, ABoverlap, BCoverlap,
                             ACoverlap, ABCoverlap, unexpl),
@@ -81,17 +84,30 @@ function(A, B, C = NULL, AB, AC = NULL, BC = NULL, ABC = NULL,
            cex = cex.names)
       text(x = c(3, 3, 3), y = c(7, 4.75, 2), c(Apure, ABoverlap, Bpure),
            cex = cex.values)
-    }  # end if 2 factors
-    else {
+      
+    } else { # end if 2 factors
+    
       plot(0, 0, ylim = c(-1, 10), xlim = c(-1, 10), type = "n", axes = FALSE,
            ylab = "", xlab = "", main = main, cex.main = cex.main)
       circle(3, 6, 3)
       circle(6, 6, 3)
       circle(4.5, 3,  3)
-      text(x = c(2.5, 6.5, 4.5), y = c(9.5, 9.5, -0.5),
+      Cname.loc = ifelse((model.type == "LM" & plot.unexpl), 6, 4.5)
+      text(x = c(2.5, 6.5, Cname.loc), y = c(9.5, 9.5, -0.5),
            labels = c(A.name, B.name, C.name), cex = cex.names)
       text(x = c(1.8, 7.2, 4.5, 4.5, 2.8, 6.2, 4.5), y = c(6.6, 6.6, 2, 7, 4, 4, 5), labels = c(Apure, Bpure, Cpure, ABoverlap, ACoverlap, BCoverlap, ABCoverlap), cex = cex.values)
-    } # end else
+    } # end if 2 factors else
+    
+    if (model.type == "LM" && plot.unexpl)  {
+      rect(-1, -1, 10, 10)
+      text(x = -0.9, y = -0.2, label = paste0("Unexplained\n      ", unexpl), adj = 0, cex = cex.values)
+    }
+    
   }  # end if plot
-  return(results)
+
+  if (all.equal(sum(results, na.rm = TRUE), 1)) cat("")
+  else warning ("Results don't sum up to 1; are you sure your input data are correct?")  # but this doesn't work because results always sum to 1 anyway
+  
+  results
+  
 }
