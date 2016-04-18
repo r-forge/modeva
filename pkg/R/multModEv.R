@@ -7,7 +7,12 @@ function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmeth
 #    message("Threshold automatically set to 0.5, which corresponds to prevalence when Favourability is used.")
 #  }
 
-  if (!is.null(models) & !all(class(models) == "list")) stop ("'models' must be an object of class 'list' containing the model object(s).")
+  if (!is.null(models) && !all(class(models) == "list")) stop ("'models' must be an object of class 'list' containing the model object(s).")
+  
+  if (!is.null(models) && 
+        !all(class(models) == "list") ||
+        !all(unique(lapply(models, class))[[1]] == c("glm", "lm"))) 
+    stop ("'models' must be an object of class 'list' containing only model object(s) of class 'glm'.")
   
   for (m in measures) {
     if (!(m %in% modEvAmethods("multModEv"))) stop(m, " is not a valid measure; type modEvAmethods('multModEv') for available options.")

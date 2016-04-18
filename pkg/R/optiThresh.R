@@ -6,6 +6,7 @@ function(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
   # version 2.6 (20 Jan 2013)
 
   if (!is.null(model)) {
+    if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
     obs <- model$y

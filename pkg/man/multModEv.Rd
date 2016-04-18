@@ -14,7 +14,7 @@ bin.method = "quantiles", quiet = TRUE)
 \arguments{
   \item{models}{a \code{list} of model object(s) of class "glm", all applied to the same data set.}
   \item{obs.data}{a data frame with observed binary data. Not necessary (and ignored) if \code{models} is provided.}
-  \item{pred.data}{a data frame with the corresponding predicted values, with both rows and columns in the same order as in \code{obs.data}. Not necessary (and ignored) if \code{models} is provided. Note that, for calibration measures (based on \code{\link{HLfit}} or \code{\link{MillerCalib}}), the results are only valid if the input predictions represent presence probability.}
+  \item{pred.data}{a data frame with the corresponding predicted values, with both rows and columns in the same order as in \code{obs.data}. Not necessary (and ignored) if \code{models} is provided. Note that, for calibration measures (based on \code{\link{HLfit}} or \code{\link{MillerCalib}}), the results are only valid if the input predictions represent probability.}
   \item{measures}{character vector of the evaluation measures to calculate. The default is all implemented measures, which you can check by typing \code{modEvAmethods("multModEv")}.}
   \item{standardize}{logical, whether to standardize measures that vary between -1 and 1 to the 0-1 scale (see \code{\link{standard01}}).}
   \item{thresh}{the threshold value to use for calculating threshold-based measures (the ones in \code{modEvAmethods("threshMeasures")}). Can be "preval" (for species prevalence) or any number between 0 and 1. The default is 0.5.}

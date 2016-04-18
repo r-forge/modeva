@@ -4,13 +4,14 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
                 grid = FALSE,xlab = c("False positive rate", "(1-specificity)"),
                 ylab = c("True positive rate", "(sensitivity)"),
                 main = "ROC curve", ...) {
-  # version 1.7 (13 Apr 2016)
+  # version 1.8 (18 Apr 2016)
 
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
 
-  if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
+  if (length(obs) != length(pred))  stop ("'obs' and 'pred' must be of the same length (and in the same order).")
 
   if (!is.null(model)) {
+    if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
     obs <- model$y

@@ -3,15 +3,16 @@ function(model = NULL, obs = NULL, pred = NULL, thresh = 0.5,
          measures = modEvAmethods("threshMeasures"), simplif = FALSE,
          plot = TRUE, plot.ordered = FALSE, standardize = TRUE,
          messages = TRUE, ...) {
-  # version 2.6 (15 Sep 2015)
+  # version 2.7 (18 Apr 2016)
 
   if (is.null(model)) {
     if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs'
 and 'pred' vectors, or a 'model' object of class 'glm'.")
-  }  # end if null model
-  else {
-    if (!all(class(model) %in% c("glm", "lm"))) stop ("'model' must be a
-model object of class 'glm'")
+
+    } else { # end if null model
+  
+    #if (!all(class(model) %in% c("glm", "lm"))) stop ("'model' must be a model object of class 'glm'")
+    if (!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
     if (messages) {
       if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
       if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")

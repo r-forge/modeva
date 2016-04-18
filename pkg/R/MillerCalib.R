@@ -4,6 +4,7 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
   if (model.provided) {
+    if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     obs <- model$y

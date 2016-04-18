@@ -7,6 +7,7 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
   if (model.provided) {
+    if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     obs <- model$y
@@ -22,7 +23,7 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
     #pred <= 1
     )
   
-  warning("Some of your 'pred' values are outside the [0,1] interval; are you sure these represent probabilities? Unexpected or incorrect results may arise. Consider properly rescaling you 'pred' values, or obtaining real probabilities instead.")
+  if (any(pred < 0) | any(pred > 1)) warning("Some of your 'pred' values are outside the [0,1] interval; are you sure these represent probabilities? Unexpected or incorrect results may arise. Consider properly rescaling you 'pred' values, or obtaining real probabilities instead.")
   
   pred[pred == 0] <- 2e-16  # avoid log 0 below
   pred[pred == 1] <- 1 - 2e-16  # avoid division by 0 below

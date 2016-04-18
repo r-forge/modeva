@@ -3,8 +3,9 @@ function(model, type = "Y", digits = NULL, prefix = NULL, suffix = NULL) {
   # version 1.6 (14 Aug 2013)
 
   stopifnot(class(model) %in% c("lm", "glm"))
-  if(length(type) != 1 | !(type %in% c("Y", "P", "F"))) stop("'type' must be either 'Y', 'P', or 'F'")
-  if(!("glm" %in% class(model)) & type != "Y") {
+  
+  if (length(type) != 1 | !(type %in% c("Y", "P", "F"))) stop("'type' must be either 'Y', 'P', or 'F'")
+  if(!("glm" %in% class(model)) && type != "Y") {
     message("types 'P' and 'F' are only applicable to models of class 'glm', so type was reset to 'Y'")
     type <- "Y"
   }

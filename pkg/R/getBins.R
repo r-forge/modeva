@@ -2,9 +2,10 @@ getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
 bin.method = "quantiles", n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15,
 min.prob.interval = 0.1, simplif = FALSE)  {
   
-  # version 2.0 (30 Mar 2016)
+  # version 2.1 (18 Abr 2016)
 
   if (!is.null(model)) {
+    if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
       if (!is.null(obs))
         message("Argument 'obs' ignored in favour of 'model'.")
       if (!is.null(pred))

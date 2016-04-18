@@ -1,4 +1,23 @@
 ==========================================
+modEvA v1.2.8 (committed 2016-04-18)
+==========================================
+
+## Modified functions:
+
+* varPart:
+- 'plot.unexpl' now also rounded to 'plot.digits'
+- 'model.type' deprecated (message emitted)
+- AB or ABC now also mandatory, and unexplained var 0, for GLMs
+- help file updated
+
+* plotGLM:
+- warning on preds outside [0,1] now only emitted when appropriate
+
+* AUC, getBins, HLfit, MillerCalib, multModEv, optiPair, optiThresh, plotGLM, threshMeasures:
+- error when model(s) provided but not binomial logit glm
+
+
+==========================================
 modEvA v1.2.7 (committed 2016-04-15)
 ==========================================
 
