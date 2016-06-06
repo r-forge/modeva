@@ -1,8 +1,8 @@
 getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
-bin.method = "quantiles", n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15,
+bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15,
 min.prob.interval = 0.1, simplif = FALSE)  {
   
-  # version 2.1 (18 Abr 2016)
+  # version 2.2 (6 Jun 2016)
 
   if (!is.null(model)) {
     if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
@@ -52,11 +52,8 @@ min.prob.interval = 0.1, simplif = FALSE)  {
     if (bin.method == "n.bins") {  # can't have 'else' here because of previous 'if'
       message("Argument min.prob.interval is ignored by this bin.method")
       if (fixed.bin.size) {
-        prob.bin <- findInterval(pred, 
-                                 quantile(pred, 
-                                          probs = seq(from = 0, 
-                                                      to = 1, 
-                                                      by = 1/n.bins)))
+        #prob.bin <- findInterval(pred, quantile(pred, probs = seq(from = 0, to = 1, by = 1 / (n.bins - 1))))
+        prob.bin <- cut(seq_along(pred), n.bins)
       }
       else {
         prob.bin <- cut(pred, n.bins)

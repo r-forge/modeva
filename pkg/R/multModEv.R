@@ -1,33 +1,35 @@
 multModEv <-
-function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmethods("multModEv"), standardize = FALSE, thresh = 0.5, bin.method = "quantiles", quiet = TRUE) {
-  # version 2.0 (24 Jun 2015)
+function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmethods("multModEv"), standardize = FALSE, thresh = 0.5, bin.method = NULL, quiet = TRUE, ...) {
+  # version 2.1 (6 Jun 2016)
 
 #  if (Favourability == TRUE & thresh == "preval") {
 #    thresh <- 0.5
 #    message("Threshold automatically set to 0.5, which corresponds to prevalence when Favourability is used.")
 #  }
 
+  
   if (!is.null(models) && !all(class(models) == "list")) stop ("'models' must be an object of class 'list' containing the model object(s).")
   
-  if (!is.null(models) && 
-        !all(class(models) == "list") ||
-        !all(unique(lapply(models, class))[[1]] == c("glm", "lm"))) 
+  if (!is.null(models) && (!all(class(models) == "list") || !all(unique(lapply(models, class))[[1]] == c("glm", "lm"))))
     stop ("'models' must be an object of class 'list' containing only model object(s) of class 'glm'.")
   
   for (m in measures) {
     if (!(m %in% modEvAmethods("multModEv"))) stop(m, " is not a valid measure; type modEvAmethods('multModEv') for available options.")
   }
 
-  if (!bin.method %in% modEvAmethods("getBins")) stop("Invalid bin.method; type modEvAmethods('getBins') for available options.")
+  if (!is.null(bin.method) && !(bin.method %in% modEvAmethods("getBins"))) stop("Invalid bin.method; type modEvAmethods('getBins') for available options.")
 
+  if (is.null(bin.method) && ("HL" %in% measures | "HL.p" %in% measures))  stop ("bin.method must be specified if HL or HLp are included in measures.")
+  
+  calib.measures <- measures[measures %in% c("HL", "HL.p", "RMSE", "Miller.int", "Miller.slope")]
+  if (length(calib.measures) > 0)  warning(paste0(calib.measures, ", "), "valid only if your input 'pred.data' represent presence probability; otherwise, please ignore these measures, or use probability as input instead.")
+  
   if (is.null(models)) {
-    if (is.null(obs.data) | is.null(pred.data)) stop("You must provide either a list of model object(s) of class 'glm', or a set of obs.data + pred.data with matching dimensions.")
+    if (is.null(obs.data) || is.null(pred.data)) stop("You must provide either a list of model object(s) of class 'glm', or a set of obs.data + pred.data with matching dimensions.")
     #if (Favourability) message("'pred.data' converted with the Fav function; set Favourability to FALSE if this is not what you wish.")
-    calib.measures <- measures[measures %in% c("HL", "HL.p", "RMSE", "Miller.int", "Miller.slope", "Miller.p")]
-    if (length(calib.measures) > 0)  warning(paste0(calib.measures, ", "), "valid only if your input 'pred.data' represent presence probability; otherwise, please ignore these measures, or use probability as input instead.")
-  }  # end if !models
-
-  else {
+ }  # end if !models
+  
+  else {  # if !null models
     if (!is.null(obs.data)) message("Argument 'obs.data' ignored in favour of 'models'.")
     if (!is.null(pred.data)) message("Argument 'pred.data' ignored in favour of 'models'.")
 
@@ -94,22 +96,22 @@ for (m in 1:n.models) {
 
     if (any(measures %in% c("HL", "HL.p"))) {
       for (m in 1:n.models) {
-        HL <- HLfit(obs = obs.data[ , m], pred = pred.data[ , m], bin.method = bin.method, simplif = TRUE)
+        HL <- HLfit(obs = obs.data[ , m], pred = pred.data[ , m], bin.method = bin.method, simplif = TRUE, ...)
         if ("HL" %in% measures)  results[m, "HL"] <- HL$chi.sq
         if ("HL.p" %in% measures)  results[m, "HL.p"] <- HL$p.value
         if ("RMSE" %in% measures)  results[m, "RMSE"] <- HL$RMSE
       }; rm(m)
     }  # end if HL
     
-    if (any(measures %in% c("Miller.int", "Miller.slope", "Miller.p"))) {
+    if (any(measures %in% c("Miller.int", "Miller.slope"))) {
       for (m in 1:n.models) {
         Miller <- MillerCalib(obs = obs.data[ , m], pred = pred.data[ , m], plot = FALSE)
         if ("Miller.int" %in% measures)
           results[m, "Miller.int"] <- Miller$intercept
         if ("Miller.slope" %in% measures)
           results[m, "Miller.slope"] <- Miller$slope
-        if ("Miller.p" %in% measures)
-          results[m, "Miller.p"] <- Miller$slope.pvalue
+        #if ("Miller.p" %in% measures)
+        #  results[m, "Miller.p"] <- Miller$slope.pvalue
       }; rm(m)
     } # end if Miller
 

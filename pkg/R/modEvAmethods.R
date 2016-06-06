@@ -8,7 +8,7 @@ modEvAmethods <- function(fun) {
     
     else if (fun == "multModEv") {
       bin.measures <- c("HL", "HL.p", "RMSE")  # "ABCc", "rABCc", "unityRsq"
-      return (c("Prevalence", "AUC", thresh.measures, bin.measures, "Miller.int", "Miller.slope", "Miller.p"))  # "Evenness", "ABCc", "rABCc", "unityRsq"
+      return (c("Prevalence", "AUC", thresh.measures, bin.measures, "Miller.int", "Miller.slope"))  # "Evenness", "ABCc", "rABCc", "unityRsq", "Miller.p"
     }  # end if multModEv
   }  # end if threshMeasures | multModEv
   

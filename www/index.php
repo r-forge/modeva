@@ -71,7 +71,7 @@ Please note that the modelling functions formerly included in <i>modEvA</i> have
 
 <h3> Citation of the <i>modEvA</i> package:</h3>
 
-<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 1.1</p>
+<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 1.2.9</p>
 
 
 <h3> Papers introducing <i>modEvA</i>:</h3>
