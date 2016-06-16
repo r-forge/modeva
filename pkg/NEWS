@@ -1,11 +1,25 @@
 ==========================================
+modEvA v1.3 (committed 2016-06-16)
+==========================================
+
+## Modified functions:
+
+* getBins (affecting HLfit):
+- bug fixed in "bin.method = quantiles", removing last additional bin of size 1
+- help file improved to better explain what each bin.method does and what arguments it ignores
+
+* HLfit:
+- added examples to help file to illustrate differences in bin.methods
+
+
+==========================================
 modEvA v1.2.9 (committed 2016-06-06)
 ==========================================
 
 ## Modified functions:
 
 * getBins (affecting HLfit):
-- bug fixed in "method = n.bins, fixed.bin.size = TRUE"
+- bug fixed in "bin.method = n.bins, fixed.bin.size = TRUE"
 - help file updated to explain what each bin.method does
 - removed default bin.method (must be specified by user)
 
@@ -14,7 +28,7 @@ modEvA v1.2.9 (committed 2016-06-06)
 - removed default bin.method (must be specified if HL in measures)
 
 * modEvAmethods:
-- excluded "Miller.p" (already eliminated from MillerCalib)
+- excluded "Miller.p" (previously eliminated from MillerCalib)
 
 
 ==========================================

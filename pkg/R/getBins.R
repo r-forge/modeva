@@ -2,7 +2,7 @@ getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
 bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15,
 min.prob.interval = 0.1, simplif = FALSE)  {
   
-  # version 2.2 (6 Jun 2016)
+  # version 2.3 (16 Jun 2016)
 
   if (!is.null(model)) {
     if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
@@ -32,37 +32,39 @@ min.prob.interval = 0.1, simplif = FALSE)  {
     N <- length(obs)
   
     if (bin.method == "round.prob") {
-      message("Arguments n.bins and min.bin.size are ignored by this bin.method")
+      message("Arguments n.bins, fixed.bin.size and min.bin.size are ignored by this bin.method.")
       prob.bin <- round(pred, digits = nchar(min.prob.interval) - 2)
     }
   
     else if (bin.method == "prob.bins") {
-      message("Arguments n.bins and min.bin.size are ignored by this bin.method")
+      message("Arguments n.bins, fixed.bin.size and min.bin.size are ignored by this bin.method.")
       bin.cuts <- seq(from = min(0, min(pred)), to = max(1, max(pred)), by = min.prob.interval)
       prob.bin <- findInterval(pred, bin.cuts)
     }
   
     else if (bin.method == "size.bins") {
-      message("Arguments n.bins and min.prob.interval are ignored by this bin.method")
+      message("Arguments n.bins and min.prob.interval are ignored by this bin.method.")
       bin.method <- "n.bins"
-      n.bins <- floor(N/min.bin.size)
+      n.bins <- floor(N / min.bin.size)
       fixed.bin.size <- TRUE
     }
   
     if (bin.method == "n.bins") {  # can't have 'else' here because of previous 'if'
-      message("Argument min.prob.interval is ignored by this bin.method")
+      message("Arguments min.bin.size and min.prob.interval are ignored by this bin.method.")
       if (fixed.bin.size) {
         #prob.bin <- findInterval(pred, quantile(pred, probs = seq(from = 0, to = 1, by = 1 / (n.bins - 1))))
-        prob.bin <- cut(seq_along(pred), n.bins)
-      }
-      else {
+        prob.bin <- cut(seq_along(pred), n.bins)  # same if sort(pred)
+      } else {
         prob.bin <- cut(pred, n.bins)
       }
     }  # end if n.bins
     
     else if (bin.method == "quantiles") {
-      cutpoints <- quantile(pred, probs = seq(0, 1, by = 1/n.bins))
-      prob.bin <- findInterval(pred, cutpoints)
+      #cutpoints <- quantile(pred, probs = seq(0, 1, by = 1/n.bins))
+      #prob.bin <- findInterval(pred, cutpoints)
+      message("Arguments n.bins, fixed.bin.size and min.bin.size are ignored by this bin.method.")
+      cutpoints <- quantile(pred, probs = seq(min.prob.interval, 1, by = min.prob.interval))
+      prob.bin <- cut(pred, breaks = length(cutpoints), include.lowest = TRUE, dig.lab = nchar(min.prob.interval) - 2)
     }
   
     prob.bins <- sort(unique(prob.bin))
