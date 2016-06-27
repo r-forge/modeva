@@ -10,8 +10,8 @@ The modEvA package can analyse species distribution models and evaluate their pe
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 1.3\cr
-Date: \tab 2016-06-16\cr
+Version: \tab 1.3.1\cr
+Date: \tab 2016-06-27\cr
 License: \tab GPL-3\cr
 }
 }
@@ -40,23 +40,25 @@ plotGLM(model = mod)
 # calculate the area under the ROC curve for the 1st model:
 AUC(model = mod)
 
-# calculate some more threshold-based measures for this model:
+# calculate some threshold-based measures for this model:
+threshMeasures(model = mod, thresh = 0.5)
 threshMeasures(model = mod, thresh = "preval")
 
 # calculate optimal thresholds based on several criteria:
 optiThresh(model = mod)
 
 # calculate the optimal threshold balancing two evaluation measures:
-optiPair(model = mod, measures = c("Omission", "Commission"))
+optiPair(model = mod, measures = c("Sensitivity", "Specificity"))
 
 # calculate the explained deviance, Hosmer-Lemeshow goodness-of-fit,
 # Miller's calibration stats, and (pseudo) R-squared values for the 1st model:
-
 Dsquared(model = mod)
-
 HLfit(model = mod, bin.method = "quantiles")
-
 MillerCalib(model = mod)
-
 RsqGLM(model = mod)
+
+# calculate a bunch of evaluation measures for a set of models:
+multModEv(models = rotif.mods$models[1:4], thresh = "preval", bin.method = "quantiles")
+multModEv(models = rotif.mods$models[1:4], thresh = "preval", bin.method = "quantiles", 
+measures = c("AUC", "Sensitivity", "TSS", "HL.p"))
 }

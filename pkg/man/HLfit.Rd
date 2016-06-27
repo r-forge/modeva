@@ -8,24 +8,27 @@ This function calculates a model's calibration performance (reliability) with th
 }
 \usage{
 HLfit(model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10,
-fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE,
-alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE,
-xlab = "Predicted probability", ylab = "Observed prevalence", ...)
+fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, 
+quantile.type = 7, simplif = FALSE, verbosity = 2, alpha = 0.05, plot = TRUE, 
+plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", 
+ylab = "Observed prevalence", ...)
 }
 \arguments{
   \item{model}{a model object of class "glm".}
-  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. Not necessary (and ignored) if \code{model} is provided.}
-  \item{pred}{a vector with the corresponding predicted probabilities as given e.g. by logistic regression. A warning is emitted if it includes values outside the [0, 1] interval. Not necessary (and ignored) if \code{model} is provided.}
-  \item{bin.method}{the method for grouping the records into bins within which to compare predicted probability to observed prevalence; type modEvAmethods("getBins") for available options, and see Details for more information.}
-  \item{n.bins}{the number of bins to use if \code{bin.method = n.bins}.}
-  \item{fixed.bin.size}{logical, whether to force bins to have (approximately) the same size.}
-  \item{min.bin.size}{the minimum number of records in each bin. The default is 15, the minimum required for accurate comparisons within bins (Jovani & Tella 2006, Jimenez-Valverde et al. 2013).}
-  \item{min.prob.interval}{the minimum interval (range) of probability values within each bin.}
-  \item{simplif}{logical, wheter to perform a faster simplified version returning only the basic statistics.}
+  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. This argument is ignored if \code{model} is provided.}
+  \item{pred}{a vector with the corresponding predicted probabilities as given e.g. by logistic regression. A warning is emitted if it includes values outside the [0, 1] interval. This argument is ignored if \code{model} is provided.}
+  \item{bin.method}{argument to pass to \code{\link{getBins}} specifying the method for grouping the records into bins within which to compare predicted probability to observed prevalence; type modEvAmethods("getBins") for available options, and see Details for more information.}
+  \item{n.bins}{argument to pass to \code{\link{getBins}} specifying the number of bins to use if bin.method = n.bins or bin.method = quantiles. The default is 10.}
+  \item{fixed.bin.size}{argument to pass to \code{\link{getBins}}, a logical value indicating whether to force bins to have (approximately) the same size. The default is FALSE.}
+  \item{min.bin.size}{argument to pass to \code{\link{getBins}} specifying the minimum number of records in each bin. The default is 15, the minimum required for accurate comparisons within bins (Jovani & Tella 2006, Jimenez-Valverde et al. 2013).}
+  \item{min.prob.interval}{argument to pass to \code{\link{getBins}} specifying the minimum interval (range) of probability values within each bin. The default is 0.1.}
+  \item{quantile.type}{argument to pass to \code{\link{quantile}} specifying the algorithm to use if bin.method = "quantiles". The default is 7 (the \code{\link{quantile}} default in R), but check out other types, e.g. 3 (used by SAS), 6 (used by Minitab and SPSS) or 5 (appropriate for deciles, which correspond to the default n.bins = 10).}
+  \item{simplif}{logical, wheter to perform a faster simplified version returning only the basic statistics. The default is FALSE.}
+  \item{verbosity}{integer specifying the amount of messages or warnings to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{alpha}{alpha value for confidence intervals if \code{plot = TRUE}.}
-  \item{plot}{logical, whether to produce a plot of the results.}
-  \item{plot.values}{logical, whether to report measure values in the plot.}
-  \item{plot.bin.size}{logical, whether to report bin sizes in the plot.}
+  \item{plot}{logical, whether to produce a plot of the results. The default is TRUE.}
+  \item{plot.values}{logical, whether to report measure values in the plot. The default is TRUE.}
+  \item{plot.bin.size}{logical, whether to report bin sizes in the plot. The default is TRUE.}
   \item{xlab}{label for the x axis.}
   \item{ylab}{label for the y axis.
 }
@@ -34,7 +37,7 @@ xlab = "Predicted probability", ylab = "Observed prevalence", ...)
 \details{
 Most of the commonly used measures for evaluating model performance focus on discrimination capacity, i.e., how well the model is capable of distinguishing presences from absences (after the model's continuous predictions of presence probability or alike are converted to binary predictions of presence or absence). However, there is another important facet of model evaluation: calibration or reliability, i.e., the relationship between predicted probability and observed prevalence (Pearce & Ferrier 2000; Jimenez-Valverde et al. 2013). The \code{HLfit} function measures model reliability with the Hosmer & Lemeshow goodness-of-fit statistic (Hosmer & Lemeshow 1980).
 
-Note that this statistic has strong limitations and caveats (see e.g. http://www.statisticalhorizons.com/hosmer-lemeshow, Allison 2014), mainly due to the need to group the values into bins within which to compare probability and prevalence, and the strong influence of the binning method on the results. The \code{HLfit} function can use several binning methods, which are implemented and roughly explained in the \code{\link{getBins}} function and can be accessed by typing \code{modEvAmethods("getBins")}. You should try \code{HLfit} with different binning methods to see how the results can change.
+Note that this statistic has strong limitations and caveats (see e.g. http://www.statisticalhorizons.com/hosmer-lemeshow, Allison 2014), mainly due to the need to group the values into bins within which to compare probability and prevalence, and the strong influence of the binning method on the results. The \code{HLfit} function can use several binning methods, which are implemented and roughly explained in the \code{\link{getBins}} function and can be accessed by typing \code{modEvAmethods("getBins")}. You should try \code{HLfit} with different binning methods to see how if the results are robust.
 }
 \value{
 \code{HLfit} returns a list with the following components:

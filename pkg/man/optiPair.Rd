@@ -20,9 +20,9 @@ plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, ...)
 \arguments{
   \item{model}{a model object of class "glm".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
-  binary response variable. Not necessary (and ignored) if \code{model} is provided.}
+  binary response variable. This argument is ignored if \code{model} is provided.}
   \item{pred}{a vector with the corresponding predicted values of presence
-  probability, habitat suitability, environmental favourability or alike. Not necessary (and ignored) if \code{model} is provided.}
+  probability, habitat suitability, environmental favourability or alike. This argument is ignored if \code{model} is provided.}
   \item{measures}{a character vector of length 2 indicating the pair of measures
   whose curves to plot and whose thresholds to optimize. The default is
   \code{c("Sensitivity", "Specificity")}.}

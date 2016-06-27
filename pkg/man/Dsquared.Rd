@@ -12,11 +12,11 @@ npar = NULL)
 }
 \arguments{
   \item{model}{a model object of class "glm".}
-  \item{obs}{a numeric vector of the observed data. Not necessary (and ignored) if \code{model} is provided.}
-  \item{pred}{a numeric vector of the values predicted by a GLM of the observed data. Not necessary (and ignored) if \code{model} is provided. Must be of the same length and in the same order as \code{obs}.}
-  \item{family}{a character vector (i.e. in quotes) of length 1 specifying the family of the GLM. Not necessary (and ignored) if \code{model} is provided; otherwise (i.e. if 'obs' and 'pred' are provided rather than a model object), only families 'binomial' (logit link) and 'poisson' (log link) are currently implemented.}
+  \item{obs}{a numeric vector of the observed data. This argument is ignored if \code{model} is provided.}
+  \item{pred}{a numeric vector of the values predicted by a GLM of the observed data. This argument is ignored if \code{model} is provided. Must be of the same length and in the same order as \code{obs}.}
+  \item{family}{a character vector (i.e. in quotes) of length 1 specifying the family of the GLM. This argument is ignored if \code{model} is provided; otherwise (i.e. if 'obs' and 'pred' are provided rather than a model object), only families 'binomial' (logit link) and 'poisson' (log link) are currently implemented.}
   \item{adjust}{logical, whether or not to adjust the D-squared value for the number of observations and parameters in the model (see Details). The default is \code{FALSE}; \code{TRUE} requires either providing the \code{model} object, or specifying the number of parameters in the model that produced the \code{pred} values.}
-  \item{npar}{an integer vector indicating the number of parameters in the model. Not necessary (and ignored) if \code{model} is provided or if \code{adjust = FALSE}.}
+  \item{npar}{an integer vector indicating the number of parameters in the model. This argument is ignored if \code{model} is provided or if \code{adjust = FALSE}.}
 }
 \details{
 Linear models come with an R-squared value that measures the proportion of variation that the model accounts for. The R-squared is provided with \code{summary(model)} in R. For generalized linear models (GLMs), the equivalent is the amount of deviance accounted for (D-squared; Guisan & Zimmermann 2000), but this value is not normally provided with the model summary. The \code{Dsquared} function calculates it. There is also an option to calculate the adjusted D-squared, which takes into account the number of observations and the number of predictors, thus allowing direct comparison among different models (Weisberg 1980, Guisan & Zimmermann 2000).

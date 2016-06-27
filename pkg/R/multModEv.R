@@ -1,12 +1,11 @@
 multModEv <-
-function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmethods("multModEv"), standardize = FALSE, thresh = 0.5, bin.method = NULL, quiet = TRUE, ...) {
-  # version 2.1 (6 Jun 2016)
+function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmethods("multModEv"), standardize = FALSE, thresh = NULL, bin.method = NULL, verbosity = 0, ...) {
+  # version 2.2 (27 Jun 2016)
 
 #  if (Favourability == TRUE & thresh == "preval") {
 #    thresh <- 0.5
 #    message("Threshold automatically set to 0.5, which corresponds to prevalence when Favourability is used.")
 #  }
-
   
   if (!is.null(models) && !all(class(models) == "list")) stop ("'models' must be an object of class 'list' containing the model object(s).")
   
@@ -15,14 +14,17 @@ function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmeth
   
   for (m in measures) {
     if (!(m %in% modEvAmethods("multModEv"))) stop(m, " is not a valid measure; type modEvAmethods('multModEv') for available options.")
-  }
+  }  # end for m
 
+  thresh.measures <- measures[measures %in% modEvAmethods("threshMeasures")]
+  if (length(thresh.measures) > 0 && is.null(thresh)) stop ("'thresh' must be specified for measures ", paste(thresh.measures, collapse = ", "))
+  
   if (!is.null(bin.method) && !(bin.method %in% modEvAmethods("getBins"))) stop("Invalid bin.method; type modEvAmethods('getBins') for available options.")
 
-  if (is.null(bin.method) && ("HL" %in% measures | "HL.p" %in% measures))  stop ("bin.method must be specified if HL or HLp are included in measures.")
+  if (is.null(bin.method) && ("HL" %in% measures | "HL.p" %in% measures))  stop ("bin.method must be specified if HL or HLp are included in 'measures'.")
   
   calib.measures <- measures[measures %in% c("HL", "HL.p", "RMSE", "Miller.int", "Miller.slope")]
-  if (length(calib.measures) > 0)  warning(paste0(calib.measures, ", "), "valid only if your input 'pred.data' represent presence probability; otherwise, please ignore these measures, or use probability as input instead.")
+  if (verbosity > 1 && length(calib.measures) > 0)  warning(paste0(calib.measures, ", "), "valid only if your input 'pred.data' represent presence probability; otherwise, please ignore these measures, or use probability as input instead.")
   
   if (is.null(models)) {
     if (is.null(obs.data) || is.null(pred.data)) stop("You must provide either a list of model object(s) of class 'glm', or a set of obs.data + pred.data with matching dimensions.")
@@ -30,8 +32,8 @@ function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmeth
  }  # end if !models
   
   else {  # if !null models
-    if (!is.null(obs.data)) message("Argument 'obs.data' ignored in favour of 'models'.")
-    if (!is.null(pred.data)) message("Argument 'pred.data' ignored in favour of 'models'.")
+    if (verbosity > 1 && !is.null(obs.data)) message("Argument 'obs.data' ignored in favour of 'models'.")
+    if (verbosity > 1 && !is.null(pred.data)) message("Argument 'pred.data' ignored in favour of 'models'.")
 
     n <- sapply(models, function(x) length(resid(x)))
     if(!(all(n == n[1]))) stop("Models must all be based on the same sample size.")
@@ -61,22 +63,22 @@ function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmeth
   rownames(results) <- colnames(obs.data)
   colnames(results) <- measures
 
-  message(n.models, " models to evaluate; ", n.measures,  " measures to calculate for each.")
+  if (verbosity > 1) message(n.models, " models to evaluate; ", n.measures,  " measures to calculate for each.")
 
-  if (any(measures %in% modEvAmethods("threshMeasures"))) {
-    thresh.measures <- measures[measures %in% modEvAmethods("threshMeasures")]
-    cat("- using '", thresh, "' as the threshold value to calculate ", paste(thresh.measures, collapse = ", "), "\n", sep = "")  # doesn't quite work with 'message' or 'paste' or with a 'sep'
-  }  # this needs to be oustide the 'for' loop
+#  if (any(measures %in% modEvAmethods("threshMeasures"))) {
+#    thresh.measures <- measures[measures %in% modEvAmethods("threshMeasures")]
+#    cat("- using '", thresh, "' as the threshold value to calculate ", paste(thresh.measures, collapse = ", "), "\n", sep = "")  # doesn't quite work with 'message' or 'paste' or with a 'sep'
+#  }  # this needs to be oustide the 'for' loop
 
-  bin.measures <- c("HL", "HL.p", "RMSE")  # ABC, unityRsq
-  if (any(measures %in% bin.measures)) {
-    bin.measures <- measures[measures %in% bin.measures]
-    cat("- using '", bin.method, "' as the bin method to calculate ", paste(bin.measures, collapse = ", "), "\n", sep = "")  # doesn't quite work with 'message' or 'paste' or with a 'sep'
-  }  # this needs to be oustide the 'for' loop
+#  bin.measures <- c("HL", "HL.p", "RMSE")  # ABC, unityRsq
+#  if (any(measures %in% bin.measures)) {
+#    bin.measures <- measures[measures %in% bin.measures]
+#    cat("- using '", bin.method, "' as the bin method to calculate ", paste(bin.measures, collapse = ", "), "\n", sep = "")  # doesn't quite work with 'message' or 'paste' or with a 'sep'
+#  }  # this needs to be oustide the 'for' loop
 
 for (m in 1:n.models) {
 
-    message("Evaluating model ", m, "...")
+    if (verbosity > 0) message("Evaluating model ", m, "...")
 
     if ("Prevalence" %in% measures)
       results[m, "Prevalence"] <- prevalence(obs.data[ , m])
@@ -89,14 +91,14 @@ for (m in 1:n.models) {
 
     if (any(measures %in% modEvAmethods("threshMeasures"))) {
       for (m in 1:n.models)  for (tm in thresh.measures) {
-        results[m, tm] <- threshMeasures(obs = obs.data[ , m], pred = pred.data[ , m], measures = tm, thresh = thresh, standardize = standardize, simplif = TRUE)
+        results[m, tm] <- threshMeasures(obs = obs.data[ , m], pred = pred.data[ , m], measures = tm, thresh = thresh, standardize = standardize, simplif = TRUE, verbosity = verbosity)
       }; rm(m, tm)
     }  # end if measures in modEvAmethods("threshMeasures")
     # thresh.measures <- optiThresh(obs = obs.data[ , m], pred = pred.data[ , m], plot = FALSE, optimize = "each")
 
     if (any(measures %in% c("HL", "HL.p"))) {
       for (m in 1:n.models) {
-        HL <- HLfit(obs = obs.data[ , m], pred = pred.data[ , m], bin.method = bin.method, simplif = TRUE, ...)
+        HL <- HLfit(obs = obs.data[ , m], pred = pred.data[ , m], bin.method = bin.method, simplif = TRUE, verbosity = verbosity, ...)
         if ("HL" %in% measures)  results[m, "HL"] <- HL$chi.sq
         if ("HL.p" %in% measures)  results[m, "HL.p"] <- HL$p.value
         if ("RMSE" %in% measures)  results[m, "RMSE"] <- HL$RMSE
@@ -134,7 +136,7 @@ for (m in 1:n.models) {
   }  # end if standardize
 
   if (!is.null(rownames(results))) results <- data.frame(Model = rownames(results), results, row.names = NULL)
-  message("Finished!")
+  if (verbosity > 0) message("Finished!")
   return(results)
 }
 

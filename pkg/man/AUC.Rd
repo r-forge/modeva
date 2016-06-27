@@ -16,14 +16,14 @@ ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve", ...)
 \arguments{
   \item{model}{a model object of class "glm".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
-  binary response variable. Not necessary (and ignored) if \code{model} is provided.}
-  \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as \code{obs}. Not necessary (and ignored) if \code{model} is provided.}
+  binary response variable. This argument is ignored if \code{model} is provided.}
+  \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as \code{obs}. This argument is ignored if \code{model} is provided.}
   \item{simplif}{logical, whether to use a faster version that outputs only the AUC value (may be useful for calculating AUC for large numbers of species in a loop, for example). Note that the ROC plot is not drawn when simplif = TRUE.}
   \item{FPR.limits}{(NOT YET IMPLEMENTED) numerical vector of length 2 indicating the limits of false positive rate between which to calculate a partial AUC. The default is c(0, 1), for considering the whole AUC.}
-  \item{interval}{interval of threshold values at which to calculate the true and false positive and negative rates. Defaults to 0.01. Ignored if \code{simplif = TRUE}. Note that this does not affect the obtained AUC value (although it can affect the size of the plotted ROC curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney U statistic and is therefore threshold-independent.}
+  \item{interval}{interval of threshold values at which to calculate the true and false positive and negative rates. Defaults to 0.01. This argument is ignored if \code{simplif = TRUE}. Note that this does not affect the obtained AUC value (although it can affect the size of the plotted ROC curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney U statistic and is therefore threshold-independent.}
   \item{plot}{logical, whether or not to plot the ROC curve. Defaults to TRUE.}
   \item{plot.values}{logical, whether or not to show in the plot the values associated to the curve (e.g., the AUC). Defaults to TRUE.}
-  \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed. Defaults to 3. Ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}
+  \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed. Defaults to 3. This argument is ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}
   \item{plot.preds}{logical, whether or not to plot the proportion of analysed model predictions (through proportionally sized circles) at each threshold. Experimental. Defaults to FALSE.}
   \item{grid}{logical, whether or not to add a grid to the plot, marking the analysed thresholds. Defaults to FALSE.}
   \item{xlab}{label for the x axis.}

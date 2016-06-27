@@ -16,7 +16,7 @@ main = "Miller calibration", ...)
   \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as \code{obs}. A warning is emitted if it includes values outside the [0, 1] interval. Not necessary (and ignored) if \code{model} is provided.}
   \item{plot}{logical, whether to produce a plot of the regression line over the reference diagonal. Defaults to TRUE.}
   \item{plot.values}{logical value indicating whether to report the values of the intercept and slope on the plot. Defaults to TRUE.}
-  \item{digits}{integer number indicating the number of digits to which the values in the plot should be rounded. Dafaults to 2. Ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}
+  \item{digits}{integer number indicating the number of digits to which the values in the plot should be rounded. Dafaults to 2. This argument is ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}
   \item{xlab}{label for the x axis.}
   \item{ylab}{label for the y axis.}
   \item{main}{title for the plot.}

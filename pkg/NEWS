@@ -1,4 +1,27 @@
 ==========================================
+modEvA v1.3.1 (committed 2016-06-27)
+==========================================
+
+## Modified functions:
+
+* getBins (affecting HLfit):
+- bug fixed in "bin.method = quantiles", now providing even-sized bins (=SPSS)
+- added argument 'quantile.type', to pass to 'quantile' function
+
+* HLfit:
+- added argument 'quantile.type', to pass to 'quantile' function
+- added argument 'verbosity'
+
+* multModEv:
+- removed default 'thresh' (must be user-specified)
+- replaced argument 'quiet' with 'verbosity' for coherence with other functions
+
+* threshMeasures:
+- removed default 'thresh' (must be user-specified)
+- replaced argument 'messages' with 'verbosity' for coherence with other functions
+
+
+==========================================
 modEvA v1.3 (committed 2016-06-16)
 ==========================================
 
@@ -7,6 +30,7 @@ modEvA v1.3 (committed 2016-06-16)
 * getBins (affecting HLfit):
 - bug fixed in "bin.method = quantiles", removing last additional bin of size 1
 - help file improved to better explain what each bin.method does and what arguments it ignores
+- added argument 'verbosity'
 
 * HLfit:
 - added examples to help file to illustrate differences in bin.methods

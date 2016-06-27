@@ -1,6 +1,6 @@
 HLfit <-
-function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, simplif = FALSE, alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", ylab = "Observed prevalence", ...) {
-  # version 1.8 (18 Apr 2016)
+function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, verbosity = 2, alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", ylab = "Observed prevalence", ...) {
+  # version 1.9 (27 Jun 2016)
 
   if (!is.null(model)) {
     if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
@@ -36,7 +36,7 @@ and 'pred' vectors, or a 'model' object of class 'glm'.")
     warning("Some of your 'pred' values are outside the [0,1] interval; are you sure these represent probabilities? Unexpected or incorrect results may arise. Consider properly rescaling you 'pred' values, or obtaining real probabilities instead.")
   }
   
-  bins <- getBins(obs = obs, pred = pred, bin.method = bin.method, n.bins = n.bins, fixed.bin.size = fixed.bin.size, min.bin.size = min.bin.size, min.prob.interval = min.prob.interval)
+  bins <- getBins(obs = obs, pred = pred, bin.method = bin.method, n.bins = n.bins, fixed.bin.size = fixed.bin.size, min.bin.size = min.bin.size, min.prob.interval = min.prob.interval, verbosity = verbosity)
   n.bins <- nrow(bins$bins.table)
 
   # next 4 lines: adapted from hosmerlem function in http://www.stat.sc.edu/~hitchcock/diseaseoutbreakRexample704.txt

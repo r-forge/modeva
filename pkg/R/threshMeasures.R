@@ -1,8 +1,8 @@
 threshMeasures <-
-function(model = NULL, obs = NULL, pred = NULL, thresh = 0.5,
+function(model = NULL, obs = NULL, pred = NULL, thresh,
          measures = modEvAmethods("threshMeasures"), simplif = FALSE,
          plot = TRUE, plot.ordered = FALSE, standardize = TRUE,
-         messages = TRUE, ...) {
+         verbosity = 2, ...) {
   # version 2.7 (18 Apr 2016)
 
   if (is.null(model)) {
@@ -13,7 +13,7 @@ and 'pred' vectors, or a 'model' object of class 'glm'.")
   
     #if (!all(class(model) %in% c("glm", "lm"))) stop ("'model' must be a model object of class 'glm'")
     if (!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
-    if (messages) {
+    if (verbosity > 0) {
       if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
       if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
     }
@@ -60,7 +60,7 @@ and 'pred' vectors, or a 'model' object of class 'glm'.")
       if (standardize == TRUE  &  measures[i] %in% c("TSS", "kappa")) {
         measureValues[i] <- standard01(measureValues[i])
         measures[i] <- paste("s", measures[i], sep = "")
-        message("\n", measures[i], " standardized to the 0-1 scale for direct comparability
+        if (verbosity > 0) message("\n", measures[i], " standardized to the 0-1 scale for direct comparability
 with other measures (type ?standard01 for more info);
 use 'standardize = FALSE' if this is not what you wish")
       }  # end if standardize
