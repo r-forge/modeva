@@ -97,7 +97,8 @@ main = "HL GOF with 10 bins of fixed size")
 HLfit(model = mod, bin.method = "n.bins", n.bins = 20, 
 main = "HL GOF with 20 bins")
 
-HLfit(model = mod, bin.method = "quantiles", main = "HL GOF with quantile bins")
+HLfit(model = mod, bin.method = "quantiles", 
+main = "HL GOF with quantile bins")
 
 HLfit(model = mod, bin.method = "quantiles", min.prob.interval = 0.05, 
 main = "HL GOF with 0.05 quantile bins")

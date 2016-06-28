@@ -94,7 +94,8 @@ names(rotif.env)  # variables are in columns 5:17
 
 west <- subset(rotif.env, HEMISPHERE == "Western", select = 5:17)
 east <- subset(rotif.env, HEMISPHERE == "Eastern", select = 5:17)
-east.with.ID <- subset(rotif.env, HEMISPHERE == "Eastern", select = c(1, 5:17))
+east.with.ID <- subset(rotif.env, HEMISPHERE == "Eastern", 
+select = c(1, 5:17))
 
 head(east)
 head(east.with.ID)  # ID is in column 1

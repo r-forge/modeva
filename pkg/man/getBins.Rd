@@ -1,15 +1,15 @@
 \name{getBins}
 \alias{getBins}
 \title{
-Get bins of data.
+Get bins of continuous values.
 }
 \description{
 Get continuous predicted values into bins according to specific criteria.
 }
 \usage{
 getBins(model = NULL, obs = NULL, pred = NULL, id = NULL, bin.method,
-n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, 
-quantile.type = 7, simplif = FALSE, verbosity = 2)
+n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, 
+min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, verbosity = 2)
 }
 \arguments{
   \item{model}{a model object of class \code{"glm"}.
@@ -47,15 +47,15 @@ argument to pass to \code{\link{quantile}} specifying the algorithm to use if bi
 \details{
 Mind that different \code{bin.method}s can lead to visibly different results regarding the bins and any operations that depend on them (such as \code{\link{HLfit}}). Currently available \code{bin.method}s are:
 
-  - \code{round.prob}: probability values are rounded to the number of digits of \code{min.prob.interval} - e.g., if min.prob.interval = 0.1 (the default), values under 0.05 get into bin 1 (rounded probability = 0), values between 0.05 and 0.15 get into bin 2  (rounded probability = 0.1), etc. until values with probability over 0.95, which get into bin 11. Arguments \code{n.bins}, \code{fixed.bin.size} and \code{min.bin.size} are ignored by this bin.method.
+  - \code{round.prob}: probability values are rounded to the number of digits of \code{min.prob.interval} - e.g., if min.prob.interval = 0.1 (the default), values under 0.05 get into bin 1 (rounded probability = 0), values between 0.05 and 0.15 get into bin 2  (rounded probability = 0.1), etc. until values with probability over 0.95, which get into bin 11. Arguments n.bins, fixed.bin.size and min.bin.size are ignored by this bin.method.
   
-  - \code{prob.bins}: probability values are grouped into bins of the given probability intervals - e.g., if min.prob.interval = 0.1 (the default), bin 1 gets the values between 0 and 0.1, bin 2 gets the values between 0.1 and 0.2, etc. until bin 10 which gets the values between 0.9 and 1. Arguments \code{n.bins}, \code{fixed.bin.size} and \code{min.bin.size} are ignored by this bin.method.
+  - \code{prob.bins}: probability values are grouped into bins of the given probability intervals - e.g., if min.prob.interval = 0.1 (the default), bin 1 gets the values between 0 and 0.1, bin 2 gets the values between 0.1 and 0.2, etc. until bin 10 which gets the values between 0.9 and 1. Arguments n.bins, fixed.bin.size and min.bin.size are ignored by this bin.method.
   
-  - \code{size.bins}: probability values are grouped into bins of (approximately) equal size, defined by argument \code{min.bin.size}. Arguments \code{n.bins} and \code{min.prob.interval} are ignored by this bin.method.
+  - \code{size.bins}: probability values are grouped into bins of (approximately) equal size, defined by argument min.bin.size. Arguments n.bins and min.prob.interval are ignored by this bin.method.
   
-  - \code{n.bins}: probability values are divided into the number of bins given by argument \code{n.bins}, and their sizes may or may not be forced to be (approximately) equal, depending on argument \code{fixed.bin.size} (which is FALSE by default). Arguments \code{min.bin.size} and \code{min.prob.interval} are ignored by this bin.method.
+  - \code{n.bins}: probability values are divided into the number of bins given by argument n.bins, and their sizes may or may not be forced to be (approximately) equal, depending on argument fixed.bin.size (which is FALSE by default). Arguments min.bin.size and min.prob.interval are ignored by this bin.method.
   
-  - \code{quantiles}: probability values are divided using R function \code{\link{quantile}}, with probability cutpoints defined by the given \code{n.bins} (i.e., deciles by default), and with the quantile algorithm defined by \code{quantile.type}. Arguments \code{fixed.bin.size} and \code{min.bin.size} are ignored by this bin.method.
+  - \code{quantiles}: probability values are divided using R function \code{\link{quantile}}, with probability cutpoints defined by the given n.bins (i.e., deciles by default), and with the quantile algorithm defined by argument quantile.type. Arguments fixed.bin.size and min.bin.size are ignored by this bin.method.
 }
 \value{
 The output of \code{getBins} is a list with the following components:
@@ -65,7 +65,7 @@ The output of \code{getBins} is a list with the following components:
 \item{n.bins}{the total number of bins obtained.}
 }
 \references{
-Jimenez-Valverde A., Acevedo P., Barbosa A.M., Lobo J.M. & Real R. (2013) Discrimination capacity in species distribution models depends on the representativeness of the environmental domain. Global Ecology and Biogeography 22: 508–516.
+Jimenez-Valverde A., Acevedo P., Barbosa A.M., Lobo J.M. & Real R. (2013) Discrimination capacity in species distribution models depends on the representativeness of the environmental domain. Global Ecology and Biogeography 22: 508-516.
 
 Jovani R. & Tella J.L. (2006) Parasite prevalence and sample size: misconceptions and solutions. Trends in Parasitology 22: 214-218.
 }

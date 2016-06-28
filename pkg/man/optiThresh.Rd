@@ -7,8 +7,9 @@ Optimize threshold for model evaluation.
 The \code{optiThresh} function calculates optimal thresholds for a number of model evaluation measures (see \code{\link{threshMeasures}}). Optimization is given for each measure, and/or for all measures according to particular criteria (e.g. Jimenez-Valverde & Lobo 2007, Nenzen & Araujo 2011). Results are given numerically and in plots.}
 \usage{
 optiThresh(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
-measures = modEvAmethods("threshMeasures"), optimize = modEvAmethods("optiThresh"),
-simplif = FALSE, plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...)
+measures = modEvAmethods("threshMeasures"),  
+optimize = modEvAmethods("optiThresh"), simplif = FALSE, 
+plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...)
 }
 \arguments{
   \item{model}{a model object of class "glm".}
@@ -57,8 +58,8 @@ optiThresh(model = mod)
 
 # change some of the parameters:
 
-optiThresh(model = mod, pch = 20, measures = c("CCR", "Sensitivity", "Specificity",
-"UPR", "OPR", "kappa", "TSS"), ylim = c(0, 1))
+optiThresh(model = mod, pch = 20, measures = c("CCR", "Sensitivity", 
+"Specificity", "UPR", "OPR", "kappa", "TSS"), ylim = c(0, 1))
 
 
 # you can also use optiThresh with vectors of observed and predicted values

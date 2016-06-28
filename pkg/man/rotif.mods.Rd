@@ -14,15 +14,13 @@ $ predictions: a data.frame with  291 observations of 60 variables, namely the p
 $ models: a list of the 30 generalized linear model (\code{link{glm}}) objects which generated those predictions.
 }
 \details{
-These models were obtained with the \code{multGLM} function and the \code{rotif.env} dataset from package \pkg{fuzzySim}, using the following code:
+These models were obtained with the \code{multGLM} function and the \code{rotif.env} dataset from R-Forge package \pkg{fuzzySim}, using the following code:
 
-\code{require(fuzzySim)}
+require(fuzzySim)
 
-\code{data(rotif.env)}
+data(rotif.env)
 
-\code{rotif.mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, 
-
-step = FALSE, trim = TRUE)}
+rotif.mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, step = FALSE, trim = TRUE)
 
 See package \pkg{fuzzySim} (currently available on R-Forge at \url{http://fuzzysim.r-forge.r-project.org}) for more information on the source data that were used to build these models.
 }

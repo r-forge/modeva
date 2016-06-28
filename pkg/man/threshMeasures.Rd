@@ -81,7 +81,8 @@ threshMeasures(model = mod, thresh = "preval")
 
 threshMeasures(model = mod, plot.ordered = TRUE, thresh = "preval")
 
-threshMeasures(model = mod, measures = c("CCR", "TSS", "kappa"), thresh = "preval")
+threshMeasures(model = mod, measures = c("CCR", "TSS", "kappa"), 
+thresh = "preval")
 
 threshMeasures(model = mod, plot.ordered = TRUE, thresh = "preval")
 

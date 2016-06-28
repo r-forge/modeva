@@ -58,7 +58,8 @@ MillerCalib(model = mod)
 RsqGLM(model = mod)
 
 # calculate a bunch of evaluation measures for a set of models:
-multModEv(models = rotif.mods$models[1:4], thresh = "preval", bin.method = "quantiles")
-multModEv(models = rotif.mods$models[1:4], thresh = "preval", bin.method = "quantiles", 
-measures = c("AUC", "Sensitivity", "TSS", "HL.p"))
+multModEv(models = rotif.mods$models[1:4], thresh = "preval", 
+bin.method = "quantiles")
+multModEv(models = rotif.mods$models[1:4], thresh = "preval", 
+bin.method = "quantiles", measures = c("AUC", "Sensitivity", "TSS", "HL.p"))
 }
