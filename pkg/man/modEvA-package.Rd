@@ -10,8 +10,8 @@ The modEvA package can analyse species distribution models and evaluate their pe
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 1.3.1\cr
-Date: \tab 2016-06-27\cr
+Version: \tab 1.3.2\cr
+Date: \tab 2016-07-12\cr
 License: \tab GPL-3\cr
 }
 }
@@ -25,7 +25,7 @@ Barbosa A.M., Real R., Munoz A.R. & Brown J.A. (2013) New measures for assessing
 }
 \keyword{ package }
 \seealso{
-\pkg{PresenceAbsence}, \pkg{ROCR}, \pkg{verification}, \pkg{dismo}, \pkg{fuzzySim}
+\pkg{PresenceAbsence}, \pkg{ROCR}, \pkg{verification}
 }
 \examples{
 # load sample models:

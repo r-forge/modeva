@@ -1,4 +1,17 @@
 ==========================================
+modEvA v1.3.2 (committed 2016-07-12)
+==========================================
+
+## Modified functions:
+
+* getBins (affecting HLfit):
+- bug fixed in "bin.method = size.bins", which was giving two different messages regarding ignored arguments
+
+* HLfit:
+- help file slightly clarified
+
+
+==========================================
 modEvA v1.3.1 (committed 2016-06-27)
 ==========================================
 

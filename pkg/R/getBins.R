@@ -30,6 +30,7 @@ min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, verbosity = 2)  {
       stop("Invalid bin.method; type modEvAmethods('getBins') for available options.")
   
     N <- length(obs)
+    bin.method0 <- bin.method
   
     if (bin.method == "round.prob" ) {
       if (verbosity > 1) message("Arguments n.bins, fixed.bin.size and min.bin.size are ignored by this bin.method.")
@@ -50,7 +51,7 @@ min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, verbosity = 2)  {
     }
   
     if (bin.method == "n.bins") {  # can't have 'else' here because of previous 'if'
-      if (verbosity > 1) message("Arguments min.bin.size and min.prob.interval are ignored by this bin.method.")
+      if (verbosity > 1 && bin.method0 != "size.bins") message("Arguments min.bin.size and min.prob.interval are ignored by this bin.method.")
       if (fixed.bin.size) {
         #prob.bin <- findInterval(pred, quantile(pred, probs = seq(from = 0, to = 1, by = 1 / (n.bins - 1))))
         prob.bin <- cut(seq_along(pred), n.bins)  # same if sort(pred)
@@ -62,10 +63,10 @@ min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, verbosity = 2)  {
     else if (bin.method == "quantiles") {
       #cutpoints <- quantile(pred, probs = seq(0, 1, by = 1/n.bins))
       #prob.bin <- findInterval(pred, cutpoints)
-      if (verbosity > 1) message("Arguments fixed.bin.size and min.bin.size are ignored by this bin.method.")
+      if (verbosity > 1) message("Arguments fixed.bin.size, min.bin.size and min.prob.interval are ignored by this bin.method.")
       #cutpoints <- quantile(pred, probs = seq(min.prob.interval, 1, by = min.prob.interval))
       #prob.bin <- cut(pred, breaks = length(cutpoints), include.lowest = TRUE, dig.lab = nchar(min.prob.interval) - 2)
-      cutpoints <- quantile(pred, probs = seq(0, 1, length = n.bins), type = quantile.type)
+      #cutpoints <- quantile(pred, probs = seq(0, 1, length = n.bins), type = quantile.type)
       cutpoints <- quantile(pred, probs = (0:n.bins)/n.bins, type = quantile.type)
       #prob.bin <- cut(pred, cutpoints, include.lowest = TRUE)
       prob.bin <- findInterval(pred, cutpoints, rightmost.closed = TRUE)

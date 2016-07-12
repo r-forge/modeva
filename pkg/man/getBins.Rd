@@ -24,7 +24,7 @@ a vector of the corresponding predicted values. This argument is ignored if \cod
 optional vector of row identifiers; must be of the same length and in the same order of \code{obs} and \code{pred} (or of the cases used to build \code{model})
 }
   \item{bin.method}{
-the method with which to divide the values into bins. Type \code{modEvAmethods("getBins")} for available options and see Details for more information on these methods.
+the method with which to divide the values into bins. Type modEvAmethods("getBins") for available options and see Details for more information on these methods.
 }
   \item{n.bins}{
 the number of bins in which to divide the data.
@@ -55,7 +55,7 @@ Mind that different \code{bin.method}s can lead to visibly different results reg
   
   - \code{n.bins}: probability values are divided into the number of bins given by argument n.bins, and their sizes may or may not be forced to be (approximately) equal, depending on argument fixed.bin.size (which is FALSE by default). Arguments min.bin.size and min.prob.interval are ignored by this bin.method.
   
-  - \code{quantiles}: probability values are divided using R function \code{\link{quantile}}, with probability cutpoints defined by the given n.bins (i.e., deciles by default), and with the quantile algorithm defined by argument quantile.type. Arguments fixed.bin.size and min.bin.size are ignored by this bin.method.
+  - \code{quantiles}: probability values are divided using R function \code{\link{quantile}}, with probability cutpoints defined by the given n.bins (i.e., deciles by default), and with the quantile algorithm defined by argument quantile.type. Arguments fixed.bin.size, min.bin.size and min.prob.interval are ignored by this bin.method.
 }
 \value{
 The output of \code{getBins} is a list with the following components:

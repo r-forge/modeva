@@ -20,13 +20,13 @@ plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, ...)
   probability, habitat suitability, environmental favourability or alike. This argument is ignored if \code{model} is provided.}
   \item{measures}{a character vector of length 2 indicating the pair of measures
   whose curves to plot and whose thresholds to optimize. The default is
-  \code{c("Sensitivity", "Specificity")}.}
+  c("Sensitivity", "Specificity").}
   \item{interval}{the interval of thresholds at which to calculate the measures. The default is 0.01.}
   \item{plot}{logical indicating whether or not to plot the pair of measures.}
   \item{plot.sum}{logical, whether to plot the sum (+) of both measures in the pair. Defaults to \code{FALSE}.}
   \item{plot.diff}{logical, whether to plot the difference (-) between both measures in the pair. Defaults to \code{FALSE}.}
   \item{ylim}{a character vector of length 2 indicating the lower and upper limits for the y axis. The default is \code{NULL} for an automatic definition of \code{ylim} based on the values of the measures and their sum and/or difference if any of these are set to \code{TRUE}.}
-  \item{\dots}{additional arguments to be passed to the \code{plot} function.}
+  \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{
 }

@@ -9,12 +9,12 @@ A set of generalized linear models of rotifer species distributions on TDWG leve
 \format{
 A list of 2 elements:
 
-$ predictions: a data.frame with  291 observations of 60 variables, namely the presence probability (P) and environmental favourability (F) for each of 30 species of rotifers, obtained from the rotif.env dataset in the \pkg{fuzzySim} package
+$ predictions: a data.frame with  291 observations of 60 variables, namely the presence probability (P) and environmental favourability (F) for each of 30 species of rotifers, obtained from the rotif.env dataset in the 'fuzzySim' R-Forge package
 
 $ models: a list of the 30 generalized linear model (\code{link{glm}}) objects which generated those predictions.
 }
 \details{
-These models were obtained with the \code{multGLM} function and the \code{rotif.env} dataset from R-Forge package \pkg{fuzzySim}, using the following code:
+These models were obtained with the \code{multGLM} function and the \code{rotif.env} dataset from R-Forge package 'fuzzySim' using the following code:
 
 require(fuzzySim)
 
@@ -22,7 +22,7 @@ data(rotif.env)
 
 rotif.mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, step = FALSE, trim = TRUE)
 
-See package \pkg{fuzzySim} (currently available on R-Forge at \url{http://fuzzysim.r-forge.r-project.org}) for more information on the source data that were used to build these models.
+See package 'fuzzySim' (currently available on R-Forge at \url{http://fuzzysim.r-forge.r-project.org}) for more information on the source data that were used to build these models.
 }
 \source{
 }
