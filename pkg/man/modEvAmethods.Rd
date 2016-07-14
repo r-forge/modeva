@@ -12,15 +12,9 @@ modEvAmethods(fun)
 \arguments{
   \item{fun}{a character vector of length 1 specifying the name (in quotes) of the function for which to obtain the available methods.}
 }
-\details{
-}
 \value{a character vector of the available methods for the specified function.}
-\references{
-}
 \author{
 A. Marcia Barbosa
-}
-\note{
 }
 \seealso{
 \code{\link{threshMeasures}}, \code{\link{optiThresh}}, \code{\link{getBins}}, \code{\link{multModEv}}
@@ -34,4 +28,3 @@ modEvAmethods("optiThresh")
 
 modEvAmethods("getBins")
 }
-\keyword{ }

@@ -28,8 +28,6 @@ plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, ...)
   \item{ylim}{a character vector of length 2 indicating the lower and upper limits for the y axis. The default is \code{NULL} for an automatic definition of \code{ylim} based on the values of the measures and their sum and/or difference if any of these are set to \code{TRUE}.}
   \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function.}
 }
-\details{
-}
 \value{
 The output is a list with the following components:
 \item{measures.values}{a data frame with the values of the chosen pair of measures, as well as their difference, sum and mean, at each threshold.}
@@ -49,8 +47,6 @@ Liu C., White M., & Newell G. (2011) Measuring and comparing the accuracy of spe
 }
 \author{
 A. Marcia Barbosa
-}
-\note{
 }
 \seealso{
 \code{\link{optiThresh}}, \code{\link{threshMeasures}}
@@ -73,4 +69,3 @@ optiPair(model = mod, measures = c("UPR", "OPR"))
 optiPair(obs = mod$y, pred = mod$fitted.values, 
 measures = c("UPR", "OPR"))
 }
-\keyword{ }

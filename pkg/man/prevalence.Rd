@@ -14,8 +14,6 @@ prevalence(obs, event = 1, na.rm = TRUE)
   \item{event}{the value whose prevalence we want to calculate (e.g. 1, "present", etc.).}
   \item{na.rm}{logical, whether NA values should be excluded. The default is TRUE.}
 }
-\details{
-}
 \value{
 Numeric value of the prevalence of \code{event} in the \code{obs} vector.
 }
@@ -26,8 +24,6 @@ Jimenez-Valverde A. & Lobo J.M. (2006) The ghost of unbalanced species distribut
 }
 \author{
 A. Marcia Barbosa
-}
-\note{
 }
 \seealso{
 \code{\link{evenness}}
@@ -45,4 +41,3 @@ prevalence(y)
 
 prevalence(z)
 }
-\keyword{ }

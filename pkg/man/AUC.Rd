@@ -50,8 +50,6 @@ Jimenez-Valverde, A., Acevedo, P., Barbosa, A.M., Lobo, J.M. & Real, R. (2013). 
 \author{
 A. Marcia Barbosa
 }
-\note{
-}
 \seealso{
 \code{\link{threshMeasures}}
 }
@@ -78,4 +76,3 @@ prediction <- mod$fitted.values
 
 AUC(obs = presabs, pred = prediction)
 }
-\keyword{ }

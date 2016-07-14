@@ -23,8 +23,6 @@ ylab = "Predicted probability", main = "Model plot", ...)
   \item{main}{character string specifying the title for the plot.}
   \item{\dots}{additional arguments to pass to \code{\link{plot}}.}
 }
-\details{
-}
 \value{
 This function outputs a plot of model predictions against observations.
 }
@@ -35,8 +33,6 @@ Weisberg S. (1980) Applied Linear Regression. Wiley, New York
 }
 \author{
 A. Marcia Barbosa
-}
-\note{
 }
 \seealso{
 \code{\link{glm}}, \code{\link{Dsquared}}
@@ -58,4 +54,3 @@ plotGLM(model = mod, plot.values = FALSE)
 
 plotGLM(obs = mod$y, pred = mod$fitted.values)
 }
-\keyword{ }

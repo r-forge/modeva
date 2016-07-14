@@ -19,12 +19,8 @@ This function was borrowed from http://stackoverflow.com/questions/5468280/scale
 \value{
 A numeric vector of the same length as the input, now with the values ranging from 0 to 1.
 }
-\references{
-}
 \author{
 A. Marcia Barbosa
-}
-\note{
 }
 \seealso{
 \code{\link{standard01}}
@@ -34,4 +30,3 @@ range01(0:10)
 
 range01(-12.3 : 21.7)
 }
-\keyword{ }

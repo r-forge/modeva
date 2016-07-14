@@ -23,12 +23,8 @@ This function is used internally by \code{optiThresh}, but can also be useful ou
 \value{
 An integer vector of the form c(nr, nc) indicating, respectively, the number of rows and of columns of plots to set in the graphics device.
 }
-\references{
-}
 \author{
 A. Marcia Barbosa
-}
-\note{
 }
 \seealso{
 \code{\link{plot}}, \code{\link{layout}}
@@ -53,4 +49,3 @@ for (i in 1:ncol(iris)) {
   plot(1:nrow(iris), iris[, i])
 }
 }
-\keyword{ }

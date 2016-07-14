@@ -96,4 +96,3 @@ getBins(model = mod, bin.method = "n.bins")
 
 getBins(model = mod, bin.method = "n.bins", fixed.bin.size = TRUE)
 }
-\keyword{ }

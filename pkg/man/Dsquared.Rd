@@ -32,8 +32,6 @@ Weisberg, S. (1980) Applied Linear Regression. Wiley, New York
 \author{
 A. Marcia Barbosa
 }
-\note{
-}
 \seealso{
 \code{\link{glm}}, \code{\link{plotGLM}}
 }
@@ -62,4 +60,3 @@ Dsquared(obs = presabs, pred = prediction, family = "binomial", adjust = TRUE,
 npar = parameters)
 
 }
-\keyword{ }

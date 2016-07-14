@@ -32,8 +32,6 @@ Brito J.C., Crespo E.G., Paulo O.S. (1999) Modelling wildlife distributions: Log
 \author{
 A. Marcia Barbosa
 }
-\note{
-}
 \seealso{
 \code{\link{MESS}}
 }
@@ -48,4 +46,3 @@ names(rotif.env)
 OA(rotif.env, sp.cols = 18, var.cols = 5:17)
 }
 }
-\keyword{ }

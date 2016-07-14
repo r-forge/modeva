@@ -34,10 +34,10 @@ data(rotif.mods)
 # choose a particular model to play with:
 mod <- rotif.mods$models[[1]]
 
-# plot the 1st model:
+# plot this model:
 plotGLM(model = mod)
 
-# calculate the area under the ROC curve for the 1st model:
+# calculate the area under the ROC curve for the model:
 AUC(model = mod)
 
 # calculate some threshold-based measures for this model:
@@ -51,7 +51,7 @@ optiThresh(model = mod)
 optiPair(model = mod, measures = c("Sensitivity", "Specificity"))
 
 # calculate the explained deviance, Hosmer-Lemeshow goodness-of-fit,
-# Miller's calibration stats, and (pseudo) R-squared values for the 1st model:
+# Miller's calibration stats, and (pseudo) R-squared values for the model:
 Dsquared(model = mod)
 HLfit(model = mod, bin.method = "quantiles")
 MillerCalib(model = mod)
@@ -60,6 +60,4 @@ RsqGLM(model = mod)
 # calculate a bunch of evaluation measures for a set of models:
 multModEv(models = rotif.mods$models[1:4], thresh = "preval", 
 bin.method = "quantiles")
-multModEv(models = rotif.mods$models[1:4], thresh = "preval", 
-bin.method = "quantiles", measures = c("AUC", "Sensitivity", "TSS", "HL.p"))
 }

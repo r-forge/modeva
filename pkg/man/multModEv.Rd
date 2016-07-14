@@ -22,17 +22,11 @@ bin.method = NULL, verbosity = 0, ...)
   \item{verbosity}{integer specifying the amount of messages or warnings to display. Defaults to 0, but can also be 1 or 2 for more messages from the functions within.}
   \item{\dots}{optional arguments to pass to \code{\link{HLfit}} (if "HL" or "HL.p" are included in \code{measures}), namely n.bins, fixed.bin.size, min.bin.size, min.prob.interval or quantile.type.}
 }
-\details{
-}
 \value{
 A data frame with the value of each evaluation measure for each model.
 }
-\references{
-}
 \author{
 A. Marcia Barbosa
-}
-\note{
 }
 \seealso{
 \code{\link{threshMeasures}}
@@ -63,4 +57,3 @@ thresh = "preval", bin.method = "prob.bins")
 
 head(eval3)
 }
-\keyword{ }

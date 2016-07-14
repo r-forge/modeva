@@ -103,4 +103,3 @@ main = "HL GOF with quantile bins (n=10)")
 HLfit(model = mod, bin.method = "quantiles", n.bins = 20,
 main = "HL GOF with quantile bins (n=20)")
 }
-\keyword{ }

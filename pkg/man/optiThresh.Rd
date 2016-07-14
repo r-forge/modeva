@@ -24,8 +24,6 @@ plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...)
   \item{xlab}{character vector indicating the label of the x axis.}
   \item{\dots}{additional arguments to pass to \code{\link{plot}}.}
 }
-\details{
-}
 \value{
 This function returns a list with the following components:
   \item{all.thresholds}{a data frame with the values of all analysed measures at all analysed thresholds.}
@@ -67,4 +65,3 @@ optiThresh(model = mod, pch = 20, measures = c("CCR", "Sensitivity",
 
 optiThresh(obs = mod$y, pred = mod$fitted.values, pch = ".")
 }
-\keyword{ }

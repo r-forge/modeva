@@ -48,4 +48,3 @@ RsqGLM(model = mod)
 
 RsqGLM(obs = mod$y, pred = mod$fitted.values)
 }
-\keyword{ }

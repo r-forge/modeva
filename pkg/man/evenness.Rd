@@ -14,8 +14,6 @@ evenness(obs)
 a vector of binary observations (e.g. 1 or 0, male or female, disease or no disease, etc.)
   }
 }
-\details{
-}
 \value{
 A number ranging between 0 when all values are the same, and 1 when there are the same number of cases with each value in \code{obs}.
 }
@@ -26,8 +24,6 @@ Jimenez-Valverde A. & Lobo J.M. (2006) The ghost of unbalanced species distribut
 }
 \author{
 A. Marcia Barbosa
-}
-\note{
 }
 \seealso{
 \code{\link{prevalence}}
@@ -46,4 +42,3 @@ evenness(y)
 prevalence(z)
 evenness(z)
 }
-\keyword{ }

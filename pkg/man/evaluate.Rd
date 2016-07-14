@@ -34,8 +34,6 @@ Liu C., White M., & Newell G. (2011) Measuring and comparing the accuracy of spe
 \author{
 A. Marcia Barbosa
 }
-\note{
-}
 \seealso{
 \code{\link{threshMeasures}}
 }
@@ -44,4 +42,3 @@ evaluate(23, 44, 21, 34)
 
 evaluate(23, 44, 21, 34, measure = "TSS")
 }
-\keyword{ }

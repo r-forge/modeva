@@ -24,8 +24,6 @@ rotif.mods <- multGLM(data = rotif.env, sp.cols = 18:47, var.cols = 5:17, step =
 
 See package 'fuzzySim' (currently available on R-Forge at \url{http://fuzzysim.r-forge.r-project.org}) for more information on the source data that were used to build these models.
 }
-\source{
-}
 \references{
 Fontaneto D., Barbosa A.M., Segers H. & Pautasso M. (2012) The 'rotiferologist' effect and other global correlates of species richness in monogonont rotifers. Ecography, 35: 174-182.
 }

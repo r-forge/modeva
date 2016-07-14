@@ -62,8 +62,6 @@ These results derive from arithmetic operations between your input values, and t
 
 This function had a bug up to modEvA version 0.8: a badly placed line break prevented the ABC overlap from being calculated correctly. Thanks to Jurica Levatic for pointing this out and helping to solve it!
 }
-\seealso{
-}
 \examples{
 # if you have a linear model (LM), use (non-adjusted) R-squared values 
 # for each factor and for their combinations as inputs:
@@ -84,4 +82,3 @@ B.name = "Climatic", C.name = "Geographic", main = "Big bird")
 # but "Unexplained variation" can be deceiving in these cases (see Details)
 # try also adding 'plot.unexpl = FALSE'
 }
-\keyword{ }

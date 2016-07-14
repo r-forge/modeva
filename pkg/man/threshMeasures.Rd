@@ -92,4 +92,3 @@ threshMeasures(model = mod, plot.ordered = TRUE, thresh = "preval")
 
 threshMeasures(obs = mod$y, pred = mod$fitted.values, thresh = "preval")
 }
-\keyword{ }

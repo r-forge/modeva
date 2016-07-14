@@ -46,10 +46,6 @@ Real R., Barbosa A.M. & Vargas J.M. (2006) Obtaining environmental favourability
 \author{
 A. Marcia Barbosa
 }
-\note{
-}
-\seealso{
-}
 \examples{
 # load sample models:
 data(rotif.mods)
@@ -63,4 +59,3 @@ getModEqn(mod, type = "P", digits = 3, suffix = "@mapset")
 
 getModEqn(mod, type = "F", digits = 2)
 }
-\keyword{ }

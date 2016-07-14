@@ -41,8 +41,6 @@ Pearce J. & Ferrier S. (2000) Evaluating the predictive performance of habitat m
 Wintle B.A., Elith J. & Potts J.M. (2005) Fauna habitat modelling and mapping: A review and case study in the Lower Hunter Central Coast region of NSW. Austral Ecology, 30: 719-738
 }
 \author{A. Marcia Barbosa}
-\note{
-}
 \seealso{
 \code{\link{HLfit}}, \code{\link{Dsquared}}, \code{\link{RsqGLM}}
 }
@@ -63,4 +61,3 @@ MillerCalib(model = mod, plot.values = FALSE, main = "Model calibration line")
 
 MillerCalib(obs = mod$y, pred = mod$fitted.values)
 }
-\keyword{ }
