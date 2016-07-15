@@ -46,19 +46,24 @@ echo $contents; } ?>
 
 <p> It includes functions for <b>variation partitioning</b>, calculating several measures of <b>model discrimination and calibration</b>, <b>optimizing prediction thresholds</b> based on a number of criteria, performing multivariate environmental similarity surface (<b>MESS</b>) <b>analysis</b>, and displaying various <b>analytical plots</b>. Includes also a <b>sample data set</b> with some species distribution models.</p>
 
-<font color="blue">
-Please note that the modelling functions formerly included in <i>modEvA</i> have been moved to package <a href="http://fuzzysim.r-forge.r-project.org/"><i>fuzzySim</i></a> for operative and editorial reasons. These functions are: <i>multGLM</i>, <i>modelTrim</i>, <i>Fav</i>, <i>getPreds</i>, <i>FDR</i>, <i>percentTestData</i>, <i>integerCols</i>, <i>multConvert</i> and <i>multicol</i>. The <i>rotif.env</i> example dataset has also moved to <i>fuzzySim</i>. Package <i>modEvA</i> now has dataset <i>rotif.mods</i>, and keeps only functions strictly related to model evaluation and analysis. Not also that <i><b>model</b></i>, which was previously the third argument in many <i>modEvA</i> functions (after <i>obs</i> and <i>pred</i>), is <b>now the first argument</b> in these functions, to facilitate automation of model evaluation.
+<font color="green">
+<h3> Package <i>modEvA</i> (v1.3.2) is now on CRAN!</h3>
 </font>
-<br />
-
 
 <h2> Install and load </h2>
 
-<p>To <strong>install</strong> <i>modEvA</i> directly form R-Forge, paste the following command in the R console (while connected to the internet):</p>
+<p>To <strong>install</strong> the <b>currently official version</b> of <i>modEvA</i>, paste the following command in the R console (while connected to the internet):</p>
+
+<code>install.packages("modEvA")</code><br />
+
+
+<p>To install a <b>developing version</b> (with possibly new additions, but probably also new bugs) of <i>modEvA</i> from R-Forge, paste the following command in the R console (while connected to the internet):</p>
 
 <code>install.packages("modEvA", repos="http://R-Forge.R-project.org")</code><br />
 
+<font color="grey" size="1">
 <p>This should work if you have the <b>latest version of R</b>; otherwise, it may either fail (producing a message like "<i>package 'modEvA' is not available for your R version</i>") or install an older version of <i>modEvA</i>. To <b>check the <i>modEvA</i> version that you have actually installed</b>, type <big><b><code>citation(package="modEvA")</code></b></big>. To install the latest <i>modEvA</i> version, you can either upgrade R <i>or</i> download the compressed <i>modEvA</i> <b>package source files</b> to your disk (<i>.tar.gz</i> for Linux/Mac or <i>.zip</i> for Windows, <b>available <a href="https://r-forge.r-project.org/R/?group_id=1876">here</a> or <a href="https://www.dropbox.com/sh/oac92wu1dbfsol4/AAAKVs4oVBBCUtDkPTnbh11Ga?dl=0">here</a></b>) and then install the package from there, e.g. with R menu "<i>Packages - Install packages from local zip files</i>" (Windows), or "<i>Packages & Data - Package installer, Packages repository - Local source package</i>" (Mac), or "<i>Tools - Install packages - Install from: Package Archive File</i>" (RStudio).</p>
+</font>
 
 <p>You only need to install (each version of) the package once, but then every time you re-open R you need to <strong>load</strong> the package by typing:</p>
 <code>library(modEvA)</code><br />
