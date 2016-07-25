@@ -74,18 +74,23 @@ echo $contents; } ?>
 
 <h2> References </h2>
 
-<h3> Citation of the <i>modEvA</i> package:</h3>
-
-<p>Barbosa A.M., Brown J.A., Jim&eacute;nez-Valverde A. & Real R. (2014) modEvA: Model Evaluation and Analysis. R package, version 1.3.2</p>
-
-
 <h3> Papers introducing <i>modEvA</i>:</h3>
 
 <p>Barbosa A.M., Real R., Mu&ntilde;oz A.R. & Brown J.A. (2013) New measures for assessing model equilibrium and prediction mismatch in species distribution models. <i>Diversity and Distributions</i> 19: 1333-1338 (DOI: <a href="http://onlinelibrary.wiley.com/doi/10.1111/ddi.12100/abstract">10.1111/ddi.12100</a>)</p>
 
 <p>Barbosa A.M.,  Brown J.A., Acevedo P., Lobo J.M. & Real R. (in prep.) The ABC of model evaluation: a visual method for a clearer assessment of model accuracy</p>
-<br />
 
+
+<h3> Other papers using <i>modEvA</i>:</h3>
+
+<p>Areias-Guerreiro J., Mira A. & Barbosa A.M. (in press) How well can models predict changes in species distributions? A 13-year-old otter model revisited. <i>Hystrix – Italian Journal of Mammalogy</i></p>
+
+<p>De Ara&uacute;jo, C.B., Marcondes-Machado, L.O. & Costa, G.C. (2013) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. <i>Journal of Biogeography</i> 41: 513-523</p>
+
+<p>Guti&eacute;rrez-Rodr&iacute;guez J., Barbosa A.M. & Mart&iacute;nez-Solano I. (in press) Present and past climatic effects on the current distribution and genetic diversity of the Iberian Spadefoot toad (<i>Pelobates cultripes</i>): an integrative approach. <i>Journal of Biogeography</i>
+
+<p>Reino L., Ferreira M., Mart&iacute;nez-Solano I., Segurado P., Xu C. & Barbosa A.M. (in press) Favourable areas for co-occurrence of parapatric species: niche conservatism and niche divergence in Iberian tree frogs and midwife toads. <i>Journal of Biogeography</i></p>
+<br />
 
 <h2>Find out more</h2>
 
