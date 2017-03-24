@@ -8,8 +8,8 @@ If you have a list of GLM model objects (created, e.g., with the \code{multGLM} 
 }
 \usage{
 multModEv(models = NULL, obs.data = NULL, pred.data = NULL,
-measures = modEvAmethods("multModEv"), standardize = FALSE, thresh = NULL,
-bin.method = NULL, verbosity = 0, ...)
+measures = modEvAmethods("multModEv"), standardize = FALSE, 
+thresh = NULL, bin.method = NULL, verbosity = 0, ...)
 }
 \arguments{
   \item{models}{a \code{list} of model object(s) of class "glm", all applied to the same data set. Evaluation is based on the cases included in the models.}
@@ -40,8 +40,8 @@ bin.method = "n.bins", fixed.bin.size = TRUE)
 head(eval1)
 
 
-eval2 <- multModEv(models = rotif.mods$models[1:6], thresh = "preval", 
-measures = c("AUC", "CCR", "Sensitivity", "TSS"))
+eval2 <- multModEv(models = rotif.mods$models[1:6], 
+thresh = "preval", measures = c("AUC", "CCR", "Sensitivity", "TSS"))
 
 head(eval2)
 
@@ -52,8 +52,9 @@ head(eval2)
 obses <- sapply(rotif.mods$models, `[[`, "y")
 preds <- sapply(rotif.mods$models, `[[`, "fitted.values")
 
-eval3 <- multModEv(obs.data = obses[ , 1:4], pred.data = preds[ , 1:4], 
-thresh = "preval", bin.method = "prob.bins")
+eval3 <- multModEv(obs.data = obses[ , 1:4], 
+pred.data = preds[ , 1:4], thresh = "preval", 
+bin.method = "prob.bins")
 
 head(eval3)
 }

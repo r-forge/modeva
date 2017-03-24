@@ -7,9 +7,10 @@ Get bins of continuous values.
 Get continuous predicted values into bins according to specific criteria.
 }
 \usage{
-getBins(model = NULL, obs = NULL, pred = NULL, id = NULL, bin.method,
-n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, 
-min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, verbosity = 2)
+getBins(model = NULL, obs = NULL, pred = NULL, id = NULL, 
+bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15,
+min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE,
+verbosity = 2)
 }
 \arguments{
   \item{model}{a model object of class \code{"glm"}.

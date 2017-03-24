@@ -7,7 +7,8 @@ Get model equation
 This function retrieves the equation of a model, to print or apply elsewhere.
 }
 \usage{
-getModEqn(model, type = "Y", digits = NULL, prefix = NULL, suffix = NULL)
+getModEqn(model, type = "Y", digits = NULL, prefix = NULL, 
+suffix = NULL)
 }
 \arguments{
   \item{model}{

@@ -7,10 +7,11 @@ Hosmer-Lemeshow goodness of fit
 This function calculates a model's calibration performance (reliability) with the Hosmer & Lemeshow goodness-of-fit statistic, which compares predicted probability to observed occurrence frequency at each portion of the probability range.
 }
 \usage{
-HLfit(model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10,
-fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, 
-quantile.type = 7, simplif = FALSE, verbosity = 2, alpha = 0.05, plot = TRUE, 
-plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", 
+HLfit(model = NULL, obs = NULL, pred = NULL, bin.method, 
+n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, 
+min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, 
+verbosity = 2, alpha = 0.05, plot = TRUE, plot.values = TRUE, 
+plot.bin.size = TRUE, xlab = "Predicted probability", 
 ylab = "Observed prevalence", ...)
 }
 \arguments{
@@ -80,16 +81,20 @@ mod <- rotif.mods$models[[1]]
 
 # try HLfit using different binning methods:
 
-HLfit(model = mod, bin.method = "round.prob", main = "HL GOF with round.prob (n=10)")
+HLfit(model = mod, bin.method = "round.prob", 
+main = "HL GOF with round.prob (n=10)")
 
-HLfit(model = mod, bin.method = "prob.bins", main = "HL GOF with prob.bins (n=10)")
+HLfit(model = mod, bin.method = "prob.bins", 
+main = "HL GOF with prob.bins (n=10)")
 
-HLfit(model = mod, bin.method = "size.bins", main = "HL GOF with size.bins (min size=15)")
+HLfit(model = mod, bin.method = "size.bins", 
+main = "HL GOF with size.bins (min size=15)")
 
 HLfit(model = mod, bin.method = "size.bins", min.bin.size = 30, 
 main = "HL GOF with size.bins min size 30")
 
-HLfit(model = mod, bin.method = "n.bins", main = "HL GOF with 10 bins")
+HLfit(model = mod, bin.method = "n.bins", 
+main = "HL GOF with 10 bins")
 
 HLfit(model = mod, bin.method = "n.bins", fixed.bin.size = TRUE, 
 main = "HL GOF with 10 bins of fixed size")

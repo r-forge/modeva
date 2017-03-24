@@ -49,8 +49,8 @@ plotGLM(model = mod)
 plotGLM(model = mod, plot.values = FALSE)
 
 
-# you can also use \code{plotGLM} with vectors of observed and predicted values
-# instead of with a model object:
+# you can also use \code{plotGLM} with vectors of observed and
+# predicted values instead of with a model object:
 
 plotGLM(obs = mod$y, pred = mod$fitted.values)
 }

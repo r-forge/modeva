@@ -7,10 +7,10 @@ Variation partitioning
 This function performs variation partitioning (Borcard et al. 1992) among two factors (e.g. Ribas et al. 2006) or three factors (e.g. Real et al. 2003) for either multiple linear regression models (LM) or generalized linear models (GLM).
 }
 \usage{
-varPart(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, model.type = NULL,
-A.name = "Factor A", B.name = "Factor B", C.name = "Factor C", plot = TRUE, 
-plot.digits = 3, cex.names = 1.5, cex.values = 1.2, main = "", cex.main = 2, 
-plot.unexpl = TRUE)
+varPart(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, 
+model.type = NULL, A.name = "Factor A", B.name = "Factor B", 
+C.name = "Factor C", plot = TRUE, plot.digits = 3, cex.names = 1.5, 
+cex.values = 1.2, main = "", cex.main = 2, plot.unexpl = TRUE)
 }
 \arguments{
   \item{A}{numeric value of the R-squared of the regression of the response variable on the variables related to factor 'A'}
@@ -72,13 +72,13 @@ C.name = "Environmental", main = "Small whale")
 
 
 # if you have a generalized linear model (GLM), 
-# you can use squared correlation coefficients 
-# of the predictions of each factor with those of the complete model:
+# you can use squared correlation coefficients of the
+# predictions of each factor with those of the complete model:
 
 varPart(A = (-0.005)^2, B = 0.698^2, C = 0.922^2, AB = 0.696^2, 
 BC = 0.994^2, AC = 0.953^2, ABC = 1, A.name = "Topographic", 
 B.name = "Climatic", C.name = "Geographic", main = "Big bird")
 
-# but "Unexplained variation" can be deceiving in these cases (see Details)
-# try also adding 'plot.unexpl = FALSE'
+# but "Unexplained variation" can be deceiving in these cases
+# (see Details); try also adding 'plot.unexpl = FALSE'
 }

@@ -8,8 +8,9 @@ This function calculates a number of measures for evaluating the discrimination 
 }
 \usage{
 threshMeasures(model = NULL, obs = NULL, pred = NULL, thresh,
-measures = modEvAmethods("threshMeasures"), simplif = FALSE, plot = TRUE,
-plot.ordered = FALSE, standardize = TRUE, verbosity = 2, ...)
+measures = modEvAmethods("threshMeasures"), simplif = FALSE, 
+plot = TRUE, plot.ordered = FALSE, standardize = TRUE, 
+verbosity = 2, ...)
 }
 \arguments{
   \item{model}{a model object of class "glm".}
@@ -87,8 +88,8 @@ thresh = "preval")
 threshMeasures(model = mod, plot.ordered = TRUE, thresh = "preval")
 
 
-# you can also use threshMeasures with vectors of observed and predicted values
-# instead of with a model object:
+# you can also use threshMeasures with vectors of observed and
+# predicted values instead of with a model object:
 
 threshMeasures(obs = mod$y, pred = mod$fitted.values, thresh = "preval")
 }

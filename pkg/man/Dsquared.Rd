@@ -7,8 +7,8 @@ Proportion of deviance explained by a GLM
 This function calculates the (adjusted) amount of deviance accounted for by a generalized linear model.
 }
 \usage{
-Dsquared(model = NULL, obs = NULL, pred = NULL, family = NULL, adjust = FALSE, 
-npar = NULL)
+Dsquared(model = NULL, obs = NULL, pred = NULL, family = NULL, 
+adjust = FALSE, npar = NULL)
 }
 \arguments{
   \item{model}{a model object of class "glm".}
@@ -56,7 +56,7 @@ parameters <- attributes(logLik(mod))$df
 
 Dsquared(obs = presabs, pred = prediction, family = "binomial")
 
-Dsquared(obs = presabs, pred = prediction, family = "binomial", adjust = TRUE, 
-npar = parameters)
+Dsquared(obs = presabs, pred = prediction, family = "binomial",
+adjust = TRUE, npar = parameters)
 
 }

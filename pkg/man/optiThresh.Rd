@@ -60,8 +60,8 @@ optiThresh(model = mod, pch = 20, measures = c("CCR", "Sensitivity",
 "Specificity", "UPR", "OPR", "kappa", "TSS"), ylim = c(0, 1))
 
 
-# you can also use optiThresh with vectors of observed and predicted values
-# instead of with a model object:
+# you can also use optiThresh with vectors of observed and predicted
+# values instead of with a model object:
 
 optiThresh(obs = mod$y, pred = mod$fitted.values, pch = ".")
 }

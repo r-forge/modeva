@@ -8,10 +8,11 @@ This function calculates the Area Under the Curve of the receiver operating char
 }
 \usage{
 AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, 
-interval = 0.01, FPR.limits = c(0, 1), plot = TRUE, plot.values = TRUE, 
-plot.digits = 3, plot.preds = FALSE, grid = FALSE, 
-xlab = c("False positive rate", "(1-specificity)"),
-ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve", ...)
+interval = 0.01, FPR.limits = c(0, 1), plot = TRUE, 
+plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, 
+grid = FALSE, xlab = c("False positive rate", "(1-specificity)"),
+ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve",
+...)
 }
 \arguments{
   \item{model}{a model object of class "glm".}

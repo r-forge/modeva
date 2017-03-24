@@ -9,8 +9,8 @@ The optiPair function can optimize a model's discrimination threshold based on a
 }
 \usage{
 optiPair(model = NULL, obs = NULL, pred = NULL,
-measures = c("Sensitivity", "Specificity"), interval = 0.01, plot = TRUE,
-plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, ...)
+measures = c("Sensitivity", "Specificity"), interval = 0.01, 
+plot = TRUE, plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, ...)
 }
 \arguments{
   \item{model}{a model object of class "glm".}
