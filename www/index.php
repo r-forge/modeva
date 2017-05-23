@@ -83,13 +83,13 @@ echo $contents; } ?>
 
 <h3> Other papers using <i>modEvA</i>:</h3>
 
-<p>Areias-Guerreiro J., Mira A. & Barbosa A.M. (in press) How well can models predict changes in species distributions? A 13-year-old otter model revisited. <i>Hystrix – Italian Journal of Mammalogy</i></p>
+<p>Dias A., Palma L., Carvalho F., Neto D., Real J. & Beja P. (2017) The role of conservative versus innovative nesting behavior on the 25-year population expansion of an avian predator. <i>Ecology and Evolution</i>, DOI: 10.1002/ece3.3007</p>
 
-<p>De Ara&uacute;jo, C.B., Marcondes-Machado, L.O. & Costa, G.C. (2013) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. <i>Journal of Biogeography</i> 41: 513-523</p>
+<p>Reino L., Ferreira M., Mart&iacute;nez-Solano I., Segurado P., Xu C. & Barbosa A.M. (2017) Favourable areas for co-occurrence of parapatric species: niche conservatism and niche divergence in Iberian tree frogs and midwife toads. <i>Journal of Biogeography</i>, 44: 88-98</p>
 
-<p>Guti&eacute;rrez-Rodr&iacute;guez J., Barbosa A.M. & Mart&iacute;nez-Solano I. (in press) Present and past climatic effects on the current distribution and genetic diversity of the Iberian Spadefoot toad (<i>Pelobates cultripes</i>): an integrative approach. <i>Journal of Biogeography</i>
+<p>Areias-Guerreiro J., Mira A. & Barbosa A.M. (2016) How well can models predict changes in species distributions? A 13-year-old otter model revisited. <i>Hystrix – Italian Journal of Mammalogy</i>, DOI: http://dx.doi.org/10.4404/hystrix-27.1-11867</p>
 
-<p>Reino L., Ferreira M., Mart&iacute;nez-Solano I., Segurado P., Xu C. & Barbosa A.M. (in press) Favourable areas for co-occurrence of parapatric species: niche conservatism and niche divergence in Iberian tree frogs and midwife toads. <i>Journal of Biogeography</i></p>
+<p>De Ara&uacute;jo, C.B., Marcondes-Machado, L.O. & Costa, G.C. (2013) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. <i>Journal of Biogeography</i>, 41: 513-523</p>
 <br />
 
 <h2>Find out more</h2>
