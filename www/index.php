@@ -78,20 +78,21 @@ echo $contents; } ?>
 
 <p>Barbosa A.M., Real R., Mu&ntilde;oz A.R. & Brown J.A. (2013) New measures for assessing model equilibrium and prediction mismatch in species distribution models. <i>Diversity and Distributions</i> 19: 1333-1338 (DOI: <a href="http://onlinelibrary.wiley.com/doi/10.1111/ddi.12100/abstract">10.1111/ddi.12100</a>)</p>
 
-<p>Barbosa A.M.,  Brown J.A., Acevedo P., Lobo J.M. & Real R. (in prep.) The ABC of model evaluation: a visual method for a clearer assessment of model accuracy</p>
-
-
-<h3> Other papers using <i>modEvA</i>:</h3>
-
 <p>Areias-Guerreiro J., Mira A. & Barbosa A.M. (2016) How well can models predict changes in species distributions? A 13-year-old otter model revisited. <i>Hystrix – Italian Journal of Mammalogy, 27(1). DOI: https://doi.org/10.4404/hystrix-27.1-11867</i></p>
+
+<p>Barbosa A.M., Brown J.A., Acevedo P., Lobo J.M. & Real R. (in prep.) The ABC of model evaluation: a visual method for a clearer assessment of model accuracy</p>
+
+
+<h3> Other papers using <i>modEvA</i> (excluding self-citations):</h3>
 
 <p>Coelho L., Romero D., Queirolo D. & Guerrero J.C. (2018) Understanding factors affecting the distribution of the maned wolf (<i>Chrysocyon brachyurus</i>) in South America: Spatial dynamics and environmental drivers. <i>Mammalian Biology</i>, 92: 54-61. https://doi.org/10.1016/j.mambio.2018.04.006</p>
 
 <p>De Ara&uacute;jo C.B., Marcondes-Machado L.O. & Costa G.C. (2013) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. <i>Journal of Biogeography</i>, 41: 513-523</p>
 
-<p>Guti&eacute;rrez-Rodr&iacute;guez J., Barbosa A.M. & Mart&iacute;nez-Solano I. (2017) Present and past climatic effects on the current distribution and genetic diversity of the Iberian Spadefoot toad (<i>Pelobates cultripes</i>): an integrative approach. <i>Journal of Biogeography</i>, 44: 245-258. https://doi.org/10.1111/jbi.12791
+<p>Horn, J. , Becher, M. A., Kennedy, P. J., Osborne, J. L. & Grimm, V. (2016) Multiple stressors: using the honeybee model BEEHAVE to explore how spatial and temporal forage stress affects colony resilience. <i>Oikos</i>, 125: 1001-1016. DOI:10.1111/oik.02636</p>
 
-<p>Reino L., Ferreira M., Mart&iacute;nez-Solano I., Segurado P., Xu C. & Barbosa A.M. (2017) Favourable areas for co-occurrence of parapatric species: niche conservatism and niche divergence in Iberian tree frogs and midwife toads. <i>Journal of Biogeography</i>, 44: 88-98. https://doi.org/10.1111/jbi.12850</p>
+<p>Naman SM, Rosenfeld JS, Kiffney PM, Richardson JS (in press). The energetic consequences of habitat structure for forest stream salmonids. <i>Journal of Animal Ecology</i>, DOI: 10.1111/1365-2656.12845</p>
+
 <br />
 
 
