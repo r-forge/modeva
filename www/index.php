@@ -89,9 +89,9 @@ echo $contents; } ?>
 
 <p>De Ara&uacute;jo C.B., Marcondes-Machado L.O. & Costa G.C. (2013) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. <i>Journal of Biogeography</i>, 41: 513-523</p>
 
-<p>Horn, J. , Becher, M. A., Kennedy, P. J., Osborne, J. L. & Grimm, V. (2016) Multiple stressors: using the honeybee model BEEHAVE to explore how spatial and temporal forage stress affects colony resilience. <i>Oikos</i>, 125: 1001-1016. DOI:10.1111/oik.02636</p>
+<p>Horn, J., Becher, M. A., Kennedy, P. J., Osborne, J. L. & Grimm, V. (2016) Multiple stressors: using the honeybee model BEEHAVE to explore how spatial and temporal forage stress affects colony resilience. <i>Oikos</i>, 125: 1001-1016. DOI:10.1111/oik.02636</p>
 
-<p>Naman SM, Rosenfeld JS, Kiffney PM, Richardson JS (in press). The energetic consequences of habitat structure for forest stream salmonids. <i>Journal of Animal Ecology</i>, DOI: 10.1111/1365-2656.12845</p>
+<p>Naman S.M., Rosenfeld J.S., Kiffney P.M., Richardson J.S. (in press) The energetic consequences of habitat structure for forest stream salmonids. <i>Journal of Animal Ecology</i>, DOI: 10.1111/1365-2656.12845</p>
 
 <br />
 
