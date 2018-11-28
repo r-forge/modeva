@@ -1,4 +1,34 @@
 ==========================================
+modEvA v1.4 (committed 2018-11-28)
+==========================================
+
+## Modified functions:
+
+* AUC
+- added arguments diag, diag.col, diag.lty, roc.col, roc.lty, roc.lwd
+- 'simplif = TRUE' no longer overrides 'plot = TRUE'
+
+* MillerCalib
+- added arguments diag, line.col
+
+
+## Other modified files:
+
+- edited .Rd files (AUC, HLfit, evaluate, optiPair, threshMeasures, modEvA-package) to reflect difference between discrimination and classification
+- updated index.php
+
+
+==========================================
+modEvA v1.3.3 (committed 2017-03-24)
+==========================================
+
+## Modified functions:
+
+* varPart:
+- bug fixed (with na.omit) when only two factors (A, B, AB)
+
+
+==========================================
 modEvA v1.3.2 (committed 2016-07-12)
 ==========================================
 

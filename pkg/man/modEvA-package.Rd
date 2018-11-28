@@ -4,14 +4,14 @@
 \docType{package}
 \title{Model Evaluation and Analysis}
 \description{
-The modEvA package can analyse species distribution models and evaluate their performance. It includes functions for performing variation partitioning, calculating several measures of model discrimination and calibration, optimizing prediction thresholds based on a number of criteria, performing multivariate environmental similarity surface (MESS) analysis, and displaying various analytical plots.
+The modEvA package can analyse species distribution models and evaluate their performance. It includes functions for performing variation partitioning; calculating several measures of model discrimination, classification, explanatory power, and calibration; optimizing prediction thresholds based on a number of criteria; performing multivariate environmental similarity surface (MESS) analysis; and displaying various analytical plots.
 }
 \details{
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 1.3.3\cr
-Date: \tab 2017-03-24\cr
+Version: \tab 1.4\cr
+Date: \tab 2018-11-28\cr
 License: \tab GPL-3\cr
 }
 }

@@ -1,5 +1,5 @@
-MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot.values = TRUE, digits = 2, xlab = "", ylab = "", main = "Miller calibration", ...) {
-  # version 1.3 (24 Jun 2015)
+MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line.col = "black", diag = TRUE, diag.col = "grey", plot.values = TRUE, digits = 2, xlab = "", ylab = "", main = "Miller calibration", ...) {
+  # version 1.4 (7 Oct 2018)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -9,9 +9,9 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     obs <- model$y
     pred <- model$fitted.values
-    
+
   } else { # if model not provided
-    
+
     if (is.null(obs) | is.null(pred))  stop ("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'.")
     if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
     # new (15 Sep 2015):
@@ -32,10 +32,10 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot
   )
   # new:
   if (any(pred < 0) | any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval; are you sure these represent probabilities?")
-  
+
   pred[pred == 0] <- 2e-16  # avoid NaN in log below
   pred[pred == 1] <- 1 - 2e-16  # avoid NaN in log below
-  
+
   logit <- log(pred / (1 - pred))
   mod <- glm(obs ~ logit, family = binomial)
   intercept <- mod$coef[[1]]
@@ -49,9 +49,9 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, plot
   if (plot) {
     ymin <- min(0, intercept)
     ymax <- max(1, intercept + 0.3)
-    plot(c(0, 1), c(ymin, ymax), type = "n", xlab = xlab, ylab = ylab, main = main)
-    abline(0, 1, col = "lightgrey", lty = 2)
-    abline(intercept, slope)
+    plot(c(0, 1), c(ymin, ymax), type = "n", xlab = xlab, ylab = ylab, main = main, ...)
+    if (diag) abline(0, 1, col = diag.col, lty = 2)
+    abline(intercept, slope, col = line.col)
     if (plot.values) {
       #plotext <- paste("intercept =" , round(intercept, digits), "\nslope =", round(slope, digits), "\nslope p-value =", round(slope.p, digits))
       plotext <- paste0("intercept = " , round(intercept, digits), "\nslope = ", round(slope, digits))

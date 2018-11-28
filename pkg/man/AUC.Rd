@@ -9,6 +9,8 @@ This function calculates the Area Under the Curve of the receiver operating char
 \usage{
 AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, 
 interval = 0.01, FPR.limits = c(0, 1), plot = TRUE, 
+diag = TRUE, diag.col = "grey", diag.lty = 1,
+roc.col = "black", roc.lty = 1, roc.lwd = 2,
 plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, 
 grid = FALSE, xlab = c("False positive rate", "(1-specificity)"),
 ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve",
@@ -19,10 +21,16 @@ ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve",
   \item{obs}{a vector of observed presences (1) and absences (0) or another
   binary response variable. This argument is ignored if \code{model} is provided.}
   \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as \code{obs}. This argument is ignored if \code{model} is provided.}
-  \item{simplif}{logical, whether to use a faster version that outputs only the AUC value (may be useful for calculating AUC for large numbers of species in a loop, for example). Note that the ROC plot is not drawn when simplif = TRUE.}
+  \item{simplif}{logical, whether to use a faster version that returns only the AUC value (and the ROC plot if plot = TRUE).}
   \item{FPR.limits}{(NOT YET IMPLEMENTED) numerical vector of length 2 indicating the limits of false positive rate between which to calculate a partial AUC. The default is c(0, 1), for considering the whole AUC.}
   \item{interval}{interval of threshold values at which to calculate the true and false positive and negative rates. Defaults to 0.01. This argument is ignored if \code{simplif = TRUE}. Note that this does not affect the obtained AUC value (although it can affect the size of the plotted ROC curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney U statistic and is therefore threshold-independent.}
   \item{plot}{logical, whether or not to plot the ROC curve. Defaults to TRUE.}
+  \item{diag}{logical, whether or not to add the reference diagonal (if plot = TRUE). Defaults to TRUE.}
+  \item{diag.col}{line colour for the reference diagonal.}
+  \item{diag.lty}{line type for the reference diagonal.}
+  \item{roc.col}{line colour for the ROC curve.}
+  \item{roc.lty}{line type for the ROC curve.}
+  \item{roc.lwd}{line width for the ROC curve.}
   \item{plot.values}{logical, whether or not to show in the plot the values associated to the curve (e.g., the AUC). Defaults to TRUE.}
   \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed. Defaults to 3. This argument is ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}
   \item{plot.preds}{logical, whether or not to plot the proportion of analysed model predictions (through proportionally sized circles) at each threshold. Experimental. Defaults to FALSE.}
@@ -33,10 +41,10 @@ ylab = c("True positive rate", "(sensitivity)"), main = "ROC curve",
   \item{\dots}{further arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{
-Like the model evaluation measures calculated by the \code{\link{threshMeasures}} function, the area under the ROC curve (AUC) assesses the discrimination performance of a model; but unlike them, it does not require the choice of a particular threshold above which to consider that a model predicts species presence, but rather averages discrimination performance over all possible thresholds. Mind that the AUC has been widely criticized (e.g. Lobo et al. 2008, Jimenez-Valverde et al. 2013), yet it is still among the most widely used metrics in model evaluation. It is highly correlated with species prevalence, so this value is also provided by the AUC function (if \code{simplif = FALSE}, the default) for reference. Although there are functions to calculate the AUC in other R packages (e.g. \pkg{ROCR}, \pkg{PresenceAbsence}, \pkg{verification}, \pkg{Epi}), the \code{AUC} function is more compatible with the remaining functions in \pkg{modEvA} and can be applied not only to a set of observed versus predicted values, but also directly to a model object of class \code{"glm"}.
+Mind that the AUC has been widely criticized (e.g. Lobo et al. 2008, Jimenez-Valverde et al. 2013), but is still among the most widely used metrics in model evaluation. It is highly correlated with species prevalence, so this value is also provided by the AUC function (if \code{simplif = FALSE}, the default) for reference. Although there are functions to calculate the AUC in other R packages (e.g. \pkg{ROCR}, \pkg{PresenceAbsence}, \pkg{verification}, \pkg{Epi}), the \code{AUC} function is more compatible with the remaining functions in \pkg{modEvA} and can be applied not only to a set of observed versus predicted values, but also directly to a model object of class \code{"glm"}.
 }
 \value{
-If \code{simplif = TRUE}, the function returns only the AUC value (a numeric value between 0 and 1). Otherwise (the default), it plots the curve and returns a \code{list} with the following components:
+If \code{simplif = TRUE}, the function returns only the AUC value (a numeric value between 0 and 1). Otherwise (the default), it returns a \code{list} with the following components:
 \item{thresholds}{a data frame of the true and false positives, the sensitivity and specificity of the predictions, and the number of predicted values at each analysed threshold.}
 \item{N}{the total number of obervations.}
 \item{prevalence}{the proportion of occurrences in the data (which correlates with the AUC).}

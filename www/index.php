@@ -44,20 +44,20 @@ echo $contents; } ?>
 
 <!-- end of project description -->
 
-<p> It includes functions for <b>variation partitioning</b>, calculating several measures of <b>model discrimination and calibration</b>, <b>optimizing prediction thresholds</b> based on a number of criteria, performing multivariate environmental similarity surface (<b>MESS</b>) <b>analysis</b>, and displaying various <b>analytical plots</b>. Includes also a <b>sample data set</b> with some species distribution models.</p>
+<p> It includes functions for <b>variation partitioning</b>; calculating several measures of model <b>discrimination</b>, <b>classification</b>, <b>explanatory power</b>, and <b>calibration</b>; <b>optimizing prediction thresholds</b> based on a number of criteria; performing multivariate environmental similarity surface (<b>MESS</b>) <b>analysis</b>; and displaying various <b>analytical plots</b>. It includes also a <b>sample data set</b> with some species distribution models.</p>
 
 <font color="green">
-<h3> Package <i>modEvA</i> (v1.3.2) is now on CRAN!</h3>
+<h3> Package <i>modEvA</i> (v1.3.2) is on CRAN!</h3>
 </font>
 
 <h2> Install and load </h2>
 
-<p>To <strong>install</strong> the <b>currently official version</b> of <i>modEvA</i>, paste the following command in the R console (while connected to the internet):</p>
+<p>To <strong>install</strong> the currently <b>stable version</b> of <i>modEvA</i> from CRAN, paste the following command in the R console (while connected to the internet):</p>
 
 <code>install.packages("modEvA")</code><br />
 
 
-<p>To install a <b>developing version</b> (with possibly new additions, but probably also new bugs) of <i>modEvA</i> from R-Forge, paste the following command in the R console (while connected to the internet):</p>
+<p>To install a <b>developing version</b> (with new features, but possibly also new bugs) of <i>modEvA</i> from R-Forge, paste the following command in the R console (while connected to the internet):</p>
 
 <code>install.packages("modEvA", repos="http://R-Forge.R-project.org")</code><br />
 
@@ -88,6 +88,8 @@ echo $contents; } ?>
 <p>Coelho L., Romero D., Queirolo D. & Guerrero J.C. (2018) Understanding factors affecting the distribution of the maned wolf (<i>Chrysocyon brachyurus</i>) in South America: Spatial dynamics and environmental drivers. <i>Mammalian Biology</i>, 92: 54-61. https://doi.org/10.1016/j.mambio.2018.04.006</p>
 
 <p>De Ara&uacute;jo C.B., Marcondes-Machado L.O. & Costa G.C. (2013) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. <i>Journal of Biogeography</i>, 41: 513-523</p>
+
+<p>Dias A., Palma L., Carvalho F., Neto D., Real J., Beja P. (2017) The role of conservative versus innovative nesting behavior on the 25‐year population expansion of an avian predator. Ecology and Evolution 7: 4241–4253. https://doi.org/10.1002/ece3.3007</p>
 
 <p>Horn, J., Becher, M. A., Kennedy, P. J., Osborne, J. L. & Grimm, V. (2016) Multiple stressors: using the honeybee model BEEHAVE to explore how spatial and temporal forage stress affects colony resilience. <i>Oikos</i>, 125: 1001-1016. DOI:10.1111/oik.02636</p>
 

@@ -1,10 +1,12 @@
 AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
                 interval = 0.01, FPR.limits = c(0, 1), plot = TRUE,
-                plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, 
-                grid = FALSE,xlab = c("False positive rate", "(1-specificity)"),
+                diag = TRUE, diag.col = "grey", diag.lty = 1,
+                roc.col = "black", roc.lty = 1, roc.lwd = 2,
+                plot.values = TRUE, plot.digits = 3, plot.preds = FALSE,
+                grid = FALSE, xlab = c("False positive rate", "(1-specificity)"),
                 ylab = c("True positive rate", "(sensitivity)"),
                 main = "ROC curve", ...) {
-  # version 1.8 (18 Apr 2016)
+  # version 1.8 (6 Oct 2018)
 
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
 
@@ -26,7 +28,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
   if (n.out < n.in)  warning (n.in - n.out, " observations removed due to missing data; ", n.out, " observations actually evaluated.")
   obs <- dat$obs
   pred <- dat$pred
-  
+
   stopifnot(
     obs %in% c(0,1),
 #    pred >= 0,
@@ -43,7 +45,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
   rnk <- rank(xy)
   AUC <- ((n0 * n1) + ((n0 * (n0 + 1))/2) - sum(rnk[1 : n0])) / (n0 * n1)
 
-  if (simplif)  return(AUC)
+  if (simplif && !plot)  return(AUC)
 
   # new:
   if (any(pred < 0) | any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval within which thresholds are calculated.")
@@ -65,11 +67,12 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
   }; rm(t)
 
   if (plot) {
-    plot(x = c(0, 1), y = c(0, 1), type = "l", xlab = xlab, ylab = ylab, main = main, col = "grey", ...)  # plots the 0.5 diagonal
+    d <- ifelse(diag, "l", "n")
+    plot(x = c(0, 1), y = c(0, 1), type = d, xlab = xlab, ylab = ylab, main = main, col = diag.col, lty = diag.lty, ...)  # plots the 0.5 diagonal (or not if diag=FALSE)
 
     if (grid) abline(h = thresholds, v = thresholds, col = "lightgrey")
 
-    lines(x = false.pos.rate, y = sensitivity, lwd = 2)  # ROC curve
+    lines(x = false.pos.rate, y = sensitivity, col = roc.col, lty = roc.lty, lwd = roc.lwd)  # ROC curve
 
     if (plot.values) {
       text(1.0, 0.1, adj = 1, substitute(paste(AUC == a), list(a = round(AUC, plot.digits))))
@@ -82,6 +85,8 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
       points(x = thresholds, y = rep(0, Nthresh), cex = 20 * sqrt(prop.preds), col = "blue")
     }  # end if plot.preds
   }  # end if plot
+
+  if (simplif)  return (AUC)
 
   return (list(thresholds = data.frame(thresholds, true.positives, true.negatives, sensitivity, specificity, false.pos.rate, n.preds, prop.preds), N = N, prevalence = preval, AUC = AUC, AUCratio = AUC / 0.5))
 }

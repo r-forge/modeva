@@ -4,7 +4,7 @@
 Evaluate a GLM based on the elements of a confusion matrix.
 }
 \description{
-This functions evaluates the discrimination performance of a model based on the values of a confusion matrix obtained at a particular threshold.
+This functions evaluates the classification performance of a model based on the values of a confusion matrix obtained at a particular threshold.
 }
 \usage{
 evaluate(a, b, c, d, N = NULL, measure = "CCR")
@@ -19,7 +19,7 @@ evaluate(a, b, c, d, N = NULL, measure = "CCR")
   \item{measure}{a character vector of length 1 indicating the the evaluation measure to use. Type \code{modEvAmethods("threshMeasures")} for available options.}
 }
 \details{
-A number of measures can be used to evaluate continuous model predictions against observed binary occurrence data (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013). The \code{evaluate} function can calculate a few threshold-based discrimination measures from the values of a confusion matrix obtained at a particular threshold. The \code{evaluate} function is used internally by \code{\link{threshMeasures}}. It can also be accessed directly by the user, but it is usually more practical to use \code{\link{threshMeasures}}, which calculates the confusion matrix automatically.
+A number of measures can be used to evaluate continuous model predictions against observed binary occurrence data (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013). The \code{evaluate} function can calculate a few threshold-based classification measures from the values of a confusion matrix obtained at a particular threshold. The \code{evaluate} function is used internally by \code{\link{threshMeasures}}. It can also be accessed directly by the user, but it is usually more practical to use \code{\link{threshMeasures}}, which calculates the confusion matrix automatically.
 }
 \value{
 The value of the specified evaluation measure.
