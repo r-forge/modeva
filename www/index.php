@@ -95,6 +95,8 @@ echo $contents; } ?>
 
 <p>Naman S.M., Rosenfeld J.S., Kiffney P.M., Richardson J.S. (in press) The energetic consequences of habitat structure for forest stream salmonids. <i>Journal of Animal Ecology</i>, DOI: 10.1111/1365-2656.12845</p>
 
+<p> Romero D., Olivero J., Real R. & Guerrero J.C. (2019) Applying fuzzy logic to assess the biogeographical risk of dengue in South America. <i>Parasites & Vectors</i>, 12: 428. DOI: 10.1186/s13071-019-3691-5</p>
+
 <br />
 
 

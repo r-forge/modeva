@@ -5,13 +5,14 @@
 This function calculates some (pseudo) R-squared statistics for binomial Generalized Linear Models.
 }
 \usage{
-RsqGLM(model = NULL, obs = NULL, pred = NULL)
+RsqGLM(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs")
 }
 \arguments{
   \item{model}{a model object of class "glm".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
   binary response variable. Not necessary (and ignored) if \code{model} is provided.}
   \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as \code{obs}. Not necessary (and ignored) if \code{model} is provided.}
+  \item{use}{argument to be passed to \code{\link{cor}} for handling mising values.}
 }
 \details{
 Implemented measures include the R-squareds of McFadden (1974), Cox-Snell (1989), Nagelkerke (1991, which corresponds to the corrected Cox-Snell, eliminating its upper bound), and Tjur (2009). See Allison (2014) for a brief review of these measures.

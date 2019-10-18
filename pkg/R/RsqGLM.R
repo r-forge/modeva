@@ -1,5 +1,5 @@
-RsqGLM <- function(model = NULL, obs = NULL, pred = NULL) {
-  # version 1.5 (26 Nov 2015)
+RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs") {
+  # version 1.6 (18 Oct 2019)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -64,7 +64,7 @@ RsqGLM <- function(model = NULL, obs = NULL, pred = NULL) {
     message("NOTE: Tjur R-squared applies only to binomial GLMs")
   }
   
-  sqPearson <- cor(obs, pred) ^ 2
+  sqPearson <- cor(obs, pred, use = use) ^ 2
 
   return(list(CoxSnell = CoxSnell, Nagelkerke = Nagelkerke, McFadden = McFadden, Tjur = Tjur, sqPearson = sqPearson))
 }

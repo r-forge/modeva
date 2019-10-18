@@ -10,15 +10,15 @@ The modEvA package can analyse species distribution models and evaluate their pe
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 1.4\cr
-Date: \tab 2018-11-28\cr
+Version: \tab 1.4.1\cr
+Date: \tab 2019-10-18\cr
 License: \tab GPL-3\cr
 }
 }
 \author{
 Barbosa A.M., Brown J.A., Jimenez-Valverde A., Real R.
 
-A. Marcia Barbosa <barbosa@uevora.pt>
+A. Marcia Barbosa <ana.marcia.barbosa@gmail.com>
 }
 \references{
 Barbosa A.M., Real R., Munoz A.R. & Brown J.A. (2013) New measures for assessing model equilibrium and prediction mismatch in species distribution models. Diversity and Distributions 19: 1333-1338 (DOI: 10.1111/ddi.12100)
