@@ -5,7 +5,8 @@
 This function calculates some (pseudo) R-squared statistics for binomial Generalized Linear Models.
 }
 \usage{
-RsqGLM(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs")
+RsqGLM(model = NULL, obs = NULL, pred = NULL, 
+use = "pairwise.complete.obs")
 }
 \arguments{
   \item{model}{a model object of class "glm".}

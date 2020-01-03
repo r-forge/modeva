@@ -1,4 +1,24 @@
 ==========================================
+modEvA v1.4.2 (committed 2020-01-03)
+==========================================
+
+## Modified functions:
+
+* plotGLM
+- corrected to adj=1 when plotting values on the right of the plot
+
+
+==========================================
+modEvA v1.4.1 (committed 2019-10-18)
+==========================================
+
+## Modified functions:
+
+* RsqGLM
+- added NA handling for 'cor'
+
+
+==========================================
 modEvA v1.4 (committed 2018-11-28)
 ==========================================
 

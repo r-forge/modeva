@@ -9,7 +9,7 @@ function(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA,
   if (!is.null(model.type)) message ("NOTE: Argument 'model.type' is no longer used.")
   
   partials <- c(A, B, C, AB, BC, AC, ABC)
-  if (is.finite(partials[c(1:2, 4)]) && is.na(partials[c(3, 5:7)]))  
+  if (all(is.finite(partials[c(1:2, 4)])) && all(is.na(partials[c(3, 5:7)])))  
     twofactors <- TRUE
   else if (all(is.finite(partials)))  
     twofactors <- FALSE

@@ -2,7 +2,7 @@ plotGLM <-
 function(model = NULL, obs = NULL, pred = NULL, link = "logit",
          plot.values = TRUE, plot.digits = 3, xlab = "Logit (Y)",
          ylab = "Predicted probability", main = "Model plot", ...) {
-  # version 1.9 (13 Apr 2016)
+  # version 2.0 (03 Jan 2020)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -51,14 +51,19 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
     #if (max(logit) > abs(min(logit)))  x.loc <- c(max(logit), 1)
     #else x.loc <- c(min(logit), 0)
     
-    if (max(logit) > abs(min(logit)))  x.loc <- max(logit)
-    else x.loc <- min(logit)
-
-    text(x.loc, 0.95, substitute(paste(D^2 == a), list(a = Dsq)), adj = 0)
-    text(x.loc, 0.8, substitute(paste(R[Cox-Snell]^2 == a), list(a = CoxSnell)), adj = 0)
-    text(x.loc, 0.6, substitute(paste(R[McFadden]^2 == a), list(a = McFadden)), adj = 0)
-    text(x.loc, 0.4, substitute(paste(R[Nagelkerke]^2 == a), list(a = Nagelkerke)), adj = 0)
-    text(x.loc, 0.2, substitute(paste(R[Tjur]^2 == a), list(a = Tjur)), adj = 0)
+    if (max(logit) > abs(min(logit))) {
+      x.loc <- max(logit)
+      adj <- 1
+    } else {
+      x.loc <- min(logit)
+      adj <- 0
+    }
+    
+    text(x.loc, 0.95, substitute(paste(D^2 == a), list(a = Dsq)), adj = adj)
+    text(x.loc, 0.8, substitute(paste(R[Cox-Snell]^2 == a), list(a = CoxSnell)), adj = adj)
+    text(x.loc, 0.6, substitute(paste(R[McFadden]^2 == a), list(a = McFadden)), adj = adj)
+    text(x.loc, 0.4, substitute(paste(R[Nagelkerke]^2 == a), list(a = Nagelkerke)), adj = adj)
+    text(x.loc, 0.2, substitute(paste(R[Tjur]^2 == a), list(a = Tjur)), adj = adj)
     
     #text(x = x.loc[1], y = 0.6, adj = x.loc[2], labels = substitute(paste(D^2 == a), list(a = round(Dsq, plot.digits))))
     #if (model.provided) {  # adjDsq needs n parameters in original model, not just our model created from obs~logit
