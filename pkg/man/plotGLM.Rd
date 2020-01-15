@@ -13,11 +13,11 @@ ylab = "Predicted probability", main = "Model plot", ...)
 }
 \arguments{
   \item{model}{a model object of class "\code{\link{glm}}".}
-  \item{obs}{a vector of presence/absence or other binary (1-0) observed data. Not necessary (and ignored) if \code{model} is provided.}
-  \item{pred}{a vector of the values predicted by a GLM of the binary observed data. Not necessary (and ignored) if \code{model} is provided.}
+  \item{obs}{a vector of presence/absence or other binary (1-0) observed data. Not necessary (and ignored) if 'model' is provided.}
+  \item{pred}{a vector of the values predicted by a GLM of the binary observed data. Not necessary (and ignored) if 'model' is provided.}
   \item{link}{the link function of the GLM; only 'logit' (the default) is implemented.}
-  \item{plot.values}{logical, whether to include in the plot diagnostic values such as explained deviance (calculated with the \code{\link{Dsquared}} function) and pseudo-R-squared measures (calculated with the \code{\link{RsqGLM}} function). Defaults to \code{TRUE}.}
-    \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed (if \code{plot.values = TRUE}). Defaults to 3.}
+  \item{plot.values}{logical, whether to include in the plot diagnostic values such as explained deviance (calculated with the \code{\link{Dsquared}} function) and pseudo-R-squared measures (calculated with the \code{\link{RsqGLM}} function). Defaults to TRUE.}
+    \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed (if 'plot.values = TRUE'). Defaults to 3.}
   \item{xlab}{character string specifying the label for the x axis.}
   \item{ylab}{character string specifying the label for the y axis.}
   \item{main}{character string specifying the title for the plot.}
@@ -49,7 +49,7 @@ plotGLM(model = mod)
 plotGLM(model = mod, plot.values = FALSE)
 
 
-# you can also use \code{plotGLM} with vectors of observed and
+# you can also use 'plotGLM' with vectors of observed and
 # predicted values instead of with a model object:
 
 plotGLM(obs = mod$y, pred = mod$fitted.values)

@@ -14,30 +14,30 @@ verbosity = 2, ...)
 }
 \arguments{
   \item{model}{a model object of class "glm".}
-  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. Not necessary (and ignored) if \code{model} is provided.}
-  \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Not necessary (and ignored) if \code{model} is provided.}
-  \item{thresh}{numeric value of the threshold to separate predicted presences from predicted absences in \code{pred}; can be \code{"preval"}, to use the prevalence of \code{obs} as the threshold, or any real number between 0 and 1.  See Details for an informed choice.}
-  \item{measures}{character vector of the evaluation measures to use. By default, all measures available in \code{modEvAmethods("threshMeasures")} are calculated.}
-  \item{simplif}{logical, whether to calculate a faster, simplified version. Used internally by other functions in the package. Defaults to \code{FALSE}.}
-  \item{plot}{logical, whether to produce a barplot of the calculated measures. Defaults to \code{TRUE}.}
-  \item{plot.ordered}{logical, whether to plot the measures in decreasing order rather than in input order. Defaults to \code{FALSE}.}
-  \item{standardize}{logical, whether to change measures that may range between -1 and +1 (namely kappa and TSS) to their corresponding value in the 0-to-1 scale (skappa and sTSS), so that they can compare directly to other measures (see \code{\link{standard01}}). The default is \code{TRUE}, but a message is displayed to inform the user about it.}
+  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. Not necessary (and ignored) if 'model' is provided.}
+  \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Not necessary (and ignored) if 'model' is provided.}
+  \item{thresh}{numeric value of the threshold to separate predicted presences from predicted absences in 'pred'; can be "preval", to use the prevalence of 'obs' as the threshold, or any real number between 0 and 1.  See Details for an informed choice.}
+  \item{measures}{character vector of the evaluation measures to use. By default, all measures available in 'modEvAmethods("threshMeasures")' are calculated.}
+  \item{simplif}{logical, whether to calculate a faster, simplified version. Used internally by other functions in the package. Defaults to FALSE.}
+  \item{plot}{logical, whether to produce a barplot of the calculated measures. Defaults to TRUE.}
+  \item{plot.ordered}{logical, whether to plot the measures in decreasing order rather than in input order. Defaults to FALSE.}
+  \item{standardize}{logical, whether to change measures that may range between -1 and +1 (namely kappa and TSS) to their corresponding value in the 0-to-1 scale (skappa and sTSS), so that they can compare directly to other measures (see \code{\link{standard01}}). The default is TRUE, but a message is displayed to inform the user about it.}
   \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{
-The \code{thresh}old value can be chosen according to a number of criteria (see e.g. Jimenez-Valverde & Lobo 2007, Nenzen & Araujo 2011). You can set \code{thresh} to \code{"preval"} (species' prevalence or proportion of presences in the input data), or calculate optimal threshold values according to different criteria with the \code{\link{optiThresh}} or the \code{\link{optiPair}} function. If you're using "environmental favourability" as input \code{pred} data (Real et al. 2006; see \code{Fav} function in R-Forge package 'fuzzySim'), then the 0.5 threshold equates to using prevalence in logistic regression (GLM with binomial error distribution and logit link function).
+The threshold value can be chosen according to a number of criteria (see e.g. Liu et al. 2005, Jimenez-Valverde & Lobo 2007, Nenzen & Araujo 2011). You can set 'thresh' to "preval" (species' prevalence or proportion of presences \bold{in the data input to this function}), or calculate optimal threshold values according to different criteria with the \code{\link{optiThresh}} or the \code{\link{optiPair}} function. If you are using "environmental favourability" as input 'pred' data (Real et al. 2006; see 'Fav' function in R package 'fuzzySim'), then the 0.5 threshold equates to using training prevalence in logistic regression (GLM with binomial error distribution and logit link function).
 
-While most of these threshold-based measures range from 0 to 1, some of them (such as kappa and TSS) may range from -1 to 1 (Allouche et al. 2006), so their raw scores are not directly comparable. \code{threshMeasures} includes an option (used by default) to standardize these measures to 0-1 (Barbosa 2015) using the \code{\link{standard01}} function, so that you obtain the standardized versions skappa and sTSS.
+While most of these threshold-based measures range from 0 to 1, some of them (such as kappa and TSS) may range from -1 to 1 (Allouche et al. 2006), so their raw scores are not directly comparable. 'threshMeasures' includes an option (used by default) to standardize these measures to 0-1 (Barbosa 2015) using the \code{\link{standard01}} function, so that you obtain the standardized versions skappa and sTSS.
 
 This function can also be used to calculate the agreement between different presence-absence (or other types of binary) data, as e.g. Barbosa et al. (2012) did for comparing mammal distribution data from atlas and range maps. Notice, however, that some of these measures, such as TSS or NMI, are not symmetrical (obs vs. pred is different from pred vs. obs).
 }
 \value{
-If \code{simplif = TRUE}, the output is a numeric matrix with the name and value of each measure.
-If \code{simplif = FALSE} (the default), the ouptut is a bar plot of the calculated measures and a list with the following components:
+If 'simplif = TRUE', the output is a numeric matrix with the name and value of each measure.
+If 'simplif = FALSE' (the default), the ouptut is a bar plot of the calculated measures and a list with the following components:
   \item{N}{the number of observations (records) in the analysis.}
-  \item{Prevalence}{the prevalence (proportion of presences) in \code{obs}.}
-  \item{Threshold}{the threshold value used to calculate the \code{measures}.}
+  \item{Prevalence}{the prevalence (proportion of presences) in 'obs'.}
+  \item{Threshold}{the threshold value used to calculate the 'measures'.}
   \item{ConfusionMatrix}{the confusion matrix obtained with the used threshold.}
   \item{ThreshMeasures}{a numeric matrix with the name and value of each measure.}
 }
@@ -54,7 +54,9 @@ Fielding A.H. & Bell J.F. (1997) A review of methods for the assessment of predi
 
 Jimenez-Valverde A. & Lobo J.M. (2007) Threshold criteria for conversion of probability of species presence to either-or presence-absence. Acta Oecologica 31: 361-369
 
-Liu C., White M., & Newell G. (2011) Measuring and comparing the accuracy of species distribution models with presence-absence data. Ecography 34: 232-243.
+Liu C., Berry P.M., Dawson T.P. & Pearson R.G. (2005) Selecting thresholds of occurrence in the prediction of species distributions. Ecography 28: 385-393.
+
+Liu C., White M. & Newell G. (2011) Measuring and comparing the accuracy of species distribution models with presence-absence data. Ecography 34: 232-243.
 
 Nenzen H.K. & Araujo M.B. (2011) Choice of threshold alters projections of species range shifts under climate change. Ecological Modelling 222: 3346-3354
 

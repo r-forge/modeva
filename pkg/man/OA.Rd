@@ -37,7 +37,7 @@ A. Marcia Barbosa
 }
 \examples{
 \dontrun{
-# load package fuzzySim (currently available on R-Forge) and its sample data:
+# load package 'fuzzySim' and its sample data:
 require(fuzzySim)
 data(rotif.env)
 

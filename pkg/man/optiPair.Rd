@@ -14,17 +14,17 @@ plot = TRUE, plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, ...)
 \arguments{
   \item{model}{a model object of class "glm".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
-  binary response variable. This argument is ignored if \code{model} is provided.}
+  binary response variable. This argument is ignored if 'model' is provided.}
   \item{pred}{a vector with the corresponding predicted values of presence
-  probability, habitat suitability, environmental favourability or alike. This argument is ignored if \code{model} is provided.}
+  probability, habitat suitability, environmental favourability or alike. This argument is ignored if 'model' is provided.}
   \item{measures}{a character vector of length 2 indicating the pair of measures
   whose curves to plot and whose thresholds to optimize. The default is
   c("Sensitivity", "Specificity").}
   \item{interval}{the interval of thresholds at which to calculate the measures. The default is 0.01.}
   \item{plot}{logical indicating whether or not to plot the pair of measures.}
-  \item{plot.sum}{logical, whether to plot the sum (+) of both measures in the pair. Defaults to \code{FALSE}.}
-  \item{plot.diff}{logical, whether to plot the difference (-) between both measures in the pair. Defaults to \code{FALSE}.}
-  \item{ylim}{a character vector of length 2 indicating the lower and upper limits for the y axis. The default is \code{NULL} for an automatic definition of \code{ylim} based on the values of the measures and their sum and/or difference if any of these are set to \code{TRUE}.}
+  \item{plot.sum}{logical, whether to plot the sum (+) of both measures in the pair. Defaults to FALSE.}
+  \item{plot.diff}{logical, whether to plot the difference (-) between both measures in the pair. Defaults to FALSE.}
+  \item{ylim}{a character vector of length 2 indicating the lower and upper limits for the y axis. The default is NULL for an automatic definition of 'ylim' based on the values of the measures and their sum and/or difference if any of these are set to TRUE.}
   \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function.}
 }
 \value{
@@ -62,8 +62,8 @@ optiPair(model = mod)
 optiPair(model = mod, measures = c("UPR", "OPR"))
 
 
-# you can also use optiPair with vectors of observed and predicted values
-# instead of with a model object:
+# you can also use 'optiPair' with vectors of observed 
+# and predicted values, instead of a model object:
 
 optiPair(obs = mod$y, pred = mod$fitted.values, 
 measures = c("UPR", "OPR"))

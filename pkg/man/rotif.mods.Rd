@@ -11,10 +11,10 @@ A list of 2 elements:
 
 $ predictions: a data.frame with  291 observations of 60 variables, namely the presence probability (P) and environmental favourability (F) for each of 30 species of rotifers, obtained from the rotif.env dataset in the 'fuzzySim' R-Forge package
 
-$ models: a list of the 30 generalized linear model (\code{link{glm}}) objects which generated those predictions.
+$ models: a list of the 30 generalized linear model (\code{\link{glm}}) objects which generated those predictions.
 }
 \details{
-These models were obtained with the \code{multGLM} function and the \code{rotif.env} dataset from R-Forge package 'fuzzySim' using the following code:
+These models were obtained with the 'multGLM' function and the \code{rotif.env} dataset from R-Forge package 'fuzzySim' using the following code:
 
 require(fuzzySim)
 

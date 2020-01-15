@@ -6,20 +6,20 @@ This function calculates Miller's (1991) calibration statistics for a generalize
 }
 \usage{
 MillerCalib(model = NULL, obs = NULL, pred = NULL, plot = TRUE,
-line.col = "black", diag = TRUE, diag.col = "grey", plot.values = TRUE, 
-digits = 2, xlab = "", ylab = "", main = "Miller calibration", ...)
+line.col = "black", diag = TRUE, diag.col = "grey", 
+plot.values = TRUE, digits = 2, xlab = "", ylab = "", 
+main = "Miller calibration", ...)
 }
 \arguments{
   \item{model}{a model object of class "glm" and family "binomial".}
-  \item{obs}{a vector of observed presences (1) and absences (0) or another
-  binary response variable. Not necessary (and ignored) if \code{model} is provided.}
-  \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as \code{obs}. A warning is emitted if it includes values outside the [0, 1] interval. Not necessary (and ignored) if \code{model} is provided.}
+  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. Not necessary (and ignored) if 'model' is provided.}
+  \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as 'obs'. A warning is emitted if it includes values outside the [0, 1] interval. Not necessary (and ignored) if 'model' is provided.}
   \item{plot}{logical, whether or not to produce a plot of the Miller regression line. Defaults to TRUE.}
   \item{line.col}{colour for the Miller regression line (if plot = TRUE).}
   \item{diag}{logical, whether or not to add the reference diagonal (if plot = TRUE). Defaults to TRUE.}
   \item{diag.col}{line colour for the reference diagonal.}
   \item{plot.values}{logical, whether or not to report the values of the intercept and slope on the plot. Defaults to TRUE.}
-  \item{digits}{integer number indicating the number of digits to which the values in the plot should be rounded. Dafaults to 2. This argument is ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}
+  \item{digits}{integer number indicating the number of digits to which the values in the plot should be rounded. Dafaults to 2. This argument is ignored if 'plot' or 'plot.values' are set to FALSE.}
   \item{xlab}{label for the x axis.}
   \item{ylab}{label for the y axis.}
   \item{main}{title for the plot.}
@@ -56,7 +56,7 @@ mod <- rotif.mods$models[[1]]
 
 MillerCalib(model = mod)
 MillerCalib(model = mod, plot.values = FALSE)
-MillerCalib(model = mod, plot.values = FALSE, main = "Model calibration line")
+MillerCalib(model = mod, main = "Model calibration line")
 
 
 # you can also use MillerCalib with vectors of observed and predicted values

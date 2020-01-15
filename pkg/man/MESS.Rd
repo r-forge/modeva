@@ -1,4 +1,4 @@
-\name{MESS}
+  \name{MESS}
 \alias{MESS}
 \title{
 Multivariate Environmental Similarity Surfaces based on a data frame
@@ -69,7 +69,7 @@ A new, apparently more complete method for analysing environmental dissimilariti
 }
 \examples{
 \dontrun{
-# load package fuzzySim (currently available on R-Forge) and its sample data:
+# load package 'fuzzySim' and its sample data:
 require(fuzzySim)
 data(rotif.env)
 

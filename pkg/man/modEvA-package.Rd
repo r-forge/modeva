@@ -10,8 +10,8 @@ The modEvA package can analyse species distribution models and evaluate their pe
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 1.4.2\cr
-Date: \tab 2020-01-03\cr
+Version: \tab 1.5\cr
+Date: \tab 2020-01-15 \cr
 License: \tab GPL-3\cr
 }
 }
@@ -45,7 +45,8 @@ threshMeasures(model = mod, thresh = 0.5)
 threshMeasures(model = mod, thresh = "preval")
 
 # calculate optimal thresholds based on several criteria:
-optiThresh(model = mod)
+optiThresh(model = mod, measures = c("CCR", "Sensitivity", "kappa", "TSS"), 
+ylim = c(0, 1))
 
 # calculate the optimal threshold balancing two evaluation measures:
 optiPair(model = mod, measures = c("Sensitivity", "Specificity"))

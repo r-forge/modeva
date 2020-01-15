@@ -1,7 +1,7 @@
 exportPattern("^[[:alpha:]]+")
-importFrom("graphics", "abline", "barplot", "lines", "mtext", "par",
+importFrom("graphics", "abline", "barplot", "hist", "legend", "lines", "mtext", "par",
            "plot", "points", "polygon", "rect", "text")
-importFrom("stats", "binomial", "complete.cases", "cor", "family",
+importFrom("stats", "binomial", "complete.cases", "cor", "density", "family",
            "glm", "logLik", "median", "na.omit", "pchisq", "qf",
            "quantile", "resid", "xtabs")
-
+#importFrom("caTools", "trapz")

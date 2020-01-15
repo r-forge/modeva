@@ -4,7 +4,7 @@
 Methods implemented in modEvA functions
 }
 \description{
-This function allows retrieving the methods available for some of the functions in \code{modEvA}, such as \code{\link{threshMeasures}}, \code{\link{optiThresh}}, \code{\link{multModEv}} and \code{\link{getBins}}.
+This function allows retrieving the methods available for some of the functions in modEvA, such as \code{\link{threshMeasures}}, \code{\link{optiThresh}}, \code{\link{multModEv}} and \code{\link{getBins}}.
 }
 \usage{
 modEvAmethods(fun)

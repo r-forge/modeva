@@ -1,4 +1,31 @@
 ==========================================
+modEvA v1.5 (committed 2020-01-15)
+==========================================
+
+## New functions:
+
+* predDensity
+
+
+## Modified functions:
+
+* AUC
+- new 'method' argument, which in the future can be "rank", "trapezoid" or "integrate" (currently only "rank" is implemented)
+- new 'curve' argument which can be "ROC" or "PR" (precision-recall)
+- arguments 'roc.col', 'roc.lty' and 'roc.lwd' renamed to 'curve.col', 'curve.lty' and 'curve.lwd'
+- 'xlab' and 'ylab' now default to "auto", to be generated according to 'curve'
+- removed 'main' argument (can be provided via '...')
+- 'plot.preds' can now be either a logical value as before, or a character "curve" and/or "bottom"
+- 'plot.preds' circles now plotted in darkgrey
+- title in .Rd file changed to "Area Under the Curve" (removed "ROC")
+
+
+## Other changes:
+
+- corrected some problems in .Rd files, to reduce LaTeX errors when creating PDF version of manual.
+
+
+==========================================
 modEvA v1.4.2 (committed 2020-01-03)
 ==========================================
 
