@@ -1,6 +1,6 @@
 evaluate <-
 function(a, b, c, d, N = NULL, measure = "CCR"){
-  # version 1.1 (24 Jul 2013)
+  # version 1.2 (16 Jan 2020)
   # internal function to be used by others in the package
   # a, b, c, d: elements of the confusion matrix (TP, FP, FN, TN)
   # N: sample size (total number of observations); calculated automatically if NULL
@@ -28,6 +28,13 @@ function(a, b, c, d, N = NULL, measure = "CCR"){
                                              +(a+b)*log(a+b)+(c+d)*log(c+d))
                                             /(N*log(N)-((a+c)*log(a+c)
                                                         +(b+d)*log(b+d))))  # NMI by Forbes (1995); the "1-" was missing in Fielding & Bell 1997 (and Manel et al 2001) but Fielding confirmed it was a typo
+  } else if (measure == "F1score") {
+    precision <- a/(a+b)
+    recall <- a/(a+c)
+    numerator <- precision * recall
+    denominator <- precision + recall
+    value <- 2 * (numerator / denominator)
+    value[numerator == 0] <- 0  # euze
   } else if(measure == "OddsRatio") { value <- (a*d)/(c*b)
   # (c*b)/(a*d)  # inverse, would give a (more expectable) unimodal plot of odds against thresholds
   } else stop("Invalid measure; available options are ", 

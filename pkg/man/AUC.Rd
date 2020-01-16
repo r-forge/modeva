@@ -4,7 +4,7 @@
 Area Under the Curve
 }
 \description{
-This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, for either a model object of class \code{"glm"}, or two matching vectors of observed (binary, 1 for occurrence vs. 0 for non-occurrence) and predicted (continuous, e.g. occurrence probability) values, respectively. Optionally, it can plot the precision-recall (PR) curve instead.
+This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, or alternatively the precision-recall (PR) plot, for either a model object of class \code{"glm"}, or two matching vectors of observed (binary, 1 for occurrence vs. 0 for non-occurrence) and predicted (continuous, e.g. occurrence probability) values, respectively.
 }
 \usage{
 AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, 
@@ -23,8 +23,8 @@ grid = FALSE, xlab = "auto", ylab = "auto", ...)
   \item{FPR.limits}{(NOT YET IMPLEMENTED) numerical vector of length 2 indicating the limits of false positive rate between which to calculate a partial AUC. The default is c(0, 1), for considering the whole AUC.}
   \item{curve}{character indicating whether to compute the "ROC" (receiver operating charateristic) or the "PR" (precision-recall) curve. Area calculation is not currently implemented for this curve.}
   \item{interval}{interval of threshold values at which to calculate the true and false positive and negative rates. Defaults to 0.01. This argument is ignored if \code{simplif = TRUE}. Note that this does not affect the obtained AUC value (although it can affect the size of the plotted ROC curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney U statistic and is therefore threshold-independent.}
-  \item{method}{character indicating which method should be used to calculate the area. Currently, only "rank" is implemented and the argument is ignored if specified otherwise.}
-  \item{plot}{logical, whether or not to plot the ROC curve. Defaults to TRUE.}
+  \item{method}{character indicating which method should be used to calculate the area. Available options are "rank" (the default and most exact, but applicable only if curve = "AUC"), "trapezoid" (the default if 'curve' is set to "PR"), or "integrate". The last two become more exact with smaller 'interval' values.}
+  \item{plot}{logical, whether or not to plot the curve. Defaults to TRUE.}
   \item{diag}{logical, whether or not to add the reference diagonal (if plot = TRUE). Defaults to TRUE.}
   \item{diag.col}{line colour for the reference diagonal (if diag=TRUE).}
   \item{diag.lty}{line type for the reference diagonal (if diag=TRUE).}
@@ -40,15 +40,15 @@ grid = FALSE, xlab = "auto", ylab = "auto", ...)
   \item{\dots}{further arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{
-In the case of the "ROC" curve (the default), the AUC is a measure of the overall discrimination power of the predictions, or the probability that an occurrence site has a higher predicted value than a non-ocurrence site. Mind that the AUC has been widely criticized (e.g. Lobo et al. 2008, Jimenez-Valverde et al. 2013), but is still among the most widely used metrics in model evaluation. It is highly correlated with species prevalence, so prevalence is also output by the AUC function (if \code{simplif = FALSE}, the default) for reference. The AUC function provides an option to compute, instead of the ROC curve, the precision-recall ("PR") curve, which is more robust to imbalanced data, e.g. species rarity (Sofaer et al. 2019).
+In the case of the "ROC" curve (the default), the AUC is a measure of the overall discrimination power of the predictions, or the probability that an occurrence site has a higher predicted value than a non-ocurrence site. It can thus be calculated with the Wilcoxon rank sum statistic. Mind that the AUC has been widely criticized (e.g. Lobo et al. 2008, Jimenez-Valverde et al. 2013), but is still among the most widely used metrics in model evaluation. It is highly correlated with species prevalence, so prevalence is also output by the AUC function (if \code{simplif = FALSE}, the default) for reference. The AUC function provides an option to compute, instead of the ROC curve, the precision-recall ("PR") curve, which is more robust to imbalanced data, e.g. species rarity (Sofaer et al. 2019).
 
 Although there are functions to calculate the AUC in other R packages (e.g. \pkg{ROCR}, \pkg{PresenceAbsence}, \pkg{verification}, \pkg{Epi}), the \code{AUC} function is more compatible with the remaining functions in \pkg{modEvA} and can be applied not only to a set of observed versus predicted values, but also directly to a model object of class \code{"glm"}.
 }
 \value{
 If \code{simplif = TRUE}, the function returns only the AUC value (a numeric value between 0 and 1). Otherwise (the default), it returns a \code{list} with the following components:
-\item{thresholds}{a data frame of the true and false positives, the sensitivity and specificity of the predictions, and the number of predicted values at each analysed threshold.}
+\item{thresholds}{a data frame of the true and false positives, the sensitivity, specificity and recall of the predictions, and the number of predicted values at each analysed threshold.}
 \item{N}{the total number of obervations.}
-\item{prevalence}{the proportion of occurrences in the data (which correlates with the AUC).}
+\item{prevalence}{the proportion of presences (i.e., ones) in the data (which correlates with the AUC of the "ROC" plot).}
 \item{AUC}{the value of the AUC).}
 \item{AUCratio}{the ratio of the obtained AUC value to the null expectation (0.5).}
 }

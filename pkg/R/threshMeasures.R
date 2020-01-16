@@ -1,13 +1,12 @@
 threshMeasures <-
 function(model = NULL, obs = NULL, pred = NULL, thresh,
-         measures = modEvAmethods("threshMeasures"), simplif = FALSE,
-         plot = TRUE, plot.ordered = FALSE, standardize = TRUE,
-         verbosity = 2, ...) {
-  # version 2.7 (18 Apr 2016)
+         measures = modEvAmethods("threshMeasures"), 
+         simplif = FALSE, plot = TRUE, plot.ordered = FALSE, 
+         standardize = TRUE, verbosity = 2, ...) {
+  # version 2.8 (16 Jan 2020)
 
   if (is.null(model)) {
-    if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs'
-and 'pred' vectors, or a 'model' object of class 'glm'.")
+    if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object of class 'glm'.")
 
     } else { # end if null model
   
@@ -23,7 +22,6 @@ and 'pred' vectors, or a 'model' object of class 'glm'.")
 
   if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
 
-  # new (15 Sep 2015):
   dat <- data.frame(obs, pred)
   n.in <- nrow(dat)
   dat <- na.omit(dat)
@@ -53,15 +51,14 @@ and 'pred' vectors, or a 'model' object of class 'glm'.")
   measureValues <- as.vector(rep(NA, Nmeasures), mode = "numeric")
 
   for (i in 1:Nmeasures) {
-    if (measures[i] == "AUC") measureValues[i] <- AUC(obs = obs, pred = pred,
-                                                      simplif = TRUE)
+    if (measures[i] == "AUC") measureValues[i] <- AUC(obs = obs, pred = pred, simplif = TRUE)
     else if (measures[i] %in% modEvAmethods("threshMeasures")) {
       measureValues[i] <- evaluate(a, b, c, d, N, measure = measures[i])
       if (standardize == TRUE  &  measures[i] %in% c("TSS", "kappa")) {
         measureValues[i] <- standard01(measureValues[i])
         measures[i] <- paste("s", measures[i], sep = "")
         if (verbosity > 0) message("\n", measures[i], " standardized to the 0-1 scale for direct comparability
-with other measures (type ?standard01 for more info);
+with other measures (type '?standard01' for more info);
 use 'standardize = FALSE' if this is not what you wish")
       }  # end if standardize
     }  # end if measures[i] in modEvAmethods("threshMeasures")
@@ -72,14 +69,12 @@ type modEvAmethods('threshMeasures') for available options.")
     }  # end else
   }  # end for i
 
-  Measures <- matrix(data = measureValues, nrow = Nmeasures, ncol = 1,
-                     dimnames = list(measures, "Value"))
+  Measures <- matrix(data = measureValues, nrow = Nmeasures, ncol = 1, dimnames = list(measures, "Value"))
   if (simplif) {  # shorter version for use with e.g. optiThresh function
     return(Measures)
   } else {
     prev <- prevalence(obs)
-    conf.matrix <- matrix(c(a, b, c, d), nrow = 2, ncol = 2, byrow = TRUE,
-                          dimnames = list(c("pred1", "pred0"), c("obs1", "obs0")))
+    conf.matrix <- matrix(c(a, b, c, d), nrow = 2, ncol = 2, byrow = TRUE, dimnames = list(c("pred1", "pred0"), c("obs1", "obs0")))
     if (plot) {
       names(measureValues) <- measures
       measures.plot <- measureValues

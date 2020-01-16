@@ -5,7 +5,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
                 curve.lwd = 2, plot.values = TRUE, plot.digits = 3,
                 plot.preds = FALSE, grid = FALSE, xlab = "auto", ylab = "auto",
                 ...) {
-  # version 2.0 (8 Jan 2020)
+  # version 2.1 (16 Jan 2020)
   
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
   
@@ -19,7 +19,6 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
     pred <- model$fitted.values
   }  # end if model
   
-  # new (15 Sep 2015):
   dat <- data.frame(obs, pred)
   n.in <- nrow(dat)
   dat <- na.omit(dat)
@@ -30,42 +29,30 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
   
   stopifnot(
     obs %in% c(0,1),
-    #    pred >= 0,
-    #    pred <= 1,
+    #pred >= 0,
+    #pred <= 1,
     interval > 0,
-    interval < 1
+    interval < 1,
+    curve %in% c("ROC", "PR"),
+    method %in% c("rank", "trapezoid", "integrate")
   )
   
   n1 <- sum(obs == 1)
   n0 <- sum(obs == 0)
   
-  # next 3 lines from Wintle et al 2005 supp mat "roc" function
-  xy <- c(pred[obs == 0], pred[obs == 1])
-  rnk <- rank(xy)
-  AUC <- ((n0 * n1) + ((n0 * (n0 + 1))/2) - sum(rnk[1 : n0])) / (n0 * n1)
-  
-  if (curve == "ROC" && simplif && !plot) {
-    return(AUC)
+  if (curve != "ROC" && method == "rank") {
+    method <- "trapezoid"
+    message("'rank' method not applicable to the specified 'curve'; using 'trapezoid' instead.")
   }
   
-  if (curve == "PR") {
-    AUC <- NA
-    plot.values <- FALSE
+  if (method == "rank") {
+    # next 3 lines from Wintle et al 2005 supp mat "roc" function
+    xy <- c(pred[obs == 0], pred[obs == 1])
+    rnk <- rank(xy)
+    AUC <- ((n0 * n1) + ((n0 * (n0 + 1))/2) - sum(rnk[1 : n0])) / (n0 * n1)
+    if (simplif && !plot) return(AUC)
   }
-  
-  # UNDER CONSTRUCTION:
-  #  if (method == "rank") {
-  #    if (curve != "ROC") {
-  #      message("'rank' method not applicable to the specified 'curve'; using 'trapezoid' instead.")
-  #      method <- "trapezoid"
-  #    }
-  # next 3 lines from Wintle et al 2005 supp mat "roc" function
-  #xy <- c(pred[obs == 0], pred[obs == 1])
-  #rnk <- rank(xy)
-  #AUC <- ((n0 * n1) + ((n0 * (n0 + 1))/2) - sum(rnk[1 : n0])) / (n0 * n1)
-  #  }
-  #  else stop("'rank' is the only method currently implemented.")
-  
+
   if (any(pred < 0) | any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval within which thresholds are calculated.")
   
   N <- length(obs)
@@ -79,40 +66,48 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
     true.negatives[t] <- sum(obs == 0 & pred < thresholds[t])
     sensitivity[t] <- true.positives[t] / n1
     specificity[t] <- true.negatives[t] / n0
-    precision[t] <- true.positives[t] / sum(pred >= thresholds[t])
+    precision[t] <- true.positives[t] / sum(pred >= thresholds[t], na.rm = TRUE)
+    if (true.positives[t] == 0 && sum(pred >= thresholds[t], na.rm = TRUE) == 0)  precision[t] <- 0  # euze
     false.pos.rate[t] <- 1 - specificity[t]
     n.preds[t] <- sum(round(pred, nchar(Nthresh) - 1) == thresholds[t])
     prop.preds[t] <- n.preds[t] / length(pred)
   }
-  thresholds.df <- data.frame(thresholds, true.positives, true.negatives, sensitivity, specificity, precision, false.pos.rate, n.preds, prop.preds)
-  rownames(thresholds.df) <- thresholds
   
-  # UNDER CONSTRUCTION:
-#    if (method == "trapezoid") {
-      #AUC <- with(na.omit(thresholds.df[ , c("sensitivity", "precision")]), caTools::trapz(x = sensitivity, y = precision))
-#      pr <- na.omit(thresholds.df[ , c("sensitivity", "precision")])
-#      x <- pr$sensitivity
-#      y <- pr$precision
-#      # next 2 lines from caTools::trapz:
-#      idx <- 2:length(x)
-#      AUC <- as.double( (x[idx] - x[idx-1]) %*% (y[idx] + y[idx-1])) / 2
-#      # next line adapted from https://stackoverflow.com/a/22418496:
-#      AUC <- sum(diff(pr$sensitivity) * (pr$precision[-1] + pr$precision[-length(pr$precision)]) / 2)
-#    }
-  #  if (method == "integrate") {
+  if (curve == "ROC") {
+    xx <- false.pos.rate
+    yy <- sensitivity
+  } else {
+    if (curve == "PR") {
+      xx <- sensitivity
+      yy <- precision
+    } else {
+      stop ("'curve' must be either 'ROC' or 'PR'.")
+    }
+  }
   
-  #  }
+  if (method == "trapezoid") {
+    xy <- na.omit(data.frame(xx, yy))
+    if (length(xx) != nrow(xy)) warning("Some non-finite values omitted from area calculation.")
+    xx <- xy$xx
+    yy <- xy$yy
+    # next line adapted from https://stackoverflow.com/a/22418496:
+    AUC <- sum(diff(xx) * (yy[-1] + yy[-length(yy)]) / 2)
+    AUC <- -AUC  # euze
+  }
+  
+    if (method == "integrate") {
+    xx.interp <- stats::approx(x = thresholds, y = xx, n = length(thresholds))
+    yy.interp <- stats::approx(x = thresholds, y = yy, n = length(thresholds))
+    f <- approxfun(x = xx.interp$y, y = yy.interp$y)
+    AUC <- integrate(f, lower = min(thresholds), upper = max(thresholds))$value
+    }
   
   if (plot) {
     if (curve == "ROC") {
-      xx <- false.pos.rate
-      yy <- sensitivity
       if (xlab == "auto") xlab <- c("False positive rate", "(1-specificity)")
       if (ylab == "auto") ylab <- c("True positive rate", "(sensitivity)")
     }
     if (curve == "PR") {
-      xx <- sensitivity
-      yy <- precision
       if (xlab == "auto") xlab <- c("Recall", "(sensitivity)")
       if (ylab == "auto") ylab <- c("Precision", "(positive predictive value)")
     }
@@ -139,6 +134,9 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
   }  # end if plot
   
   if (simplif)  return (AUC)
+  
+  thresholds.df <- data.frame(thresholds, true.positives, true.negatives, sensitivity, specificity, precision, false.pos.rate, n.preds, prop.preds)
+  rownames(thresholds.df) <- thresholds
   
   return (list(thresholds = thresholds.df, N = N, prevalence = preval, AUC = AUC, AUCratio = AUC / 0.5))
 }

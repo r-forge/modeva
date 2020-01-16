@@ -54,12 +54,15 @@ A. Marcia Barbosa
 # load sample models:
 data(rotif.mods)
 
+
 # choose a particular model to play with:
 mod <- rotif.mods$models[[1]]
 
 optiPair(model = mod)
 
 optiPair(model = mod, measures = c("UPR", "OPR"))
+
+optiPair(model = mod, measures = c("CCR", "F1score"))
 
 
 # you can also use 'optiPair' with vectors of observed 

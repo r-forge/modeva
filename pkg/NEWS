@@ -1,4 +1,20 @@
 ==========================================
+modEvA v1.7 (committed 2020-01-16)
+==========================================
+
+
+## Modified functions:
+
+* AUC
+- implemented methods "trapezoid" and "integrate"
+- added area calculation for "PR" curve
+
+
+* threshMeasures, evaluate, modEvAmethods, (optiThresh, optiPair)
+- added "F1score" to available 'measures'
+
+
+==========================================
 modEvA v1.5 (committed 2020-01-15)
 ==========================================
 
