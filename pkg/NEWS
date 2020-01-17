@@ -1,9 +1,21 @@
 ## TO CONSIDER:
+
 - point biserial correlaction
 - Brier score
 - Gini coefficient
 - straight classification error rate
 - average squared error
+- thresholds: 10% / 0% omission error rate & other maxent criteria
+- evaluation for spatial (point + raster) data
+
+
+==========================================
+modEvA v1.8 (committed 2020-01-17)
+==========================================
+
+## Other changes:
+
+- added 'inst' folder with article citation information
 
 
 ==========================================
