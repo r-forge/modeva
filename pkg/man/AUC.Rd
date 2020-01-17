@@ -22,8 +22,8 @@ grid = FALSE, xlab = "auto", ylab = "auto", ...)
   \item{simplif}{logical, whether to use a faster version that returns only the AUC value (and the ROC plot if plot = TRUE).}
   \item{FPR.limits}{(NOT YET IMPLEMENTED) numerical vector of length 2 indicating the limits of false positive rate between which to calculate a partial AUC. The default is c(0, 1), for considering the whole AUC.}
   \item{curve}{character indicating whether to compute the "ROC" (receiver operating charateristic) or the "PR" (precision-recall) curve. Area calculation is not currently implemented for this curve.}
-  \item{interval}{interval of threshold values at which to calculate the true and false positive and negative rates. Defaults to 0.01. This argument is ignored if \code{simplif = TRUE}. Note that this does not affect the obtained AUC value (although it can affect the size of the plotted ROC curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney U statistic and is therefore threshold-independent.}
-  \item{method}{character indicating which method should be used to calculate the area. Available options are "rank" (the default and most exact, but applicable only if curve = "AUC"), "trapezoid" (the default if 'curve' is set to "PR"), or "integrate". The last two become more exact with smaller 'interval' values.}
+  \item{interval}{interval of threshold values at which to calculate the true and false positive and negative rates. Defaults to 0.01. This argument is ignored if simplif = TRUE. Note that, if method = "rank" (the default if curve = "ROC"), this does not affect the obtained AUC value (although it can affect the size of the plotted curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney-Wilcoxon statistic and is therefore threshold-independent.}
+  \item{method}{character indicating which method should be used to calculate the AUC. Available options are "rank" (the default and most exact, but implemented only if curve = "ROC"), "trapezoid" (the default if curve = "PR"), or "integrate". The last two compute more exactly if 'interval' is decreased.}
   \item{plot}{logical, whether or not to plot the curve. Defaults to TRUE.}
   \item{diag}{logical, whether or not to add the reference diagonal (if plot = TRUE). Defaults to TRUE.}
   \item{diag.col}{line colour for the reference diagonal (if diag=TRUE).}
@@ -32,7 +32,7 @@ grid = FALSE, xlab = "auto", ylab = "auto", ...)
   \item{curve.lty}{line type for the curve.}
   \item{curve.lwd}{line width for the curve.}
   \item{plot.values}{logical, whether or not to show in the plot the values associated to the curve (e.g., the AUC). Defaults to TRUE.}
-  \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed. Defaults to 3. This argument is ignored if \code{plot} or \code{plot.values} are set to \code{FALSE}.}
+  \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed. Defaults to 3. This argument is ignored if 'plot' or 'plot.values' are set to FALSE.}
   \item{plot.preds}{logical value indicating whether the proportions of analysed model predictions should be plotted as proportionally sized circles for each threshold. Can also be provided as a character value specifying if the circles should be plotted only on the "curve" or at the "bottom" of the plot. The default is FALSE.}
   \item{grid}{logical, whether or not to add a grid to the plot, marking the analysed thresholds. Defaults to FALSE.}
   \item{xlab}{label for the x axis. By default, a label is automatically generated according to the specified 'curve'.}

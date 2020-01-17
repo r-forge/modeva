@@ -1,11 +1,5 @@
-AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
-                interval = 0.01, FPR.limits = c(0, 1), curve = "ROC", 
-                method = "rank", plot = TRUE, diag = TRUE, diag.col = "grey",
-                diag.lty = 1, curve.col = "black", curve.lty = 1, 
-                curve.lwd = 2, plot.values = TRUE, plot.digits = 3,
-                plot.preds = FALSE, grid = FALSE, xlab = "auto", ylab = "auto",
-                ...) {
-  # version 2.1 (16 Jan 2020)
+AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01, FPR.limits = c(0, 1), curve = "ROC",  method = "rank", plot = TRUE, diag = TRUE, diag.col = "grey", diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, xlab = "auto", ylab = "auto", ...) {
+  # version 2.2 (17 Jan 2020)
   
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
   
@@ -42,7 +36,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
   
   if (curve != "ROC" && method == "rank") {
     method <- "trapezoid"
-    message("'rank' method not applicable to the specified 'curve'; using 'trapezoid' instead.")
+    #message("'rank' method not applicable to the specified 'curve'; using 'trapezoid' instead.")
   }
   
   if (method == "rank") {
@@ -67,7 +61,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
     sensitivity[t] <- true.positives[t] / n1
     specificity[t] <- true.negatives[t] / n0
     precision[t] <- true.positives[t] / sum(pred >= thresholds[t], na.rm = TRUE)
-    if (true.positives[t] == 0 && sum(pred >= thresholds[t], na.rm = TRUE) == 0)  precision[t] <- 0  # euze
+    #if (true.positives[t] == 0 && sum(pred >= thresholds[t], na.rm = TRUE) == 0)  precision[t] <- 0  # to avoid NaN?
     false.pos.rate[t] <- 1 - specificity[t]
     n.preds[t] <- sum(round(pred, nchar(Nthresh) - 1) == thresholds[t])
     prop.preds[t] <- n.preds[t] / length(pred)
@@ -87,7 +81,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
   
   if (method == "trapezoid") {
     xy <- na.omit(data.frame(xx, yy))
-    if (length(xx) != nrow(xy)) warning("Some non-finite values omitted from area calculation.")
+    #if (length(xx) != nrow(xy)) warning("Some non-finite values omitted from area calculation.")
     xx <- xy$xx
     yy <- xy$yy
     # next line adapted from https://stackoverflow.com/a/22418496:
@@ -112,8 +106,9 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
       if (ylab == "auto") ylab <- c("Precision", "(positive predictive value)")
     }
     
-    d <- ifelse(diag, "l", "n")
-    plot(x = c(0, 1), y = c(0, 1), type = d, xlab = xlab, ylab = ylab, col = diag.col, lty = diag.lty, ...)  # plots the 0.5 diagonal (or not if diag=FALSE)
+    d <- ifelse(diag, "l", "n")  # to plot the 0.5 diagonal (or not if diag=FALSE)
+    if (curve == "ROC") plot(x = c(0, 1), y = c(0, 1), type = d, xlab = xlab, ylab = ylab, col = diag.col, lty = diag.lty, ...)
+    if (curve == "PR") plot(x = c(0, 1), y = c(1, 0), type = d, xlab = xlab, ylab = ylab, col = diag.col, lty = diag.lty, ...)
     
     if (grid) abline(h = thresholds, v = thresholds, col = "lightgrey")
     
@@ -128,7 +123,9 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
     }
     
     if (plot.values) {
-      text(1, 0.4, adj = 1, substitute(paste(AUC == a), list(a = round(AUC, plot.digits))))
+      if (curve == "ROC") place <- 0.4
+      if (curve == "PR") place <- 1
+      text(1, place, adj = 1, substitute(paste(AUC == a), list(a = round(AUC, plot.digits))))
     }  # end if plot.values
     
   }  # end if plot

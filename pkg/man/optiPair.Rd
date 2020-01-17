@@ -4,7 +4,7 @@
 Optimize the classification threshold for a pair of related model evaluation measures.
 }
 \description{
-The optiPair function can optimize a model's classification threshold based on a pair of model evaluation measures that balance each other, such as sensitivity-specificity, omission-commission, or underprediction-overprediction (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013). The function plots both measures in the given pair against all thresholds with a given interval, and calculates the optimal sum, difference and mean of the two measures.
+This function can optimize a model's classification threshold based on a pair of model evaluation measures that balance each other, such as sensitivity-specificity, precision-recall (i.e., positive predictive power vs. sensitivity), omission-commission, or underprediction-overprediction (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013). The function plots both measures of the given pair against all thresholds with a given interval, and calculates the optimal sum, difference and mean of the two measures.
 }
 \usage{
 optiPair(model = NULL, obs = NULL, pred = NULL,
@@ -60,6 +60,8 @@ mod <- rotif.mods$models[[1]]
 
 optiPair(model = mod)
 
+optiPair(model = mod, measures = c("Sensitivity", "PPP"))
+
 optiPair(model = mod, measures = c("UPR", "OPR"))
 
 optiPair(model = mod, measures = c("CCR", "F1score"))
@@ -68,6 +70,5 @@ optiPair(model = mod, measures = c("CCR", "F1score"))
 # you can also use 'optiPair' with vectors of observed 
 # and predicted values, instead of a model object:
 
-optiPair(obs = mod$y, pred = mod$fitted.values, 
-measures = c("UPR", "OPR"))
+optiPair(obs = mod$y, pred = mod$fitted.values)
 }

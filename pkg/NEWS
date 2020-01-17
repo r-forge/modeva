@@ -1,7 +1,18 @@
 ==========================================
-modEvA v1.7 (committed 2020-01-16)
+modEvA v1.8 (committed 2020-01-17)
 ==========================================
 
+## Modified functions:
+
+* AUC
+- removed artificial zeros (instead of NaN) when curve = "PR"
+- reversed the reference diagonal if curve = "PR"
+- value now placed higher on the plot if curve = "PR" to avoid superposition
+
+
+==========================================
+modEvA v1.7 (committed 2020-01-16)
+==========================================
 
 ## Modified functions:
 
