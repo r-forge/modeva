@@ -4,7 +4,7 @@
 Optimize threshold for model evaluation.
 }
 \description{
-The 'optiThresh' function calculates optimal thresholds for a number of model evaluation measures (see \code{\link{threshMeasures}}). Optimization is given for each measure, and/or for all measures according to particular criteria (e.g. Jimenez-Valverde & Lobo 2007, Nenzen & Araujo 2011). Results are given numerically and in plots.}
+The 'optiThresh' function calculates optimal thresholds for a number of model evaluation measures (see \code{\link{threshMeasures}}). Optimization is given for each measure, and/or for all measures according to particular criteria (e.g. Jimenez-Valverde & Lobo 2007; Liu et al. 2005; Nenzen & Araujo 2011). Results are given numerically and in plots.}
 \usage{
 optiThresh(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
 measures = modEvAmethods("threshMeasures"),  
@@ -30,8 +30,13 @@ This function returns a list with the following components:
   \item{optimals.each}{if "each" is among the threshold criteria specified in 'optimize', optimals.each is output as a data frame with the value of each measure at its optimal threshold, as well as the type of optimal for that measure (which may be the maximum for measures of goodness such as "Sensitivity", or the minimum for measures of badness such as "Omission").}
   \item{optimals.criteria}{a data frame with the values of measure at the threshold that maximizes each of the criteria specified in 'optimize' (except for "each", see above).}
 }
+\note{
+"Sensitivity" is the same as "Recall", and "PPP" (positive predictive power) is the same as "Precision". "F1score"" is the harmonic mean of precision and recall.
+}
 \references{
 Jimenez-Valverde A. & Lobo J.M. (2007) Threshold criteria for conversion of probability of species presence to either-or presence-absence. Acta Oecologica 31: 361-369.
+
+Liu C., Berry P.M., Dawson T.P. & Pearson R.G. (2005) Selecting thresholds of occurrence in the prediction of species distributions. Ecography 28: 385-393.
 
 Nenzen H.K. & Araujo M.B. (2011) Choice of threshold alters projections of species range shifts under climate change. Ecological Modelling 222: 3346-3354.
 }

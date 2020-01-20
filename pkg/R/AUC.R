@@ -67,6 +67,8 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     prop.preds[t] <- n.preds[t] / length(pred)
   }
   
+  precision_mean <- mean(precision, na.rm = TRUE)
+    
   if (curve == "ROC") {
     xx <- false.pos.rate
     yy <- sensitivity
@@ -123,9 +125,9 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     }
     
     if (plot.values) {
-      if (curve == "ROC") place <- 0.4
-      if (curve == "PR") place <- 1
-      text(1, place, adj = 1, substitute(paste(AUC == a), list(a = round(AUC, plot.digits))))
+      if (curve == "ROC") text(1, 0.4, adj = 1, substitute(paste(AUC == a), list(a = round(AUC, plot.digits))))
+      #if (curve == "PR") text(1, 1, adj = 1, substitute(paste(expression('AUC'['PR']) == a), list(a = round(AUC, plot.digits))))
+      if (curve == "PR") text(1, 1, adj = 1, substitute(paste('AUC'['PR'] == a), list(a = round(AUC, plot.digits))))
     }  # end if plot.values
     
   }  # end if plot
@@ -135,5 +137,5 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   thresholds.df <- data.frame(thresholds, true.positives, true.negatives, sensitivity, specificity, precision, false.pos.rate, n.preds, prop.preds)
   rownames(thresholds.df) <- thresholds
   
-  return (list(thresholds = thresholds.df, N = N, prevalence = preval, AUC = AUC, AUCratio = AUC / 0.5))
+  return (list(thresholds = thresholds.df, N = N, prevalence = preval, AUC = AUC, AUCratio = AUC / 0.5, meanPrecision = precision_mean))
 }

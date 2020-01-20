@@ -61,8 +61,7 @@ function(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
       optimals.each <- data.frame(matrix(data = NA, nrow = Nmeasures, ncol = 4))
       colnames(optimals.each) <- c("measure", "threshold", "value", "type")
       optimals.each[1] <- measures
-      goodness.measures <- c("CCR", "Sensitivity", "Specificity", "PPP", "NPP",
-                             "kappa", "TSS", "NMI", "OddsRatio")
+      goodness.measures <- c("CCR", "Sensitivity", "Specificity", "PPP", "NPP", "kappa", "TSS", "NMI", "OddsRatio", "F1score")
       badness.measures <- c("Omission", "Commission", "Misclass", "UPR", "OPR")
       change.measures <- c("PPI", "PAI")
 

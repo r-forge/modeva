@@ -17,7 +17,7 @@ verbosity = 2, ...)
   \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. Not necessary (and ignored) if 'model' is provided.}
   \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Not necessary (and ignored) if 'model' is provided.}
   \item{thresh}{numeric value of the threshold to separate predicted presences from predicted absences in 'pred'; can be "preval", to use the prevalence of 'obs' as the threshold, or any real number between 0 and 1.  See Details for an informed choice.}
-  \item{measures}{character vector of the evaluation measures to use. By default, all measures available in 'modEvAmethods("threshMeasures")' are calculated. Note that "Sensitivity" is a synonym of "recall", and "PPP" (positive predictive power) is the same as "precision".}
+  \item{measures}{character vector of the evaluation measures to use. By default, all measures available in 'modEvAmethods("threshMeasures")' are calculated.}
   \item{simplif}{logical, whether to calculate a faster, simplified version. Used internally by other functions in the package. Defaults to FALSE.}
   \item{plot}{logical, whether to produce a barplot of the calculated measures. Defaults to TRUE.}
   \item{plot.ordered}{logical, whether to plot the measures in decreasing order rather than in input order. Defaults to FALSE.}
@@ -39,6 +39,9 @@ If 'simplif = TRUE', the output is a numeric matrix with the name and value of e
   \item{Threshold}{the threshold value used to calculate the 'measures'.}
   \item{ConfusionMatrix}{the confusion matrix obtained with the used threshold.}
   \item{ThreshMeasures}{a numeric matrix with the name and value of each measure.}
+}
+\note{
+"Sensitivity" is the same as "Recall", and "PPP" (positive predictive power) is the same as "Precision". "F1score"" is the harmonic mean of precision and recall.
 }
 \references{
 Allouche O., Tsoar A. & Kadmon R. (2006) Assessing the accuracy of species distribution models: prevalence, kappa and the true skill statistic (TSS). Journal of Applied Ecology 43: 1223-1232.

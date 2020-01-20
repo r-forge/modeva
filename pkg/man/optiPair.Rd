@@ -37,6 +37,9 @@ The output is a list with the following components:
 \item{MaxMean}{numeric value, the maximum mean of both measures.}
 \item{ThreshMean}{numeric value, the threshold that maximizes the mean of both measures.}
 }
+\note{
+"Sensitivity" is the same as "Recall", and "PPP" (positive predictive power) is the same as "Precision". "F1score"" is the harmonic mean of precision and recall.
+}
 \references{
 Barbosa, A.M., Real, R., Munoz, A.-R. & Brown, J.A. (2013) New measures for assessing model equilibrium and prediction mismatch in species distribution models. Diversity and Distributions 19: 1333-1338
 
@@ -60,7 +63,7 @@ mod <- rotif.mods$models[[1]]
 
 optiPair(model = mod)
 
-optiPair(model = mod, measures = c("Sensitivity", "PPP"))
+optiPair(model = mod, measures = c("Precision", "Recall"))
 
 optiPair(model = mod, measures = c("UPR", "OPR"))
 

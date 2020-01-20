@@ -58,7 +58,7 @@ function (model = NULL, obs = NULL, pred = NULL,
       else ylim <- c(min(finite), max(finite))
     }  # end if null ylim
 
-    plot(measures.values[ , 1] ~ measures.values$Threshold, pch = 20, xlab = "", ylab = "", ylim = ylim, ...)
+    plot(measures.values[ , 1] ~ measures.values$Threshold, pch = 19, xlab = "", ylab = "", ylim = ylim, ...)
     mtext(side = 1, text = "Threshold", line = 2, col = "black")
     mtext(side = 2, text = measures[1], line = 3, col = "black")
     mtext(side = 2, text = measures[2], line = 2, col = "darkgrey")

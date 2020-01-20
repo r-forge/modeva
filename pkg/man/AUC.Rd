@@ -22,8 +22,8 @@ grid = FALSE, xlab = "auto", ylab = "auto", ...)
   \item{simplif}{logical, whether to use a faster version that returns only the AUC value (and the ROC plot if plot = TRUE).}
   \item{FPR.limits}{(NOT YET IMPLEMENTED) numerical vector of length 2 indicating the limits of false positive rate between which to calculate a partial AUC. The default is c(0, 1), for considering the whole AUC.}
   \item{curve}{character indicating whether to compute the "ROC" (receiver operating charateristic) or the "PR" (precision-recall) curve. Area calculation is not currently implemented for this curve.}
-  \item{interval}{interval of threshold values at which to calculate the true and false positive and negative rates. Defaults to 0.01. This argument is ignored if simplif = TRUE. Note that, if method = "rank" (the default if curve = "ROC"), this does not affect the obtained AUC value (although it can affect the size of the plotted curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney-Wilcoxon statistic and is therefore threshold-independent.}
-  \item{method}{character indicating which method should be used to calculate the AUC. Available options are "rank" (the default and most exact, but implemented only if curve = "ROC"), "trapezoid" (the default if curve = "PR"), or "integrate". The last two compute more exactly if 'interval' is decreased.}
+  \item{interval}{interval of threshold values at which to calculate the true and false positives and negatives. Defaults to 0.01. Note that, if method = "rank" (the default if curve = "ROC"), this does not affect the obtained AUC value (although it can affect the size of the plotted curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney-Wilcoxon statistic and is therefore threshold-independent. If method != "rank" (or, by extension, if curve = "PR"), setting 'interval' to smaller values will provide more accurate AUC values. The size of the 'interval' also affects the resulting 'meanPrecision', as this is averaged across all threshold values.}
+  \item{method}{character indicating which method should be used to calculate the AUC. Available options are "rank" (the default and most exact, but implemented only if curve = "ROC"), "trapezoid" (the default if curve = "PR"), or "integrate". The last two compute more exactly if 'interval' is decreased (see above).}
   \item{plot}{logical, whether or not to plot the curve. Defaults to TRUE.}
   \item{diag}{logical, whether or not to add the reference diagonal (if plot = TRUE). Defaults to TRUE.}
   \item{diag.col}{line colour for the reference diagonal (if diag=TRUE).}
@@ -51,6 +51,8 @@ If \code{simplif = TRUE}, the function returns only the AUC value (a numeric val
 \item{prevalence}{the proportion of presences (i.e., ones) in the data (which correlates with the AUC of the "ROC" plot).}
 \item{AUC}{the value of the AUC).}
 \item{AUCratio}{the ratio of the obtained AUC value to the null expectation (0.5).}
+\item{meanPrecision}{the arithmetic mean of precision (proportion of predicted presences actually observed as presences) across all threshold values (defined by 'interval'). It is close to the AUC of the precision-recall (PR) curve.}
+
 }
 \references{
 Lobo, J.M., Jimenez-Valverde, A. & Real, R. (2008). AUC: a misleading measure of the performance of predictive distribution models. Global Ecology and Biogeography 17: 145-151

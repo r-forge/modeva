@@ -87,7 +87,7 @@ for (m in 1:n.models) {
       results[m, "Evenness"] <- evenness(obs.data[ , m])
 
     if ("AUC" %in% measures)
-      results[m, "AUC"] <- AUC(obs = obs.data[ , m], pred = pred.data[ , m], simplif = TRUE)
+      results[m, "AUC"] <- AUC(obs = obs.data[ , m], pred = pred.data[ , m], simplif = TRUE, plot = FALSE)
 
     if (any(measures %in% modEvAmethods("threshMeasures"))) {
       for (m in 1:n.models)  for (tm in thresh.measures) {

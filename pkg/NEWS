@@ -1,21 +1,31 @@
-## TO CONSIDER:
-
-- point biserial correlaction
-- Brier score
-- Gini coefficient
-- straight classification error rate
-- average squared error
-- thresholds: 10% / 0% omission error rate & other maxent criteria
-- evaluation for spatial (point + raster) data
-
-
 ==========================================
-modEvA v1.8 (committed 2020-01-17)
+modEvA v2.0 (committed 2020-01-20)
 ==========================================
 
-## Other changes:
+## Modified functions:
 
-- added 'inst' folder with article citation information
+* AUC
+- added 'meanPrecision' to returned list (if simplif = FALSE)
+- "AUC-PR" mentioned on plot when curve = "PR"
+
+* optiThresh
+- added "F1score" to goodness.measures in optimals.each
+- added Liu et al. 2005 reference to threshold criteria
+
+* threshMeasures, modEvAmethods
+- added "Precision" and "Recall" (even though synonyms with "PPP" and "Sensitivity")
+
+* optiPair
+- changed pch of measure 1 to 19 (slightly larger than pch 20) so it's still visible when overlapped by measure 2
+
+* multModEv
+- added 'plot = FALSE' to internal AUC call
+
+
+## Other modified files:
+
+* threshMeasures.Rd, optiThresh.Rd, optiPair.Rd
+- added "Note" saying sens=recall and PPP=precision, and defining F1score 
 
 
 ==========================================
@@ -28,6 +38,11 @@ modEvA v1.8 (committed 2020-01-17)
 - removed artificial zeros (instead of NaN) when curve = "PR"
 - reversed the reference diagonal if curve = "PR"
 - value now placed higher on the plot if curve = "PR" to avoid superposition
+
+
+## Other changes:
+
+- added 'inst' folder with article citation information
 
 
 ==========================================

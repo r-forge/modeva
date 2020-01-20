@@ -10,11 +10,11 @@ function(a, b, c, d, N = NULL, measure = "CCR"){
   if(is.null(N))  N <- a + b + c + d
   stopifnot(N == a + b + c + d)
   if(measure == "CCR") { value <- (a+d)/N
-  } else if(measure == "Sensitivity") { value <- a/(a+c)
+  } else if(measure %in% c("Sensitivity", "Recall")) { value <- a/(a+c)
   } else if(measure == "Specificity") { value <- d/(b+d)
   } else if(measure == "Omission") { value <- c/(a+c)
   } else if(measure == "Commission") { value <- b/(b+d)
-  } else if(measure == "PPP") { value <- a/(a+b)  # also called "Precision"
+  } else if(measure %in% c("PPP", "Precision")) { value <- a/(a+b)  # also called "Precision"
   } else if(measure == "NPP") { value <- d/(c+d)
   } else if(measure == "Misclass") { value <- (b+c)/N
   } else if(measure == "UPR") { value <- c/(c+d)  # this and next 3: Barbosa et al. 2013 Diversity and Distributions
