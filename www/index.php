@@ -47,7 +47,7 @@ echo $contents; } ?>
 <p> It includes functions for <b>variation partitioning</b>; calculating several measures of model <b>discrimination</b>, <b>classification</b>, <b>explanatory power</b>, and <b>calibration</b>; <b>optimizing prediction thresholds</b> based on a number of criteria; performing multivariate environmental similarity surface (<b>MESS</b>) <b>analysis</b>; and displaying various <b>analytical plots</b>. It includes also a <b>sample data set</b> with some species distribution models.</p>
 
 <font color="green">
-<h3> Package <i>modEvA</i> (v1.3.2) is on <a href="https://CRAN.R-project.org/package=modEvA">CRAN</a>!</h3>
+<h3> Package <i>modEvA</i> (v2.0) is on <a href="https://CRAN.R-project.org/package=modEvA">CRAN</a>!</h3>
 </font>
 
 <h2> Install and load </h2>
