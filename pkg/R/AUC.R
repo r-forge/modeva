@@ -60,7 +60,8 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     true.negatives[t] <- sum(obs == 0 & pred < thresholds[t])
     sensitivity[t] <- true.positives[t] / n1
     specificity[t] <- true.negatives[t] / n0
-    precision[t] <- true.positives[t] / sum(pred >= thresholds[t], na.rm = TRUE)
+    #pred.positives[t] <- sum(pred >= thresholds[t])
+    precision[t] <- true.positives[t] / sum(pred >= thresholds[t])
     #if (true.positives[t] == 0 && sum(pred >= thresholds[t], na.rm = TRUE) == 0)  precision[t] <- 0  # to avoid NaN?
     false.pos.rate[t] <- 1 - specificity[t]
     n.preds[t] <- sum(round(pred, nchar(Nthresh) - 1) == thresholds[t])

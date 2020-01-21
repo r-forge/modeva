@@ -1,6 +1,6 @@
 multModEv <-
 function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmethods("multModEv"), standardize = FALSE, thresh = NULL, bin.method = NULL, verbosity = 0, ...) {
-  # version 2.2 (27 Jun 2016)
+  # version 2.3 (21 Jan 2020)
 
 #  if (Favourability == TRUE & thresh == "preval") {
 #    thresh <- 0.5
@@ -86,8 +86,16 @@ for (m in 1:n.models) {
     if ("Evenness" %in% measures)
       results[m, "Evenness"] <- evenness(obs.data[ , m])
 
-    if ("AUC" %in% measures)
-      results[m, "AUC"] <- AUC(obs = obs.data[ , m], pred = pred.data[ , m], simplif = TRUE, plot = FALSE)
+    if (any(measures %in% c("AUC", "MeanPrecision"))) {
+      auc <- AUC(obs = obs.data[ , m], pred = pred.data[ , m], plot = FALSE)
+      if ("AUC" %in% measures)
+        results[m, "AUC"] <- auc$AUC
+      if ("MeanPrecision" %in% measures)
+        results[m, "MeanPrecision"] <- auc$meanPrecision
+    }
+    
+    if ("AUCPR" %in% measures)
+      results[m, "AUCPR"] <- AUC(obs = obs.data[ , m], pred = pred.data[ , m], plot = FALSE, curve = "PR")$AUC
 
     if (any(measures %in% modEvAmethods("threshMeasures"))) {
       for (m in 1:n.models)  for (tm in thresh.measures) {

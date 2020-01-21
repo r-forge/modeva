@@ -1,4 +1,23 @@
 ==========================================
+modEvA v2.0 (committed 2020-01-21)
+==========================================
+
+## Modified functions:
+
+* modEvA-internal
+- removed .Random.seed
+
+* multModEv, modEvAmethods, modEvA-internal
+- added "MeanPrecision", "AUCPR" and "F1score"
+
+
+## Other modified files:
+
+* multModEv.Rd
+- added "AUCPR" to one of the examples
+
+
+==========================================
 modEvA v2.0 (committed 2020-01-20)
 ==========================================
 
@@ -6,7 +25,7 @@ modEvA v2.0 (committed 2020-01-20)
 
 * AUC
 - added 'meanPrecision' to returned list (if simplif = FALSE)
-- "AUC-PR" mentioned on plot when curve = "PR"
+- "AUC[PR]" mentioned on plot when curve = "PR"
 
 * optiThresh
 - added "F1score" to goodness.measures in optimals.each

@@ -41,8 +41,8 @@ head(eval1)
 
 
 eval2 <- multModEv(models = rotif.mods$models[1:6], 
-thresh = "preval", measures = c("AUC", "CCR", "Sensitivity", 
-"TSS"))
+thresh = "preval", measures = c("AUC", "AUCPR", "CCR", 
+"Sensitivity", "TSS"))
 
 head(eval2)
 
