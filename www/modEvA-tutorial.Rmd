@@ -1,7 +1,7 @@
 ---
 title: 'Model evaluation and analysis: the *modEvA* R package in a nutshell'
-author: "A. Marcia Barbosa, CIBIO/InBIO - University of Evora (Portugal), barbosa@uevora.pt"
-date: "updated 7 May 2015"
+author: "A. Marcia Barbosa (https://modtools.wordpress.com)"
+date: "updated 28 Feb 2020"
 output: html_document
 ---
 
@@ -15,21 +15,19 @@ The ***modEvA*** package works within the free and open-source R statistical sof
 **Install *modEvA*** by pasting the command below in the R console (when connected to the internet):
 
 ```{r, eval=FALSE}
-install.packages("modEvA", repos = "http://R-Forge.R-project.org")
+install.packages("modEvA")
 ```
-
-This should work if you have the **latest version of R**; otherwise, it may either fail (producing a message like "*package 'modEvA' is not available for your R version*") or show a warning and install an older version of *modEvA*. To **check the version that you have actually installed**, type `citation(package="modEvA")`. To install the latest version of the package, you can either upgrade R *or* download the compressed *modEvA* package **source files** to your disk -- .*zip* for Windows or .*tar.gz* for Linux and Mac, available at the [package development page](https://r-forge.r-project.org/R/?group_id=1876) or at [this Dropbox folder](https://www.dropbox.com/sh/oac92wu1dbfsol4/AAAKVs4oVBBCUtDkPTnbh11Ga?dl=0) and then install the package locally, e.g. with R menu "*Packages - Install packages from local zip files*" (Windows), or "*Packages & Data - Package installer, Packages repository - Local source package*" (Mac), or "*Tools - Install packages - Install from: Package Archive File*" (RStudio).
 
 You only need to install the package once (unless a new version becomes available), but you need to **load it every time you open a new R session** in which you intend to use *modEvA* (no need for an internet connection anymore), by pasting the following command in R:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(modEvA)
 ```
 
 
 ## Analysing models
 
-Load the *rotif.mods* sample dataset that comes with the *modEvA* package, to use as an example:
+Load the *rotif.mods* sample dataset (based on a global dataset of rotifer distribution records originally published with [this article](http://onlinelibrary.wiley.com/doi/10.1111/j.1600-0587.2011.06850.x/abstract)) to use as an example:
 
 ```{r}
 data(rotif.mods)
@@ -54,7 +52,7 @@ mod <- rotif.mods$models[[1]]
 mod <- rotif.mods$models[["Abrigh"]]
 ```
 
-In most *modEvA* functions, instead of a model object, you can provide observed and predicted values that you've obtained elswehere. Let's extract such values from this model, to be able to use them in examples as well:
+In most *modEvA* functions, instead of a model object, you can provide vectors of observed and predicted values that you've obtained elswehere. Let's extract such values from this model, to be able to use them in the examples as well:
 
 ```{r}
 mydata <- data.frame(observed = mod$y, predicted = mod$fitted.values)
@@ -154,6 +152,7 @@ write.csv(model_eval, file = "model_eval.csv", row.names = FALSE)
 Some other potentially useful *modEvA* functions are (still) not covered in this tutorial, but you can find out about them as well:
 
 ```{r, eval=FALSE}
+help(predDensity)
 help(evenness)
 help(prevalence)
 help(OA)
@@ -163,4 +162,4 @@ help(varPart)
 
 You can find out additional options and further info on any function with *help(function.name)* (e.g., `help(multModEv)`).
 
-That's it! You can e-mail me with any suggestions or concerns, but first remember to check for updates to the package or this tutorial at <http://modEvA.r-forge.r-project.org>. This tutorial was built with *RStudio* + *rmarkdown* + *knitr*. Thanks!
+That's it! You can [contact me](https://modtools.wordpress.com/barbosa) with any suggestions or concerns, but first remember to check for updates to the package or to this tutorial at <http://modEvA.r-forge.r-project.org>. This tutorial was built with *RStudio* + *rmarkdown* + *knitr*. Thanks!
