@@ -93,7 +93,9 @@ echo $contents; } ?>
 
 <p>Horn, J., Becher, M. A., Kennedy, P. J., Osborne, J. L. & Grimm, V. (2016) Multiple stressors: using the honeybee model BEEHAVE to explore how spatial and temporal forage stress affects colony resilience. <i>Oikos</i>, 125: 1001-1016. DOI:10.1111/oik.02636</p>
 
-<p>Naman S.M., Rosenfeld J.S., Kiffney P.M., Richardson J.S. (in press) The energetic consequences of habitat structure for forest stream salmonids. <i>Journal of Animal Ecology</i>, DOI: 10.1111/1365-2656.12845</p>
+<p>Moreno‐Zarate L., Estrada A., Peach W. & Arroyo B. (2020) Spatial heterogeneity in population change of the globally threatened European turtle dove in Spain: The role of environmental favourability and land use. Diversity & Distributions, https://doi.org/10.1111/ddi.13067</p>
+
+<p>Naman S.M., Rosenfeld J.S., Kiffney P.M., Richardson J.S. (2018) The energetic consequences of habitat structure for forest stream salmonids. <i>Journal of Animal Ecology</i>, DOI: 10.1111/1365-2656.12845</p>
 
 <p> Romero D., Olivero J., Real R. & Guerrero J.C. (2019) Applying fuzzy logic to assess the biogeographical risk of dengue in South America. <i>Parasites & Vectors</i>, 12: 428. DOI: 10.1186/s13071-019-3691-5</p>
 
