@@ -87,6 +87,8 @@ echo $contents; } ?>
 
 <p>Coelho L., Romero D., Queirolo D. & Guerrero J.C. (2018) Understanding factors affecting the distribution of the maned wolf (<i>Chrysocyon brachyurus</i>) in South America: Spatial dynamics and environmental drivers. <i>Mammalian Biology</i>, 92: 54-61. https://doi.org/10.1016/j.mambio.2018.04.006</p>
 
+<p> da Silva B.A., Guerrero J.C., Bidegaray-Batista L. & Simo M. (2020) Description of Latica, a new monotypic spider genus from Uruguay and Argentina (Araneae, Herpyllinae, Gnaphosidae): An integrative approach. <i>Zoologischer Anzeiger</i>, 288: 84-96. DOI: 10.1016/j.jcz.2020.07.006</p>
+
 <p>De Ara&uacute;jo C.B., Marcondes-Machado L.O. & Costa G.C. (2013) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. <i>Journal of Biogeography</i>, 41: 513-523</p>
 
 <p>Dias A., Palma L., Carvalho F., Neto D., Real J., Beja P. (2017) The role of conservative versus innovative nesting behavior on the 25‐year population expansion of an avian predator. Ecology and Evolution 7: 4241–4253. https://doi.org/10.1002/ece3.3007</p>
