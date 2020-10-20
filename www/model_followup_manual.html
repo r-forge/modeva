@@ -390,7 +390,7 @@ mydata$test[sample(which(mydata$train == 0), 20)] &lt;- 1</code></pre>
 ## 5     0 0.3678857    0
 ## 6     1 0.3891151    1</code></pre>
 <p>So, our sample dataframe is called <strong><em>mydata</em></strong>, the column containing the predicted probability values is called <strong><em>pred</em></strong>, and the columns with the observed data before and after modelling (training and test data, respectively) are called <strong><em>train</em></strong> and <strong><em>test</em></strong>.</p>
-<p>To confirm that your <em>train</em>ing data are indeed exactly the same that were used to get your <em>pred</em>icted data (i.e., including all sites that were modelled and excluding all sites that were not), check that they add up to the same value (which they should if your model is a GLM):</p>
+<p>To confirm that your <em>train</em>ing data are indeed exactly the same that were used to get your <em>pred</em>icted data (i.e., including all sites that were modelled and excluding all sites that were not), check that they add up to the same value:</p>
 <pre class="r"><code>with(mydata, all.equal(sum(train, na.rm = TRUE), sum(pred, na.rm = TRUE)))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>To quantify the lost, gained and maintained presences from the training to the test data, you can use the <em>fuzzyRangeChange</em> function of the <em>fuzzySim</em> package:</p>
