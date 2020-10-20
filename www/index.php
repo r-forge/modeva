@@ -87,7 +87,7 @@ echo $contents; } ?>
 
 <p>Coelho L., Romero D., Queirolo D. & Guerrero J.C. (2018) Understanding factors affecting the distribution of the maned wolf (<i>Chrysocyon brachyurus</i>) in South America: Spatial dynamics and environmental drivers. <i>Mammalian Biology</i>, 92: 54-61. https://doi.org/10.1016/j.mambio.2018.04.006</p>
 
-<p> da Silva B.A., Guerrero J.C., Bidegaray-Batista L. & Simo M. (2020) Description of Latica, a new monotypic spider genus from Uruguay and Argentina (Araneae, Herpyllinae, Gnaphosidae): An integrative approach. <i>Zoologischer Anzeiger</i>, 288: 84-96. DOI: 10.1016/j.jcz.2020.07.006</p>
+<p>da Silva B.A., Guerrero J.C., Bidegaray-Batista L. & Simo M. (2020) Description of Latica, a new monotypic spider genus from Uruguay and Argentina (Araneae, Herpyllinae, Gnaphosidae): An integrative approach. <i>Zoologischer Anzeiger</i>, 288: 84-96. DOI: 10.1016/j.jcz.2020.07.006</p>
 
 <p>De Ara&uacute;jo C.B., Marcondes-Machado L.O. & Costa G.C. (2013) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. <i>Journal of Biogeography</i>, 41: 513-523</p>
 
@@ -99,8 +99,9 @@ echo $contents; } ?>
 
 <p>Naman S.M., Rosenfeld J.S., Kiffney P.M., Richardson J.S. (2018) The energetic consequences of habitat structure for forest stream salmonids. <i>Journal of Animal Ecology</i>, DOI: 10.1111/1365-2656.12845</p>
 
-<p> Romero D., Olivero J., Real R. & Guerrero J.C. (2019) Applying fuzzy logic to assess the biogeographical risk of dengue in South America. <i>Parasites & Vectors</i>, 12: 428. DOI: 10.1186/s13071-019-3691-5</p>
+<p>Romero D., Olivero J., Real R. & Guerrero J.C. (2019) Applying fuzzy logic to assess the biogeographical risk of dengue in South America. <i>Parasites & Vectors</i>, 12: 428. DOI: 10.1186/s13071-019-3691-5</p>
 
+<p>Waterhouse M., Baxter C., Duarte Romero B., Mcleod D.S.A., English D.R., Armstrong B.K., Clarke M.W., Ebeling P.R., Hartel G., Kimlin M.G., O’connell R.L., Pham H., Harris R.M.R., Van Der Pols J.C., Venn A.J., Webb P.M., Whiteman D.C. & Neale R.E. (2020). Predicting deseasonalised serum 25 hydroxy vitamin D concentrations in the D-Health Trial: an analysis using boosted regression trees. MedRxiv, 2020.08.23.20180422. https://doi.org/10.1101/2020.08.23.20180422</p>
 <br />
 
 
