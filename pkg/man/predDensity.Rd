@@ -16,7 +16,7 @@ type = c("both"), legend.pos = "topright")
   \item{pred}{numeric vector of the values predicted by a GLM of the observed data. This argument is ignored if 'model' is provided. Must be of the same length and in the same order as 'obs'.}
   \item{separate}{logical value indicating whether prediction densities should be computed separately for observed presences (ones) and absences (zeros). Defaults to TRUE, but is changed to FALSE if either 'model' or 'obs' not provided.}
   \item{type}{character vector specifying whether to produce a "histogram", a "density" plot, or "both" (the default). Partial argument matching is used.}
-  \item{legend.pos}{character specifying the position for the legend, or "n" for no legend. Position can be "topright" (the default), "topleft, "bottomright"", "bottomleft", "top", "bottom", "left", "right", or "center". Partial argument matching is used.}
+  \item{legend.pos}{character specifying the position for the legend; NA or "n" for no legend. Position can be "topright" (the default), "topleft, "bottomright"", "bottomleft", "top", "bottom", "left", "right", or "center". Partial argument matching is used.}
 }
 \details{
 For more details, please refer to the documentation of the functions mentioned under "See Also".

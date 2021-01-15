@@ -1,4 +1,34 @@
 ==========================================
+modEvA v2.1 (committed 2021-01-15)
+==========================================
+
+## New functions:
+
+* predPlot
+
+
+## Modified functions:
+
+* predDensity
+- like 'predPlot', 'legend.pos' now allows NA (for no legend) instead of throwing obscure error
+
+
+* optiThresh
+- added warning when any of 'measures' or 'optimize' not within implemented values
+
+
+## Other modified files:
+
+* MESS.Rd
+- removed mention that we will implement ExDet for dataframes; added 'ecospat.climan' to 'See also'
+
+
+## Other changes:
+
+* minor corrections to some 'man' files
+
+
+==========================================
 modEvA v2.0 (committed 2020-01-21)
 ==========================================
 

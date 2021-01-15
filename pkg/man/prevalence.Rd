@@ -4,7 +4,7 @@
 Prevalence
 }
 \description{
-For building and evaluating species distribution models, the porportion of presences of the species may be issues to take into account (e.g. Jimenez-Valverde & Lobo 2006, Barbosa et al. 2013). The \code{prevalence} function calculates this measure.
+For building and evaluating species distribution models, the porportion of presences of the species may be an issue to take into account (e.g. Jimenez-Valverde & Lobo 2006, Barbosa et al. 2013). The \code{prevalence} function calculates this measure.
 }
 \usage{
 prevalence(obs, event = 1, na.rm = TRUE)

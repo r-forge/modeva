@@ -1,5 +1,5 @@
 predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, type = c("both"), legend.pos = "topright") {
-  # version 1.0 (9 Jan 2020)
+  # version 1.1 (15 Jan 2021)
   
   if (!is.null(model)) {
     if (!("glm" %in% class(model)) || family(model)$family != "binomial") stop("'model' must be of class 'glm' and family 'binomial'.")
@@ -73,8 +73,8 @@ predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
     } else {
       lines(dens1, col = "black", lwd = 2)
       lines(dens0, col = "darkgrey", lty = 5, lwd = 2)
-      if (legend.pos != "n" && type == "density") legend(legend.pos, legend = c("absences", "presences"), col = c("darkgrey", "black"), lty = c(5, 1), bty = "n")
-      if (legend.pos != "n" && type == "both") legend(legend.pos, legend = c("absences", "presences"), fill = c("darkgrey", "grey20"), border = NA, lty = c(5, 1), col = c("darkgrey", "grey15"), density = c(40, NA), bty = "n")
+      if (!is.na(legend.pos) && legend.pos != "n" && type == "density") legend(legend.pos, legend = c("absences", "presences"), col = c("darkgrey", "black"), lty = c(5, 1), bty = "n")
+      if (!is.na(legend.pos) && legend.pos != "n" && type == "both") legend(legend.pos, legend = c("absences", "presences"), fill = c("darkgrey", "grey20"), border = NA, lty = c(5, 1), col = c("darkgrey", "grey15"), density = c(40, NA), bty = "n")
     }
   }
   

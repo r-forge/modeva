@@ -3,8 +3,19 @@ function(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
          measures = modEvAmethods("threshMeasures"),
          optimize = modEvAmethods("optiThresh"), simplif = FALSE,
          plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...) {
-  # version 2.6 (20 Jan 2013)
-
+  # version 2.7 (14 Jan 2021)
+  
+  wrong.measures <- measures[which(!(measures %in% modEvAmethods("threshMeasures")))]
+  wrong.optimizers <- optimize[which(!(optimize %in% modEvAmethods("optiThresh")))]
+  if (length(wrong.measures) > 0) {
+    warning("'", paste(wrong.measures, collapse = ", "), "'", " invalid under 'measures'; see modEvAmethods('threshMeasures') for available options.")
+    measures <- measures[!(measures %in% wrong.measures)]
+  }
+  if (length(wrong.optimizers) > 0) {
+    warning("'", paste(wrong.optimizers, collapse = ", "), "'", " invalid under 'optimize'; see modEvAmethods('optiThresh') for available options.")
+    optimize <- optimize[!(optimize %in% wrong.optimizers)]
+  }
+  
   if (!is.null(model)) {
     if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")

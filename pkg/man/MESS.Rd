@@ -1,4 +1,4 @@
-  \name{MESS}
+\name{MESS}
 \alias{MESS}
 \title{
 Multivariate Environmental Similarity Surfaces based on a data frame
@@ -62,10 +62,10 @@ of species geographic distributions. Ecological Modelling 190: 231-259
 Alberto Jimenez-Valverde, A. Marcia Barbosa
 }
 \note{
-A new, apparently more complete method for analysing environmental dissimilarities has recently become available (see https://www.climond.org/ExDet.aspx). We are planning on implementing a dataframe version of that too.
+A new, apparently more complete method for analysing environmental dissimilarities is now available (see https://www.climond.org/ExDet.aspx).
 }
 \seealso{
-\code{mess} in package \pkg{dismo}; \code{\link{OA}}
+\code{mess} in package \pkg{dismo}; \code{ecospat.climan} in package \pkg{ecospat}; \code{\link{OA}} 
 }
 \examples{
 \dontrun{
