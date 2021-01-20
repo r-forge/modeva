@@ -28,7 +28,7 @@ This function outputs and plots the object(s) specified in 'type' -- by default,
 A. Marcia Barbosa
 }
 \seealso{
-\code{\link{hist}}, \code{\link{density}}
+\code{\link{hist}}, \code{\link{density}}, \code{\link{predPlot}}
 }
 \examples{
 # load sample models:

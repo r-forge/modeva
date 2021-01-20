@@ -35,7 +35,7 @@ Weisberg S. (1980) Applied Linear Regression. Wiley, New York
 A. Marcia Barbosa
 }
 \seealso{
-\code{\link{glm}}, \code{\link{Dsquared}}
+\code{\link{predPlot}}, \code{\link{predDensity}}
 }
 \examples{
 # load sample models:
