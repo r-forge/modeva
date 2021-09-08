@@ -1,5 +1,5 @@
 MESS <- function(V, P, id.col = NULL){
-  # version 1.5, 22 Sep 2014
+  # version 1.6, 8 Sep 2021
 
   index.V <- 1:nrow(V)
   index.P <- 1:nrow(P)
