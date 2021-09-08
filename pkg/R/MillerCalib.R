@@ -54,7 +54,7 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line
     abline(intercept, slope, col = line.col)
     if (plot.values) {
       #plotext <- paste("intercept =" , round(intercept, digits), "\nslope =", round(slope, digits), "\nslope p-value =", round(slope.p, digits))
-      plotext <- paste0("intercept = " , round(intercept, digits), "\nslope = ", round(slope, digits))
+      plotext <- paste0("slope = " , round(slope, digits), "\nintercept = ", round(intercept, digits))
       text(x = 1, y = ymin + 0.1 * (ymax - ymin), adj = 1, labels = plotext)
     }  # end if plot.values
   }  # end if plot

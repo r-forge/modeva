@@ -2,10 +2,11 @@ varPart <-
 function(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA,
          model.type = NULL, A.name = "Factor A", B.name = "Factor B", 
          C.name = "Factor C", plot = TRUE, plot.digits = 3, cex.names = 1.5, 
-         cex.values = 1.2, main = "", cex.main = 2, plot.unexpl = TRUE) {
+         cex.values = 1.2, main = "", cex.main = 2, plot.unexpl = TRUE, 
+         coloured = FALSE) {
   
-  # version 1.7 (17 Mar 2017)
-
+  # version 1.8 (8 Sep 2021), based on suggestions by Oswald van Ginkel
+  
   if (!is.null(model.type)) message ("NOTE: Argument 'model.type' is no longer used.")
   
   partials <- c(A, B, C, AB, BC, AC, ABC)
@@ -58,11 +59,11 @@ function(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA,
 
   if (plot) {  # adapted from Daniel's http://stackoverflow.com/questions/1428946/venn-diagrams-with-r
 
-    circle <- function(x, y, r) {
-      ang <- seq(0, 2*pi, length = 100)
+    circle <- function(x, y, r, col = NA) {
+      ang <- seq(0, 2 * pi, length = 100)
       xx <- x + r * cos(ang)
       yy <- y + r * sin(ang)
-      polygon(xx, yy)
+      polygon(xx, yy, col = col)
     }  # end circle funtion (by Daniel)
 
     Apure <- round(Apure, plot.digits)  # shorten values for plotting
@@ -76,22 +77,22 @@ function(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA,
     }
 
     if (twofactors) {
-      plot(0, 0, ylim = c(-1, 10), xlim = c(-1, 7), type = "n", axes = FALSE,
+      plot(0, 0, ylim = c(-1, 10), xlim = c(-1, 10), type = "n", axes = FALSE,
            ylab = "", xlab = "", main = main, cex.main = cex.main)
-      circle(3,3,3)
-      circle(3,6,3)
-      text(x = c(3, 3), y = c(9.5, -0.5), labels = c(A.name, B.name),
+      circle(4.5, 3, 3, col = ifelse(coloured, rgb(1, 0, 0, 0.5), NA))
+      circle(4.5, 6, 3, col = ifelse(coloured, rgb(0, 1, 0, 0.5), NA))
+      text(x = c(4.5, 4.5), y = c(9.5, -0.5), labels = c(A.name, B.name),
            cex = cex.names)
-      text(x = c(3, 3, 3), y = c(7, 4.75, 2), c(Apure, ABoverlap, Bpure),
+      text(x = c(4.5, 4.5, 4.5), y = c(7, 4.75, 2), c(Apure, ABoverlap, Bpure),
            cex = cex.values)
       
     } else { # end if 2 factors
     
       plot(0, 0, ylim = c(-1, 10), xlim = c(-1, 10), type = "n", axes = FALSE,
            ylab = "", xlab = "", main = main, cex.main = cex.main)
-      circle(3, 6, 3)
-      circle(6, 6, 3)
-      circle(4.5, 3,  3)
+      circle(3, 6, 3, col = ifelse(coloured, rgb(1, 0, 0, 0.5), NA))
+      circle(6, 6, 3, col = ifelse(coloured, rgb(0, 1, 0, 0.5), NA))
+      circle(4.5, 3, 3, col = ifelse(coloured, rgb(0, 0, 1, 0.5), NA))
       #Cname.loc = ifelse((plot.unexpl), 6, 4.5)
       text(x = c(2.5, 6.5, 4.5), y = c(9.5, 9.5, -0.5),
            labels = c(A.name, B.name, C.name), cex = cex.names, adj = c(0.5, 0.5, 0))

@@ -34,10 +34,10 @@ MESS analysis is implemented in the MAXENT software (Phillips et al.
 2006) and in the \pkg{dismo} R package, but there it requires input
 variables in raster format. This implies not only the use of complex spatial
 data structures, but also that the units of analysis are rectangular pixels,
-whereas we often need to model distribution data recorded on irregular
-units (e.g. provinces, river basins), or on equal-area units (e.g. UTM cells,
-equal-area hexagons), whereas pixels vary in area between the equator and the
-poles. The MESS function computes this analysis for variables in a data frame,
+whereas we often need to model distribution data recorded on less regular
+units (e.g. provinces, river basins), or on equal-area cells that are not 
+necessarily rectangular (e.g. UTM cells, equal-area hexagons or other geometric 
+shapes). The MESS function computes this analysis for variables in a data frame, 
 where localities (in rows) may be of any size or shape.
 }
 \value{
@@ -55,6 +55,10 @@ Barbosa A.M., Real R. & Vargas J.M. (2009) Transferability of environmental favo
 Elith J., Kearney M. & Phillips S. (2010) The art of modelling range-shifting
 species. Methods in Ecology and Evolution 1: 330-342
 
+Mesgaran M.B., Cousens R.D. & Webber B.L. (2014) Here be dragons: a tool for quantifying novelty due to covariate range and correlation change when projecting species distribution models. Diversity and Distributions, 20: 1147-1159
+
+Owens H.L., Campbell L.P., Dornak L.L., Saupe E.E., Barve N., Soberon J., Ingenloff K., Lira-Noriega A., Hensz C.M., Myers C.E. & Peterson A.T. (2013) Constraints on interpretation of ecological niche models by limited environmental ranges on calibration areas. Ecological Modelling, 263: 10-18
+
 Phillips S.J., Anderson R.P. & Schapire R.E. (2006) Maximum entropy modeling
 of species geographic distributions. Ecological Modelling 190: 231-259
 }
@@ -62,10 +66,10 @@ of species geographic distributions. Ecological Modelling 190: 231-259
 Alberto Jimenez-Valverde, A. Marcia Barbosa
 }
 \note{
-A new, apparently more complete method for analysing environmental dissimilarities is now available (see https://www.climond.org/ExDet.aspx).
+Newer and apparently more complete methods for analysing environmental dissimilarities have been developed, such as extrapolation detection (ExDet; Mesgaran et al. 2014) and Mobility-Oriented Parity analysis (MOP; Owens et al. 2013).
 }
 \seealso{
-\code{mess} in package \pkg{dismo}; \code{ecospat.climan} in package \pkg{ecospat}; \code{\link{OA}} 
+\code{\link{OA}}; \code{mess} in package \pkg{dismo}; \code{ecospat.climan} in package \pkg{ecospat}; \code{kuenm_mop} and \code{kuenm_mmop} in package \pkg{kuenm}
 }
 \examples{
 \dontrun{

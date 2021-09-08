@@ -10,7 +10,8 @@ This function performs variation partitioning (Borcard et al. 1992) among two fa
 varPart(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, 
 model.type = NULL, A.name = "Factor A", B.name = "Factor B", 
 C.name = "Factor C", plot = TRUE, plot.digits = 3, cex.names = 1.5, 
-cex.values = 1.2, main = "", cex.main = 2, plot.unexpl = TRUE)
+cex.values = 1.2, main = "", cex.main = 2, plot.unexpl = TRUE, 
+coloured = FALSE)
 }
 \arguments{
   \item{A}{numeric value of the R-squared of the regression of the response variable on the variables related to factor 'A'}
@@ -33,6 +34,7 @@ cex.values = 1.2, main = "", cex.main = 2, plot.unexpl = TRUE)
   \item{main}{optional character string indicating the main title for the plot. The default is empty.}
   \item{cex.main}{numeric value indicating character expansion factor to define the font size of the plot title (if provided).}
   \item{plot.unexpl}{logical value indicating whether the amount of unexplained variation should be included in the plot. The default is TRUE.}
+  \item{coloured}{logical value indicating whether or not to colour the circles in the plot. The default is FALSE for back-compatibility.}
 }
 \details{
 If you have linear models, input data for 'varPart' are the coefficients of determination (R-squared values) of the linear regressions of the target variable on all the variables in the model, on the variables related to each particular factor, and (when there are 3 factors) on the variables related to each pair of factors. The outputs are the amounts of variance explained exclusively by each factor, the amounts explained exclusively by the overlapping effects of each pair of factors, and the amount explained by the overlap of the 3 factors if this is the case (e.g. Real et al. 2003). The amount of variation not explained by the complete model is also provided.
@@ -61,14 +63,31 @@ A. Marcia Barbosa
 These results derive from arithmetic operations between your input values, and they always sum up to 1; if your input is incorrect, the results will be incorrect as well, even if they sum up to 1.
 
 This function had a bug up to modEvA version 0.8: a badly placed line break prevented the ABC overlap from being calculated correctly. Thanks to Jurica Levatic for pointing this out and helping to solve it!
+
+Oswald van Ginkel also suggested a fix to some plotting awkwardness when using only two factors, and a nice option for colouring the plot. Many thanks!
 }
 \examples{
 # if you have a linear model (LM), use (non-adjusted) R-squared values 
 # for each factor and for their combinations as inputs:
 
+# with 2 factors:
+
+varPart(A = 0.456, B = 0.315, AB = 0.852, A.name = "Spatial", 
+B.name = "Environmental", main = "Small whale")
+
+varPart(A = 0.456, B = 0.315, AB = 0.852, A.name = "Spatial", 
+B.name = "Environmental", main = "Small whale", col = TRUE)
+
+
+# with 3 factors:
+
 varPart(A = 0.456, B = 0.315, C = 0.281, AB = 0.051, BC = 0.444, 
 AC = 0.569, ABC = 0.624, A.name = "Spatial", B.name = "Human", 
 C.name = "Environmental", main = "Small whale")
+
+varPart(A = 0.456, B = 0.315, C = 0.281, AB = 0.051, BC = 0.444, 
+AC = 0.569, ABC = 0.624, A.name = "Spatial", B.name = "Human", 
+C.name = "Environmental", main = "Small whale", col = TRUE)
 
 
 # if you have a generalized linear model (GLM), 

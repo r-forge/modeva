@@ -1,4 +1,20 @@
 ==========================================
+modEvA v2.2 (committed 2021-09-08)
+==========================================
+
+## Modified functions:
+
+* MillerCalib
+- slope value now plotted before (above) intercept (if plot.values = TRUE)
+
+* varPart
+- fixed right margin in 2-factor plot and added option for colouring the circles, following suggestions by Oswald van Ginkel
+
+* MESS
+- bug fix e-mailed by Huijie Qiao
+
+
+==========================================
 modEvA v2.1 (committed 2021-01-15)
 ==========================================
 
@@ -11,7 +27,6 @@ modEvA v2.1 (committed 2021-01-15)
 
 * predDensity
 - like 'predPlot', 'legend.pos' now allows NA (for no legend) instead of throwing obscure error
-
 
 * optiThresh
 - added warning when any of 'measures' or 'optimize' not within implemented values

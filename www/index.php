@@ -89,11 +89,13 @@ echo $contents; } ?>
 
 <p>da Silva B.A., Guerrero J.C., Bidegaray-Batista L. & Simo M. (2020) Description of Latica, a new monotypic spider genus from Uruguay and Argentina (Araneae, Herpyllinae, Gnaphosidae): An integrative approach. <i>Zoologischer Anzeiger</i>, 288: 84-96. DOI: 10.1016/j.jcz.2020.07.006</p>
 
-<p>De Ara&uacute;jo C.B., Marcondes-Machado L.O. & Costa G.C. (2013) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. <i>Journal of Biogeography</i>, 41: 513-523</p>
+<p>De Araujo C.B., Marcondes-Machado L.O. & Costa G.C. (2013) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. <i>Journal of Biogeography</i>, 41: 513-523</p>
 
 <p>Dias A., Palma L., Carvalho F., Neto D., Real J., Beja P. (2017) The role of conservative versus innovative nesting behavior on the 25‐year population expansion of an avian predator. Ecology and Evolution 7: 4241–4253. https://doi.org/10.1002/ece3.3007</p>
 
 <p>Horn, J., Becher, M. A., Kennedy, P. J., Osborne, J. L. & Grimm, V. (2016) Multiple stressors: using the honeybee model BEEHAVE to explore how spatial and temporal forage stress affects colony resilience. <i>Oikos</i>, 125: 1001-1016. DOI:10.1111/oik.02636</p>
+
+<p>Mata-Nicolas E., Montero-Pau J., Gimeno-Paez E., Garcia-Perez A., Ziarsolo P., Blanca J., van der Knaap E., Diez M.J., Canizares J. (2021) Discovery of a Major QTL Controlling Trichome IV Density in Tomato Using K-Seq Genotyping. Genes, 12(2): 243. https://doi.org/10.3390/genes12020243</p>
 
 <p>Moreno‐Zarate L., Estrada A., Peach W. & Arroyo B. (2020) Spatial heterogeneity in population change of the globally threatened European turtle dove in Spain: The role of environmental favourability and land use. Diversity & Distributions, https://doi.org/10.1111/ddi.13067</p>
 

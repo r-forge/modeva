@@ -24,8 +24,9 @@ MESS <- function(V, P, id.col = NULL){
     SIM <- vector("numeric", nrow.P)
     for (j in 1:nrow.P){
       VV <- V[, i]
-      VV[VV < P[j, i]] <- 1
-      VV[VV >= P[j, i]] <- 0
+      #VV[VV < P[j, i]] <- 1
+      #VV[VV >= P[j, i]] <- 0
+      VV <- ifelse(VV < P[j, i], 1, 0)  # bug fix by Huijie Qiao
       Fj <- sum(VV, na.rm = TRUE) * 100 / length(VV)
       if (Fj == 0)  SIM[j] <- (P[j, i] - min.Vi) / (max.Vi - min.Vi) * 100
       else if (Fj > 0 && Fj <= 50)  SIM[j] <- 2 * Fj
