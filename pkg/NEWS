@@ -1,4 +1,17 @@
 ==========================================
+modEvA v2.3 (committed 2021-09-30)
+==========================================
+
+## Modified functions:
+
+* prevalence
+- added 'model' argument, which can now be provided instead of 'obs'
+- help file includes examples with 'model' and with character 'obs' 
+- error message when 'obs' not a vector and when 'event' not in 'obs'
+- warning when 'obs' ignored in favour of 'model'
+
+
+==========================================
 modEvA v2.2 (committed 2021-09-08)
 ==========================================
 
