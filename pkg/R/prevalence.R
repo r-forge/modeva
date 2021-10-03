@@ -17,7 +17,7 @@ function (obs = NULL, model = NULL, event = 1, na.rm = TRUE) {
     } else if (is(model, "gbm")) {
       obs <- model$data$y
     } else if (is(model, "randomForest")) {
-      obs <- model$y
+      obs <- as.integer(as.character(model$y))
     } else if (is(model, "bart")) {
       if (is.null(model$fit$data)) stop("'$fit$data' section not available in 'model'. Try computing the 'bart' model with 'keeptrees=TRUE', or providing 'obs' here instead of 'model'.")
       obs <- model$fit$data@y  # requires model ran with keeptrees=TRUE
