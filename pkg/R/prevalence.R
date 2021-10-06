@@ -1,12 +1,12 @@
 prevalence <-
 function (obs = NULL, model = NULL, event = 1, na.rm = TRUE) {
-  # version 1.1 (30 sep 2021)
+  # version 1.2 (6 Oct 2021)
 
   #model_classes_implemented <- c("glm", "gam", "gbm", "randomForest", "bart")
   #if (any(class(obs) %in% model_classes_implemented))  model <- obs  # (in case the user provides unnamed model argument)
   
   if (!is.null(obs)) {
-    if (!is(obs, "vector")) stop("'obs' must be a vector.")
+    if (!is(obs, "vector") && !is(obs, "factor")) stop("'obs' must be of class 'vector' or 'factor'.")
     if (!(event %in% obs)) stop("'event' is not among of the values of 'obs'.")
   }
   
