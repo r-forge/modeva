@@ -10,7 +10,7 @@ This function calculates a number of measures for evaluating the classification 
 threshMeasures(model = NULL, obs = NULL, pred = NULL, thresh,
 measures = modEvAmethods("threshMeasures"), simplif = FALSE, 
 plot = TRUE, plot.ordered = FALSE, standardize = TRUE, 
-verbosity = 2, ...)
+verbosity = 2, ylim = c(0, 1), ...)
 }
 \arguments{
   \item{model}{a model object of class "glm".}
@@ -23,6 +23,7 @@ verbosity = 2, ...)
   \item{plot.ordered}{logical, whether to plot the measures in decreasing order rather than in input order. Defaults to FALSE.}
   \item{standardize}{logical, whether to change measures that may range between -1 and +1 (namely kappa and TSS) to their corresponding value in the 0-to-1 scale (skappa and sTSS), so that they can compare directly to other measures (see \code{\link{standard01}}). The default is TRUE, but a message is displayed to inform the user about it.}
   \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
+  \item{ylim}{limits for the y axis.}
   \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{

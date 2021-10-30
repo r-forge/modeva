@@ -2,8 +2,8 @@ threshMeasures <-
 function(model = NULL, obs = NULL, pred = NULL, thresh,
          measures = modEvAmethods("threshMeasures"), 
          simplif = FALSE, plot = TRUE, plot.ordered = FALSE, 
-         standardize = TRUE, verbosity = 2, ...) {
-  # version 2.8 (16 Jan 2020)
+         standardize = TRUE, verbosity = 2, ylim = c(0, 1), ...) {
+  # version 2.9 (30 Oct 2021)
 
   if (is.null(model)) {
     if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object of class 'glm'.")
@@ -81,7 +81,8 @@ type modEvAmethods('threshMeasures') for available options.")
       if (plot.ordered) {
         measures.plot <- sort(measures.plot, decreasing = TRUE)
       }
-      barplot(measures.plot, las = 3, ...)
+      #measures.plot[is.infinite(measures.plot)] <- NA  # no longer needed after 'ylim' argument added
+      barplot(measures.plot, las = 3, ylim = ylim, ...)
     }  # end if plot
     return(list(N = N, Prevalence = prev, Threshold = thresh,
                 ConfusionMatrix = conf.matrix, ThreshMeasures = Measures))

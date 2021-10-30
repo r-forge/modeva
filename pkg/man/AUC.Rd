@@ -15,25 +15,24 @@ plot.values = TRUE, plot.digits = 3, plot.preds = FALSE,
 grid = FALSE, xlab = "auto", ylab = "auto", ...)
 }
 \arguments{
-  \item{model}{a model object of class "glm".}
-  \item{obs}{a vector of observed presences (1) and absences (0) or another
-  binary response variable. This argument is ignored if \code{model} is provided.}
-  \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as \code{obs}. This argument is ignored if \code{model} is provided.}
-  \item{simplif}{logical, whether to use a faster version that returns only the AUC value (and the ROC plot if plot = TRUE).}
+  \item{model}{a model object of class "glm". Alternatively, you can use the 'obs' and 'pred' arguments instead of 'model'.}
+  \item{obs}{alternatively to 'model', a vector of observed presences (1) and absences (0) or another binary response variable. This argument is ignored if 'model' is provided.}
+  \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. This argument is ignored if 'model' is provided.}
+  \item{simplif}{logical, whether to use a faster version that returns only the AUC value (and the plot if 'plot = TRUE').}
   \item{FPR.limits}{(NOT YET IMPLEMENTED) numerical vector of length 2 indicating the limits of false positive rate between which to calculate a partial AUC. The default is c(0, 1), for considering the whole AUC.}
-  \item{curve}{character indicating whether to compute the "ROC" (receiver operating charateristic) or the "PR" (precision-recall) curve. Area calculation is not currently implemented for this curve.}
-  \item{interval}{interval of threshold values at which to calculate the true and false positives and negatives. Defaults to 0.01. Note that, if method = "rank" (the default if curve = "ROC"), this does not affect the obtained AUC value (although it can affect the size of the plotted curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney-Wilcoxon statistic and is therefore threshold-independent. If method != "rank" (or, by extension, if curve = "PR"), setting 'interval' to smaller values will provide more accurate AUC values. The size of the 'interval' also affects the resulting 'meanPrecision', as this is averaged across all threshold values.}
-  \item{method}{character indicating which method should be used to calculate the AUC. Available options are "rank" (the default and most exact, but implemented only if curve = "ROC"), "trapezoid" (the default if curve = "PR"), or "integrate". The last two compute more exactly if 'interval' is decreased (see above).}
+  \item{curve}{character indicating whether to compute the "ROC" (receiver operating charateristic) or the "PR" (precision-recall) curve.}
+  \item{interval}{interval of threshold values at which to calculate the true and false positive rates. Defaults to 0.01 for relatively quick while still relatively accurate computation. Note that, if method = "rank" (the default if curve = "ROC"), this does not affect the obtained AUC value (although it can affect the size of the plotted curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney-Wilcoxon statistic and is therefore threshold-independent. If method != "rank" (or, by extension, if curve = "PR" -- see 'method' argument), setting 'interval' to smaller values will provide more accurate AUC values. The size of the 'interval' also affects the resulting 'meanPrecision', as this is averaged across all threshold values.}
+  \item{method}{character indicating with which method to calculate the AUC value. Available options are "rank" (the default and most exact, but implemented only if curve = "ROC") and "trapezoid" (the default if curve = "PR"). The latter is computed more exactly if 'interval' is decreased (see 'interval' argument).}
   \item{plot}{logical, whether or not to plot the curve. Defaults to TRUE.}
   \item{diag}{logical, whether or not to add the reference diagonal (if plot = TRUE). Defaults to TRUE.}
-  \item{diag.col}{line colour for the reference diagonal (if diag=TRUE).}
-  \item{diag.lty}{line type for the reference diagonal (if diag=TRUE).}
+  \item{diag.col}{line colour for the reference diagonal (if diag = TRUE).}
+  \item{diag.lty}{line type for the reference diagonal (if diag = TRUE).}
   \item{curve.col}{line colour for the curve.}
   \item{curve.lty}{line type for the curve.}
   \item{curve.lwd}{line width for the curve.}
   \item{plot.values}{logical, whether or not to show in the plot the values associated to the curve (e.g., the AUC). Defaults to TRUE.}
   \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed. Defaults to 3. This argument is ignored if 'plot' or 'plot.values' are set to FALSE.}
-  \item{plot.preds}{logical value indicating whether the proportions of analysed model predictions should be plotted as proportionally sized circles for each threshold. Can also be provided as a character value specifying if the circles should be plotted only on the "curve" or at the "bottom" of the plot. The default is FALSE.}
+  \item{plot.preds}{logical value indicating whether the proportions of analysed model predictions should be plotted as proportionally sized circles for each threshold. Can also be provided as a character vector specifying if the circles should be plotted only on the "curve" or at the "bottom" of the plot. The default is FALSE.}
   \item{grid}{logical, whether or not to add a grid to the plot, marking the analysed thresholds. Defaults to FALSE.}
   \item{xlab}{label for the x axis. By default, a label is automatically generated according to the specified 'curve'.}
   \item{ylab}{label for the y axis. By default, a label is automatically generated according to the specified 'curve'.}

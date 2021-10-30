@@ -1,4 +1,20 @@
 ==========================================
+modEvA v2.4 (committed 2021-10-31)
+==========================================
+
+## Modified functions:
+
+* AUC
+- fixed wrong PR area when last precision value(s) NaN (following bug report by Ying-Ju Tessa Chen)
+- deactivated option method = "integrate", which was providing somewhat inaccurate values
+- added / improved warning messages when 'method' changed to match chosen 'curve'
+- added warning when method = "trapezoid" and interval >= 0.01, noting result is more accurate with smaller intervals
+
+* threshMeasures
+- added 'ylim' argument with default c(0, 1) to avoid error when no selected measure has finite values 
+
+
+==========================================
 modEvA v2.3 (committed 2021-09-30)
 ==========================================
 

@@ -1,9 +1,9 @@
-AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01, FPR.limits = c(0, 1), curve = "ROC",  method = "rank", plot = TRUE, diag = TRUE, diag.col = "grey", diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, xlab = "auto", ylab = "auto", ...) {
-  # version 2.2 (17 Jan 2020)
+AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01, FPR.limits = c(0, 1), curve = "ROC", method = "rank", plot = TRUE, diag = TRUE, diag.col = "grey", diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, xlab = "auto", ylab = "auto", ...) {
+  # version 2.3 (30 Oct 2021)
   
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
   
-  if (length(obs) != length(pred))  stop ("'obs' and 'pred' must be of the same length (and in the same order).")
+  if (model == NULL && length(obs) != length(pred))  stop ("'obs' and 'pred' must be of the same length (and in the same order).")
   
   if (!is.null(model)) {
     if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
@@ -12,6 +12,8 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     obs <- model$y
     pred <- model$fitted.values
   }  # end if model
+  
+  if (any(pred < 0) || any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval within which thresholds are calculated.")
   
   dat <- data.frame(obs, pred)
   n.in <- nrow(dat)
@@ -31,13 +33,18 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     method %in% c("rank", "trapezoid", "integrate")
   )
   
+  if (method == "integrate") {
+    warning("'integrate' method no longer supported; using default 'rank' method for ROC or 'trapezoid' for PR curve.")
+    method <- ifelse(curve == "ROC", "rank", "trapezoid")
+  }
+  
+  if (method == "rank" && curve != "ROC") {
+    warning("'rank' method not applicable to the specified 'curve'; using 'trapezoid' method instead.")
+    method <- "trapezoid"
+  }
+  
   n1 <- sum(obs == 1)
   n0 <- sum(obs == 0)
-  
-  if (curve != "ROC" && method == "rank") {
-    method <- "trapezoid"
-    #message("'rank' method not applicable to the specified 'curve'; using 'trapezoid' instead.")
-  }
   
   if (method == "rank") {
     # next 3 lines from Wintle et al 2005 supp mat "roc" function
@@ -47,8 +54,6 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     if (simplif && !plot) return(AUC)
   }
 
-  if (any(pred < 0) | any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval within which thresholds are calculated.")
-  
   N <- length(obs)
   preval <- prevalence(obs)
   thresholds <- seq(0, 1, by = interval)
@@ -83,21 +88,30 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   }
   
   if (method == "trapezoid") {
-    xy <- na.omit(data.frame(xx, yy))
-    #if (length(xx) != nrow(xy)) warning("Some non-finite values omitted from area calculation.")
+    if (interval >= 0.01) warning ("Results will be more accurate if 'interval' is decreased to e.g. 0.001 or 0.0001 -- see 'interval' and 'method' arguments in the function help file.")
+    xy <- data.frame(xx, yy)
+    #xy <- na.omit(data.frame(xx, yy))
+    #if (length(xx) != nrow(xy))  warning(paste(abs(length(xx) - nrow(xy)), "non-finite value(s) omitted from area calculation."))
     xx <- xy$xx
     yy <- xy$yy
     # next line adapted from https://stackoverflow.com/a/22418496:
     AUC <- sum(diff(xx) * (yy[-1] + yy[-length(yy)]) / 2)
     AUC <- -AUC  # euze
-  }
+    
+    if (curve == "PR" && any(is.nan(yy))) {  # added Oct 30 2021 following bug report by Ying-Ju Tessa Chen, which caused wrong area calculation when curve extreme was NaN
+      yy_noNaN <- yy
+      yy_noNaN[is.nan(yy)] <- 1
+      AUC <- sum(diff(xx) * (yy_noNaN[-1] + yy_noNaN[-length(yy_noNaN)]) / 2)
+      AUC <- -AUC  # euze
+    }  # end if NaN precision
+  }  # end if trapezoid
   
-    if (method == "integrate") {
-    xx.interp <- stats::approx(x = thresholds, y = xx, n = length(thresholds))
-    yy.interp <- stats::approx(x = thresholds, y = yy, n = length(thresholds))
-    f <- approxfun(x = xx.interp$y, y = yy.interp$y)
-    AUC <- integrate(f, lower = min(thresholds), upper = max(thresholds))$value
-    }
+    # if (method == "integrate") {  # deactivated for producing less accurate values (compared to 'rank' method for 'ROC' curve)
+    # xx.interp <- stats::approx(x = thresholds, y = xx, n = length(thresholds))
+    # yy.interp <- stats::approx(x = thresholds, y = yy, n = length(thresholds))
+    # f <- approxfun(x = xx.interp$y, y = yy.interp$y)
+    # AUC <- integrate(f, lower = min(thresholds), upper = max(thresholds))$value
+    # }
   
   if (plot) {
     if (curve == "ROC") {
