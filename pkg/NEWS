@@ -1,17 +1,45 @@
+PLANNED IMPROVEMENTS:
+
+* threshMeasures
+- kappa computed with 'try' to prevent error "cannot allocate vector of size ..."
+
+
 ==========================================
-modEvA v2.4 (committed 2021-10-31)
+modEvA v2.5 (committed 2021-10-31)
 ==========================================
 
 ## Modified functions:
 
 * AUC
-- fixed wrong PR area when last precision value(s) NaN (following bug report by Ying-Ju Tessa Chen)
+- plot.preds=TRUE now plots filled circles with transparency
+- plot.preds=TRUE now defaults to plotting circles on the curve (rather than both curve and bottom)
+- size of circles if plot.preds=TRUE changed from 100*prop.preds to 20*sqrt(prop.preds)
+- x coordinates of circles if plot.preds=TRUE changed from 'thresholds' to 'xx'
+- if plot.values=TRUE, value is now plotted on the middle bottom for ROC and middle top for PR curve
+- NaN precision values now coerced to the last non-NaN value (rather than 1), and warning emitted
+- interpolated (NaN precision) part of the PR curve now plotted besides the curve with actual precision values
+
+
+==========================================
+modEvA v2.4 (committed 2021-10-30)
+==========================================
+
+## Modified functions:
+
+* AUC
+- fixed wrong PR area when last precision value(s) NaN, by coercing NaN precisions to 1 (thanks to bug report by Ying-Ju Tessa Chen)
 - deactivated option method = "integrate", which was providing somewhat inaccurate values
 - added / improved warning messages when 'method' changed to match chosen 'curve'
 - added warning when method = "trapezoid" and interval >= 0.01, noting result is more accurate with smaller intervals
 
 * threshMeasures
 - added 'ylim' argument with default c(0, 1) to avoid error when no selected measure has finite values 
+
+
+## Other modified files:
+
+* inst/CITATION
+- corrected publication year of 'New measures' paper under 'textVersion' of citation (thanks to bug report by Alba Estrada)
 
 
 ==========================================

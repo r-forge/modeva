@@ -4,7 +4,7 @@
 Area Under the Curve
 }
 \description{
-This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, or alternatively the precision-recall (PR) plot, for either a model object of class \code{"glm"}, or two matching vectors of observed (binary, 1 for occurrence vs. 0 for non-occurrence) and predicted (continuous, e.g. occurrence probability) values, respectively.
+This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, or alternatively the precision-recall (PR) plot, for either a model object of class \code{"glm"}, or two matching vectors of observed binary (1 for occurrence vs. 0 for non-occurrence) and predicted (continuous, e.g. occurrence probability) values, respectively.
 }
 \usage{
 AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, 
@@ -12,7 +12,7 @@ interval = 0.01, FPR.limits = c(0, 1), curve = "ROC",
 method = "rank", plot = TRUE, diag = TRUE, diag.col = "grey", 
 diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2,
 plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, 
-grid = FALSE, xlab = "auto", ylab = "auto", ...)
+grid = FALSE, xlab = "auto", ylab = "auto", ticks = FALSE, ...)
 }
 \arguments{
   \item{model}{a model object of class "glm". Alternatively, you can use the 'obs' and 'pred' arguments instead of 'model'.}
@@ -32,10 +32,11 @@ grid = FALSE, xlab = "auto", ylab = "auto", ...)
   \item{curve.lwd}{line width for the curve.}
   \item{plot.values}{logical, whether or not to show in the plot the values associated to the curve (e.g., the AUC). Defaults to TRUE.}
   \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed. Defaults to 3. This argument is ignored if 'plot' or 'plot.values' are set to FALSE.}
-  \item{plot.preds}{logical value indicating whether the proportions of analysed model predictions should be plotted as proportionally sized circles for each threshold. Can also be provided as a character vector specifying if the circles should be plotted only on the "curve" or at the "bottom" of the plot. The default is FALSE.}
+  \item{plot.preds}{logical value indicating whether the proportions of 'pred' values for each threshold should be plotted as proportionally sized blue circles. Can also be provided as a character vector specifying if the circles should be plotted on the "curve" (the default) and/or at the "bottom" of the plot. The default is FALSE for no circles, but it may be interesting to try it, especially if your curve has long straight lines or does not cover the full length of the plot.}
   \item{grid}{logical, whether or not to add a grid to the plot, marking the analysed thresholds. Defaults to FALSE.}
   \item{xlab}{label for the x axis. By default, a label is automatically generated according to the specified 'curve'.}
   \item{ylab}{label for the y axis. By default, a label is automatically generated according to the specified 'curve'.}
+  \item{ticks}{logical, whether or not to add blue tick marks at the bottom of the plot to mark the thresholds at which there were values from which to to draw the curve. Defaults to FALSE.}
   \item{\dots}{further arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{
@@ -79,8 +80,11 @@ AUC(model = mod, curve = "PR")
 
 AUC(model = mod, interval = 0.1, grid = TRUE)
 
-AUC(model = mod, plot.preds = "curve")
+AUC(model = mod, plot.preds = TRUE)
 
+AUC(model = mod, ticks = TRUE)
+
+AUC(model = mod, plot.preds = c("curve", "bottom"))
 
 # you can also use AUC with vectors of observed and predicted values
 # instead of with a model object:
@@ -89,4 +93,6 @@ presabs <- mod$y
 prediction <- mod$fitted.values
 
 AUC(obs = presabs, pred = prediction)
+
+AUC(obs = presabs, pred = prediction, plot.preds = TRUE)
 }

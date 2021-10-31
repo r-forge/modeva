@@ -1,5 +1,5 @@
-AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01, FPR.limits = c(0, 1), curve = "ROC", method = "rank", plot = TRUE, diag = TRUE, diag.col = "grey", diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, xlab = "auto", ylab = "auto", ...) {
-  # version 2.3 (30 Oct 2021)
+AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01, FPR.limits = c(0, 1), curve = "ROC", method = "rank", plot = TRUE, diag = TRUE, diag.col = "grey", diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, xlab = "auto", ylab = "auto", ticks = FALSE, ...) {
+  # version 2.4 (31 Oct 2021)
   
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
   
@@ -88,9 +88,12 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   }
   
   if (method == "trapezoid") {
-    if (interval >= 0.01) warning ("Results will be more accurate if 'interval' is decreased to e.g. 0.001 or 0.0001 -- see 'interval' and 'method' arguments in the function help file.")
+    
+    if (curve == "ROC") warning ("AUC value will be more accurate if method = 'rank', or if 'interval' is decreased -- see 'interval' and 'method' arguments in the function help file.")
+    else if (interval >= 0.01) warning ("AUC value will be more accurate if 'interval' is decreased -- see 'interval' and 'method' arguments in the function help file.")
+
     xy <- data.frame(xx, yy)
-    #xy <- na.omit(data.frame(xx, yy))
+    #xy <- na.omit(data.frame(xx, yy))  # this caused inaccurate AUC-PR values, as per bug report by Tessa Chen
     #if (length(xx) != nrow(xy))  warning(paste(abs(length(xx) - nrow(xy)), "non-finite value(s) omitted from area calculation."))
     xx <- xy$xx
     yy <- xy$yy
@@ -99,8 +102,11 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     AUC <- -AUC  # euze
     
     if (curve == "PR" && any(is.nan(yy))) {  # added Oct 30 2021 following bug report by Ying-Ju Tessa Chen, which caused wrong area calculation when curve extreme was NaN
+      warning(paste(sum(is.nan(yy)), "point(s) with NaN precision value (see 'precision' column in the $thresholds section of your returned results if simplif=FALSE); coercing to last non-NaN value to interpolate curve for AUC calculation"))
+      last_thresh_with_value <- max(which(!is.nan(yy)))
       yy_noNaN <- yy
-      yy_noNaN[is.nan(yy)] <- 1
+      yy_noNaN[is.nan(yy)] <- yy_noNaN[last_thresh_with_value]
+      # next line adapted from https://stackoverflow.com/a/22418496:
       AUC <- sum(diff(xx) * (yy_noNaN[-1] + yy_noNaN[-length(yy_noNaN)]) / 2)
       AUC <- -AUC  # euze
     }  # end if NaN precision
@@ -129,20 +135,22 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     
     if (grid) abline(h = thresholds, v = thresholds, col = "lightgrey")
     
+    if (curve == "PR" && any(is.nan(yy))) lines(x = xx, y = yy_noNaN, col = "coral", lty = 3, lwd = min(1, curve.lwd))  # plots the interpolated (noNaN) curve underneath the curve with actual precision values
     lines(x = xx, y = yy, col = curve.col, lty = curve.lty, lwd = curve.lwd)
     
-    if (plot.preds == TRUE) plot.preds <- c("curve", "bottom")  # for back-compatibility
+    # if (plot.preds == TRUE) plot.preds <- c("curve", "bottom")  # for back-compatibility
     if ("bottom" %in% plot.preds) {
-      points(x = thresholds, y = rep(0, Nthresh), cex = 100 * prop.preds, col = "darkgrey")  # 20 * sqrt(prop.preds)
+      points(x = xx, y = rep(0, Nthresh), cex = 20 * sqrt(prop.preds), pch = 21, col = "darkgrey", bg = rgb(red = 0, green = 0, blue = 1, alpha = 0.2))  # cex = 100 * prop.preds
     }
-    if ("curve" %in% plot.preds) {
-      points(x = xx, y = yy, cex = 100 * prop.preds, col = "darkgrey")
+    if ("curve" %in% plot.preds || plot.preds == TRUE) {
+      points(x = xx, y = yy, cex = 20 * sqrt(prop.preds), pch = 21, col = "darkgrey", bg = rgb(red = 0, green = 0, blue = 1, alpha = 0.2))  # cex = 100 * prop.preds
     }
+    if (ticks == TRUE) axis(1, at = xx, labels = NA, tick = TRUE, tck = 0.03, col = NA, col.ticks = "blue")
     
     if (plot.values) {
-      if (curve == "ROC") text(1, 0.4, adj = 1, substitute(paste(AUC == a), list(a = round(AUC, plot.digits))))
+      if (curve == "ROC") text(0.5, 0.1, substitute(paste(AUC == a), list(a = round(AUC, plot.digits))))
       #if (curve == "PR") text(1, 1, adj = 1, substitute(paste(expression('AUC'['PR']) == a), list(a = round(AUC, plot.digits))))
-      if (curve == "PR") text(1, 1, adj = 1, substitute(paste('AUC'['PR'] == a), list(a = round(AUC, plot.digits))))
+      if (curve == "PR") text(0.5, 0.9, substitute(paste('AUC'['PR'] == a), list(a = round(AUC, plot.digits))))
     }  # end if plot.values
     
   }  # end if plot
