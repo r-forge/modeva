@@ -8,7 +8,7 @@ This function plots predicted values separated into observed presences and absen
 }
 \usage{
 predPlot(model = NULL, obs = NULL, pred = NULL, thresh = "preval", 
-main = "Classified predicted values", legend.pos = "bottomright")
+main = "Classified predicted values", legend.pos = "n", pch = 1, col = c("black", "grey"))
 }
 \arguments{
   \item{model}{a model object of class "glm" and family "binomial".}
@@ -16,8 +16,9 @@ main = "Classified predicted values", legend.pos = "bottomright")
   \item{pred}{(instead of a 'model' object) numeric vector of the values predicted by a model of the 'obs'erved data. This argument is ignored if 'model' is provided. Must be of the same length and in the same order as 'obs'.}
   \item{thresh}{threshold value to separate predicted presences from predicted absences in 'pred'; can be "preval" (the default), to use the \code{\link{prevalence}} (i.e. proportion of presences) in 'obs', or any real number between 0 and 1. This value will be used to draw a vertical line on the plot and to colour the points (predicted values) according to whether they fall below or above the threshold. See Details in help(threshMeasures) for an informed choice.}
   \item{main}{Main title for the plot.}
-  \item{legend.pos}{character value specifying the position for the legend on the plot. Can be "bottomright" (the default), "bottom", "bottomleft", "left", "topleft", "top", "topright", "right" and "center", or NA or "n" for no legend. Partial argument matching is used.
-  }
+  \item{legend.pos}{character value specifying the position for the legend on the plot. Can be "bottomleft", "bottom", "bottomright", "topleft", "left", "top", "topright", "right", "center", or NA or "n" for no legend (the default). Partial argument matching is used.}
+  \item{pch}{plotting character for the presences and absences (see \code{\link{points}}).}
+  \item{col}{vector of length 2 indicating the colours with which to plot predicted presences and absences (points above and below the threshold), respectively.}
 }
 \note{
 Points are \code{\link{jitter}}ed randomly along the y axis to minimize visual overlap. So, each run of 'predPlot' (unless you use \code{\link{set.seed}} first) will produce a different arrangement of points for the same data, although their x-axis values are faithful.

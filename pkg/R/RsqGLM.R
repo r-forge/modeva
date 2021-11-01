@@ -1,5 +1,5 @@
-RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs") {
-  # version 1.6 (18 Oct 2019)
+RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs", plot = TRUE, ...) {
+  # version 1.7 (1 Nov 2021)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -65,6 +65,10 @@ RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.comple
   }
   
   sqPearson <- cor(obs, pred, use = use) ^ 2
+  
+  if (plot) {
+    barplot(as.matrix(data.frame(CoxSnell = CoxSnell, Nagelkerke = Nagelkerke, McFadden = McFadden, Tjur = Tjur, sqPearson = sqPearson)), ...)
+  }
 
   return(list(CoxSnell = CoxSnell, Nagelkerke = Nagelkerke, McFadden = McFadden, Tjur = Tjur, sqPearson = sqPearson))
 }

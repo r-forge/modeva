@@ -40,7 +40,7 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
 
   if (plot.values) {
     Dsq <- round(Dsquared(model = model, adjust = FALSE), plot.digits)
-    Rsq <- RsqGLM(model = model)
+    Rsq <- RsqGLM(model = model, plot = FALSE)
     CoxSnell <- round(Rsq$CoxSnell, plot.digits)
     McFadden <- round(Rsq$McFadden, plot.digits)
     Nagelkerke <- round(Rsq$Nagelkerke, plot.digits)

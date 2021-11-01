@@ -5,6 +5,36 @@ PLANNED IMPROVEMENTS:
 
 
 ==========================================
+modEvA v2.6 (committed 2021-11-01)
+==========================================
+
+## Modified functions:
+
+* predDensity
+- added 'main' argument for plot title
+
+* predPlot
+- added 'pch' and 'col' arguments for the plot
+- legend.pos is now "n" by default (legend was ugly and needed box to distinguish from actual plot points)
+
+* RsqGLM
+- added "plot" argument (default TRUE)
+- added '...' for additional parameters for 'plot'
+
+* plotGLM
+- added 'plot=FALSE' to 'RsqGLM' (run if 'plot.values')
+
+* optiThresh
+- slightly changed plot margins so that bottom axis values are visible
+
+
+## Other modified files:
+
+* www/modEvA-tutorial.html
+- updated with these recent options
+
+
+==========================================
 modEvA v2.5 (committed 2021-10-31)
 ==========================================
 

@@ -191,9 +191,9 @@ function(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
       on.exit(par(opar))
       n.input.measures <- length(input.measures)
       if (sep.plots) {
-        par(mfrow = c(1,1))
+        par(mfrow = c(1, 1))
       } else {
-        if (n.input.measures > 4)  par(mar = c(1, 4.5, 1, 1))
+        if (n.input.measures > 4)  par(mar = c(2, 4.5, 0.5, 0.5))
         par(mfrow = arrangePlots(n.input.measures))
       }  # end if sep.plots else
       for (m in 1 : n.input.measures) {

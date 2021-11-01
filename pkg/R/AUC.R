@@ -150,7 +150,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     if (plot.values) {
       if (curve == "ROC") text(0.5, 0.1, substitute(paste(AUC == a), list(a = round(AUC, plot.digits))))
       #if (curve == "PR") text(1, 1, adj = 1, substitute(paste(expression('AUC'['PR']) == a), list(a = round(AUC, plot.digits))))
-      if (curve == "PR") text(0.5, 0.9, substitute(paste('AUC'['PR'] == a), list(a = round(AUC, plot.digits))))
+      if (curve == "PR") text(0.5, 0.1, substitute(paste('AUC'['PR'] == a), list(a = round(AUC, plot.digits))))
     }  # end if plot.values
     
   }  # end if plot

@@ -1,5 +1,5 @@
-predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, type = c("both"), legend.pos = "topright") {
-  # version 1.1 (15 Jan 2021)
+predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, type = c("both"), legend.pos = "topright", main = "Density of predicted values") {
+  # version 1.2 (1 Nov 2021)
   
   if (!is.null(model)) {
     if (!("glm" %in% class(model)) || family(model)$family != "binomial") stop("'model' must be of class 'glm' and family 'binomial'.")
@@ -44,7 +44,7 @@ predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
       rslt[["density_obs1"]] <- dens1
       rslt[["density_obs0"]] <- dens0
     }
-    plot(x = xrange, y = yrange, xlab = "Predicted value", ylab = "Density", type = "n")
+    plot(x = xrange, y = yrange, xlab = "Predicted value", ylab = "Density", type = "n", main = main)
   }
   
   if (type %in% c("histogram", "both")) {  # "histogram" %in% type
@@ -53,7 +53,7 @@ predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
     hist1 <- hist(pred1, plot = FALSE)
     if (type == "histogram") {  # !("density" %in% type)
       yrange <- range(hist0$density, hist1$density, finite = TRUE)
-      plot(x = c(0, 1), y = yrange, type = "n", xlab = "Predicted value", ylab = "Density")
+      plot(x = c(0, 1), y = yrange, type = "n", xlab = "Predicted value", ylab = "Density", main = main)
     }
     if (!separate) {
       histogram <- hist(c(pred0, pred1), freq = FALSE, col = "grey20", add = TRUE)

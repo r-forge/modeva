@@ -1,5 +1,5 @@
-predPlot <- function(model = NULL, obs = NULL, pred = NULL, thresh = "preval", main = "Classified predicted values", legend.pos = "bottomright") {
-  # version 1.0 (14 Jan 2021)
+predPlot <- function(model = NULL, obs = NULL, pred = NULL, thresh = "preval", main = "Classified predicted values", legend.pos = "n", pch = 1, col = c("black", "grey")) {
+  # version 1.1 (1 Nov 2021)
   
   if (!is.null(model)) {
     if (!("glm" %in% class(model)) || family(model)$family != "binomial") stop("'model' must be of class 'glm' and family 'binomial'.")
@@ -26,8 +26,8 @@ predPlot <- function(model = NULL, obs = NULL, pred = NULL, thresh = "preval", m
   plot(x = c(0, 1), y = c(-0.5, 1.5), xlab = "Predicted value", type = "n", ylab = "", yaxt = "n", main = main)
   axis(side = 2, at = c(0, 1), tick = FALSE, labels = c("Observed\nabsences", "Observed\npresences"), las = 1)
   abline(v = thresh, lty = 2)
-  points(x = pred0, y = sapply(rep(0, length(pred0)), jitter, 10), col = ifelse(pred0 < thresh, "grey", "black"))
-  points(x = pred1, y = sapply(rep(1, length(pred1)), jitter, 10), col = ifelse(pred1 < thresh, "grey", "black"))
+  points(x = pred0, y = sapply(rep(0, length(pred0)), jitter, 10), pch = pch, col = ifelse(pred0 < thresh, col[2], col[1]))
+  points(x = pred1, y = sapply(rep(1, length(pred1)), jitter, 10), pch = pch, col = ifelse(pred1 < thresh, col[2], col[1]))
   
-  if (!is.na(legend.pos) && legend.pos != "n")  legend(legend.pos, legend = c("Predicted presence", "Predicted absence"), pch = 1, col = c("black", "grey"))
+  if (!is.na(legend.pos) && legend.pos != "n")  legend(legend.pos, legend = c("Predicted presence", "Predicted absence"), pch = pch, col = col)
 }

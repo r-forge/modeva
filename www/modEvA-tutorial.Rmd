@@ -1,7 +1,7 @@
 ---
 title: 'Model evaluation and analysis: the *modEvA* R package in a nutshell'
 author: "A. Marcia Barbosa (https://modtools.wordpress.com)"
-date: "updated 28 Feb 2020"
+date: "updated 1 Nov 2021"
 output: html_document
 ---
 
@@ -12,10 +12,10 @@ output: html_document
 
 The ***modEvA*** package works within the free and open-source R statistical software, so you first need to **download, install and open R** (available at <http://www.r-project.org>). In this tutorial, in `monospaced` font are the commands that you need to type (or copy and paste) into the R console (and then press the *enter* key to execute them). For commands that generate visible results in R, these are usually shown below them, preceded by hash marks (##). Note that all **commands are case-sensitive**, so you must respect upper- and lower-case letters; that you must always use **straight** (`'`, `"`) **rather than curly quotes and apostrophes**; and that **R is only ready to receive a new command when there's a prompt sign (>) at the end of the R console**; if not, it's still waiting for an operation to be finished or for you to complete a previous command -- watch out for unclosed parentheses and such.
 
-**Install *modEvA*** by pasting the command below in the R console (when connected to the internet):
+**Install the latest version of *modEvA*** by pasting the command below in the R console (when connected to the internet):
 
 ```{r, eval=FALSE}
-install.packages("modEvA")
+install.packages("modEvA", repos="http://R-Forge.R-project.org")
 ```
 
 You only need to install the package once (unless a new version becomes available), but you need to **load it every time you open a new R session** in which you intend to use *modEvA* (no need for an internet connection anymore), by pasting the following command in R:
@@ -107,13 +107,7 @@ Let's now assess the **proportion of variation that the model accounts for**. Fo
 ```{r, warning=FALSE, message=FALSE, fig.width=3.5, fig.height=3.5}
 Dsquared(model = mod)
 Dsquared(model = mod, adjust = TRUE)
-RsqGLM(model = mod)
-```
-
-You can **visualise these R-squared measures** with the *barplot* R function:
-
-```{r, fig.width=3.5, fig.height=3.5}
-barplot(unlist(RsqGLM(model = mod)), ylim = c(0, 1), las = 2, main = "R-squared values")
+RsqGLM(model = mod, ylim = c(0, 0.5), las = 2, main = "R-squared values")
 ```
 
 We can also take a look at some model calibration measures, such as **Miller's calibration statistics** and the **Hosmer-Lemeshow goodness-of-fit**. Note, however, that the former is not useful for evaluating a model on the same data used for building it (the results will always look good); and that the latter can depend strongly on the *bin.method* used for grouping the values. See `help(MillerCalib)` and `help(HLfit)` to find out how these measures are calculated and how their results can be interpreted.
@@ -153,6 +147,7 @@ Some other potentially useful *modEvA* functions are (still) not covered in this
 
 ```{r, eval=FALSE}
 help(predDensity)
+help(predPlot)
 help(evenness)
 help(prevalence)
 help(OA)

@@ -8,7 +8,7 @@ This function produces a histogram and/or a kernel density plot of predicted val
 }
 \usage{
 predDensity(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
-type = c("both"), legend.pos = "topright")
+type = c("both"), legend.pos = "topright", main = "Density of predicted values")
 }
 \arguments{
   \item{model}{a model object of class "glm" and family "binomial".}
@@ -17,6 +17,8 @@ type = c("both"), legend.pos = "topright")
   \item{separate}{logical value indicating whether prediction densities should be computed separately for observed presences (ones) and absences (zeros). Defaults to TRUE, but is changed to FALSE if either 'model' or 'obs' not provided.}
   \item{type}{character vector specifying whether to produce a "histogram", a "density" plot, or "both" (the default). Partial argument matching is used.}
   \item{legend.pos}{character specifying the position for the legend; NA or "n" for no legend. Position can be "topright" (the default), "topleft, "bottomright"", "bottomleft", "top", "bottom", "left", "right", or "center". Partial argument matching is used.}
+    \item{main}{main title for the plot.}
+
 }
 \details{
 For more details, please refer to the documentation of the functions mentioned under "See Also".
