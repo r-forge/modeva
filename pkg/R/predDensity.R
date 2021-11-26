@@ -1,17 +1,20 @@
 predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, type = c("both"), legend.pos = "topright", main = "Density of predicted values") {
-  # version 1.2 (1 Nov 2021)
+  # version 1.3 (26 Nov 2021)
   
   if (!is.null(model)) {
-    if (!("glm" %in% class(model)) || family(model)$family != "binomial") stop("'model' must be of class 'glm' and family 'binomial'.")
+    #if (!("glm" %in% class(model)) || family(model)$family != "binomial") stop("'model' must be of class 'glm' and family 'binomial'.")
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
-    obs <- model$y
-    pred <- model$fitted.values
+    # obs <- model$y
+    # pred <- model$fitted.values
+    obspred <- mod2obspred(model)
+    obs <- obspred[ , "obs"]
+    pred <- obspred[ , "pred"]
   }
   
   if (is.null(obs)) {
     if (is.null(pred)) stop ("You must provide either 'model' or 'pred'.")
-    #if (separate) message("'obs' not provided, so 'separate' automatically set to FALSE.")
+    # if (separate) message("'obs' not provided, so 'separate' automatically set to FALSE.")
     separate <- FALSE
     obs <- sample(c(0, 1), length(pred), replace = TRUE)  # dummy variable
   } else {

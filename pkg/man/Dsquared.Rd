@@ -22,7 +22,7 @@ adjust = FALSE, npar = NULL)
 Linear models come with an R-squared value that measures the proportion of variation that the model accounts for. The R-squared is provided with \code{summary(model)} in R. For generalized linear models (GLMs), the equivalent is the amount of deviance accounted for (D-squared; Guisan & Zimmermann 2000), but this value is not normally provided with the model summary. The \code{Dsquared} function calculates it. There is also an option to calculate the adjusted D-squared, which takes into account the number of observations and the number of predictors, thus allowing direct comparison among different models (Weisberg 1980, Guisan & Zimmermann 2000).
 }
 \value{
-This functin returns a numeric value indicating the (adjusted) proportion of deviance accounted for by the model.
+This function returns a numeric value indicating the (adjusted) proportion of deviance accounted for by the model.
 }
 \references{
 Guisan, A. & Zimmermann, N.E. (2000) Predictive habitat distribution models in ecology. Ecological Modelling 135: 147-186

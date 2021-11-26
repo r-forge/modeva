@@ -4,7 +4,7 @@
 Area Under the Curve
 }
 \description{
-This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, or alternatively the precision-recall (PR) plot, for either a model object of class \code{"glm"}, or two matching vectors of observed binary (1 for occurrence vs. 0 for non-occurrence) and predicted (continuous, e.g. occurrence probability) values, respectively.
+This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, or alternatively the precision-recall (PR) plot, for either a model object or two matching vectors of observed binary (1 for occurrence vs. 0 for non-occurrence) and predicted (continuous, e.g. occurrence probability) values, respectively.
 }
 \usage{
 AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, 
@@ -15,7 +15,7 @@ plot.values = TRUE, plot.digits = 3, plot.preds = FALSE,
 grid = FALSE, xlab = "auto", ylab = "auto", ticks = FALSE, ...)
 }
 \arguments{
-  \item{model}{a model object of class "glm". Alternatively, you can use the 'obs' and 'pred' arguments instead of 'model'.}
+  \item{model}{a model object of class "glm", "gam", "gbm", "randomForest" or "bart". Alternatively, you can use the 'obs' and 'pred' arguments instead of 'model'.}
   \item{obs}{alternatively to 'model', a vector of observed presences (1) and absences (0) or another binary response variable. This argument is ignored if 'model' is provided.}
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. This argument is ignored if 'model' is provided.}
   \item{simplif}{logical, whether to use a faster version that returns only the AUC value (and the plot if 'plot = TRUE').}
@@ -42,7 +42,7 @@ grid = FALSE, xlab = "auto", ylab = "auto", ticks = FALSE, ...)
 \details{
 In the case of the "ROC" curve (the default), the AUC is a measure of the overall discrimination power of the predictions, or the probability that an occurrence site has a higher predicted value than a non-occurrence site. It can thus be calculated with the Wilcoxon rank sum statistic. Mind that the AUC has been widely criticized (e.g. Lobo et al. 2008, Jimenez-Valverde et al. 2013), but is still among the most widely used metrics in model evaluation. It is highly correlated with species prevalence, so prevalence is also output by the AUC function (if \code{simplif = FALSE}, the default) for reference. The AUC function provides an option to compute, instead of the ROC curve, the precision-recall ("PR") curve, which is more robust to imbalanced data, e.g. species rarity (Sofaer et al. 2019).
 
-Although there are functions to calculate the AUC in other R packages (e.g. \pkg{ROCR}, \pkg{PresenceAbsence}, \pkg{verification}, \pkg{Epi}, \pkg{PRROC}, \pkg{PerfMeas}, \pkg{precrec}), the \code{AUC} function is more compatible with the remaining functions in \pkg{modEvA} and can be applied not only to a set of observed versus predicted values, but also directly to a model object of class \code{"glm"}.
+Although there are functions to calculate the AUC in other R packages (e.g. \pkg{ROCR}, \pkg{PresenceAbsence}, \pkg{verification}, \pkg{Epi}, \pkg{PRROC}, \pkg{PerfMeas}, \pkg{precrec}), the \code{AUC} function is more compatible with the remaining functions in \pkg{modEvA} and can be applied not only to a set of observed versus predicted values, but also directly to a model object of class "glm", "gam", "gbm", "randomForest" or "bart".
 }
 \value{
 If \code{simplif = TRUE}, the function returns only the AUC value (a numeric value between 0 and 1). Otherwise (the default), it returns a \code{list} with the following components:

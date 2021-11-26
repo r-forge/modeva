@@ -1,7 +1,42 @@
 PLANNED IMPROVEMENTS:
 
 * threshMeasures
-- kappa computed with 'try' to prevent error "cannot allocate vector of size ..."
+- kappa computed with 'try' to prevent error "cannot allocate vector of size ..." (or Note added to .Rd)
+- add similarity indices
+
+* Dsquared, multModEv
+- implement for model classes other than GLM?
+
+* plotGLM
+- convert to 'plotModel' and implement for other model classes?
+
+* RsqGLM
+- convert to 'pseudoRsq' and implement for other model classes?
+
+* multGLM
+- handle missing values or add Note to .Rd?
+
+
+==========================================
+modEvA v2.7 (committed 2021-11-26)
+==========================================
+
+## New functions:
+
+* confusionLabel (to map the confusion matrix)
+
+* mod2obspred (to extract 'obs' and 'pred' from model objects)
+
+
+## Modified functions:
+
+* prevalence
+- message "'event' is not among of the values of 'obs'" changed from error to warning
+- 'mod2obspred' now used for extracting 'obs' if 'model' is provided
+
+* AUC, getBins, HLfit, MillerCalib, optiPair, optiThresh, predDensity, predPlot, threshMeasures
+- 'model' can now be of class "glm", "gam", "gbm", "randomForest" or "bart"
+- 'mod2obspred' now used for extracting 'obs' and 'pred' if 'model' is provided
 
 
 ==========================================
@@ -22,7 +57,7 @@ modEvA v2.6 (committed 2021-11-01)
 - added '...' for additional parameters for 'plot'
 
 * plotGLM
-- added 'plot=FALSE' to 'RsqGLM' (run if 'plot.values')
+- added 'plot=FALSE' to 'RsqGLM' (used if 'plot.values')
 
 * optiThresh
 - slightly changed plot margins so that bottom axis values are visible

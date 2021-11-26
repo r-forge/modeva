@@ -1,16 +1,19 @@
 AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01, FPR.limits = c(0, 1), curve = "ROC", method = "rank", plot = TRUE, diag = TRUE, diag.col = "grey", diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, xlab = "auto", ylab = "auto", ticks = FALSE, ...) {
-  # version 2.4 (31 Oct 2021)
+  # version 2.5 (26 Nov 2021)
   
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
   
   if (model == NULL && length(obs) != length(pred))  stop ("'obs' and 'pred' must be of the same length (and in the same order).")
   
   if (!is.null(model)) {
-    if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
+    #if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
-    obs <- model$y
-    pred <- model$fitted.values
+    # obs <- model$y
+    # pred <- model$fitted.values
+    obspred <- mod2obspred(model)
+    obs <- obspred[ , "obs"]
+    pred <- obspred[ , "pred"]
   }  # end if model
   
   if (any(pred < 0) || any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval within which thresholds are calculated.")

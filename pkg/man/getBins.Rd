@@ -13,7 +13,7 @@ min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE,
 verbosity = 2)
 }
 \arguments{
-  \item{model}{a model object of class \code{"glm"}.
+  \item{model}{a model object of class "glm", "gam", "gbm", "randomForest" or "bart".
 }
   \item{obs}{
 a vector of 1-0 values of a modelled binary variable. This argument is ignored if \code{model} is provided.

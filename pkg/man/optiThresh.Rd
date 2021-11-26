@@ -12,7 +12,7 @@ optimize = modEvAmethods("optiThresh"), simplif = FALSE,
 plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...)
 }
 \arguments{
-  \item{model}{a model object of class "glm".}
+  \item{model}{a model object of class "glm", "gam", "gbm", "randomForest" or "bart".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. This argument is ignored if 'model' is provided.}
   \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. This argument is ignored if 'model' is provided.}
   \item{interval}{numeric value between 0 and 1 indicating the interval between the thresholds at which to calculate the evaluation measures. Defaults to 0.01.}

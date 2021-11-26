@@ -3,6 +3,6 @@ importFrom("graphics", "abline", "axis", "barplot", "hist", "legend", "lines", "
            "plot", "points", "polygon", "rect", "text")
 importFrom("grDevices", "rgb")
 importFrom("stats", "approx", "approxfun", "binomial", "complete.cases", "cor", "density", "family", "glm", "integrate", "logLik", "median", "na.omit", "pchisq", "qf",
-           "quantile", "resid", "xtabs")
+           "quantile", "resid", "xtabs", "fitted", "predict")
 importFrom("methods", "is")
 

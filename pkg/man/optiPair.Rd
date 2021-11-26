@@ -12,7 +12,7 @@ measures = c("Sensitivity", "Specificity"), interval = 0.01,
 plot = TRUE, plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, ...)
 }
 \arguments{
-  \item{model}{a model object of class "glm".}
+  \item{model}{a model object of class "glm", "gam", "gbm", "randomForest" or "bart".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another
   binary response variable. This argument is ignored if 'model' is provided.}
   \item{pred}{a vector with the corresponding predicted values of presence

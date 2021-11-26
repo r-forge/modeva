@@ -15,7 +15,7 @@ plot.bin.size = TRUE, xlab = "Predicted probability",
 ylab = "Observed prevalence", ...)
 }
 \arguments{
-  \item{model}{a model object of class "glm".}
+  \item{model}{a model object of class "glm", "gam", "gbm", "randomForest" or "bart".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. This argument is ignored if \code{model} is provided.}
   \item{pred}{a vector with the corresponding predicted probabilities as given e.g. by logistic regression. A warning is emitted if it includes values outside the [0, 1] interval. This argument is ignored if \code{model} is provided.}
   \item{bin.method}{argument to pass to \code{\link{getBins}} specifying the method for grouping the records into bins within which to compare predicted probability to observed prevalence; type modEvAmethods("getBins") for available options, and see Details for more information.}

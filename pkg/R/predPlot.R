@@ -1,12 +1,15 @@
 predPlot <- function(model = NULL, obs = NULL, pred = NULL, thresh = "preval", main = "Classified predicted values", legend.pos = "n", pch = 1, col = c("black", "grey")) {
-  # version 1.1 (1 Nov 2021)
+  # version 1.2 (26 Nov 2021)
   
   if (!is.null(model)) {
-    if (!("glm" %in% class(model)) || family(model)$family != "binomial") stop("'model' must be of class 'glm' and family 'binomial'.")
+    #if (!("glm" %in% class(model)) || family(model)$family != "binomial") stop("'model' must be of class 'glm' and family 'binomial'.")
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
-    obs <- model$y
-    pred <- model$fitted.values
+    # obs <- model$y
+    # pred <- model$fitted.values
+    obspred <- mod2obspred(model)
+    obs <- obspred[ , "obs"]
+    pred <- obspred[ , "pred"]
   } else {
     if (is.null(obs) || is.null(pred)) stop ("You must provide either 'model' or a combination of 'obs' and 'pred'.")
     if (!is.numeric(obs) || !is.numeric(pred)) stop ("'obs' and 'pred' must be numeric.")

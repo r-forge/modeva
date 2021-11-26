@@ -13,10 +13,10 @@ plot = TRUE, plot.ordered = FALSE, standardize = TRUE,
 verbosity = 2, ylim = c(0, 1), ...)
 }
 \arguments{
-  \item{model}{a model object of class "glm".}
+  \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart".}
   \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. Not necessary (and ignored) if 'model' is provided.}
   \item{pred}{a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Not necessary (and ignored) if 'model' is provided.}
-  \item{thresh}{numeric value of the threshold to separate predicted presences from predicted absences in 'pred'; can be "preval", to use the prevalence of 'obs' as the threshold, or any real number between 0 and 1.  See Details for an informed choice.}
+  \item{thresh}{numeric value of the threshold to separate predicted presences from predicted absences in 'pred'; can be "preval", to use the prevalence of 'obs' as the threshold, or any real number between 0 and 1. See Details for an informed choice.}
   \item{measures}{character vector of the evaluation measures to use. By default, all measures available in 'modEvAmethods("threshMeasures")' are calculated.}
   \item{simplif}{logical, whether to calculate a faster, simplified version. Used internally by other functions in the package. Defaults to FALSE.}
   \item{plot}{logical, whether to produce a barplot of the calculated measures. Defaults to TRUE.}

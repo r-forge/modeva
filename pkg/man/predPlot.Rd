@@ -11,8 +11,8 @@ predPlot(model = NULL, obs = NULL, pred = NULL, thresh = "preval",
 main = "Classified predicted values", legend.pos = "n", pch = 1, col = c("black", "grey"))
 }
 \arguments{
-  \item{model}{a model object of class "glm" and family "binomial".}
-  \item{obs}{(instead of a 'model' object) numeric vector of the observed data, consisting of zeros (absences) and ones (presences). This argument is ignored if 'model' is provided.}
+  \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart".}
+  \item{obs}{(instead of a 'model' object) numeric vector of the observed (response) variable, consisting of zeros (absences) and ones (presences). This argument is ignored if 'model' is provided.}
   \item{pred}{(instead of a 'model' object) numeric vector of the values predicted by a model of the 'obs'erved data. This argument is ignored if 'model' is provided. Must be of the same length and in the same order as 'obs'.}
   \item{thresh}{threshold value to separate predicted presences from predicted absences in 'pred'; can be "preval" (the default), to use the \code{\link{prevalence}} (i.e. proportion of presences) in 'obs', or any real number between 0 and 1. This value will be used to draw a vertical line on the plot and to colour the points (predicted values) according to whether they fall below or above the threshold. See Details in help(threshMeasures) for an informed choice.}
   \item{main}{Main title for the plot.}

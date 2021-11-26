@@ -3,13 +3,13 @@ function (model = NULL, obs = NULL, pred = NULL,
           measures = c("Sensitivity", "Specificity"), 
           interval = 0.01, plot = TRUE, plot.sum = FALSE, 
           plot.diff = FALSE, ylim = NULL, ...) {
-  # version 1.7 (18 Apr 2016)
+  # version 1.8 (26 Nov 2021)
 
   if(length(measures) != 2) stop ("'measures' must contain two elements.")
 
   if(is.null(model)) {
     
-    if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object of class 'glm'.")
+    if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object.")
     if (length(obs) != length(pred))  stop ("'obs' and 'pred' must be of the same length (and in the same order).")
     
     dat <- data.frame(obs, pred)
@@ -22,11 +22,15 @@ function (model = NULL, obs = NULL, pred = NULL,
     
   } else { # end if null model
   
-    if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
+    #if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
-    obs <- model$y
-    pred <- model$fitted.values
+    # obs <- model$y
+    # pred <- model$fitted.values
+    obspred <- mod2obspred(model)
+    obs <- obspred[ , "obs"]
+    pred <- obspred[ , "pred"]
+    
     model <- NULL  # so the message is not repeated for each threshold
   }  # end if model
 

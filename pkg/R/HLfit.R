@@ -1,18 +1,21 @@
 HLfit <-
 function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, verbosity = 2, alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", ylab = "Observed prevalence", ...) {
-  # version 1.9 (27 Jun 2016)
+  # version 2.0 (26 Nov 2021)
 
   if (!is.null(model)) {
-    if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
+    #if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
-    obs <- model$y
-    pred <- model$fitted.values
-
+    # obs <- model$y
+    # pred <- model$fitted.values
+    obspred <- mod2obspred(model)
+    obs <- obspred[ , "obs"]
+    pred <- obspred[ , "pred"]
+    
   } else {  # if is.null model
     
     if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs'
-and 'pred' vectors, or a 'model' object of class 'glm'.")
+and 'pred' vectors, or a 'model' object.")
     if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
     
     # new (15 Sep 2015):
