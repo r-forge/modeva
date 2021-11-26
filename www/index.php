@@ -52,17 +52,17 @@ echo $contents; } ?>
 
 <h2> Install and load </h2>
 
-<p>To <strong>install</strong> the currently <b>stable version</b> of <i>modEvA</i> from CRAN, paste the following command in the R console (while connected to the internet):</p>
+<p>To <strong>install</strong> the latest <b>CRAN version</b> of <i>modEvA</i>, paste the following command in the R console (while connected to the internet):</p>
 
 <code>install.packages("modEvA")</code><br />
 
 
-<p>To install a <b>developing version</b> (with new features, but possibly also new bugs) of <i>modEvA</i> from R-Forge, paste the following command in the R console (while connected to the internet):</p>
+<p>To install the <b>development version</b> (with new features, possibly also new bugs, but also new bug fixes) of <i>modEvA</i> from R-Forge, paste the following command in the R console (while connected to the internet):</p>
 
 <code>install.packages("modEvA", repos="http://R-Forge.R-project.org")</code><br />
 
 <font color="grey" size="1">
-<p>This should work if you have the <b>latest version of R</b>; otherwise, it may either fail (producing a message like "<i>package 'modEvA' is not available for your R version</i>") or install an older version of <i>modEvA</i>. To <b>check the <i>modEvA</i> version that you have actually installed</b>, type <big><b><code>citation(package="modEvA")</code></b></big>. To install the latest <i>modEvA</i> version, you can either upgrade R <i>or</i> download the compressed <i>modEvA</i> <b>package source files</b> to your disk (<i>.tar.gz</i> for Linux/Mac or <i>.zip</i> for Windows, <b>available <a href="https://r-forge.r-project.org/R/?group_id=1876">here</a>) and then install the package from there, e.g. with R menu "<i>Packages - Install packages from local zip files</i>" (Windows), or "<i>Packages & Data - Package installer, Packages repository - Local source package</i>" (Mac), or "<i>Tools - Install packages - Install from: Package Archive File</i>" (RStudio).</p>
+<p>This should work if you have the <b>latest version of R</b>; otherwise, it may either fail (producing a message like "<i>package 'modEvA' is not available for your R version</i>") or install an older version of <i>modEvA</i>. To <b>check which <i>modEvA</i> version you have actually installed</b>, type <big><b><code>citation(package="modEvA")</code></b></big>. To install the latest <i>modEvA</i> version, you can either upgrade R <i>or</i> download the compressed <i>modEvA</i> <b>package source files</b> to your disk (<i>.tar.gz</i> for Linux/Mac or <i>.zip</i> for Windows, <b>available <a href="https://r-forge.r-project.org/R/?group_id=1876">here</a>)</b> and then install the package from there, e.g. with R menu "<i>Packages - Install packages from local zip files</i>" (Windows), or "<i>Packages & Data - Package installer, Packages repository - Local source package</i>" (Mac), or "<i>Tools - Install packages - Install from: Package Archive File</i>" (RStudio).</p>
 </font>
 
 <p>You only need to install (each version of) the package once, but then every time you re-open R you need to <strong>load</strong> the package by typing:</p>

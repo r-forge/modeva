@@ -1,22 +1,3 @@
-PLANNED IMPROVEMENTS:
-
-* threshMeasures
-- kappa computed with 'try' to prevent error "cannot allocate vector of size ..." (or Note added to .Rd)
-- add similarity indices
-
-* Dsquared, multModEv
-- implement for model classes other than GLM?
-
-* plotGLM
-- convert to 'plotModel' and implement for other model classes?
-
-* RsqGLM
-- convert to 'pseudoRsq' and implement for other model classes?
-
-* multGLM
-- handle missing values or add Note to .Rd?
-
-
 ==========================================
 modEvA v2.7 (committed 2021-11-26)
 ==========================================
@@ -166,7 +147,7 @@ modEvA v2.1 (committed 2021-01-15)
 
 
 ==========================================
-modEvA v2.0 (committed 2020-01-21)
+modEvA v2.0 (committed 2020-01-21) -> CRAN
 ==========================================
 
 ## Modified functions:
