@@ -2,8 +2,8 @@ optiPair <-
 function (model = NULL, obs = NULL, pred = NULL,
           measures = c("Sensitivity", "Specificity"), 
           interval = 0.01, plot = TRUE, plot.sum = FALSE, 
-          plot.diff = FALSE, ylim = NULL, ...) {
-  # version 1.8 (26 Nov 2021)
+          plot.diff = FALSE, ylim = NULL, na.rm = TRUE, exclude.zeros = TRUE, ...) {
+  # version 1.9 (3 Dec 2021)
 
   if(length(measures) != 2) stop ("'measures' must contain two elements.")
 
@@ -16,7 +16,7 @@ function (model = NULL, obs = NULL, pred = NULL,
     n.in <- nrow(dat)
     dat <- na.omit(dat)
     n.out <- nrow(dat)
-    if (n.out < n.in)  warning (n.in - n.out, " observations removed due to missing data; ", n.out, " observations actually evaluated.")
+    if (n.out < n.in)  warning (n.in - n.out, " observation(s) removed due to missing data; ", n.out, " observations actually evaluated.")
     obs <- dat$obs
     pred <- dat$pred
     
@@ -34,24 +34,28 @@ function (model = NULL, obs = NULL, pred = NULL,
     model <- NULL  # so the message is not repeated for each threshold
   }  # end if model
 
-  if (NA %in% obs | NA %in% pred) stop("Please remove (rows with) NA from your data")
+  if (NA %in% obs | NA %in% pred) stop("Please remove (rows with) NA from your data")  # I think this is not realy used
   if (length(obs) != length(pred)) stop("'obs' and 'pred' must have the same number of values (and in the same order)")
   if (!all(obs %in% c(0, 1))) stop ("'obs' must consist of binary observations of 0 or 1")
   if (any(pred < 0 | pred > 1)) stop ("'pred' must range between 0 and 1")
 
   measures.values <- optiThresh(obs = obs, pred = pred, interval = interval, measures = measures, optimize = "each", simplif = TRUE)
+  
   measures.values$Difference <- abs(measures.values[, 1] - measures.values[, 2])
   measures.values$Sum <- rowSums(measures.values[ , 1:2])
   measures.values$Mean <- rowMeans(measures.values[ , 1:2])
   measures.values$Threshold <- as.numeric(rownames(measures.values))
 
-  MinDiff <- min(measures.values$Difference)
-  MaxSum <- max(measures.values$Sum)
-  MaxMean <- max(measures.values$Mean)
+  measures.values.trimmed <- measures.values
+  if (exclude.zeros)  measures.values.trimmed <- measures.values.trimmed[is.finite(rowSums(measures.values.trimmed[ , 1:2])) & rowSums(measures.values.trimmed[ , 1:2] > 0), ]
+  
+  MinDiff <- min(measures.values.trimmed$Difference, na.rm = na.rm)
+  MaxSum <- max(measures.values.trimmed$Sum, na.rm = na.rm)
+  MaxMean <- max(measures.values.trimmed$Mean, na.rm = na.rm)
 
-  ThreshDiff <- with(measures.values, Threshold[which.min(Difference)])
-  ThreshSum <- with(measures.values, Threshold[which.max(Sum)])
-  ThreshMean <- with(measures.values, Threshold[which.max(Mean)])
+  ThreshDiff <- with(measures.values.trimmed, Threshold[which.min(Difference)])
+  ThreshSum <- with(measures.values.trimmed, Threshold[which.max(Sum)])
+  ThreshMean <- with(measures.values.trimmed, Threshold[which.max(Mean)])
 
   if (plot) {
 
@@ -67,7 +71,7 @@ function (model = NULL, obs = NULL, pred = NULL,
     mtext(side = 2, text = measures[1], line = 3, col = "black")
     mtext(side = 2, text = measures[2], line = 2, col = "darkgrey")
     points(measures.values[ , 2] ~ measures.values$Threshold, pch = 20, col = "darkgrey")
-    abline(h = measures.values[which.min(measures.values$Difference), 1], col = "lightgrey", lty = 2)
+    abline(h = measures.values[which.min(measures.values.trimmed$Difference), 1], col = "lightgrey", lty = 2)
     abline(v = ThreshDiff, col = "lightgrey", lty = 2)
 
     if (plot.sum) {

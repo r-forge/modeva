@@ -1,4 +1,16 @@
 ==========================================
+modEvA v2.8 (committed 2021-12-03)
+==========================================
+
+## Modified functions:
+
+* optiPair
+- message "'pred' must range between 0 and 1" changed from error to warning
+- added argument 'na.rm' (default TRUE) to avoid NaNs in result MinDiff, MaxSum, etc.
+- added argument 'exclude.zeros' (default TRUE) to avoid precision-recall "optimal" difference when both 0 or NaN
+
+
+==========================================
 modEvA v2.7 (committed 2021-11-26)
 ==========================================
 

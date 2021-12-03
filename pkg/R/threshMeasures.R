@@ -30,7 +30,7 @@ threshMeasures <-
     n.in <- nrow(dat)
     dat <- na.omit(dat)
     n.out <- nrow(dat)
-    if (n.out < n.in)  warning (n.in - n.out, " observations removed due to missing data; ", n.out, " observations actually evaluated.")
+    if (n.out < n.in)  warning (n.in - n.out, " observation(s) removed due to missing data; ", n.out, " observations actually evaluated.")
     obs <- dat$obs
     pred <- dat$pred
     

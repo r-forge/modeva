@@ -69,7 +69,7 @@ Real R., Barbosa A.M. & Vargas J.M. (2006) Obtaining environmental favourability
 A. Marcia Barbosa
 }
 \note{
-Some of these measures (like NMI, UPR, OPR, PPP, NPP) cannot be calculated for thresholds at which there are zeros in the confusion matrix.
+"Sensitivity" is the same as "Recall", and "PPP" (positive predictive power) is the same as "Precision". Some of these measures (like NMI, UPR, OPR, PPP, NPP) cannot be calculated for thresholds at which there are zeros in the confusion matrix, so they can yield NaN values.
 }
 \seealso{
 \code{\link{optiThresh}}, \code{\link{optiPair}}, \code{\link{AUC}}
