@@ -1,4 +1,18 @@
 ==========================================
+modEvA v3.0 (committed 2021-12-13) -> CRAN
+==========================================
+
+## Modified functions:
+
+* AUC
+- warning if 'obs' contains only zeros or only ones (to explain result NaN and no curve on plot)
+- if the previous occurs, other warnings suppressed (PR curve interpolated past NaN precision, method changed to 'trapezoid', etc.)
+
+* MillerCalib
+- plot text elevated by 0.05 y-axis units, to avoid it being cropped in small plots
+
+
+==========================================
 modEvA v2.8 (committed 2021-12-03)
 ==========================================
 

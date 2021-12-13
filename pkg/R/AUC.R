@@ -18,6 +18,12 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   
   if (any(pred < 0) || any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval within which thresholds are calculated.")
   
+  incalculable <- FALSE
+  if (all(obs == 0) || all(obs == 1)) {
+    incalculable <- TRUE
+    warning("AUC can't be computed if there aren't two response states (i.e. ones and zeros) to compare their predictions.")
+  }
+  
   dat <- data.frame(obs, pred)
   n.in <- nrow(dat)
   dat <- na.omit(dat)
@@ -37,12 +43,12 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   )
   
   if (method == "integrate") {
-    warning("'integrate' method no longer supported; using default 'rank' method for ROC or 'trapezoid' for PR curve.")
+    if (!incalculable) warning("'integrate' method no longer supported; using default 'rank' method for ROC or 'trapezoid' for PR curve.")
     method <- ifelse(curve == "ROC", "rank", "trapezoid")
   }
   
   if (method == "rank" && curve != "ROC") {
-    warning("'rank' method not applicable to the specified 'curve'; using 'trapezoid' method instead.")
+    if (!incalculable) warning("'rank' method not applicable to the specified 'curve'; using 'trapezoid' method instead.")
     method <- "trapezoid"
   }
   
@@ -56,9 +62,9 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     AUC <- ((n0 * n1) + ((n0 * (n0 + 1))/2) - sum(rnk[1 : n0])) / (n0 * n1)
     if (simplif && !plot) return(AUC)
   }
-
+  
   N <- length(obs)
-  preval <- prevalence(obs)
+  preval <- suppressWarnings(prevalence(obs))
   thresholds <- seq(0, 1, by = interval)
   Nthresh <- length(thresholds)
   true.positives <- true.negatives <- sensitivity <- specificity <- precision <- false.pos.rate <- n.preds <- prop.preds <- numeric(Nthresh)
@@ -77,7 +83,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   }
   
   precision_mean <- mean(precision, na.rm = TRUE)
-    
+  
   if (curve == "ROC") {
     xx <- false.pos.rate
     yy <- sensitivity
@@ -92,9 +98,9 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   
   if (method == "trapezoid") {
     
-    if (curve == "ROC") warning ("AUC value will be more accurate if method = 'rank', or if 'interval' is decreased -- see 'interval' and 'method' arguments in the function help file.")
-    else if (interval >= 0.01) warning ("AUC value will be more accurate if 'interval' is decreased -- see 'interval' and 'method' arguments in the function help file.")
-
+    if (curve == "ROC" && !incalculable) warning ("AUC value will be more accurate if method = 'rank', or if 'interval' is decreased -- see 'interval' and 'method' arguments in the function help file.")
+    else if (interval >= 0.01 && !incalculable) warning ("AUC value will be more accurate if 'interval' is decreased -- see 'interval' and 'method' arguments in the function help file.")
+    
     xy <- data.frame(xx, yy)
     #xy <- na.omit(data.frame(xx, yy))  # this caused inaccurate AUC-PR values, as per bug report by Tessa Chen
     #if (length(xx) != nrow(xy))  warning(paste(abs(length(xx) - nrow(xy)), "non-finite value(s) omitted from area calculation."))
@@ -105,7 +111,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     AUC <- -AUC  # euze
     
     if (curve == "PR" && any(is.nan(yy))) {  # added Oct 30 2021 following bug report by Ying-Ju Tessa Chen, which caused wrong area calculation when curve extreme was NaN
-      warning(paste(sum(is.nan(yy)), "point(s) with NaN precision value (see 'precision' column in the $thresholds section of your returned results if simplif=FALSE); coercing to last non-NaN value to interpolate curve for AUC calculation"))
+      if(!incalculable) warning(paste(sum(is.nan(yy)), "point(s) with NaN precision value (see 'precision' column in the $thresholds section of your returned results if simplif=FALSE); coercing to last non-NaN value to interpolate curve for AUC calculation"))
       last_thresh_with_value <- max(which(!is.nan(yy)))
       yy_noNaN <- yy
       yy_noNaN[is.nan(yy)] <- yy_noNaN[last_thresh_with_value]
@@ -115,12 +121,12 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     }  # end if NaN precision
   }  # end if trapezoid
   
-    # if (method == "integrate") {  # deactivated for producing less accurate values (compared to 'rank' method for 'ROC' curve)
-    # xx.interp <- stats::approx(x = thresholds, y = xx, n = length(thresholds))
-    # yy.interp <- stats::approx(x = thresholds, y = yy, n = length(thresholds))
-    # f <- approxfun(x = xx.interp$y, y = yy.interp$y)
-    # AUC <- integrate(f, lower = min(thresholds), upper = max(thresholds))$value
-    # }
+  # if (method == "integrate") {  # deactivated for producing less accurate values (compared to 'rank' method for 'ROC' curve)
+  # xx.interp <- stats::approx(x = thresholds, y = xx, n = length(thresholds))
+  # yy.interp <- stats::approx(x = thresholds, y = yy, n = length(thresholds))
+  # f <- approxfun(x = xx.interp$y, y = yy.interp$y)
+  # AUC <- integrate(f, lower = min(thresholds), upper = max(thresholds))$value
+  # }
   
   if (plot) {
     if (curve == "ROC") {

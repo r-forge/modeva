@@ -1,5 +1,5 @@
 MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line.col = "black", diag = TRUE, diag.col = "grey", plot.values = TRUE, digits = 2, xlab = "", ylab = "", main = "Miller calibration", ...) {
-  # version 1.5 (26 Nov 2021)
+  # version 1.6 (13 Dec 2021)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -58,7 +58,7 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line
     if (plot.values) {
       # plotext <- paste("intercept =" , round(intercept, digits), "\nslope =", round(slope, digits), "\nslope p-value =", round(slope.p, digits))
       plotext <- paste0("slope = " , round(slope, digits), "\nintercept = ", round(intercept, digits))
-      text(x = 1, y = ymin + 0.1 * (ymax - ymin), adj = 1, labels = plotext)
+      text(x = 1, y = ymin + 0.15 * (ymax - ymin), adj = 1, labels = plotext)
     }  # end if plot.values
   }  # end if plot
 
