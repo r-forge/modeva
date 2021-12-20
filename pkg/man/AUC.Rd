@@ -15,8 +15,8 @@ plot.values = TRUE, plot.digits = 3, plot.preds = FALSE,
 grid = FALSE, xlab = "auto", ylab = "auto", ticks = FALSE, ...)
 }
 \arguments{
-  \item{model}{a model object of class "glm", "gam", "gbm", "randomForest" or "bart". Alternatively, you can use the 'obs' and 'pred' arguments instead of 'model'.}
-  \item{obs}{alternatively to 'model', a vector of observed presences (1) and absences (0) or another binary response variable. This argument is ignored if 'model' is provided.}
+  \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
+  \item{obs}{alternatively to 'model' and together with 'pred', a vector of observed presences (1) and absences (0) of a binary response variable. This argument is ignored if 'model' is provided.}
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. This argument is ignored if 'model' is provided.}
   \item{simplif}{logical, whether to use a faster version that returns only the AUC value (and the plot if 'plot = TRUE').}
   \item{FPR.limits}{(NOT YET IMPLEMENTED) numerical vector of length 2 indicating the limits of false positive rate between which to calculate a partial AUC. The default is c(0, 1), for considering the whole AUC.}

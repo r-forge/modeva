@@ -12,7 +12,7 @@ plot.values = TRUE, plot.digits = 3, xlab = "Logit (Y)",
 ylab = "Predicted probability", main = "Model plot", ...)
 }
 \arguments{
-  \item{model}{a model object of class "\code{\link{glm}}".}
+  \item{model}{a binary-response model object of class "\code{\link{glm}}".}
   \item{obs}{a vector of presence/absence or other binary (1-0) observed data. Not necessary (and ignored) if 'model' is provided.}
   \item{pred}{a vector of the values predicted by a GLM of the binary observed data. Not necessary (and ignored) if 'model' is provided.}
   \item{link}{the link function of the GLM; only 'logit' (the default) is implemented.}

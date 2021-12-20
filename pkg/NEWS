@@ -1,5 +1,5 @@
 ==========================================
-modEvA v3.0 (committed 2021-12-13) -> CRAN
+modEvA v3.0 (committed 2021-12-20) -> CRAN
 ==========================================
 
 ## Modified functions:
@@ -10,6 +10,11 @@ modEvA v3.0 (committed 2021-12-13) -> CRAN
 
 * MillerCalib
 - plot text elevated by 0.05 y-axis units, to avoid it being cropped in small plots
+
+
+## Other changes:
+
+- uniformized description of arguments "model", "obs" and "pred" across functions' help files
 
 
 ==========================================

@@ -15,9 +15,9 @@ plot.bin.size = TRUE, xlab = "Predicted probability",
 ylab = "Observed prevalence", ...)
 }
 \arguments{
-  \item{model}{a model object of class "glm", "gam", "gbm", "randomForest" or "bart".}
-  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. This argument is ignored if \code{model} is provided.}
-  \item{pred}{a vector with the corresponding predicted probabilities as given e.g. by logistic regression. A warning is emitted if it includes values outside the [0, 1] interval. This argument is ignored if \code{model} is provided.}
+  \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
+  \item{obs}{alternatively to 'model' and together with 'pred', a vector of observed presences (1) and absences (0) of a binary response variable. This argument is ignored if 'model' is provided.}
+  \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as 'obs'. This argument is ignored if 'model' is provided.}
   \item{bin.method}{argument to pass to \code{\link{getBins}} specifying the method for grouping the records into bins within which to compare predicted probability to observed prevalence; type modEvAmethods("getBins") for available options, and see Details for more information.}
   \item{n.bins}{argument to pass to \code{\link{getBins}} specifying the number of bins to use if bin.method = n.bins or bin.method = quantiles. The default is 10.}
   \item{fixed.bin.size}{argument to pass to \code{\link{getBins}}, a logical value indicating whether to force bins to have (approximately) the same size. The default is FALSE.}

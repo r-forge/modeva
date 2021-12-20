@@ -11,9 +11,9 @@ plot.values = TRUE, digits = 2, xlab = "", ylab = "",
 main = "Miller calibration", ...)
 }
 \arguments{
-  \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart".}
-  \item{obs}{a vector of observed presences (1) and absences (0) or another binary response variable. Not necessary (and ignored) if 'model' is provided.}
-  \item{pred}{a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as 'obs'. A warning is emitted if it includes values outside the [0, 1] interval. Not necessary (and ignored) if 'model' is provided.}
+  \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
+  \item{obs}{alternatively to 'model' and together with 'pred', a vector of observed presences (1) and absences (0) of a binary response variable. This argument is ignored if 'model' is provided.}
+  \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as 'obs'. This argument is ignored if 'model' is provided.}
   \item{plot}{logical, whether or not to produce a plot of the Miller regression line. Defaults to TRUE.}
   \item{line.col}{colour for the Miller regression line (if plot = TRUE).}
   \item{diag}{logical, whether or not to add the reference diagonal (if plot = TRUE). Defaults to TRUE.}
