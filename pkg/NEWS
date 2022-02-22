@@ -1,3 +1,11 @@
+NEXT:
+
+## Modified functions:
+
+* most functions:
+- 'obs' and 'pred' can be presence points/coordinates and a raster map, respectively
+
+
 ==========================================
 modEvA v3.1 (committed 2022-02-22)
 ==========================================
@@ -11,9 +19,6 @@ modEvA v3.1 (committed 2022-02-22)
 
 ## Modified functions:
 
-* most functions:
-- 'obs' and 'pred' can be presence points/coordinates and a raster map, respectively
-
 * AUC
 - moved 'pred' range check to after NAs are removed to avoid error
 
@@ -21,7 +26,7 @@ modEvA v3.1 (committed 2022-02-22)
 - on exit, restores only 'par(mar)' (the only one changed) rather than all 'par'
 
 * RsqGLM
-- added las = 2 to 'barplot' (but can be changed by user through '...' argument)
+- added las = 2 to 'barplot'
 
 
 ==========================================
