@@ -5,4 +5,4 @@ importFrom("grDevices", "rgb")
 importFrom("stats", "approx", "approxfun", "binomial", "complete.cases", "cor", "density", "family", "glm", "integrate", "logLik", "median", "na.omit", "pchisq", "qf",
            "quantile", "resid", "xtabs", "fitted", "predict")
 importFrom("methods", "is")
-
+importFrom("terra", "rasterize", "nlyr", "values")

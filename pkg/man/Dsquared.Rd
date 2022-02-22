@@ -11,9 +11,9 @@ Dsquared(model = NULL, obs = NULL, pred = NULL, family = NULL,
 adjust = FALSE, npar = NULL)
 }
 \arguments{
-  \item{model}{a model object of class "glm".}
-  \item{obs}{a numeric vector of the observed data. This argument is ignored if \code{model} is provided.}
-  \item{pred}{a numeric vector of the values predicted by a GLM of the observed data. This argument is ignored if \code{model} is provided. Must be of the same length and in the same order as \code{obs}.}
+  \item{model}{a model object of class "glm". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
+  \item{obs}{alternatively to 'model' and together with 'pred', a vector of observed presences (1) and absences (0) of a binary response variable. This argument is ignored if 'model' is provided.}
+  \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as 'obs'. This argument is ignored if 'model' is provided.}
   \item{family}{a character vector (i.e. in quotes) of length 1 specifying the family of the GLM. This argument is ignored if \code{model} is provided; otherwise (i.e. if 'obs' and 'pred' are provided rather than a model object), only families 'binomial' (logit link) and 'poisson' (log link) are currently implemented.}
   \item{adjust}{logical, whether or not to adjust the D-squared value for the number of observations and parameters in the model (see Details). The default is \code{FALSE}; \code{TRUE} requires either providing the \code{model} object, or specifying the number of parameters in the model that produced the \code{pred} values.}
   \item{npar}{an integer vector indicating the number of parameters in the model. This argument is ignored if \code{model} is provided or if \code{adjust = FALSE}.}

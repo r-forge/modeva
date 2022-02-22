@@ -1,5 +1,5 @@
 predPlot <- function(model = NULL, obs = NULL, pred = NULL, thresh = "preval", main = "Classified predicted values", legend.pos = "n", pch = 1, col = c("black", "grey")) {
-  # version 1.2 (26 Nov 2021)
+  # version 1.3 (21 Dec 2021)
   
   if (!is.null(model)) {
     #if (!("glm" %in% class(model)) || family(model)$family != "binomial") stop("'model' must be of class 'glm' and family 'binomial'.")
@@ -22,10 +22,13 @@ predPlot <- function(model = NULL, obs = NULL, pred = NULL, thresh = "preval", m
   pred0 <- pred[obs == 0]
   pred1 <- pred[obs == 1]
   
-  opar <- par(no.readonly = TRUE)
-  on.exit(par(opar))
+  # opar <- par(no.readonly = TRUE)
+  # on.exit(par(opar))
+  # par(mar = c(5, 5.2, 3, 1))
+  par_mar <- par()$mar
+  on.exit(par(mar = par_mar))
   par(mar = c(5, 5.2, 3, 1))
-
+  
   plot(x = c(0, 1), y = c(-0.5, 1.5), xlab = "Predicted value", type = "n", ylab = "", yaxt = "n", main = main)
   axis(side = 2, at = c(0, 1), tick = FALSE, labels = c("Observed\nabsences", "Observed\npresences"), las = 1)
   abline(v = thresh, lty = 2)

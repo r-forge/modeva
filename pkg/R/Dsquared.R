@@ -16,6 +16,7 @@ Dsquared <- function(model = NULL,
     pred <- model$fitted.values
 
   } else { # if model not provided
+    
     if (is.null(obs) | is.null(pred)) stop ("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'.")
     if (length(obs) != length(pred)) stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
     if (is.null(family)) stop ("With 'obs' and 'pred' arguments (rather than a model object), you must also specify one of two model family options: 'binomial' or 'poisson' (in quotes).")

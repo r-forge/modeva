@@ -12,7 +12,9 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     obs <- model$y
     pred <- model$fitted.values
-  }  else { # if model not provided
+    
+  } else { # if model not provided
+    
     if (is.null(obs) | is.null(pred)) stop("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'")
   }  # end if model
   

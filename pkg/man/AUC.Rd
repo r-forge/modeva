@@ -4,7 +4,7 @@
 Area Under the Curve
 }
 \description{
-This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, or alternatively the precision-recall (PR) plot, for either a model object or two matching vectors of observed binary (1 for occurrence vs. 0 for non-occurrence) and predicted (continuous, e.g. occurrence probability) values, respectively.
+This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, or alternatively the precision-recall (PR) plot, for either a model object or two matching vectors of observed binary (1 for occurrence vs. 0 for non-occurrence) and predicted continuous (e.g. occurrence probability) values, respectively.
 }
 \usage{
 AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, 
@@ -15,7 +15,7 @@ plot.values = TRUE, plot.digits = 3, plot.preds = FALSE,
 grid = FALSE, xlab = "auto", ylab = "auto", ticks = FALSE, ...)
 }
 \arguments{
-  \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
+  \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
   \item{obs}{alternatively to 'model' and together with 'pred', a vector of observed presences (1) and absences (0) of a binary response variable. This argument is ignored if 'model' is provided.}
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. This argument is ignored if 'model' is provided.}
   \item{simplif}{logical, whether to use a faster version that returns only the AUC value (and the plot if 'plot = TRUE').}
@@ -78,6 +78,8 @@ data(rotif.mods)
 mod <- rotif.mods$models[[1]]
 
 
+# compute the AUC:
+
 AUC(model = mod, simplif = TRUE)
 
 AUC(model = mod, curve = "PR")
@@ -90,8 +92,9 @@ AUC(model = mod, ticks = TRUE)
 
 AUC(model = mod, plot.preds = c("curve", "bottom"))
 
-# you can also use AUC with vectors of observed and predicted values
-# instead of with a model object:
+
+# you can also use vectors of observed and predicted values
+# instead of a model object:
 
 presabs <- mod$y
 prediction <- mod$fitted.values

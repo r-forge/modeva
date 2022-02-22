@@ -1,4 +1,30 @@
 ==========================================
+modEvA v3.1 (committed 2022-02-22)
+==========================================
+
+## New functions:
+
+- Boyce
+
+- ptsrast2obspred
+
+
+## Modified functions:
+
+* most functions:
+- 'obs' and 'pred' can be presence points/coordinates and a raster map, respectively
+
+* AUC
+- moved 'pred' range check to after NAs are removed to avoid error
+
+* predPlot
+- on exit, restores only 'par(mar)' (the only one changed) rather than all 'par'
+
+* RsqGLM
+- added las = 2 to 'barplot' (but can be changed by user through '...' argument)
+
+
+==========================================
 modEvA v3.0 (committed 2021-12-20) -> CRAN
 ==========================================
 

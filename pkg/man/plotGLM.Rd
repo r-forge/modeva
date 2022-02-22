@@ -12,9 +12,9 @@ plot.values = TRUE, plot.digits = 3, xlab = "Logit (Y)",
 ylab = "Predicted probability", main = "Model plot", ...)
 }
 \arguments{
-  \item{model}{a binary-response model object of class "\code{\link{glm}}".}
-  \item{obs}{a vector of presence/absence or other binary (1-0) observed data. Not necessary (and ignored) if 'model' is provided.}
-  \item{pred}{a vector of the values predicted by a GLM of the binary observed data. Not necessary (and ignored) if 'model' is provided.}
+  \item{model}{a binary-response model object of class "\code{\link{glm}}". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
+  \item{obs}{alternatively to 'model' and together with 'pred', a vector of observed presences (1) and absences (0) of a binary response variable. This argument is ignored if 'model' is provided.}
+  \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as 'obs'. This argument is ignored if 'model' is provided.}
   \item{link}{the link function of the GLM; only 'logit' (the default) is implemented.}
   \item{plot.values}{logical, whether to include in the plot diagnostic values such as explained deviance (calculated with the \code{\link{Dsquared}} function) and pseudo-R-squared measures (calculated with the \code{\link{RsqGLM}} function). Defaults to TRUE.}
     \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed (if 'plot.values = TRUE'). Defaults to 3.}
