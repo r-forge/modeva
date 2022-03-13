@@ -1,9 +1,22 @@
-NEXT:
+==========================================
+modEvA v3.2 (committed 2022-03-13)
+==========================================
 
 ## Modified functions:
 
-* most functions:
-- 'obs' and 'pred' can be presence points/coordinates and a raster map, respectively
+* ptsrast2obspred
+- added argument 'na.rm' and set to TRUE by default
+- help file now uses 'elev' raster for more clarity
+
+* Boyce
+- added argument '...', e.g. for plot 'main' or 'xlim'
+- argument name 'nclass' replaced with 'n.bins' to match other modEvA functions
+- argument name 'window.w' replaced with 'bin.width' to accomodate other modEvA functions
+- default 'nclass = 0' replaced with 'n.bins = NA', and all else accordingly
+- changed default 'rm.dupl.classes' to FALSE after some checks (e.g. Galpyr RF in SDMB course)
+
+* AUC
+- 'obs' and 'pred' can be presence coordinates and a SpatRaster, respectively
 
 
 ==========================================

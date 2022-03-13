@@ -1,9 +1,7 @@
 AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01, FPR.limits = c(0, 1), curve = "ROC", method = "rank", plot = TRUE, diag = TRUE, diag.col = "grey", diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, xlab = "auto", ylab = "auto", ticks = FALSE, ...) {
-  # version 2.6 (18 Feb 2022)
+  # version 2.7 (13 Mar 2022)
   
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
-  
-  if (model == NULL && length(obs) != length(pred))  stop ("'obs' and 'pred' must be of the same length (and in the same order).")
   
   if (!is.null(model)) {
     #if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
@@ -14,9 +12,25 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     obspred <- mod2obspred(model)
     obs <- obspred[ , "obs"]
     pred <- obspred[ , "pred"]
-  }  # end if model
-  
+  }  else {  # end if model
+    
+    if (inherits(obs, "data.frame") || inherits(obs, "matrix")) {
+      if (!inherits(pred, "SpatRaster")) stop ("If 'obs' is a matrix or dataframe (in which case it should contain the x and y presence point coordinates), 'pred' should be of class 'SpatRaster'.")
+    }
+    
+    if (inherits(pred, "SpatRaster")) {
+      error_message <- "If 'pred' is a SpatRaster, 'obs' must be a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points."
+      if (!(inherits(obs, "data.frame") || inherits(obs, "matrix"))) stop(error_message)
+      if ((inherits(obs, "data.frame") || inherits(obs, "matrix")) && ncol(obs) != 2) stop(error_message)
+      obspred <- ptsrast2obspred(pts = obs, rst = pred, rm.dup = TRUE)
+      obs <- obspred[ , "obs"]
+      pred <- obspred[ , "pred"]
+    }  # end if SpatRaster
+  }
+
   # if (any(pred < 0, na.rm = TRUE) || any(pred > 1, na.rm = TRUE)) warning("Some of your predicted values are outside the [0, 1] interval within which thresholds are calculated.")  # moved to after NA removal and simplif check
+  
+  if (length(obs) != length(pred))  stop ("'obs' and 'pred' must be of the same length (and in the same order).")
   
   incalculable <- FALSE
   if (all(obs == 0) || all(obs == 1)) {

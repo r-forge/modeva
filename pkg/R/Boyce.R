@@ -1,4 +1,6 @@
-Boyce <- function(model = NULL, obs = NULL, pred = NULL, nclass = 0, window.w = "default", res = 100, method = "spearman", rm.dupl.classes = TRUE, rm.dupl.points = TRUE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, plot.digits = 3) {
+Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width = "default", res = 100, method = "spearman", rm.dupl.classes = FALSE, rm.dupl.points = TRUE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, ...) {
+  
+  # version 1.1 (13 Mar 2022)
   
   if (!is.null(model)) {
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
@@ -6,18 +8,21 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, nclass = 0, window.w = 
     obspred <- mod2obspred(model)
     obs <- obspred[ , "obs"]
     pred <- obspred[ , "pred"]
-  }  # end if model
-  
-  if (inherits(pred, "SpatRaster")) {
+  }  else {  # end if model
     
-    error_message <- "If 'pred' is a SpatRaster, 'obs' must be either a 'SpatVector' of the presence points, or a two-column matrix or data frame containing their x (longitude) and y (latitude) coordinates, respectively."
-    if (!(inherits(obs, "data.frame") || inherits(obs, "matrix"))) stop(error_message)
-    if ((inherits(obs, "data.frame") || inherits(obs, "matrix")) && ncol(obs) != 2) stop(error_message)
-
-    obspred <- ptsrast2obspred(pts = obs, rst = pred, rm.dup = rm.dupl.points)
-    obs <- obspred[ , "obs"]
-    pred <- obspred[ , "pred"]
-  }  # end if SpatRaster
+    if (inherits(obs, "data.frame") || inherits(obs, "matrix")) {
+      if (!inherits(pred, "SpatRaster")) stop ("If 'obs' is a matrix or dataframe (in which case it should contain the x and y presence point coordinates), 'pred' should be of class 'SpatRaster'.")
+    }
+    
+    if (inherits(pred, "SpatRaster")) {
+      error_message <- "If 'pred' is a SpatRaster, 'obs' must be a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points."
+      if (!(inherits(obs, "data.frame") || inherits(obs, "matrix"))) stop(error_message)
+      if ((inherits(obs, "data.frame") || inherits(obs, "matrix")) && ncol(obs) != 2) stop(error_message)
+      obspred <- ptsrast2obspred(pts = obs, rst = pred, rm.dup = TRUE)
+      obs <- obspred[ , "obs"]
+      pred <- obspred[ , "pred"]
+    }  # end if SpatRaster
+  }
   
   dat <- data.frame(obs, pred)
   n.in <- nrow(dat)
@@ -61,20 +66,20 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, nclass = 0, window.w = 
   
   mini <- min(fit, obs)
   maxi <- max(fit, obs)
-  if (length(nclass) == 1) {
-    if (nclass == 0) {
-      if (window.w == "default") {
-        window.w <- (max(fit) - min(fit)) / 10
+  if (length(n.bins) == 1) {
+    if (is.na(n.bins)) {
+      if (bin.width == "default") {
+        bin.width <- (max(fit) - min(fit)) / 10
       }
-      vec.mov <- seq(from = mini, to = maxi - window.w, by = (maxi - mini - window.w) / res)
+      vec.mov <- seq(from = mini, to = maxi - bin.width, by = (maxi - mini - bin.width) / res)
       vec.mov[res + 1] <- vec.mov[res + 1] + 1
-      interval <- cbind(vec.mov, vec.mov + window.w)
+      interval <- cbind(vec.mov, vec.mov + bin.width)
     } else {
-      vec.mov <- seq(from = mini, to = maxi, by = (maxi - mini) / nclass)
+      vec.mov <- seq(from = mini, to = maxi, by = (maxi - mini) / n.bins)
       interval <- cbind(vec.mov, c(vec.mov[-1], maxi))
     }
   } else {
-    vec.mov <- c(mini, sort(nclass[!nclass > maxi | nclass < mini]))
+    vec.mov <- c(mini, sort(n.bins[!n.bins > maxi | n.bins < mini]))
     interval <- cbind(vec.mov, c(vec.mov[-1], maxi))
   }
   
@@ -96,20 +101,20 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, nclass = 0, window.w = 
   }
   
   HS <- apply(interval, 1, sum) / 2
-  if (length(nclass) == 1 & nclass == 0) {
+  if (length(n.bins) == 1 & is.na(n.bins)) {
     HS[length(HS)] <- HS[length(HS)] - 1
   }
   HS <- HS[to.keep]
   
   if (plot) {
-    plot(HS, f, xlab = "Prediction class", ylab = "Predicted / expected ratio", col = "grey", cex = 0.5)  # includes duplicate P/E values
+    plot(HS, f, ylim = c(0, max(f, na.rm = TRUE)), xlab = "Prediction class", ylab = "Predicted / expected ratio", col = "grey", cex = 0.5, ...)  # includes duplicate P/E values; 'ylim' was my add
     if (plot.lines) {  # my add
       lines(HS, f, col = "grey")
       lines(HS[r], f[r])
     }  # my add
     points(HS[r], f[r], pch = 19, cex = 0.5)  # without duplicate P/E values
     #abline(h = 1, lty = 5, col = "grey")  # my add
-    if (plot.values) text(x = median(range(HS)), y = diff(range(f)) / 20, paste("B =", round(b, plot.digits)), adj = c(0.5, 1))  # my add
+    if (plot.values) text(x = max(HS), y = diff(range(f)) / 10, paste("B =", round(b, plot.digits)), adj = 1)  # my add
   }
   
   # the following is different from 'ecospat.boyce':
