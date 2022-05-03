@@ -7,7 +7,8 @@ Label predictions according to their confusion matrix category
 This function labels the predictions of a binary-response model according to their confusion matrix categories, i.e., it classifies each prediction into a false positive, false negative, true positive or true negative, given a user-defined threshold value.
 }
 \usage{
-confusionLabel(model = NULL, obs = NULL, pred = NULL, thresh, verbosity = 2, na.rm = FALSE)
+confusionLabel(model = NULL, obs = NULL, pred = NULL, thresh, verbosity = 2, 
+na.rm = FALSE)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments (e.g. for external test data) instead of 'model'.}

@@ -50,7 +50,8 @@ nrow(obspred)  # you get as many 'obs' as pixels + additional points per pixel
 sum(obspred$obs)  # as many presences as points that overlay 'pred'
 
 # with removal of duplicates:
-obspred_rmdup <- ptsrast2obspred(pts = crds(presences), rst = rst[[1]], rm.dup = TRUE)  # you get as many 'obs' as pixels
+obspred_rmdup <- ptsrast2obspred(pts = crds(presences), rst = rst[[1]], 
+rm.dup = TRUE)  # you get as many 'obs' as pixels
 obspred_rmdup
 nrow(obspred_rmdup)  # you get as many 'obs' as pixels
 sum(obspred_rmdup$obs)  # as many presences as pixels that contain (one or more) points
