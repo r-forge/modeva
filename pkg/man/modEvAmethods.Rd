@@ -10,7 +10,7 @@ This function allows retrieving the methods available for some of the functions 
 modEvAmethods(fun)
 }
 \arguments{
-  \item{fun}{a character vector of length 1 specifying the name (in quotes) of the function for which to obtain the available methods.}
+  \item{fun}{a character vector of length 1 specifying the name (in quotes) of the function for which to obtain the available methods. Must be one of "threshMeasures", "optiThresh", "multModEv", "getThreshold" or "getBins".}
 }
 \value{a character vector of the available methods for the specified function.}
 \author{

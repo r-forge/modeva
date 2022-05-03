@@ -1,25 +1,16 @@
 getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
                      bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15,
-                     min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, verbosity = 2)  {
+                     min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, verbosity = 2, na.rm = TRUE)  {
   
-  # version 2.5 (26 Nov 2021)
+  # version 2.6 (17 Apr 2022)
   
-  if (!is.null(model)) {
-    #if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
-    if (!is.null(obs) && verbosity > 0)
-      message("Argument 'obs' ignored in favour of 'model'.")
-    if (!is.null(pred) && verbosity > 0)
-      message("Argument 'pred' ignored in favour of 'model'.")
-    # obs <- model$y
-    # pred <- model$fitted.values
-    obspred <- mod2obspred(model)
-    obs <- obspred[ , "obs"]
-    pred <- obspred[ , "pred"]
-  }
-    
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm)  
+  obs <- obspred[ , "obs"]
+  pred <- obspred[ , "pred"]
+  
   stopifnot(length(obs) == length(pred), 
-            !(NA %in% obs), 
-            !(NA %in% pred), 
+            # !(NA %in% obs), 
+            # !(NA %in% pred), 
             obs %in% c(0, 1), 
             #pred >= 0, 
             #pred <= 1, 
@@ -42,7 +33,7 @@ getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
   
   else if (bin.method == "prob.bins") {
     if (verbosity > 1) message("Arguments n.bins, fixed.bin.size and min.bin.size are ignored by this bin.method.")
-    bin.cuts <- seq(from = min(0, min(pred)), to = max(1, max(pred)), by = min.prob.interval)
+    bin.cuts <- seq(from = min(0, min(pred, na.rm = na.rm), na.rm = na.rm), to = max(1, max(pred, na.rm = na.rm), na.rm = na.rm), by = min.prob.interval)
     prob.bin <- findInterval(pred, bin.cuts)
   }
   
@@ -70,7 +61,7 @@ getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
     #cutpoints <- quantile(pred, probs = seq(min.prob.interval, 1, by = min.prob.interval))
     #prob.bin <- cut(pred, breaks = length(cutpoints), include.lowest = TRUE, dig.lab = nchar(min.prob.interval) - 2)
     #cutpoints <- quantile(pred, probs = seq(0, 1, length = n.bins), type = quantile.type)
-    cutpoints <- quantile(pred, probs = (0:n.bins)/n.bins, type = quantile.type)
+    cutpoints <- quantile(pred, probs = (0:n.bins)/n.bins, type = quantile.type, na.rm = na.rm)
     #prob.bin <- cut(pred, cutpoints, include.lowest = TRUE)
     prob.bin <- findInterval(pred, cutpoints, rightmost.closed = TRUE)
   }

@@ -8,7 +8,7 @@ This function computes the (continuous) Boyce index (Boyce 2002; Hirzel et al. 2
 }
 \usage{Boyce(model = NULL, obs = NULL, pred = NULL, n.bins = NA, 
 bin.width = "default", res = 100, method = "spearman", rm.dupl.classes = FALSE, 
-rm.dupl.points = TRUE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, 
+rm.dupl.points = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, 
 plot.digits = 3, ...)}
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments (e.g. for external test data) instead of 'model'.}
@@ -62,4 +62,8 @@ presabs <- mod$y
 prediction <- mod$fitted.values
 
 Boyce(obs = presabs, pred = prediction)
+
+
+# 'obs' can also be a table of presence point coordinates
+# and 'pred' a SpatRaster of predicted values
 }

@@ -2,24 +2,28 @@ plotGLM <-
 function(model = NULL, obs = NULL, pred = NULL, link = "logit",
          plot.values = TRUE, plot.digits = 3, xlab = "Logit (Y)",
          ylab = "Predicted probability", main = "Model plot", ...) {
-  # version 2.0 (03 Jan 2020)
+  # version 2.1 (13 Apr 2022)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
-  if (model.provided) {
-    if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
-    if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
-    if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
-    obs <- model$y
-    pred <- model$fitted.values
-    
-  } else { # if model not provided
-    
-    if (is.null(obs) | is.null(pred)) stop("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'")
-  }  # end if model
+  # if (model.provided) {
+  #   if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
+  #   if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
+  #   if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
+  #   obs <- model$y
+  #   pred <- model$fitted.values
+  #   
+  # } else { # if model not provided
+  #   
+  #   if (is.null(obs) | is.null(pred)) stop("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'")
+  # }  # end if model
+  
+  obspred <- inputMunch(model, obs, pred, na.rm = TRUE)  
+  obs <- obspred[ , "obs"]
+  pred <- obspred[ , "pred"]
   
   stopifnot(
-    length(obs) == length(pred),
+    #length(obs) == length(pred),
     obs %in% c(0, 1)#,
     #pred >= 0,
     #pred <= 1

@@ -1,4 +1,4 @@
-MESS <- function(V, P, id.col = NULL){
+MESS <- function(V, P, id.col = NULL, verbosity = 2){
   # version 1.6, 8 Sep 2021
 
   index.V <- 1:nrow(V)
@@ -18,7 +18,7 @@ MESS <- function(V, P, id.col = NULL){
   results <- matrix(nrow = nrow.P, ncol = n.vars, dimnames = list(NULL, colnames(P)))
 
   for (i in 1:n.vars){
-    message("Comparing variable ", i, " of ", n.vars, "...")
+    if (verbosity > 0) message("Comparing variable ", i, " of ", n.vars, "...")
     min.Vi <- min(V[, i], na.rm = TRUE)
     max.Vi <- max(V[, i], na.rm = TRUE)
     SIM <- vector("numeric", nrow.P)
@@ -36,7 +36,7 @@ MESS <- function(V, P, id.col = NULL){
     results[, i] <- SIM
   }
 
-  message("Calculating MESS and MoD...")
+  if (verbosity > 0) message("Calculating MESS and MoD...")
   results <- data.frame(results)
   results$TOTAL <- apply(results[ , 1:n.vars], 1, min)
   results$MoD <- as.factor(colnames(results)[apply(results[ , 1:n.vars], 1, which.min)])
@@ -44,6 +44,6 @@ MESS <- function(V, P, id.col = NULL){
     results <- data.frame(P.input[ , id.col], results)
     colnames(results)[1] <- colnames(P.input)[id.col]
   }
-  message("Finished!")
+  if (verbosity > 0) message("Finished!")
   return(results)
 }

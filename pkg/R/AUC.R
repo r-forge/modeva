@@ -3,48 +3,17 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
   
-  if (!is.null(model)) {
-    #if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
-    if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
-    if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
-    # obs <- model$y
-    # pred <- model$fitted.values
-    obspred <- mod2obspred(model)
-    obs <- obspred[ , "obs"]
-    pred <- obspred[ , "pred"]
-  }  else {  # end if model
-    
-    if (inherits(obs, "data.frame") || inherits(obs, "matrix")) {
-      if (!inherits(pred, "SpatRaster")) stop ("If 'obs' is a matrix or dataframe (in which case it should contain the x and y presence point coordinates), 'pred' should be of class 'SpatRaster'.")
-    }
-    
-    if (inherits(pred, "SpatRaster")) {
-      error_message <- "If 'pred' is a SpatRaster, 'obs' must be a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points."
-      if (!(inherits(obs, "data.frame") || inherits(obs, "matrix"))) stop(error_message)
-      if ((inherits(obs, "data.frame") || inherits(obs, "matrix")) && ncol(obs) != 2) stop(error_message)
-      obspred <- ptsrast2obspred(pts = obs, rst = pred, rm.dup = TRUE)
-      obs <- obspred[ , "obs"]
-      pred <- obspred[ , "pred"]
-    }  # end if SpatRaster
-  }
-
-  # if (any(pred < 0, na.rm = TRUE) || any(pred > 1, na.rm = TRUE)) warning("Some of your predicted values are outside the [0, 1] interval within which thresholds are calculated.")  # moved to after NA removal and simplif check
+  obspred <- inputMunch(model, obs, pred, na.rm = TRUE)
+  obs <- obspred[ , "obs"]
+  pred <- obspred[ , "pred"]
   
-  if (length(obs) != length(pred))  stop ("'obs' and 'pred' must be of the same length (and in the same order).")
+  # if (any(pred < 0, na.rm = TRUE) || any(pred > 1, na.rm = TRUE)) warning("Some of your predicted values are outside the [0, 1] interval within which thresholds are calculated.")  # moved to after NA removal and simplif check
   
   incalculable <- FALSE
   if (all(obs == 0) || all(obs == 1)) {
     incalculable <- TRUE
     warning("AUC can't be computed if there aren't two response states (i.e. ones and zeros) to compare their predictions.")
   }
-  
-  dat <- data.frame(obs, pred)
-  n.in <- nrow(dat)
-  dat <- na.omit(dat)
-  n.out <- nrow(dat)
-  if (n.out < n.in)  warning (n.in - n.out, " observations removed due to missing data; ", n.out, " observations actually evaluated.")
-  obs <- dat$obs
-  pred <- dat$pred
   
   stopifnot(
     obs %in% c(0,1),

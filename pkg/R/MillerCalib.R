@@ -1,39 +1,16 @@
 MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line.col = "black", diag = TRUE, diag.col = "grey", plot.values = TRUE, digits = 2, xlab = "", ylab = "", main = "Miller calibration", ...) {
-  # version 1.6 (13 Dec 2021)
+  # version 1.7 (17 Apr 2022)
 
-  model.provided <- ifelse(is.null(model), FALSE, TRUE)
-
-  if (model.provided) {
-    #if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
-    if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
-    if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
-    # obs <- model$y
-    # pred <- model$fitted.values
-    obspred <- mod2obspred(model)
-    obs <- obspred[ , "obs"]
-    pred <- obspred[ , "pred"]
-    
-  } else { # if model not provided
-
-    if (is.null(obs) | is.null(pred))  stop ("You must provide either 'obs' and 'pred', or a 'model' object.")
-    if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
-    # new (15 Sep 2015):
-    dat <- data.frame(obs, pred)
-    n.in <- nrow(dat)
-    dat <- na.omit(dat)
-    n.out <- nrow(dat)
-    if (n.out < n.in)  warning (n.in - n.out, " observations removed due to missing data; ", n.out, " observations actually evaluated.")
-    obs <- dat$obs
-    pred <- dat$pred
-  }
-
+  obspred <- inputMunch(model, obs, pred, na.rm = TRUE)
+  obs <- obspred[ , "obs"]
+  pred <- obspred[ , "pred"]
+  
   stopifnot(
-    length(obs) == length(pred),
     obs %in% c(0, 1)#,
     #pred >= 0,
     #pred <= 1
   )
-  # new:
+  
   if (any(pred < 0) | any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval; are you sure these represent probabilities?")
 
   pred[pred == 0] <- 2e-16  # avoid NaN in log below

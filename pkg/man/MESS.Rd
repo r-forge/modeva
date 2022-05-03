@@ -10,7 +10,7 @@ projection (extrapolation) data. It is applicable to variables in a matrix
 or data frame.
 }
 \usage{
-MESS(V, P, id.col = NULL)
+MESS(V, P, id.col = NULL, verbosity = 2)
 }
 \arguments{
   \item{V}{a matrix or data frame containing the variables (one in each column)
@@ -19,6 +19,7 @@ in the training dataset.}
   which the model(s) will be projected. Variables (columns) must be in the same
   order as in \code{V}, and \code{colnames(P)} must exist.}
   \item{id.col}{optionally, the index number of a column containing the row identifiers in P. If provided, this column will be excluded from MESS calculations but included in the output.}
+  \item{verbosity}{Integer number indicating the amount of messages to display while computing the results. The default is to display all messages. Set verbosity=0 for no messages.}
 }
 \details{
 When model predictions are projected into regions, times or spatial resolutions

@@ -1,12 +1,56 @@
 ==========================================
+modEvA v3.3 (committed 2022-05-03)
+==========================================
+
+## New functions:
+
+* inputMunch
+- converts from model or point & raster inputs to obs & pred vectors
+
+* getThreshold
+- computes threshold based on any of a range of published criteria
+
+
+## Modified functions:
+
+* prevalence
+- added 'unlist' to avoid obscure error when input is one-column tibble instead of vector
+
+* confusionLabel, Dsquared, getBins, HLfit, MillerCalib, optiPair, optiThresh, plotGLM, predDensity, predPlot, RsqGLM, threshMeasures
+- 'obs' and 'pred' can also be presence coordinates and a SpatRaster, respectively
+
+* confusionLabel, getBins
+- added na.rm argument
+
+* threshMeasures 
+- 'thresh' argument now calls new 'getThreshold' function to include more options
+
+* ptsrast2obspred
+- checks for duplicates and shows message if there are (if rm.dup = FALSE)
+- 'rm.dup' now defaults to FALSE, to assume less and to match 'ecospat.boyce'
+
+* Boyce
+- 'rm.dupl.points' now defaults to FALSE, to assume less and to match 'ecospat.boyce'
+
+* modEvAmethods
+- added error message when 'fun' not correctly specified (instead of silent empty result)
+- help file now provides all available values under 'fun' argument
+
+* getModEqn
+- 'round' replaced with 'signif' to avoid small coeffs becoming zeros (bug report by Jose Carlos Guerrero)
+
+* MESS
+- added 'verbosity' argument
+
+
+==========================================
 modEvA v3.2 (committed 2022-03-13)
 ==========================================
 
 ## Modified functions:
 
-* ptsrast2obspred
-- added argument 'na.rm' and set to TRUE by default
-- help file now uses 'elev' raster for more clarity
+* AUC
+- 'obs' and 'pred' can be presence coordinates and a SpatRaster, respectively
 
 * Boyce
 - added argument '...', e.g. for plot 'main' or 'xlim'
@@ -15,8 +59,9 @@ modEvA v3.2 (committed 2022-03-13)
 - default 'nclass = 0' replaced with 'n.bins = NA', and all else accordingly
 - changed default 'rm.dupl.classes' to FALSE after some checks (e.g. Galpyr RF in SDMB course)
 
-* AUC
-- 'obs' and 'pred' can be presence coordinates and a SpatRaster, respectively
+* ptsrast2obspred
+- added argument 'na.rm' and set to TRUE by default
+- help file now uses 'elev' raster for more clarity
 
 
 ==========================================

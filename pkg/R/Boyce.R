@@ -1,37 +1,11 @@
-Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width = "default", res = 100, method = "spearman", rm.dupl.classes = FALSE, rm.dupl.points = TRUE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, ...) {
+Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width = "default", res = 100, method = "spearman", rm.dupl.classes = FALSE, rm.dupl.points = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, ...) {
   
-  # version 1.1 (13 Mar 2022)
+  # version 1.12 (17 Apr 2022)
   
-  if (!is.null(model)) {
-    if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
-    if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
-    obspred <- mod2obspred(model)
-    obs <- obspred[ , "obs"]
-    pred <- obspred[ , "pred"]
-  }  else {  # end if model
-    
-    if (inherits(obs, "data.frame") || inherits(obs, "matrix")) {
-      if (!inherits(pred, "SpatRaster")) stop ("If 'obs' is a matrix or dataframe (in which case it should contain the x and y presence point coordinates), 'pred' should be of class 'SpatRaster'.")
-    }
-    
-    if (inherits(pred, "SpatRaster")) {
-      error_message <- "If 'pred' is a SpatRaster, 'obs' must be a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points."
-      if (!(inherits(obs, "data.frame") || inherits(obs, "matrix"))) stop(error_message)
-      if ((inherits(obs, "data.frame") || inherits(obs, "matrix")) && ncol(obs) != 2) stop(error_message)
-      obspred <- ptsrast2obspred(pts = obs, rst = pred, rm.dup = TRUE)
-      obs <- obspred[ , "obs"]
-      pred <- obspred[ , "pred"]
-    }  # end if SpatRaster
-  }
-  
-  dat <- data.frame(obs, pred)
-  n.in <- nrow(dat)
-  dat <- na.omit(dat)
-  n.out <- nrow(dat)
-  if (n.out < n.in)  warning (n.in - n.out, " observations removed due to missing data; ", n.out, " observations actually evaluated.")
-  obs <- dat$obs
-  pred <- dat$pred
-  
+  obspred <- inputMunch(model, obs, pred, na.rm = TRUE)  
+  obs <- obspred[ , "obs"]
+  pred <- obspred[ , "pred"]
+
   # to match the original 'ecospat::ecospat.boyce' arguments:
   fit <- pred
   obs <- pred[which(obs == 1)]

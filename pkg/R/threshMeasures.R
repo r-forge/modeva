@@ -2,44 +2,53 @@ threshMeasures <-
   function(model = NULL, obs = NULL, pred = NULL, thresh,
            measures = modEvAmethods("threshMeasures"), 
            simplif = FALSE, plot = TRUE, plot.ordered = FALSE, 
-           standardize = TRUE, verbosity = 2, ylim = c(0, 1), ...) {
-    # version 3.0 (26 Nov 2021)
+           standardize = TRUE, verbosity = 2, ylim = c(0, 1),
+           interval = 0.01, quant = 0, na.rm = TRUE, ...) {
+    # version 3.2 (13 Apr 2022)
     
-    if (is.null(model)) {
-      if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object.")
-      
-    } else { # end if null model
-      
-      #if (!all(class(model) %in% c("glm", "lm"))) stop ("'model' must be a model object of class 'glm'")
-      #if (!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
-      if (verbosity > 0) {
-        if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
-        if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
-      }
-      # obs <- model$y
-      # pred <- model$fitted.values
-      obspred <- mod2obspred(model)
-      obs <- obspred[ , "obs"]
-      pred <- obspred[ , "pred"]
-      
-    }  # end if !null model
-    
-    if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
-    
-    dat <- data.frame(obs, pred)
-    n.in <- nrow(dat)
-    dat <- na.omit(dat)
-    n.out <- nrow(dat)
-    if (n.out < n.in)  warning (n.in - n.out, " observation(s) removed due to missing data; ", n.out, " observations actually evaluated.")
-    obs <- dat$obs
-    pred <- dat$pred
-    
-    if (!all(obs %in% c(0, 1)))
-      stop ("'obs' must consist of binary observations of 0 or 1")
+    # if (is.null(model)) {
+    #   if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object.")
+    #   
+    # } else { # end if null model
+    #   
+    #   #if (!all(class(model) %in% c("glm", "lm"))) stop ("'model' must be a model object of class 'glm'")
+    #   #if (!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
+    #   if (verbosity > 0) {
+    #     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
+    #     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
+    #   }
+    #   # obs <- model$y
+    #   # pred <- model$fitted.values
+    #   obspred <- mod2obspred(model)
+    #   obs <- obspred[ , "obs"]
+    #   pred <- obspred[ , "pred"]
+    #   
+    # }  # end if !null model
+    # 
+    # if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
+    # 
+    # dat <- data.frame(obs, pred)
+    # n.in <- nrow(dat)
+    # dat <- na.omit(dat)
+    # n.out <- nrow(dat)
+    # if (n.out < n.in)  warning (n.in - n.out, " observation(s) removed due to missing data; ", n.out, " observations actually evaluated.")
+    # obs <- dat$obs
+    # pred <- dat$pred
+    # 
+    # if (!all(obs %in% c(0, 1)))
+    #   stop ("'obs' must consist of binary observations of 0 or 1")
+
+    obspred <- inputMunch(model, obs, pred) 
+    obs <- obspred[ , "obs"]
+    pred <- obspred[ , "pred"]
+        
     #if (any(pred < 0 | pred > 1)) stop ("'pred' must range between 0 and 1")
-    if (!(thresh == "preval" | is.numeric(thresh)))
-      stop("'thresh' must be either 'preval' or a numeric value between 0 and 1")
-    if (thresh == "preval")  thresh <- prevalence(obs)
+    # if (!(thresh == "preval" | is.numeric(thresh)))
+    #   stop("'thresh' must be either 'preval' or a numeric value between 0 and 1")
+    # if (thresh == "preval")  thresh <- prevalence(obs)
+    if (!(is.numeric(thresh) || thresh %in% modEvAmethods("getThreshold")))
+      stop("'thresh' must be either a numeric value between 0 and 1, or one of the options obtained with modEvAmethods('getThreshold')")
+    if (thresh %in% modEvAmethods("getThreshold"))  thresh <- getThreshold(obs = obs, pred = pred, threshMethod = thresh, interval = interval, quant = quant, na.rm = na.rm)
     
     obs0 <- obs == 0
     obs1 <- obs == 1
@@ -77,7 +86,7 @@ type modEvAmethods('threshMeasures') for available options.")
     if (simplif) {  # shorter version for use with e.g. optiThresh function
       return(Measures)
     } else {
-      prev <- prevalence(obs)
+      prev <- prevalence(obs = obs)
       conf.matrix <- matrix(c(a, b, c, d), nrow = 2, ncol = 2, byrow = TRUE, dimnames = list(c("pred1", "pred0"), c("obs1", "obs0")))
       if (plot) {
         names(measureValues) <- measures

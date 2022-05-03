@@ -10,8 +10,8 @@ The modEvA package can analyse species distribution models and evaluate their pe
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 3.2\cr
-Date: \tab 2022-03-13 \cr 
+Version: \tab 3.3\cr
+Date: \tab 2022-05-03 \cr 
 License: \tab GPL-3\cr
 }
 }
@@ -51,8 +51,9 @@ ylim = c(0, 1))
 # calculate the optimal threshold balancing two evaluation measures:
 optiPair(model = mod, measures = c("Sensitivity", "Specificity"))
 
-# calculate the explained deviance, Hosmer-Lemeshow goodness-of-fit,
+# calculate the Boyce index, explained deviance, Hosmer-Lemeshow goodness-of-fit,
 # Miller's calibration stats, and (pseudo) R-squared values for the model:
+Boyce(model = mod)
 Dsquared(model = mod)
 HLfit(model = mod, bin.method = "quantiles")
 MillerCalib(model = mod)

@@ -3,7 +3,7 @@ optiThresh <-
            measures = modEvAmethods("threshMeasures"),
            optimize = modEvAmethods("optiThresh"), simplif = FALSE,
            plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...) {
-    # version 2.8 (26 Nov 2021)
+    # version 2.9 (17 Apr 2022)
     
     wrong.measures <- measures[which(!(measures %in% modEvAmethods("threshMeasures")))]
     wrong.optimizers <- optimize[which(!(optimize %in% modEvAmethods("optiThresh")))]
@@ -16,18 +16,13 @@ optiThresh <-
       optimize <- optimize[!(optimize %in% wrong.optimizers)]
     }
     
-    if (!is.null(model)) {
-      #if(!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
-      if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
-      if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
-      # obs <- model$y
-      # pred <- model$fitted.values
-      obspred <- mod2obspred(model)
-      obs <- obspred[ , "obs"]
-      pred <- obspred[ , "pred"]
-      
-      model <- NULL  # so the message is not repeated for each threshold
-    }  # end if model
+    obspred <- inputMunch(model, obs, pred, na.rm = TRUE)
+    obs <- obspred[ , "obs"]
+    pred <- obspred[ , "pred"]
+
+    # if (!is.null(model)) {
+    #   model <- NULL  # so the message is not repeated for each threshold
+    # }  # end if model
     
     input.measures <- measures
     

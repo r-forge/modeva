@@ -102,4 +102,8 @@ prediction <- mod$fitted.values
 AUC(obs = presabs, pred = prediction)
 
 AUC(obs = presabs, pred = prediction, plot.preds = TRUE)
+
+
+# 'obs' can also be a table of presence point coordinates
+# and 'pred' a SpatRaster of predicted values
 }

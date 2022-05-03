@@ -9,9 +9,9 @@ RsqGLM(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs",
 plot = TRUE, ...)
 }
 \arguments{
-  \item{model}{a binary-response model object of class "glm". Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
-  \item{obs}{alternatively to 'model' and together with 'pred', a vector of observed presences (1) and absences (0) of a binary response variable. This argument is ignored if 'model' is provided.}
-  \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as 'obs'. This argument is ignored if 'model' is provided.}
+  \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
+  \item{obs}{alternatively to 'model' and together with 'pred', a numeric vector of observed presences (1) and absences (0) of a binary response variable. Alternatively (and if 'pred' is a 'SpatRaster'), a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points, in which case the 'obs' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
+  \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. Alternatively (and if 'obs' is a set of point coordinates), a 'SpatRaster' map of the predicted values for the entire evaluation region, in which case the 'pred' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
   \item{use}{argument to be passed to \code{\link{cor}} for handling mising values.}
   \item{plot}{logical value indicating whether or not to display a barplot of the calculated measures.}
   \item{\dots}{additional arguments to pass to the \code{\link{plot}} function (see Examples).}
@@ -54,7 +54,12 @@ RsqGLM(obs = mod$y, pred = mod$fitted.values)
 
 # plotting arguments can be modified:
 
+par(mar = c(6, 3, 2, 1))
+
 RsqGLM(obs = mod$y, pred = mod$fitted.values, col = "seagreen", border = NA, 
 ylim = c(0, 1), las = 2, main = "Pseudo-R-squared values")
 
+
+# 'obs' can also be a table of presence point coordinates
+# and 'pred' a SpatRaster of predicted values
 }
