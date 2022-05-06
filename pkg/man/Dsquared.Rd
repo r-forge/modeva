@@ -8,7 +8,7 @@ This function calculates the (adjusted) amount of deviance accounted for by a ge
 }
 \usage{
 Dsquared(model = NULL, obs = NULL, pred = NULL, family = NULL, 
-adjust = FALSE, npar = NULL)
+adjust = FALSE, npar = NULL, na.rm = TRUE, rm.dup = FALSE)
 }
 \arguments{
   \item{model}{a model object of class "glm". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -17,6 +17,8 @@ adjust = FALSE, npar = NULL)
   \item{family}{a character vector (i.e. in quotes) of length 1 specifying the family of the GLM. This argument is ignored if \code{model} is provided; otherwise (i.e. if 'obs' and 'pred' are provided rather than a model object), only families 'binomial' (logit link) and 'poisson' (log link) are currently implemented.}
   \item{adjust}{logical, whether or not to adjust the D-squared value for the number of observations and parameters in the model (see Details). The default is \code{FALSE}; \code{TRUE} requires either providing the \code{model} object, or specifying the number of parameters in the model that produced the \code{pred} values.}
   \item{npar}{an integer vector indicating the number of parameters in the model. This argument is ignored if \code{model} is provided or if \code{adjust = FALSE}.}
+    \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
+  \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
 }
 \details{
 Linear models come with an R-squared value that measures the proportion of variation that the model accounts for. The R-squared is provided with \code{summary(model)} in R. For generalized linear models (GLMs), the equivalent is the amount of deviance accounted for (D-squared; Guisan & Zimmermann 2000), but this value is not normally provided with the model summary. The \code{Dsquared} function calculates it. There is also an option to calculate the adjusted D-squared, which takes into account the number of observations and the number of predictors, thus allowing direct comparison among different models (Weisberg 1980, Guisan & Zimmermann 2000).

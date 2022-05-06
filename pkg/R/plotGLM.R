@@ -1,8 +1,8 @@
-plotGLM <-
-function(model = NULL, obs = NULL, pred = NULL, link = "logit",
+plotGLM <- function(model = NULL, obs = NULL, pred = NULL, link = "logit",
          plot.values = TRUE, plot.digits = 3, xlab = "Logit (Y)",
-         ylab = "Predicted probability", main = "Model plot", ...) {
-  # version 2.1 (13 Apr 2022)
+         ylab = "Predicted probability", main = "Model plot",
+         na.rm = TRUE, rm.dup = FALSE, ...) {
+  # version 2.2 (6 May 2022)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -18,7 +18,7 @@ function(model = NULL, obs = NULL, pred = NULL, link = "logit",
   #   if (is.null(obs) | is.null(pred)) stop("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'")
   # }  # end if model
   
-  obspred <- inputMunch(model, obs, pred, na.rm = TRUE)  
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)  
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
   

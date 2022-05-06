@@ -9,7 +9,8 @@ This function plots the observed (presence/absence) data and the predicted (prob
 \usage{
 plotGLM(model = NULL, obs = NULL, pred = NULL, link = "logit", 
 plot.values = TRUE, plot.digits = 3, xlab = "Logit (Y)", 
-ylab = "Predicted probability", main = "Model plot", ...)
+ylab = "Predicted probability", main = "Model plot", na.rm = TRUE, 
+rm.dup = FALSE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "\code{\link{glm}}". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -17,10 +18,12 @@ ylab = "Predicted probability", main = "Model plot", ...)
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. Alternatively (and if 'obs' is a set of point coordinates), a 'SpatRaster' map of the predicted values for the entire evaluation region, in which case the 'pred' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
   \item{link}{the link function of the GLM; only 'logit' (the default) is implemented.}
   \item{plot.values}{logical, whether to include in the plot diagnostic values such as explained deviance (calculated with the \code{\link{Dsquared}} function) and pseudo-R-squared measures (calculated with the \code{\link{RsqGLM}} function). Defaults to TRUE.}
-    \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed (if 'plot.values = TRUE'). Defaults to 3.}
+   \item{plot.digits}{integer number indicating the number of digits to which the values in the plot should be \code{\link{round}}ed (if 'plot.values = TRUE'). Defaults to 3.}
   \item{xlab}{character string specifying the label for the x axis.}
   \item{ylab}{character string specifying the label for the y axis.}
   \item{main}{character string specifying the title for the plot.}
+  \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
+  \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
   \item{\dots}{additional arguments to pass to \code{\link{plot}}.}
 }
 \value{

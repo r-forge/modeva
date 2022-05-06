@@ -3,10 +3,12 @@ Dsquared <- function(model = NULL,
                      pred = NULL, 
                      family = NULL, # needed only when 'model' not provided
                      adjust = FALSE, 
-                     npar = NULL) { # needed only when 'model' not provided
-  # version 1.7 (17 Apr 2022)
+                     npar = NULL, # needed only when 'model' not provided
+                     na.rm = TRUE,
+                     rm.dup = FALSE) {
+  # version 1.8 (6 May 2022)
 
-  obspred <- inputMunch(model, obs, pred, na.rm = TRUE)  
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)  
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
   

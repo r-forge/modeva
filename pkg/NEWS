@@ -1,4 +1,18 @@
 ==========================================
+modEvA v3.4 (committed 2022-05-06)
+==========================================
+
+## Modified functions:
+
+* AUC, confusionLabel, Dsquared, getBins, HLfit, MillerCalib, optiPair, optiThresh, plotGLM, predDensity, predPlot, RsqGLM, threshMeasures
+- added arguments 'rm.dup' and 'na.rm' to pass to 'inputMunch' and cascade to 'ptsrast2obspred'
+
+* Boyce
+- renamed arguments 'rm.dupl.classes' and 'rm.dupl.points' to 'rm.dup.classes' and 'rm.dup.points', for better coherence with 'rm.dup' in other functions
+- added 'na.rm' argument
+
+
+==========================================
 modEvA v3.3 (committed 2022-05-03)
 ==========================================
 
@@ -20,7 +34,7 @@ modEvA v3.3 (committed 2022-05-03)
 - 'obs' and 'pred' can also be presence coordinates and a SpatRaster, respectively
 
 * confusionLabel, getBins
-- added na.rm argument
+- added 'na.rm' argument
 
 * threshMeasures 
 - 'thresh' argument now calls new 'getThreshold' function to include more options

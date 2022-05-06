@@ -10,7 +10,7 @@ This function can optimize a model's classification threshold based on a pair of
 optiPair(model = NULL, obs = NULL, pred = NULL,
 measures = c("Sensitivity", "Specificity"), interval = 0.01, 
 plot = TRUE, plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, 
-na.rm = TRUE, exclude.zeros = TRUE, ...)
+na.rm = TRUE, exclude.zeros = TRUE, rm.dup = FALSE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -24,6 +24,7 @@ na.rm = TRUE, exclude.zeros = TRUE, ...)
   \item{ylim}{a character vector of length 2 indicating the lower and upper limits for the y axis. The default is NULL for an automatic definition of 'ylim' based on the values of the measures and their sum and/or difference if any of these are set to TRUE.}
   \item{na.rm}{logical, whether NA values should be removed from the calculation of minimum/maximum/mean values to get the optimized measures. Defaults to TRUE.}
   \item{exclude.zeros}{logical, whether non-finite and zero values should be removed from the calculation of minimum/maximum/mean values to get the optimized measures. Defaults to TRUE.}
+  \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
   \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function.}
 }
 \value{

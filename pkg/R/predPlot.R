@@ -1,7 +1,7 @@
-predPlot <- function(model = NULL, obs = NULL, pred = NULL, thresh = "preval", main = "Classified predicted values", legend.pos = "n", pch = 1, col = c("black", "grey")) {
-  # version 1.4 (17 Apr 2022)
+predPlot <- function(model = NULL, obs = NULL, pred = NULL, thresh = "preval", main = "Classified predicted values", legend.pos = "n", pch = 1, col = c("black", "grey"), na.rm = TRUE, rm.dup = FALSE) {
+  # version 1.5 (6 May 2022)
   
-  obspred <- inputMunch(model, obs, pred, na.rm = FALSE)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
   

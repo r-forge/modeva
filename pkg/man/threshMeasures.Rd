@@ -10,7 +10,7 @@ This function calculates a number of measures for evaluating the classification 
 threshMeasures(model = NULL, obs = NULL, pred = NULL, thresh,
 measures = modEvAmethods("threshMeasures"), simplif = FALSE, 
 plot = TRUE, plot.ordered = FALSE, standardize = TRUE, verbosity = 2,
-ylim = c(0, 1), interval = 0.01, quant = 0, na.rm = TRUE, ...)
+ylim = c(0, 1), interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -26,7 +26,8 @@ ylim = c(0, 1), interval = 0.01, quant = 0, na.rm = TRUE, ...)
   \item{ylim}{limits for the y axis.}
   \item{interval}{Numeric value, used if 'thresh' is a threshold optimization method such as "maxKappa" or "maxTSS", indicating the interval between the thresholds to test. The default is 0.01. Smaller values may provide more precise results but take longer to compute.}
   \item{quant}{Numeric value indicating the proportion of presences to discard if thresh="MTP" (minimum training presence). With the default value 0, MTP will be the threshold at which all observed presences are classified as such; with e.g. quant=0.05, MTP will be the threshold at which 5\% presences will be classified as absences.}
-  \item{na.rm}{Logical value indicating whether NA values should be ignored. Defaults to TRUE.}
+  \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
+  \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
   \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{

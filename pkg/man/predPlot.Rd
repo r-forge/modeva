@@ -8,7 +8,8 @@ This function plots predicted values separated into observed presences and absen
 }
 \usage{
 predPlot(model = NULL, obs = NULL, pred = NULL, thresh = "preval", 
-main = "Classified predicted values", legend.pos = "n", pch = 1, col = c("black", "grey"))
+main = "Classified predicted values", legend.pos = "n", pch = 1, 
+col = c("black", "grey"), na.rm = TRUE, rm.dup = FALSE)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -19,6 +20,8 @@ main = "Classified predicted values", legend.pos = "n", pch = 1, col = c("black"
   \item{legend.pos}{character value specifying the position for the legend on the plot. Can be "bottomleft", "bottom", "bottomright", "topleft", "left", "top", "topright", "right", "center", or NA or "n" for no legend (the default). Partial argument matching is used.}
   \item{pch}{plotting character for the presences and absences (see \code{\link{points}}).}
   \item{col}{vector of length 2 indicating the colours with which to plot predicted presences and absences (points above and below the threshold), respectively.}
+  \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
+  \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
 }
 \note{
 Points are \code{\link{jitter}}ed randomly along the y axis to minimize visual overlap. So, each run of 'predPlot' (unless you use \code{\link{set.seed}} first) will produce a different arrangement of points for the same data, although their x-axis values are faithful.

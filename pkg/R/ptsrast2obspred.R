@@ -39,10 +39,10 @@ ptsrast2obspred <- function(pts, rst, rm.dup = FALSE, na.rm = FALSE, verbosity =
   }
   
   if (verbosity > 0) {
-    cat(paste("Output has", sum(out$obs, na.rm = TRUE), "presences and", sum(out$obs == 0, na.rm = TRUE), "absences.\n"))
+    cat(paste("Data include", sum(out$obs, na.rm = TRUE), "presences and", sum(out$obs == 0, na.rm = TRUE), "absences.\n"))
   }
   
-  if (!rm.dup && n_repeats > 0) message("NOTE: Output includes ", n_repeats, " duplicate(s), i.e. repeated presence points in the same raster pixel; use 'rm.dup=TRUE' if you want them removed.")
+  if (!rm.dup && n_repeats > 0) warning("Data include ", n_repeats, " duplicate(s), i.e. repeated presence points in already occupied pixels; use 'rm.dup=TRUE' if you want them removed.")
   
   return(out)
 }

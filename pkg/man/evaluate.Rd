@@ -1,7 +1,7 @@
 \name{evaluate}
 \alias{evaluate}
 \title{
-Evaluate a GLM based on the elements of a confusion matrix.
+Evaluate a model based on the elements of a confusion matrix.
 }
 \description{
 This function evaluates the classification performance of a model based on the values of a confusion matrix obtained at a particular threshold.
@@ -15,7 +15,7 @@ evaluate(a, b, c, d, N = NULL, measure = "CCR")
   \item{c}{number of presences incorrectly predicted as absences
 }
   \item{d}{number of correctly predicted absences}
-  \item{N}{total number of cases. If NULL (the dafault) it is calculated automatically by adding up a, b, c and d.)}
+  \item{N}{total number of cases. If NULL (the default), it is calculated automatically by adding up a, b, c and d.)}
   \item{measure}{a character vector of length 1 indicating the the evaluation measure to use. Type 'modEvAmethods("threshMeasures")' for available options.}
 }
 \details{

@@ -12,7 +12,7 @@ n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15,
 min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, 
 verbosity = 2, alpha = 0.05, plot = TRUE, plot.values = TRUE, 
 plot.bin.size = TRUE, xlab = "Predicted probability", 
-ylab = "Observed prevalence", ...)
+ylab = "Observed prevalence", na.rm = TRUE, rm.dup = FALSE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -31,8 +31,9 @@ ylab = "Observed prevalence", ...)
   \item{plot.values}{logical, whether to report measure values in the plot. The default is TRUE.}
   \item{plot.bin.size}{logical, whether to report bin sizes in the plot. The default is TRUE.}
   \item{xlab}{label for the x axis.}
-  \item{ylab}{label for the y axis.
-}
+  \item{ylab}{label for the y axis.}
+  \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
+  \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
   \item{\dots}{further arguments to pass to the \code{\link{plot}} function.}
 }
 \details{

@@ -1,13 +1,13 @@
-optiPair <-
-function (model = NULL, obs = NULL, pred = NULL,
+optiPair <- function (model = NULL, obs = NULL, pred = NULL,
           measures = c("Sensitivity", "Specificity"), 
           interval = 0.01, plot = TRUE, plot.sum = FALSE, 
-          plot.diff = FALSE, ylim = NULL, na.rm = TRUE, exclude.zeros = TRUE, ...) {
-  # version 2.0 (17 Apr 2022)
+          plot.diff = FALSE, ylim = NULL, na.rm = TRUE, exclude.zeros = TRUE, 
+          rm.dup = FALSE, ...) {
+  # version 2.1 (6 May 2022)
 
   if (length(measures) != 2) stop ("'measures' must contain two elements.")
 
-  obspred <- inputMunch(model, obs, pred, na.rm = TRUE)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 

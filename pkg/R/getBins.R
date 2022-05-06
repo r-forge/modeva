@@ -1,10 +1,11 @@
 getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
                      bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15,
-                     min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, verbosity = 2, na.rm = TRUE)  {
+                     min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, 
+                     verbosity = 2, na.rm = TRUE, rm.dup = FALSE)  {
   
-  # version 2.6 (17 Apr 2022)
+  # version 2.7 (6 May 2022)
   
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm)  
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)  
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
   

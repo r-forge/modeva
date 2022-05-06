@@ -2,8 +2,9 @@ optiThresh <-
   function(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
            measures = modEvAmethods("threshMeasures"),
            optimize = modEvAmethods("optiThresh"), simplif = FALSE,
-           plot = TRUE, sep.plots = FALSE, xlab = "Threshold", ...) {
-    # version 2.9 (17 Apr 2022)
+           plot = TRUE, sep.plots = FALSE, xlab = "Threshold",
+           na.rm = TRUE, rm.dup = FALSE, ...) {
+    # version 3.0 (6 May 2022)
     
     wrong.measures <- measures[which(!(measures %in% modEvAmethods("threshMeasures")))]
     wrong.optimizers <- optimize[which(!(optimize %in% modEvAmethods("optiThresh")))]
@@ -16,7 +17,7 @@ optiThresh <-
       optimize <- optimize[!(optimize %in% wrong.optimizers)]
     }
     
-    obspred <- inputMunch(model, obs, pred, na.rm = TRUE)
+    obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
     obs <- obspred[ , "obs"]
     pred <- obspred[ , "pred"]
 

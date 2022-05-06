@@ -1,5 +1,5 @@
-predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, type = c("both"), legend.pos = "topright", main = "Density of predicted values") {
-  # version 1.4 (17 Apr 2022)
+predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, type = c("both"), legend.pos = "topright", main = "Density of predicted values", na.rm = TRUE, rm.dup = FALSE) {
+  # version 1.5 (6 May 2022)
   
   if (is.null(obs) && is.null(model)) {
     if (is.null(pred)) stop ("You must provide either 'model' or 'pred'.")
@@ -7,7 +7,7 @@ predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
     obs <- sample(c(0, 1), length(pred), replace = TRUE)  # dummy variable
   }
 
-  obspred <- inputMunch(model, obs, pred, na.rm = TRUE)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
   

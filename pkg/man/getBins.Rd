@@ -10,7 +10,7 @@ Get continuous predicted values into bins according to specific criteria.
 getBins(model = NULL, obs = NULL, pred = NULL, id = NULL, 
 bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15,
 min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE,
-verbosity = 2, na.rm = TRUE)
+verbosity = 2, na.rm = TRUE, rm.dup = FALSE)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -26,6 +26,7 @@ verbosity = 2, na.rm = TRUE)
   \item{simplif}{logical, whether to calculate a faster, simplified version (used internally in other functions). The default is FALSE.}
   \item{verbosity}{integer specifying the amount of messages or warnings to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{na.rm}{logical argument indicating whether to remove (with a warning saying how many) rows with NA in any of the 'obs' or 'pred' values. The default is TRUE, as some 'bin.method' options will fail if there are NAs.}
+    \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
 }
 \details{
 Mind that different \code{bin.method}s can lead to visibly different results regarding the bins and any operations that depend on them (such as \code{\link{HLfit}}). Currently available \code{bin.method}s are:

@@ -1,8 +1,8 @@
-Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width = "default", res = 100, method = "spearman", rm.dupl.classes = FALSE, rm.dupl.points = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, ...) {
+Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width = "default", res = 100, method = "spearman", rm.dup.classes = FALSE, rm.dup.points = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, na.rm = TRUE, ...) {
   
-  # version 1.12 (17 Apr 2022)
+  # version 1.3 (6 May 2022)
   
-  obspred <- inputMunch(model, obs, pred, na.rm = TRUE)  
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup.points)  
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 
@@ -68,7 +68,7 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
     b <- NA
   } else {
     r <- 1:length(f)
-    if (rm.dupl.classes) {
+    if (rm.dup.classes) {
       r <- c(1:length(f))[f != c(f[-1], TRUE)]
     }
     b <- cor(f[r], vec.mov[to.keep][r], method = method)

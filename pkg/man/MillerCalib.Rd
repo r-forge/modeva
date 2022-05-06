@@ -8,7 +8,7 @@ This function calculates Miller's (1991) calibration statistics for a generalize
 MillerCalib(model = NULL, obs = NULL, pred = NULL, plot = TRUE,
 line.col = "black", diag = TRUE, diag.col = "grey", 
 plot.values = TRUE, digits = 2, xlab = "", ylab = "", 
-main = "Miller calibration", ...)
+main = "Miller calibration", na.rm = TRUE, rm.dup = FALSE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -23,6 +23,8 @@ main = "Miller calibration", ...)
   \item{xlab}{label for the x axis.}
   \item{ylab}{label for the y axis.}
   \item{main}{title for the plot.}
+  \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
+  \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
   \item{\dots}{additional arguments to pass to \code{\link{plot}}.}
 }
 \details{

@@ -8,7 +8,8 @@ This function produces a histogram and/or a kernel density plot of predicted val
 }
 \usage{
 predDensity(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
-type = c("both"), legend.pos = "topright", main = "Density of predicted values")
+type = c("both"), legend.pos = "topright", main = "Density of predicted values",
+na.rm = TRUE, rm.dup = FALSE)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -17,8 +18,9 @@ type = c("both"), legend.pos = "topright", main = "Density of predicted values")
   \item{separate}{logical value indicating whether prediction densities should be computed separately for observed presences (ones) and absences (zeros). Defaults to TRUE, but is necessarily changed to FALSE if either 'model' or 'obs' are not provided.}
   \item{type}{character vector specifying whether to produce a "histogram", a "density" plot, or "both" (the default). Partial argument matching is used.}
   \item{legend.pos}{character specifying the position for the legend; NA or "n" for no legend. Position can be "topright" (the default), "topleft, "bottomright"", "bottomleft", "top", "bottom", "left", "right", or "center". Partial argument matching is used.}
-    \item{main}{main title for the plot.}
-
+  \item{main}{main title for the plot.}
+  \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
+  \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
 }
 \details{
 For more details, please refer to the documentation of the functions mentioned under "See Also".
