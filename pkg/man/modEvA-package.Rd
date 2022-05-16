@@ -10,8 +10,8 @@ The modEvA package can analyse species distribution models and evaluate their pe
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 3.4\cr
-Date: \tab 2022-05-06\cr 
+Version: \tab 3.5\cr
+Date: \tab 2022-05-16\cr 
 License: \tab GPL-3\cr
 }
 }

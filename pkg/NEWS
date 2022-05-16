@@ -1,4 +1,35 @@
 ==========================================
+modEvA v3.5 (committed 2022-05-15)
+==========================================
+
+## New functions:
+
+* applyThreshold
+
+
+## Modified functions:
+
+* Boyce
+- warning emitted and points coloured red for bins with less than 30 values
+
+* standard01 (benefitting threshMeasures)
+- added is.finite(score) to avoid error when NAs produced by kappa integer overflow
+
+* getThreshold, inputMunch
+- 'obs' can be null if only 'pred' is needed
+
+* predPlot
+- added call to 'getThreshold' to include more threshold options
+- added 'cex' argument (default 0.5), plus 'interval' and 'quant' to pass to 'getThreshold'
+
+* confusionLabel
+- output is SpatRaster if input is too (as also implemented in 'applyThreshold')
+
+* optiThresh
+- fixed bug: Precision and Recall were missing from 'goodness.measures' and did not get optimals
+
+
+==========================================
 modEvA v3.4 (committed 2022-05-06)
 ==========================================
 

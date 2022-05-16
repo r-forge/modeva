@@ -88,6 +88,12 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
     }  # my add
     points(HS[r], f[r], pch = 19, cex = 0.5)  # without duplicate P/E values
     #abline(h = 1, lty = 5, col = "grey")  # my add
+    
+    bin.N <- boycei.result[to.keep, 1]  # my add
+    small_bins <- which(bin.N < 30)  # my add
+    if (length(small_bins) > 0) warning ("Some bins (plotted in red) have less than 30 values, so their result may not be meaningful (see 'bin.N' column in console output).")
+    points(HS[r][small_bins], f[r][small_bins], pch = 19, cex = 0.5, col = "red")  # my add
+    
     if (plot.values) text(x = max(HS), y = diff(range(f)) / 10, paste("B =", round(b, plot.digits)), adj = 1)  # my add
   }
   

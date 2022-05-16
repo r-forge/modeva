@@ -30,11 +30,14 @@ plot.digits = 3, na.rm = TRUE, ...)}
 \details{
 The Boyce index is the correlation between model predictions and area-adjusted frequencies (i.e., observed vs. expected proportion of occurrences) along different prediction classes. In other words, it measures how model predictions differ from a random distribution of the observed presences across the prediction gradient (Boyce et al. 2002). It can take values between -1 and 1. Positive values indicate that presences are more frequent than expected by chance (given availability) in areas with higher predicted values. Values close to zero mean that predictions are no better than random, and negative values indicate counter predictions, i.e. that presences are more frequent in areas with lower predicted values.
 }
+\note{
+In bins with overly small sample sizes, the comparison between prediction and expectation may not be meaningful, although they will equally contribute to the overall Boyce index. When there are bins with less than 30 values, a warning is emitted and their points are plotted in red. But note that 30 is a largely arbitrary number; you should look at the $bins$bin.N section of the console output of this function, and judge for yourself which bins may be too small for your study system. Future implementations will attempt to merge or enlarge small bins to avoid this problem.
+}
 \value{
 This function returns a \code{list} with the following components:
 \item{bins}{a data frame with the number of values in each bin, their median and range of predicted values, and the corresponding predicted/expected ratio of presences.}
 \item{B}{the numeric value of the Boyce index, i.e. the coefficient of correlation between the median predicted value in each bin and the corresponding predicted/expected ratio.}
-If plot=TRUE (the default), the function also plots the predicted/expected ratio for the utilized bins along the prediction range. A good model should yield a monotonically increasing curve. 
+If plot=TRUE (the default), the function also plots the predicted/expected ratio for the utilized bins along the prediction range. A good model should yield a monotonically increasing curve (but see Note above). 
 }
 \author{
 A. Marcia Barbosa, with significant chunks of code from the 'ecospat::ecospat.boyce' function by Blaise Petitpierre and Frank Breiner (\pkg{ecospat} package version 3.2.1).

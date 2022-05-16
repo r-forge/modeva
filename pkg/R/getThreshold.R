@@ -1,13 +1,14 @@
 getThreshold <- function(model = NULL, obs = NULL, pred = NULL, threshMethod, interval = 0.01, quant = 0, na.rm = TRUE) {
   
-  # version 1.0 (11 Apr 2022)
+  # version 1.1 (16 May 2022)
   
   stopifnot(length(threshMethod) == 1)
   
-  obspred <- inputMunch(model, obs, pred)  
-  obs <- obspred[ , "obs"]
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm)
+  if (!is.null(obs) || !is.null(model)) obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
   
+  if (is.null(obs) && !(threshMethod %in% c("meanPred", "midPoint"))) stop ("'obs' must be provided for the specified threshold method.")
 
   # thresholds in Liu et al. (2005, 2013):
   

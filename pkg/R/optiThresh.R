@@ -20,7 +20,7 @@ optiThresh <-
     obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
     obs <- obspred[ , "obs"]
     pred <- obspred[ , "pred"]
-
+    
     # if (!is.null(model)) {
     #   model <- NULL  # so the message is not repeated for each threshold
     # }  # end if model
@@ -47,8 +47,10 @@ optiThresh <-
     thresholds <- seq(from = 0, to = 1, by = interval)
     Nthresholds <- length(thresholds)
     Nmeasures <- length(measures)
-    all.thresholds <- data.frame(matrix(data = NA, nrow = Nthresholds,
-                                        ncol = Nmeasures), row.names = thresholds)
+    all.thresholds <- data.frame(matrix(data = NA, 
+                                        nrow = Nthresholds,
+                                        ncol = Nmeasures), 
+                                 row.names = thresholds)
     colnames(all.thresholds) = measures
     
     for (t in 1 : Nthresholds) for (m in 1 : Nmeasures) {
@@ -72,7 +74,7 @@ optiThresh <-
         optimals.each <- data.frame(matrix(data = NA, nrow = Nmeasures, ncol = 4))
         colnames(optimals.each) <- c("measure", "threshold", "value", "type")
         optimals.each[1] <- measures
-        goodness.measures <- c("CCR", "Sensitivity", "Specificity", "PPP", "NPP", "kappa", "TSS", "NMI", "OddsRatio", "F1score")
+        goodness.measures <- c("CCR", "Sensitivity", "Specificity", "PPP", "NPP", "kappa", "TSS", "NMI", "OddsRatio", "F1score", "Precision", "Recall")
         badness.measures <- c("Omission", "Commission", "Misclass", "UPR", "OPR")
         change.measures <- c("PPI", "PAI")
         
@@ -86,7 +88,7 @@ optiThresh <-
           else {
             if (measures[m] %in% (badness.measures)) {  # optimal is minimum
               optimals.each[m, "threshold"] <- as.numeric(rownames(all.thresholds)[which.min(all.thresholds[, m])])
-              optimals.each[m, "value"] <- min(all.thresholds[ ,m], na.rm = TRUE)
+              optimals.each[m, "value"] <- min(all.thresholds[ , m], na.rm = TRUE)
               optimals.each[m, "type"] <- "minimum"
             }  # end if measure in badness
             else {

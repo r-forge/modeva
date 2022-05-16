@@ -1,9 +1,13 @@
 inputMunch <- function(model = NULL, obs = NULL, pred = NULL, rm.dup = FALSE, na.rm = FALSE) {
   
+  # version 1.2 (15 May 2022)
+  
   if (!is.null(model)) {
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
     if (!is.null(pred)) message("Argument 'pred' ignored in favour of 'model'.")
     obspred <- mod2obspred(model)
+    obs <- obspred$obs
+    pred <- obspred$pred
     
   }  else {  # end if model
     
@@ -13,14 +17,19 @@ inputMunch <- function(model = NULL, obs = NULL, pred = NULL, rm.dup = FALSE, na
     
     if (inherits(pred, "SpatRaster")) {
       error_message <- "When 'pred' is a SpatRaster, 'obs' must be a matrix or data frame with two columns containing, respectively and in this order, the x (longitude) and y (latitude) coordinates of the presence points."
-      if (!(inherits(obs, "data.frame") || inherits(obs, "matrix"))) stop(error_message)
+      if (!(is.null(obs) || inherits(obs, "data.frame") || inherits(obs, "matrix"))) stop(error_message)
       if ((inherits(obs, "data.frame") || inherits(obs, "matrix")) && ncol(obs) != 2) stop(error_message)
-      obspred <- ptsrast2obspred(pts = obs, rst = pred, rm.dup = rm.dup)
+      if (is.null(obs)) {
+        obspred <- data.frame(pred = terra::values(pred))
+        names(obspred) <- "pred"  # was naming column "lyr1" otherwise, error downstream
+      }
+      else obspred <- ptsrast2obspred(pts = obs, rst = pred, rm.dup = rm.dup)
       
     } else {  # end if SpatRaster
       
-      if (length(obs) != length(pred))  stop ("When they are provided as numeric vectors, 'obs' and 'pred' must be of the same length (and in the same order).")
-      obspred <- data.frame(obs = obs, pred = pred)
+      #if (!is.null(obs) && length(obs) != length(pred))  stop ("When they are provided as numeric vectors, 'obs' and 'pred' must be of the same length (and in the same order).")
+      if (is.null(obs)) obspred <- data.frame(pred = pred)
+      else obspred <- data.frame(obs = obs, pred = pred)
     }  # end if vectors
   }  # end of !model
   
@@ -30,9 +39,9 @@ inputMunch <- function(model = NULL, obs = NULL, pred = NULL, rm.dup = FALSE, na
     dat <- na.omit(dat)
     n.out <- nrow(dat)
     if (n.out < n.in)  warning (n.in - n.out, " observation(s) removed due to missing data; ", n.out, " observations actually evaluated.")
-    obs <- dat$obs
-    pred <- dat$pred
-    obspred <- data.frame(obs = obs, pred = pred)
+    
+    if (is.null(obs)) obspred <- data.frame(pred = dat$pred)
+    else obspred <- data.frame(obs = dat$obs, pred = dat$pred)
   }
   
   return(obspred)
