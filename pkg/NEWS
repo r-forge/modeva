@@ -1,5 +1,25 @@
 ==========================================
-modEvA v3.5 (committed 2022-05-16)
+modEvA v3.6 (committed 2022-06-14)
+==========================================
+
+## New functions:
+
+* confusionMatrix
+
+
+## Modified functions:
+
+* confusionLabel
+- added 'getThreshold' to include all 'thresh' options
+- added 'interval' and 'quant' arguments for the above
+- 'rm.dup' now defaults to FALSE to assume less
+
+* threshMeasures
+- moved part of the code to new 'confusionMatrix' function, which is now called from here
+
+
+==========================================
+modEvA v3.5 (committed 2022-05-16) -> CRAN
 ==========================================
 
 ## New functions:
@@ -26,7 +46,7 @@ modEvA v3.5 (committed 2022-05-16)
 - output is SpatRaster if input is too (as also implemented in 'applyThreshold')
 
 * optiThresh
-- fixed bug: Precision and Recall were missing from 'goodness.measures' and did not get optimals
+- fixed bug: Precision and Recall were missing from 'goodness.measures' and didn't get optimals
 
 
 ==========================================

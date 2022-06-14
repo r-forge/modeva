@@ -4,7 +4,7 @@
 Boyce Index
 }
 \description{
-This function computes the (continuous) Boyce index (Boyce 2002; Hirzel et al. 2006) for either: 1) a model object; or 2) two paired numeric vectors of observed (binary, 1 for occurrence vs. 0 for no occurrence records) and predicted (continuous, e.g. occurrence probability) values; or 3) a set of presence point coordinates and a raster map with the predicted values for the entire model evaluation area. This metric is designed for evaluating model predictions against presence/background data (i.e. presence/available, where "available" includes both presences and absences; Boyce 2002), so the function uses the model predictions for the presence sites (ones) against the predictions for the entire dataset (ones and zeros). The code is largely based on the 'ecospat.boyce' function in the \pkg{ecospat} package (version 3.2.1), but it is modified to match the input types in the remaining functions of 'modEvA', and to return a more complete output.
+This function computes the (continuous) Boyce index (Boyce 2002; Hirzel et al. 2006) for either: 1) a model object; or 2) two paired numeric vectors of observed (binary, 1 for occurrence vs. 0 for no occurrence records) and predicted (continuous, e.g. occurrence probability) values; or 3) a set of presence point coordinates and a raster map with the predicted values for the entire model evaluation area. This metric is designed for evaluating model predictions against presence/background data (i.e. presence/available, where "available" includes both presences and absences; Boyce 2002), so the function uses the model predictions for the presence sites (ones) against the predictions for the entire dataset (ones and zeros).
 }
 \usage{Boyce(model = NULL, obs = NULL, pred = NULL, n.bins = NA, 
 bin.width = "default", res = 100, method = "spearman", rm.dup.classes = FALSE, 
@@ -29,9 +29,11 @@ plot.digits = 3, na.rm = TRUE, ...)}
 }
 \details{
 The Boyce index is the correlation between model predictions and area-adjusted frequencies (i.e., observed vs. expected proportion of occurrences) along different prediction classes. In other words, it measures how model predictions differ from a random distribution of the observed presences across the prediction gradient (Boyce et al. 2002). It can take values between -1 and 1. Positive values indicate that presences are more frequent than expected by chance (given availability) in areas with higher predicted values. Values close to zero mean that predictions are no better than random, and negative values indicate counter predictions, i.e. that presences are more frequent in areas with lower predicted values.
+
+The code is largely based on the 'ecospat.boyce' function in the \pkg{ecospat} package (version 3.2.1), but it is modified to match the input types in the remaining functions of 'modEvA', and to return a more complete output.
 }
 \note{
-In bins with overly small sample sizes, the comparison between median prediction and random expectation may not be meaningful, although these bins will equally contribute to the overall Boyce index. When there are bins with less than 30 values, a warning is emitted and their points are plotted in red, but note that 30 is a largely arbitrary number. See the $bins$bin.N section of the console output, and use the 'bin.width' argument to enlarge the bins.
+In bins with overly small sample sizes, the comparison between median prediction and random expectation may not be meaningful, although these bins will equally contribute to the overall Boyce index. When there are bins with less than 30 values, a warning is emitted and their points are plotted in red, but mind that 30 is a largely arbitrary number. See the $bins$bin.N section of the console output, and use the 'bin.width' argument to enlarge the bins.
 }
 \value{
 This function returns a \code{list} with the following components:

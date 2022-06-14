@@ -4,7 +4,7 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh,
                            standardize = TRUE, verbosity = 2, ylim = c(0, 1),
                            interval = 0.01, quant = 0, na.rm = TRUE, 
                            rm.dup = FALSE, ...) {
-  # version 3.3 (6 May 2022)
+  # version 3.4 (14 Jun 2022)
   
   # if (is.null(model)) {
   #   if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object.")
@@ -50,14 +50,20 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh,
     stop("'thresh' must be either a numeric value between 0 and 1, or one of the options obtained with modEvAmethods('getThreshold')")
   if (thresh %in% modEvAmethods("getThreshold"))  thresh <- getThreshold(obs = obs, pred = pred, threshMethod = thresh, interval = interval, quant = quant, na.rm = na.rm)
   
-  obs0 <- obs == 0
-  obs1 <- obs == 1
-  pred0 <- pred < thresh
-  pred1 <- pred >= thresh
-  a <- sum(obs1 & pred1, na.rm = TRUE)
-  b <- sum(obs0 & pred1, na.rm = TRUE)
-  c <- sum(obs1 & pred0, na.rm = TRUE)
-  d <- sum(obs0 & pred0, na.rm = TRUE)
+  # next lines moved to new 'confusionMatrix' function:
+  # obs0 <- obs == 0
+  # obs1 <- obs == 1
+  # pred0 <- pred < thresh
+  # pred1 <- pred >= thresh
+  # a <- sum(obs1 & pred1, na.rm = TRUE)
+  # b <- sum(obs0 & pred1, na.rm = TRUE)
+  # c <- sum(obs1 & pred0, na.rm = TRUE)
+  # d <- sum(obs0 & pred0, na.rm = TRUE)
+  conf_mat <- confusionMatrix(obs = obs, pred = pred, thresh = thresh)
+  a <- conf_mat["pred1", "obs1"]
+  b <- conf_mat["pred1", "obs0"]
+  c <- conf_mat["pred0", "obs1"]
+  d <- conf_mat["pred0", "obs0"]
   N <- a + b + c + d
   
   Nmeasures <- length(measures)
