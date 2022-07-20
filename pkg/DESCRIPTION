@@ -1,7 +1,7 @@
 Package: modEvA
 Type: Package
 Title: Model Evaluation and Analysis
-Version: 3.8
+Version: 3.81
 Date: 2022-07-20
 Author: Barbosa A.M., Brown J.A., Jimenez-Valverde A., Real R.
 Maintainer: A. Marcia Barbosa <ana.marcia.barbosa@gmail.com>

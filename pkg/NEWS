@@ -1,16 +1,22 @@
 ==========================================
-modEvA v3.8 (committed 2022-07-  )
+modEvA v3.81 (committed 2022-07-20)
 ==========================================
-
-## New functions:
-
-* varPartMod?
-
 
 ## Modified functions:
 
 * varPart
-- output table now doesn't say "pure" or "overlap", just the factor nams separated by "_"
+- argument 'model' now accepts glms of any family (but properly tested only for binomial!)
+
+
+==========================================
+modEvA v3.8 (committed 2022-07-20)
+==========================================
+
+## Modified functions:
+
+* varPart
+- new arguments 'model', 'groups', 'method', 'return.models'
+- output table now doesn't say "pure" or "overlap", just the factor names separated by "_"
 - argument 'coloured' changed to 'colr' to avoid English/American spelling issues
 
 
@@ -21,7 +27,7 @@ modEvA v3.7 (committed 2022-07-10)
 ## Modified functions:
 
 * applyThreshold
-- 'thresh' can now be of length 2, for high, intermediate and low predcitions
+- 'thresh' can now be of length 2, for high, intermediate and low predictions
 
 
 ## Other modified files:

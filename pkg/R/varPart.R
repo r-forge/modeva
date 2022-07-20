@@ -11,8 +11,9 @@ function(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, model.type = NULL,
   
   if (!is.null(model)) {
     if (!missing(A) || !missing(B)) warning("Arguments 'A', 'B', etc. are ignored as argument 'model' is provided.")
-    if (!(inherits(model, "glm")) || family(model)$family != "binomial") stop("Argument 'model' is currently only implemented for class 'glm' and family 'binomial'.")
+    if (!(inherits(model, "glm"))) stop("Argument 'model' is currently only implemented for class 'glm'.")
     if (!(method %in% c("Y", "P", "F"))) stop ("Invalid 'method' argument.")
+    if (method == "F" && family(model)$family != "binomial") stop ("method='F' is only applicable to binomial models.")
     
     vars <- names(model$coefficients)[-1]
     
@@ -41,7 +42,7 @@ function(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, model.type = NULL,
     for (fac in 1:length(combinations)) {
       vars_fac <- groups[groups[ , 3] %in% unlist(combinations[fac]), 1]
       form <- as.formula(paste(response, "~", paste(vars_fac, collapse = "+")))
-      mods[[fac]] <- glm(form, data = model$model, family = binomial)
+      mods[[fac]] <- glm(form, data = model$model, family = family(model)$family)
     }
     
     preds <- data.frame(matrix(nrow = nrow(model$model), ncol = 0))
@@ -58,7 +59,8 @@ function(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, model.type = NULL,
     rsq <- rep(NA_real_, length(mods))
     names(rsq) <- names(mods)
     for (f in names(preds)) {
-      linmod <- lm(preds[ , ncol(preds)] ~ preds[ , f])
+      if (family(model)$family == "gaussian") linmod <- lm(model$model[ , 1] ~ preds[ , f])
+      else linmod <- lm(preds[ , ncol(preds)] ~ preds[ , f])
       rsq[f] <- summary(linmod)$r.squared
     }
   }
