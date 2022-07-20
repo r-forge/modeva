@@ -7,11 +7,11 @@ Variation partitioning
 This function performs variation partitioning (Borcard et al. 1992) among two factors (e.g. Ribas et al. 2006) or three factors (e.g. Real et al. 2003) for either multiple linear regression models (LM) or generalized linear models (GLM).
 }
 \usage{
-varPart(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, 
-model.type = NULL, A.name = "Factor A", B.name = "Factor B", 
-C.name = "Factor C", plot = TRUE, plot.digits = 3, cex.names = 1.5, 
-cex.values = 1.2, main = "", cex.main = 2, plot.unexpl = TRUE, 
-coloured = FALSE)
+varPart(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, model.type = NULL, 
+A.name = "Factor A", B.name = "Factor B", C.name = "Factor C", 
+model = NULL, groups = NULL, method = "Y", return.models = FALSE, 
+plot = TRUE, plot.digits = 3, cex.names = 1.5, cex.values = 1.2, main = "", 
+cex.main = 2, plot.unexpl = TRUE, colr = FALSE)
 }
 \arguments{
   \item{A}{numeric value of the R-squared of the regression of the response variable on the variables related to factor 'A'}
@@ -27,6 +27,10 @@ coloured = FALSE)
   \item{B.name}{character string indicating the name of factor 'B'
 }
   \item{C.name}{character string indicating the name of factor 'C' (if there are 3 factors)}
+  \item{model}{a model object, which currently must be of class 'glm' and family 'binomial'. If this argument is provided, all previous arguments are ignored, as they are obtained instead from 'model' and 'groups'.}
+  \item{groups}{data frame with 2 columns containing, respectively, the names of the variables and the names of the groups in which they should be divided. This argument is mandatory (and only used) if 'model' is provided.}
+  \item{method}{"Y" (the default) for the logit link (in the scale of the predictor variables), "P" for the response (in the scale of probability), or "F" for favourability (i.e., probability after removing the effect of modelled prevalence; see 'Fav' function in package \pkg{fuzzySim}). This argument is only used if 'model' is provided.}
+  \item{return.models}{logical value indicating whether to include in the output the model obtained for each group of variables. The default is FALSE. This argument is only used if 'model' is provided.}
   \item{plot}{logical, whether to plot the variation partitioning diagram. The default is TRUE.}
   \item{plot.digits}{integer value of the number of digits to which to \code{\link{round}} the values in the plot. The default is 3.}
   \item{cex.names}{numeric value indicating character expansion factor to define the size of the names of the factors displayed in the plot.}
@@ -34,14 +38,14 @@ coloured = FALSE)
   \item{main}{optional character string indicating the main title for the plot. The default is empty.}
   \item{cex.main}{numeric value indicating character expansion factor to define the font size of the plot title (if provided).}
   \item{plot.unexpl}{logical value indicating whether the amount of unexplained variation should be included in the plot. The default is TRUE.}
-  \item{coloured}{logical value indicating whether or not to colour the circles in the plot. The default is FALSE for back-compatibility.}
+  \item{colr}{logical value indicating whether or not to colour the circles in the plot. The default is FALSE for back-compatibility.}
 }
 \details{
 If you have linear models, input data for 'varPart' are the coefficients of determination (R-squared values) of the linear regressions of the target variable on all the variables in the model, on the variables related to each particular factor, and (when there are 3 factors) on the variables related to each pair of factors. The outputs are the amounts of variance explained exclusively by each factor, the amounts explained exclusively by the overlapping effects of each pair of factors, and the amount explained by the overlap of the 3 factors if this is the case (e.g. Real et al. 2003). The amount of variation not explained by the complete model is also provided.
 
 If you have generalized linear models (GLMs) such as logistic regression (see \code{\link{glm}}), you have no true R-squared values; inputs can then be the squared coefficients of correlation between the model predictions given by each factor (or pair of factors) and the predictions of the complete model (e.g. Munoz & Real 2006), or the R-squared values of the corresponding logit (y) functions (Real et al. 2013), or an adjusted R-squared (De Araujo et al. 2013). In these cases, the "total variation" (AB or ABC, depending on whether you have two or three factors) is 1 (correlation of the predictions of the complete model with themselves), and output values are not the total amounts of variance (of the target variable) explained by factors and overlaps, but rather their proportional contribution to the total variation explained by the model.}
 \value{
-The output consists of a data frame indicating the proportion of variance accounted for by each of the factors, and (if 'plot = TRUE') a Venn diagram of the contributions of each factor.
+This function returns a data frame indicating the proportion of variance accounted for by each of the factors or groups, and (if 'plot = TRUE') a Venn diagram of the contributions of each factor. If 'return.models=TRUE', the outputs includes also the model obtained for each group of variables.
 }
 \references{
 Borcard D., Legendre P., Drapeau P. (1992) Partialling out the spatial component of ecological variation. Ecology 73: 1045-1055
@@ -76,7 +80,7 @@ varPart(A = 0.456, B = 0.315, AB = 0.852, A.name = "Spatial",
 B.name = "Environmental", main = "Small whale")
 
 varPart(A = 0.456, B = 0.315, AB = 0.852, A.name = "Spatial", 
-B.name = "Environmental", main = "Small whale", col = TRUE)
+B.name = "Environmental", main = "Small whale", colr = TRUE)
 
 
 # with 3 factors:
@@ -87,11 +91,11 @@ C.name = "Environmental", main = "Small whale")
 
 varPart(A = 0.456, B = 0.315, C = 0.281, AB = 0.051, BC = 0.444, 
 AC = 0.569, ABC = 0.624, A.name = "Spatial", B.name = "Human", 
-C.name = "Environmental", main = "Small whale", col = TRUE)
+C.name = "Environmental", main = "Small whale", colr = TRUE)
 
 
 # if you have a generalized linear model (GLM), 
-# you can use squared correlation coefficients of the
+# you can use squared Pearson correlation coefficients of the
 # predictions of each factor with those of the complete model:
 
 varPart(A = (-0.005)^2, B = 0.698^2, C = 0.922^2, AB = 0.696^2, 
@@ -100,4 +104,19 @@ B.name = "Climatic", C.name = "Geographic", main = "Big bird")
 
 # but "Unexplained variation" can be deceiving in these cases
 # (see Details); try also adding 'plot.unexpl = FALSE'
+
+
+# if you have a model object and a table classifying the variables into groups:
+
+data(rotif.mods)
+mod <- rotif.mods$models[[2]]
+
+head(mod$model)
+vars <- colnames(mod$model)[-1]
+groups <- c("Spatial", "Spatial", "Climate", "Climate", "Climate", "Human")
+var_groups <- data.frame(vars, groups)
+var_groups
+
+varPart(model = mod, groups = var_groups)
+varPart(model = mod, groups = var_groups, method = "P")
 }

@@ -1,4 +1,20 @@
 ==========================================
+modEvA v3.8 (committed 2022-07-  )
+==========================================
+
+## New functions:
+
+* varPartMod?
+
+
+## Modified functions:
+
+* varPart
+- output table now doesn't say "pure" or "overlap", just the factor nams separated by "_"
+- argument 'coloured' changed to 'colr' to avoid English/American spelling issues
+
+
+==========================================
 modEvA v3.7 (committed 2022-07-10)
 ==========================================
 
