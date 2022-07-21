@@ -9,9 +9,9 @@ This function performs variation partitioning (Borcard et al. 1992) among two fa
 \usage{
 varPart(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, model.type = NULL, 
 A.name = "Factor A", B.name = "Factor B", C.name = "Factor C", 
-model = NULL, groups = NULL, method = "Y", return.models = FALSE, 
-plot = TRUE, plot.digits = 3, cex.names = 1.5, cex.values = 1.2, main = "", 
-cex.main = 2, plot.unexpl = TRUE, colr = FALSE)
+model = NULL, groups = NULL, pred.type = "Y", cor.method = "pearson", 
+return.models = FALSE, plot = TRUE, plot.digits = 3, cex.names = 1.5, 
+cex.values = 1.2, main = "", cex.main = 2, plot.unexpl = TRUE, colr = FALSE)
 }
 \arguments{
   \item{A}{numeric value of the R-squared of the regression of the response variable on the variables related to factor 'A'. NOTE: INSTEAD of this and the next 10 arguments, you can use arguments 'model' and 'groups' below.}
@@ -29,7 +29,8 @@ cex.main = 2, plot.unexpl = TRUE, colr = FALSE)
   \item{C.name}{character string indicating the name of factor 'C' (if there are 3 factors)}
   \item{model}{a model object of class 'glm' (for linear models, instead of 'lm' you can use use 'glm' with family=gaussian). If this argument is provided, all previous arguments are ignored, as they are computed instead from 'model' and 'groups'.}
   \item{groups}{data frame with 2 columns, the 1st one containing the names of the variables, and the 2nd one containing the names of the factors in which they should be grouped (e.g. climatic, human, topographic) for the variation partitioning. This argument is required (and only used) if 'model' is provided.}
-  \item{method}{"Y" (the default) for computing R-squareds on the 'link' function (in the scale of the predictor variables), "P" for using the 'response' (e.g. in the scale of probability for models of family binomial), or "F" for using favourability (i.e., probability after removing the effect of modelled prevalence, as in the 'Fav' function of package \pkg{fuzzySim}); see Details. This argument is only used if 'model' is provided.}
+  \item{pred.type}{character value specifying the type of predictions among which to calculate the R-squared values, or squared correlations. Can be "Y" (the default) for the 'link' function (in the scale of the predictor variables), "P" for using the 'response' (e.g. in the scale of probability for models of family binomial), or "F" for using favourability (i.e., probability after removing the effect of modelled prevalence, as in the 'Fav' function of package \pkg{fuzzySim}); see Details. This argument is only used if 'model' is provided.}
+  \item{cor.method}{character value to pass to the 'method' argument of \code{\link{cor}} specifying the correlation coefficient to use. The default is "pearson". This argument is only used if 'model' is provided.}
   \item{return.models}{logical value indicating whether to include in the output the model obtained for each group of variables. The default is FALSE. This argument is only used if 'model' is provided.}
   \item{plot}{logical, whether to plot the variation partitioning diagram. The default is TRUE.}
   \item{plot.digits}{integer value of the number of digits to which to \code{\link{round}} the values in the plot. The default is 3.}
@@ -43,15 +44,19 @@ cex.main = 2, plot.unexpl = TRUE, colr = FALSE)
 \details{
 If you have linear models (i.e. GLMs of family Gaussian), input data for 'varPart' are the coefficients of determination (R-squared values) of the linear regressions of the response variable on all the variables in the model, on the variables related to each particular factor, and (when there are 3 factors) on the variables related to each pair of factors. The outputs are the amounts of variance explained exclusively by each factor, the amounts explained exclusively by the overlapping effects of each pair of factors, and the amount explained by the overlap of the 3 factors if this is the case (e.g. Real et al. 2003). The amount of variation not explained by the complete model is also provided.
 
-If you have generalized linear models (GLMs) such as logistic regression (see \code{\link{glm}}), you have no true R-squared values; inputs can then be the squared coefficients of correlation between the model predictions given by each factor (or pair of factors) and the predictions of the complete model (e.g. Munoz & Real 2006), or the R-squared values of the corresponding logit (y) functions (Real et al. 2013), or an adjusted R-squared (De Araujo et al. 2014). In these cases, the "total variation" (AB or ABC, depending on whether you have two or three factors) is 1 (correlation of the predictions of the complete model with themselves), and output values are not the total amounts of variance (of the response variable) explained by factors and overlaps, but rather their proportional contribution to the total variation explained by the model.
+If you have generalized linear models (GLMs) such as logistic regression (see \code{\link{glm}}), you have no true R-squared values; inputs can then be the squared coefficients of correlation between the model predictions given by each factor (or pair of factors) and the predictions of the complete model. Predictions can be probability (e.g. Munoz & Real 2006), favourability (Baez et al. 2012, Estrada et al. 2016), or the 'logit' linear predictor (Real et al. 2013); the correltion coefficient can be e.g. Pearson's (Munoz & Real 2006) or Spearman's (Baez et al. 2012). An adjusted R-squared can also be used (De Araujo et al. 2014). In GLMs, the "total variation" (AB or ABC, depending on whether you have two or three factors) is 1 (correlation of the predictions of the complete model with themselves), and output values are not the total amounts of variance (of the response variable) explained by variable groups and their overlaps, but rather their proportional contribution to the total variation explained by the model.
 }
 \value{
 This function returns a data frame indicating the proportion of variance accounted for by each of the factors or groups, and (if 'plot = TRUE') a Venn diagram of the contributions of each factor or overlap. If 'return.models=TRUE', the output includes also the model obtained for each group of variables.
 }
 \references{
+Baez J.C., Estrada A., Torreblanca D. & Real R (2012) Predicting the distribution of cryptic species: the case of the spur-thighed tortoise in Andalusia (southern Iberian Peninsula). Biodiversity and Conservation 21: 65-78
+
 Borcard D., Legendre P., Drapeau P. (1992) Partialling out the spatial component of ecological variation. Ecology 73: 1045-1055
 
 De Araujo C.B., Marcondes-Machado L.O. & Costa G.C. (2014) The importance of biotic interactions in species distribution models: a test of the Eltonian noise hypothesis using parrots. Journal of Biogeography 41: 513-523
+
+Estrada A., Delgado M.P., Arroyo B., Traba J., Morales M.B. (2016) Forecasting Large-Scale Habitat Suitability of European Bustards under Climate Change: The Role of Environmental and Geographic Variables. PLoS ONE 11(3): e0149810
 
 Munoz A.-R. & Real R. (2006) Assessing the potential range expansion of the exotic monk parakeet in Spain. Diversity and Distributions 12: 656-665
 
@@ -119,5 +124,5 @@ var_groups <- data.frame(vars = vars, groups = c("Spatial", "Spatial", "Climate"
 var_groups
 
 varPart(model = mod, groups = var_groups)
-varPart(model = mod, groups = var_groups, method = "P", colr = TRUE)
+varPart(model = mod, groups = var_groups, pred.type = "P", colr = TRUE)
 }

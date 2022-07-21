@@ -1,19 +1,20 @@
 varPart <-
 function(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, model.type = NULL, 
          A.name = "Factor A", B.name = "Factor B", C.name = "Factor C", 
-         model = NULL, groups = NULL, method = "Y", return.models = FALSE, 
-         plot = TRUE, plot.digits = 3, cex.names = 1.5, cex.values = 1.2, 
-         main = "", cex.main = 2, plot.unexpl = TRUE, colr = FALSE) {
+         model = NULL, groups = NULL, pred.type = "Y", cor.method = "pearson", 
+         return.models = FALSE, plot = TRUE, plot.digits = 3, cex.names = 1.5, 
+         cex.values = 1.2, main = "", cex.main = 2, plot.unexpl = TRUE, 
+         colr = FALSE) {
   
-  # version 2.0 (20 Jul 2022)
+  # version 2.1 (21 Jul 2022)
   
   if (!is.null(model.type)) message ("NOTE: Argument 'model.type' is no longer used.")
   
   if (!is.null(model)) {
     if (!missing(A) || !missing(B)) warning("Arguments 'A', 'B', etc. are ignored as argument 'model' is provided.")
     if (!(inherits(model, "glm"))) stop("Argument 'model' is currently only implemented for class 'glm'.")
-    if (!(method %in% c("Y", "P", "F"))) stop ("Invalid 'method' argument.")
-    if (method == "F" && family(model)$family != "binomial") stop ("method='F' is only applicable to binomial models.")
+    if (!(pred.type %in% c("Y", "P", "F"))) stop ("Invalid 'pred.type' argument.")
+    if (pred.type == "F" && family(model)$family != "binomial") stop ("pred.type='F' is only applicable to binomial models.")
     
     vars <- names(model$coefficients)[-1]
     
@@ -46,11 +47,11 @@ function(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, model.type = NULL,
     }
     
     preds <- data.frame(matrix(nrow = nrow(model$model), ncol = 0))
-    if (method == "Y") type <- "link"  else type <- "response"
+    if (pred.type == "Y") type <- "link"  else type <- "response"
     for (m in names(mods)) {
       preds[ , m] <- predict(mods[[m]], type = type)
     }
-    if (method == "F") {
+    if (pred.type == "F") {
       n1 <- sum(model$y == 1)
       n0 <- sum(model$y == 0)
       preds <- as.data.frame(sapply(preds, function(p) (p/(1-p)) / ((n1/n0) + (p/(1-p)))))  # can't import from fuzzySim because fuzzySim imports modEvA
@@ -59,9 +60,12 @@ function(A, B, C = NA, AB, AC = NA, BC = NA, ABC = NA, model.type = NULL,
     rsq <- rep(NA_real_, length(mods))
     names(rsq) <- names(mods)
     for (f in names(preds)) {
-      if (family(model)$family == "gaussian") linmod <- lm(model$model[ , 1] ~ preds[ , f])
-      else linmod <- lm(preds[ , ncol(preds)] ~ preds[ , f])
-      rsq[f] <- summary(linmod)$r.squared
+      # if (family(model)$family == "gaussian") linmod <- lm(model$model[ , 1] ~ preds[ , f])
+      # else linmod <- lm(preds[ , ncol(preds)] ~ preds[ , f])
+      # rsq[f] <- summary(linmod)$r.squared
+      if (family(model)$family == "gaussian") corr <- cor(model$model[ , 1], preds[ , f], method = cor.method)
+      else corr <- cor(preds[ , ncol(preds)], preds[ , f], method = cor.method)
+      rsq[f] <- corr ^ 2
     }
   }
   

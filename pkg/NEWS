@@ -1,4 +1,15 @@
 ==========================================
+modEvA v3.82 (committed 2022-07-21)
+==========================================
+
+## Modified functions:
+
+* varPart
+- added argument 'cor.method'
+- changed previous argument name 'method' to 'pred.type', to avoid confusion with the above
+
+
+==========================================
 modEvA v3.81 (committed 2022-07-20)
 ==========================================
 
