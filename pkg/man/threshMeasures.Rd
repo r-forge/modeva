@@ -8,7 +8,7 @@ This function calculates a number of measures for evaluating the classification 
 }
 \usage{
 threshMeasures(model = NULL, obs = NULL, pred = NULL, thresh,
-measures = modEvAmethods("threshMeasures"), simplif = FALSE, 
+measures = modEvAmethods("threshMeasures"), simplif = FALSE,
 plot = TRUE, plot.ordered = FALSE, standardize = TRUE, verbosity = 2,
 ylim = c(0, 1), interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
 }
@@ -16,8 +16,8 @@ ylim = c(0, 1), interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
   \item{obs}{alternatively to 'model' and together with 'pred', a numeric vector of observed presences (1) and absences (0) of a binary response variable. Alternatively (and if 'pred' is a 'SpatRaster'), a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points, in which case the 'obs' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. Alternatively (and if 'obs' is a set of point coordinates), a 'SpatRaster' map of the predicted values for the entire evaluation region, in which case the 'pred' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
-  \item{thresh}{threshold to separate predicted presences from predicted absences in 'model' or 'pred'; can be a numeric value between 0 and 1, or any of the options provided with \code{modEvAmethods("getThreshold")}. See Details in ?\code{\link{getThreshold}} for a description of the available options, and also Details below for a more informed choice.}
-  \item{measures}{character vector of the evaluation measures to use. By default, all measures available in 'modEvAmethods("threshMeasures")' are calculated.}
+  \item{thresh}{threshold to separate predicted presences from predicted absences in 'model' or 'pred'; can be a numeric value between 0 and 1, or any of the options provided with \code{modEvAmethods("getThreshold")}. See Details in \code{\link{getThreshold}} for a description of the available options, and also Details below for a more informed choice.}
+  \item{measures}{character vector of the evaluation measures to use. By default, all measures available through \code{modEvAmethods("getThreshold")} are calculated.}
   \item{simplif}{logical, whether to calculate a faster, simplified version. Used internally by other functions in the package. Defaults to FALSE.}
   \item{plot}{logical, whether to produce a barplot of the calculated measures. Defaults to TRUE.}
   \item{plot.ordered}{logical, whether to plot the measures in decreasing order rather than in input order. Defaults to FALSE.}
@@ -38,15 +38,12 @@ While most of these threshold-based measures range from 0 to 1, some of them (su
 This function can also be used to calculate the agreement between different presence-absence (or other types of binary) data, as e.g. Barbosa et al. (2012) did for comparing mammal distribution data from atlas and range maps. Notice, however, that some of these measures, such as TSS or NMI, are not symmetrical (obs vs. pred is different from pred vs. obs).
 }
 \value{
-If 'simplif = TRUE', the output is a numeric matrix with the name and value of each measure. If 'simplif = FALSE' (the default), the ouptut is a list with the following components:
+If 'simplif=TRUE', the output is a numeric matrix with the name and value of each measure. If 'simplif=FALSE' (the default), the ouptut is a list with the following components:
   \item{N}{the number of observations (records) in the analysis.}
   \item{Prevalence}{the prevalence (proportion of presences) in 'obs'.}
   \item{Threshold}{the threshold value used to calculate the 'measures'.}
   \item{ConfusionMatrix}{the confusion matrix obtained with the used threshold.}
   \item{ThreshMeasures}{a numeric matrix with the name and value of each measure.}
-}
-\note{
-"Sensitivity" is the same as "Recall", and "PPP" (positive predictive power) is the same as "Precision". "F1score"" is the harmonic mean of precision and recall.
 }
 \references{
 Allouche O., Tsoar A. & Kadmon R. (2006) Assessing the accuracy of species distribution models: prevalence, kappa and the true skill statistic (TSS). Journal of Applied Ecology 43: 1223-1232.
@@ -93,7 +90,7 @@ threshMeasures(model = mod, thresh = "preval")
 
 threshMeasures(model = mod, plot.ordered = TRUE, thresh = "preval")
 
-threshMeasures(model = mod, measures = c("CCR", "TSS", "kappa"), 
+threshMeasures(model = mod, measures = c("CCR", "TSS", "kappa"),
 thresh = "preval")
 
 threshMeasures(model = mod, plot.ordered = TRUE, thresh = "preval")

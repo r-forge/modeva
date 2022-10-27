@@ -4,8 +4,8 @@ optiThresh <-
            optimize = modEvAmethods("optiThresh"), simplif = FALSE,
            plot = TRUE, sep.plots = FALSE, xlab = "Threshold",
            na.rm = TRUE, rm.dup = FALSE, ...) {
-    # version 3.0 (6 May 2022)
-    
+    # version 3.1 (27 Oct 2022)
+
     wrong.measures <- measures[which(!(measures %in% modEvAmethods("threshMeasures")))]
     wrong.optimizers <- optimize[which(!(optimize %in% modEvAmethods("optiThresh")))]
     if (length(wrong.measures) > 0) {
@@ -16,17 +16,20 @@ optiThresh <-
       warning("'", paste(wrong.optimizers, collapse = ", "), "'", " invalid under 'optimize'; see modEvAmethods('optiThresh') for available options.")
       optimize <- optimize[!(optimize %in% wrong.optimizers)]
     }
-    
+
     obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
     obs <- obspred[ , "obs"]
     pred <- obspred[ , "pred"]
-    
+
+    if (all(obs == 0)) warning ("All obs = 0.")
+    if (all(obs == 1)) warning ("All obs = 1.")
+
     # if (!is.null(model)) {
     #   model <- NULL  # so the message is not repeated for each threshold
     # }  # end if model
-    
+
     input.measures <- measures
-    
+
     if ("minSensSpecDiff" %in% optimize | "maxSensSpecSum" %in% optimize) {
       if (!("Sensitivity" %in% measures)) {
         measures <- c(measures, "Sensitivity")
@@ -35,41 +38,41 @@ optiThresh <-
         measures <- c(measures, "Specificity")
       }  # end if !Specificity
     }  # end if minSensSpecDiff
-    
+
     if("maxKappa" %in% optimize & !("kappa" %in% measures)) {
       measures <- c(measures, "kappa")
     }
-    
+
     if("maxTSS" %in% optimize & !("TSS" %in% measures)) {
       measures <- c(measures, "TSS")
     }
-    
+
     thresholds <- seq(from = 0, to = 1, by = interval)
     Nthresholds <- length(thresholds)
     Nmeasures <- length(measures)
-    all.thresholds <- data.frame(matrix(data = NA, 
+    all.thresholds <- data.frame(matrix(data = NA,
                                         nrow = Nthresholds,
-                                        ncol = Nmeasures), 
+                                        ncol = Nmeasures),
                                  row.names = thresholds)
     colnames(all.thresholds) = measures
-    
+
     for (t in 1 : Nthresholds) for (m in 1 : Nmeasures) {
       all.thresholds[t, m] <- threshMeasures(obs = obs, pred = pred,
                                              thresh = thresholds[t],
                                              measures = measures[m],
                                              standardize = FALSE, simplif = TRUE)
     }  # end for t for m
-    
+
     if (simplif) {  # shorter version for use with e.g. the optiPair function
       return(all.thresholds)
     }  # end if simplif
     else {
       results <- list(all.thresholds = all.thresholds)  # start a list of results
-      
+
       input.optimize <- optimize
-      
+
       if (plot == TRUE & !("each" %in% optimize)) optimize <- c("each", optimize)
-      
+
       if ("each" %in% optimize) {
         optimals.each <- data.frame(matrix(data = NA, nrow = Nmeasures, ncol = 4))
         colnames(optimals.each) <- c("measure", "threshold", "value", "type")
@@ -77,7 +80,7 @@ optiThresh <-
         goodness.measures <- c("CCR", "Sensitivity", "Specificity", "PPP", "NPP", "kappa", "TSS", "NMI", "OddsRatio", "F1score", "Precision", "Recall")
         badness.measures <- c("Omission", "Commission", "Misclass", "UPR", "OPR")
         change.measures <- c("PPI", "PAI")
-        
+
         for (m in 1 : Nmeasures) {
           if (measures[m] %in% (goodness.measures)) {  # optimal is maximum
             optimals.each[m, "threshold"] <- as.numeric(
@@ -105,17 +108,17 @@ optiThresh <-
         if ("each" %in% input.optimize)  results <- c(results,
                                                       optimals.each = list(optimals.each))  # add this to results
       }  # end if each
-      
+
       criteria <- optimize[optimize != "each"]
       Ncriteria <- length(criteria)
-      
+
       if (Ncriteria > 0) {
-        
+
         optimals.criteria <- data.frame(matrix(data = NA, nrow = Nmeasures,
                                                ncol = Ncriteria))
         rownames(optimals.criteria) <- measures
         colnames(optimals.criteria) <- criteria
-        
+
         if ("preval" %in% criteria) {
           for (m in 1 : Nmeasures) {
             optimals.criteria[m, "preval"] <- threshMeasures(
@@ -123,7 +126,7 @@ optiThresh <-
               standardize = FALSE, simplif = TRUE)
           }
         }  # end if preval
-        
+
         if ("minSensSpecDiff" %in% criteria) {
           all.thresholds$SensSpecDiff <- with(all.thresholds,
                                               abs(Sensitivity - Specificity))
@@ -134,7 +137,7 @@ optiThresh <-
               measures = measures[m], standardize = FALSE, simplif = TRUE)
           }
         }
-        
+
         if ("maxSensSpecSum" %in% criteria) {
           all.thresholds$SensSpecSum <- with(all.thresholds,
                                              Sensitivity + Specificity)
@@ -145,7 +148,7 @@ optiThresh <-
               measures = measures[m], standardize = FALSE, simplif = TRUE)
           }
         }
-        
+
         if ("maxKappa" %in% criteria) {
           if (!("kappa" %in% measures)) {
             for (t in 1 : Nthresholds) {
@@ -161,7 +164,7 @@ optiThresh <-
               standardize = FALSE, simplif = TRUE)
           }
         }
-        
+
         if ("maxTSS" %in% criteria) {
           if (!("TSS" %in% measures)) {
             for (t in 1 : Nthresholds) {
@@ -177,17 +180,17 @@ optiThresh <-
               standardize = FALSE, simplif = TRUE)
           }
         }
-        
+
         if ("0.5" %in% criteria) {
           for (m in 1 : Nmeasures) {
             optimals.criteria[m,"0.5"] <- all.thresholds[rownames(
               all.thresholds) == 0.5, m]
           }
         }
-        
+
         results <- c(results, optimals.criteria = list(optimals.criteria))  # add this to results
       }  # end if Ncriteria > 0
-      
+
       if (plot) {
         opar <- par(no.readonly = TRUE)
         on.exit(par(opar))
@@ -206,8 +209,8 @@ optiThresh <-
           }
         }  # end for m
       }  # end if plot
-      
+
       return(results)
-      
+
     }  # end if simplif else
   }

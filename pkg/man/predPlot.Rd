@@ -1,27 +1,27 @@
 \name{predPlot}
 \alias{predPlot}
 \title{
-Plot predicted values for presences and absences, classified according to a prediction threshold.
+Plot predicted values for presences and absences, optionally classified according to a prediction threshold.
 }
 \description{
-This function plots predicted values separated into observed presences and absences and coloured according to whether they are above or below a given prediction threshold. The plot imitates (with permission from the author) one of the graphical outputs of the 'summary' of models built with the \pkg{embarcadero} package (Carlson, 2020), but it can be applied to any 'glm' object or any set of observed and predicted values, and it allows specifying a user-defined threshold.
+This function plots predicted values separated into observed presences and absences and (optionally and by default) coloured according to whether they are above or below a given prediction threshold. The plot imitates (with permission from the author) one of the graphical outputs of the 'summary' of models built with the \pkg{embarcadero} package (Carlson, 2020), but it can be applied to other types of models or to a set of observed and predicted values, and it allows specifying a user-defined threshold.
 }
 \usage{
-predPlot(model = NULL, obs = NULL, pred = NULL, thresh = "preval", 
-main = "Classified predicted values", legend.pos = "n", pch = 1, cex = 0.5, 
-col = c("black", "grey"), na.rm = TRUE, rm.dup = FALSE, interval = 0.01, 
+predPlot(model = NULL, obs = NULL, pred = NULL, thresh = "preval",
+main = "Classified predicted values", legend.pos = "n", pch = 1, cex = 0.5,
+col = c("black", "grey"), na.rm = TRUE, rm.dup = FALSE, interval = 0.01,
 quant = 0)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
   \item{obs}{alternatively to 'model' and together with 'pred', a numeric vector of observed presences (1) and absences (0) of a binary response variable. Alternatively (and if 'pred' is a 'SpatRaster'), a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points, in which case the 'obs' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. Alternatively (and if 'obs' is a set of point coordinates), a 'SpatRaster' map of the predicted values for the entire evaluation region, in which case the 'pred' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
-  \item{thresh}{threshold value to separate predicted presences from predicted absences in 'pred'; can be "preval" (the default), to use the \code{\link{prevalence}} (i.e. proportion of presences) in 'obs', or any real number between 0 and 1. This value will be used to draw a vertical line on the plot and to colour the points (predicted values) according to whether they fall below or above the threshold. Run modEvAmethods("getThreshold") for available options, and see Details in \code{\link{getThreshold}} for their description.}
+  \item{thresh}{threshold value to separate predicted presences from predicted absences in 'pred'; can be "preval" (the default), to use the \code{\link{prevalence}} (i.e. proportion of presences) in 'obs'; or any real number between 0 and 1; or any of the options available on modEvAmethods("getThreshold") -- see Details in \code{\link{getThreshold}} for their description. This value, if not NA or NULL, will be used to draw a vertical line on the plot and to colour the points (predicted values) according to whether they fall above or below the threshold.}
   \item{main}{Main title for the plot.}
   \item{legend.pos}{character value specifying the position for the legend on the plot. Can be "bottomleft", "bottom", "bottomright", "topleft", "left", "top", "topright", "right", "center", or NA or "n" for no legend (the default). Partial argument matching is used.}
   \item{pch}{plotting character for the presences and absences (see \code{\link{par}}).}
   \item{cex}{relative size of the plotting character (see \code{\link{par}}).}
-  \item{col}{vector of length 2 indicating the colours with which to plot predicted presences and absences (points above and below the threshold), respectively.}
+  \item{col}{vector of length 2 indicating the colours with which to plot predicted presences and absences (points above and below the threshold), respectively. If 'thresh' is NA or NULL, all points will have the first of the specified colours.}
   \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
   \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
   \item{interval}{Argument to pass to \code{\link{optiThresh}} indicating the interval between the thresholds to test, if 'thresh' implies optimizing a threshold-based measure. The default is 0.01. Smaller values may provide more precise results but take longer to compute.}

@@ -1,4 +1,24 @@
 ==========================================
+modEvA v3.8.3 (committed 2022-10-27)
+==========================================
+
+## Modified functions:
+
+* predPlot
+- 'thresh' can now be set to NA or NULL
+- legend is also changed accordingly
+
+* optiThresh
+- warning emitted if obs are all 0 or all 1 (which may originate errorr) - propagates to optiPair
+
+
+## Other modified files:
+
+* MillerCalib.Rd
+- added explanations and examples on applicability to non-logit link models and non-probability predictions
+
+
+==========================================
 modEvA v3.82 (committed 2022-07-21)
 ==========================================
 

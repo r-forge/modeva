@@ -16,7 +16,7 @@ evaluate(a, b, c, d, N = NULL, measure = "CCR")
 }
   \item{d}{number of correctly predicted absences}
   \item{N}{total number of cases. If NULL (the default), it is calculated automatically by adding up a, b, c and d.)}
-  \item{measure}{a character vector of length 1 indicating the the evaluation measure to use. Type 'modEvAmethods("threshMeasures")' for available options.}
+  \item{measure}{a character vector of length 1 indicating the the evaluation measure to use. Type \code{modEvAmethods("threshMeasures")} for available options.}
 }
 \details{
 A number of measures can be used to evaluate continuous model predictions against observed binary occurrence data (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013). The 'evaluate' function can calculate a few threshold-based classification measures from the values of a confusion matrix obtained at a particular threshold. The 'evaluate' function is used internally by \code{\link{threshMeasures}}. It can also be accessed directly by the user, but it is usually more practical to use 'threshMeasures', which calculates the confusion matrix automatically.
@@ -25,7 +25,7 @@ A number of measures can be used to evaluate continuous model predictions agains
 The value of the specified evaluation measure.
 }
 \note{
-Some measures (e.g. NMI, odds ratio) don't work with zeros in (some parts of) the confusion matrix. Also, TSS and NMI are not symmetrical, i.e. "obs" vs "pred" different from "pred" vs "obs".
+Some measures (e.g. NMI, odds ratio) don't work with zeros in (some parts of) the confusion matrix. Also, TSS and NMI are not symmetrical, i.e. "obs" vs "pred" is different from "pred" vs "obs".
 }
 \references{
 Barbosa A.M., Real R., Munoz A.R. & Brown J.A. (2013) New measures for assessing model equilibrium and prediction mismatch in species distribution models. Diversity and Distributions, 19: 1333-1338
