@@ -1,4 +1,14 @@
 ==========================================
+modEvA v3.8.4 (committed 2022-10-28)
+==========================================
+
+## Modified functions:
+
+* applyThreshold
+- added "as.numeric" to 'sort(tresh)', otherwise it was character if one of the input 'thresh' criteria was character, which generated errors downstream
+
+
+==========================================
 modEvA v3.8.3 (committed 2022-10-27)
 ==========================================
 
