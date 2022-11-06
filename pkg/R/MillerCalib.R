@@ -1,21 +1,21 @@
 MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line.col = "black", diag = TRUE, diag.col = "grey", plot.values = TRUE, digits = 2, xlab = "", ylab = "", main = "Miller calibration", na.rm = TRUE, rm.dup = FALSE, ...) {
   # version 1.8 (6 May 2022)
-  
+
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
-  
+
   stopifnot(
     obs %in% c(0, 1)#,
     #pred >= 0,
     #pred <= 1
   )
-  
+
   if (any(pred < 0) | any(pred > 1)) warning("Some of your predicted values are outside the [0, 1] interval; are you sure these represent probabilities?")
-  
+
   pred[pred == 0] <- 2e-16  # avoid NaN in log below
   pred[pred == 1] <- 1 - 2e-16  # avoid NaN in log below
-  
+
   logit <- log(pred / (1 - pred))
   mod <- glm(obs ~ logit, family = binomial)
   intercept <- mod$coef[[1]]
@@ -25,7 +25,7 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line
   #slope.t <- (slope - 1) / std.err
   #slope.p <- pt(slope.t, df = mod$df.residual)  # http://stats.stackexchange.com/questions/111559/test-model-coefficient-regression-slope-against-some-value
   # both values look wrong...
-  
+
   if (plot) {
     ymin <- min(0, intercept)
     ymax <- max(1, intercept + 0.3)
@@ -38,7 +38,7 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line
       text(x = 1, y = ymin + 0.15 * (ymax - ymin), adj = 1, labels = plotext)
     }  # end if plot.values
   }  # end if plot
-  
+
   # return(list(intercept = intercept, slope = slope, slope.pvalue = slope.p))
   list(intercept = intercept, slope = slope)
 }  # end MillerCalib function

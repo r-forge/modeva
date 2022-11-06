@@ -1,9 +1,12 @@
 MESS <- function(V, P, id.col = NULL, verbosity = 2){
   # version 1.6, 8 Sep 2021
 
+  # if (inherits(V, "SpatRaster")) V <- terra::values(V)
+  # if (inherits(P, "SpatRaster")) P <- terra::values(P)
+
   index.V <- 1:nrow(V)
   index.P <- 1:nrow(P)
-  
+
   if (is.null(id.col)) {
     if (ncol(V) != ncol(P))  stop ("The number of variables in V and P does not match.")
   } else {  # if id.col
@@ -11,7 +14,7 @@ MESS <- function(V, P, id.col = NULL, verbosity = 2){
     P.input <- P
     P <- P[ , -id.col]
   }
-  
+
   n.vars <- ncol(V)
   n.varP <- ncol(P)
   nrow.P <- nrow(P)

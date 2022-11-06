@@ -1,6 +1,19 @@
-==========================================
-modEvA v3.8.4 (committed 2022-10-28)
-==========================================
+============================================
+modEvA v3.8.5 (committed 2022-11-06)
+============================================
+
+## Modified functions:
+
+* ptsrast2obspred
+- added (or 'rm.dup.points=TRUE' for 'Boyce' function) to warning, otherwise Boyce would say "argument X matches multiple formal arguments"
+
+* MilerCalib
+- added final empty line
+
+
+============================================
+modEvA v3.8.4 (committed 2022-10-28) -> CRAN
+============================================
 
 ## Modified functions:
 
