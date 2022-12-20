@@ -1,4 +1,15 @@
 ============================================
+modEvA v3.8.6 (committed 2022-12-20)
+============================================
+
+## Modified functions:
+
+* Dsquared
+- 'family' is now guessed from data (with message) if null
+- extended to models other than GLM
+
+
+============================================
 modEvA v3.8.5 (committed 2022-11-06)
 ============================================
 

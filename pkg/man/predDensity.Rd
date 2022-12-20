@@ -7,7 +7,7 @@ Plot the density of predicted values for presences and absences.
 This function produces a histogram and/or a kernel density plot of predicted values for a binomial GLM, by default separately for the observed presences and absences, given a model object or a vector of predicted values and (optionally) a vector of the corresponding observed values.
 }
 \usage{
-predDensity(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
+predDensity(model = NULL, obs = NULL, pred = NULL, separate = TRUE,
 type = c("both"), legend.pos = "topright", main = "Density of predicted values",
 na.rm = TRUE, rm.dup = FALSE)
 }
@@ -47,7 +47,7 @@ predDensity(model = mod, type = "histogram")
 
 predDensity(model = mod, type = "density")
 
-# you can also use 'predDensity' with vectors of 
+# you can also use 'predDensity' with vectors of
 # observed and predicted values, instead of a model object:
 
 presabs <- mod$y
