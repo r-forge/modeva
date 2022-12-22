@@ -23,10 +23,10 @@ adjust = FALSE, npar = NULL, na.rm = TRUE, rm.dup = FALSE)
 \details{
 Linear models have an R-squared value (commonly provided with the model summary) which measures the proportion of variation that the model accounts for. For generalized linear models (GLMs) and others based on non-continuous response variables, an equivalent is the amount of deviance accounted for (D-squared; Guisan & Zimmermann 2000), though this value is not routinely provided with the model summary. The \code{Dsquared} function calculates it as the proportion of the null deviance (i.e. the deviance of a model with no predictor variables) that is accounted for by the model. There is also an option to compute the adjusted D-squared, which takes into account the number of observations and the number of parameters, thus allowing direct comparison among the output for different models (Weisberg 1980, Guisan & Zimmermann 2000).
 
-This function uses code from the \code{calc.deviance} function of package \pkg{dismo} to compute the deviance of the model predictions against the observed (response) values. It then computes the deviance of a null model, i.e. of the response as predicted by the mean of the response, and finally it gets the explained deviance as (null_deviance - deviance) / null_deviance.
+The function computes the mean residual deviance (as in the \code{calc.deviance} function of package \pkg{dismo}) of the observed (response) against the predicted values, and the mean deviance of a null model (with no predictor variables), i.e. of the response against the mean of the response. Finally, it gets the explained deviance as (null-residual)/null.
 }
 \value{
-This function returns a numeric value indicating the (optionally adjusted) proportion of deviance accounted for by the input model predictions.
+The function returns a numeric value indicating the (optionally adjusted) proportion of deviance accounted for by the input model predictions.
 }
 \references{
 Guisan, A. & Zimmermann, N.E. (2000) Predictive habitat distribution models in ecology. Ecological Modelling 135: 147-186

@@ -1,4 +1,19 @@
 ============================================
+modEvA v3.8.7 (committed 2022-12-  )
+============================================
+
+## New functions:
+
+* varImp
+
+
+## Modified functions:
+
+* mod2obspred
+- added supressMessages() when predicting with GBM
+
+
+============================================
 modEvA v3.8.6 (committed 2022-12-20)
 ============================================
 

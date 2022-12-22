@@ -1,12 +1,12 @@
 Dsquared <- function(model = NULL,
-                      obs = NULL,
-                      pred = NULL,
-                      family = NULL, # needed only when 'model' not provided or not GLM
-                      adjust = FALSE,
-                      npar = NULL, # needed only when 'model' not provided or not GLM
-                      na.rm = TRUE,
-                      rm.dup = FALSE) {
-  # version 2.0 (16 Dec 2022)
+                     obs = NULL,
+                     pred = NULL,
+                     family = NULL,
+                     adjust = FALSE,
+                     npar = NULL,
+                     na.rm = TRUE,
+                     rm.dup = FALSE) {
+  # version 2.0 (20 Dec 2022)
 
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
   obs <- obspred[ , "obs"]
@@ -20,6 +20,27 @@ Dsquared <- function(model = NULL,
   # else {
   #   message("'model' object not provided; using glm() for computing the null model and the corresponding null deviance - result can be somewhat inaccurate if 'pred' comes from a different type of model.")
   # }  # end if no 'model'
+
+
+  # OLD VERSION:
+  #
+  # pred[pred == 0] <- 2e-16  # avoid NaN in log below
+  # pred[pred == 1] <- 1 - 2e-16  # avoid NaN in log below
+  #
+  # if (family == "binomial") {
+  #   if (any(!(obs %in% c(0, 1)) | pred < 0 | pred > 1)) stop ("'binomial' family implies that 'obs' should be binary (with values 0 or 1) and 'pred' should be bounded between 0 and 1.")
+  #   link <- log(pred / (1 - pred))  # logit
+  # }  # end if binomial
+  #
+  # else if (family == "poisson") {
+  #   if (any(obs %%1 != 0)) stop ("'poisson' family implies that 'obs' should be integer.")
+  #   link <- log(pred)
+  # }  # end if poisson
+  #
+  # model <- glm(obs ~ link, family = family)
+  #
+  # Dsq <- (model$null.deviance - model$deviance) / model$null.deviance
+
 
   if (is.null(family)) {
     if (all(obs %in% c(0, 1))) family <- "binomial"
@@ -53,24 +74,6 @@ Dsquared <- function(model = NULL,
   null.deviance <- dev(obs = obs, pred = mean(obs), family = family)
   Dsq <- (null.deviance - deviance) / null.deviance
 
-
-  # pred[pred == 0] <- 2e-16  # avoid NaN in log below
-  # pred[pred == 1] <- 1 - 2e-16  # avoid NaN in log below
-  #
-  # if (family == "binomial") {
-  #   if (any(!(obs %in% c(0, 1)) | pred < 0 | pred > 1)) stop ("'binomial' family implies that 'obs' should be binary (with values 0 or 1) and 'pred' should be bounded between 0 and 1.")
-  #   link <- log(pred / (1 - pred))  # logit
-  # }  # end if binomial
-  #
-  # else if (family == "poisson") {
-  #   if (any(obs %%1 != 0)) stop ("'poisson' family implies that 'obs' should be integer.")
-  #   link <- log(pred)
-  # }  # end if poisson
-  #
-  # model <- glm(obs ~ link, family = family)
-  #
-  # Dsq <- (model$null.deviance - model$deviance) / model$null.deviance
-
   if (adjust) {
     if (model.provided && is(model, "glm")) {
       n <- length(model$y)
@@ -85,5 +88,6 @@ Dsquared <- function(model = NULL,
     Dsq <- 1 - ((n - 1) / (n - p)) * (1 - Dsq)
   }  # end if adjust
 
-  return (Dsq)
+  # Dsq <- round(Dsq, 4)  # result can be slightly inexact beyond 4 decimals
+  return(Dsq)
 }
