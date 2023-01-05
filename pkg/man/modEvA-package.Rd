@@ -10,8 +10,8 @@ The modEvA package can analyse species distribution models and evaluate their pe
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 3.8.7\cr
-Date: \tab 2022-12-222\cr
+Version: \tab 3.8.8\cr
+Date: \tab 2023-01-05\cr
 License: \tab GPL-3\cr
 }
 }
@@ -25,7 +25,7 @@ Barbosa A.M., Real R., Munoz A.R. & Brown J.A. (2013) New measures for assessing
 }
 \keyword{ package }
 \seealso{
-\pkg{PresenceAbsence}, \pkg{ROCR}, \pkg{verification}
+\pkg{PresenceAbsence}, \pkg{ROCR}, \pkg{verification}, \pkg{Metrics}
 }
 \examples{
 # load sample models:
@@ -36,6 +36,12 @@ mod <- rotif.mods$models[[1]]
 
 # plot this model:
 plotGLM(model = mod)
+
+# compute the Root Mean Square Error of the model:
+RMSE(model = mod)
+
+# extract variable importance from the model:
+varImp(model = mod)
 
 # calculate the area under the ROC curve for the model:
 AUC(model = mod)

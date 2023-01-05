@@ -4,7 +4,7 @@
 Plot the density of predicted values for presences and absences.
 }
 \description{
-This function produces a histogram and/or a kernel density plot of predicted values for a binomial GLM, by default separately for the observed presences and absences, given a model object or a vector of predicted values and (optionally) a vector of the corresponding observed values.
+This function produces a histogram and/or a kernel density plot of predicted values for a binary-response model, by default separately for the observed presences and absences, given a model object or a vector of predicted values and (optionally) a vector of the corresponding observed values.
 }
 \usage{
 predDensity(model = NULL, obs = NULL, pred = NULL, separate = TRUE,

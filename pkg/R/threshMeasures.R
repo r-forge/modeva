@@ -1,16 +1,17 @@
 threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh,
-                           measures = modEvAmethods("threshMeasures"), 
-                           simplif = FALSE, plot = TRUE, plot.ordered = FALSE, 
-                           standardize = TRUE, verbosity = 2, ylim = c(0, 1),
-                           interval = 0.01, quant = 0, na.rm = TRUE, 
-                           rm.dup = FALSE, ...) {
-  # version 3.4 (14 Jun 2022)
-  
+                           measures = modEvAmethods("threshMeasures")
+                           [-grep("OddsRatio", modEvAmethods("threshMeasures"))],
+                           simplif = FALSE, plot = TRUE, plot.type = "lollipop",
+                           plot.ordered = FALSE, standardize = TRUE,
+                           verbosity = 2, interval = 0.01, quant = 0,
+                           na.rm = TRUE, rm.dup = FALSE, ...) {
+  # version 3.5 (5 Jan 2023)
+
   # if (is.null(model)) {
   #   if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object.")
-  #   
+  #
   # } else { # end if null model
-  #   
+  #
   #   #if (!all(class(model) %in% c("glm", "lm"))) stop ("'model' must be a model object of class 'glm'")
   #   #if (!("glm" %in% class(model) && model$family$family == "binomial" && model$family$link == "logit")) stop ("'model' must be an object of class 'glm' with 'binomial' family and 'logit' link.")
   #   if (verbosity > 0) {
@@ -22,11 +23,11 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh,
   #   obspred <- mod2obspred(model)
   #   obs <- obspred[ , "obs"]
   #   pred <- obspred[ , "pred"]
-  #   
+  #
   # }  # end if !null model
-  # 
+  #
   # if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
-  # 
+  #
   # dat <- data.frame(obs, pred)
   # n.in <- nrow(dat)
   # dat <- na.omit(dat)
@@ -34,14 +35,14 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh,
   # if (n.out < n.in)  warning (n.in - n.out, " observation(s) removed due to missing data; ", n.out, " observations actually evaluated.")
   # obs <- dat$obs
   # pred <- dat$pred
-  # 
+  #
   # if (!all(obs %in% c(0, 1)))
   #   stop ("'obs' must consist of binary observations of 0 or 1")
-  
+
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
-  
+
   #if (any(pred < 0 | pred > 1)) stop ("'pred' must range between 0 and 1")
   # if (!(thresh == "preval" | is.numeric(thresh)))
   #   stop("'thresh' must be either 'preval' or a numeric value between 0 and 1")
@@ -49,7 +50,7 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh,
   if (!(is.numeric(thresh) || thresh %in% modEvAmethods("getThreshold")))
     stop("'thresh' must be either a numeric value between 0 and 1, or one of the options obtained with modEvAmethods('getThreshold')")
   if (thresh %in% modEvAmethods("getThreshold"))  thresh <- getThreshold(obs = obs, pred = pred, threshMethod = thresh, interval = interval, quant = quant, na.rm = na.rm)
-  
+
   # next lines moved to new 'confusionMatrix' function:
   # obs0 <- obs == 0
   # obs1 <- obs == 1
@@ -65,10 +66,10 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh,
   c <- conf_mat["pred0", "obs1"]
   d <- conf_mat["pred0", "obs0"]
   N <- a + b + c + d
-  
+
   Nmeasures <- length(measures)
   measureValues <- as.vector(rep(NA, Nmeasures), mode = "numeric")
-  
+
   for (i in 1:Nmeasures) {
     if (measures[i] == "AUC") measureValues[i] <- AUC(obs = obs, pred = pred, simplif = TRUE)
     else if (measures[i] %in% modEvAmethods("threshMeasures")) {
@@ -87,7 +88,7 @@ type modEvAmethods('threshMeasures') for available options.")
       next
     }  # end else
   }  # end for i
-  
+
   Measures <- matrix(data = measureValues, nrow = Nmeasures, ncol = 1, dimnames = list(measures, "Value"))
   if (simplif) {  # shorter version for use with e.g. optiThresh function
     return(Measures)
@@ -100,8 +101,9 @@ type modEvAmethods('threshMeasures') for available options.")
       if (plot.ordered) {
         measures.plot <- sort(measures.plot, decreasing = TRUE)
       }
-      #measures.plot[is.infinite(measures.plot)] <- NA  # no longer needed after 'ylim' argument added
-      barplot(measures.plot, las = 3, ylim = ylim, ...)
+      measures.plot[is.infinite(measures.plot)] <- NA
+      if (plot.type == "barplot") barplot(measures.plot, las = 3, ...)
+      if (plot.type == "lollipop") lollipop(measures.plot, las = 3, ymin = NA, ylab = "", ...)
     }  # end if plot
     return(list(N = N, Prevalence = prev, Threshold = thresh,
                 ConfusionMatrix = conf.matrix, ThreshMeasures = Measures))

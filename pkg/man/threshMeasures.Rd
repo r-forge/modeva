@@ -8,22 +8,23 @@ This function calculates a number of measures for evaluating the classification 
 }
 \usage{
 threshMeasures(model = NULL, obs = NULL, pred = NULL, thresh,
-measures = modEvAmethods("threshMeasures"), simplif = FALSE,
-plot = TRUE, plot.ordered = FALSE, standardize = TRUE, verbosity = 2,
-ylim = c(0, 1), interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
+measures = modEvAmethods("threshMeasures")
+[-grep("OddsRatio", modEvAmethods("threshMeasures"))], simplif = FALSE,
+plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE, standardize = TRUE,
+verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
   \item{obs}{alternatively to 'model' and together with 'pred', a numeric vector of observed presences (1) and absences (0) of a binary response variable. Alternatively (and if 'pred' is a 'SpatRaster'), a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points, in which case the 'obs' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. Alternatively (and if 'obs' is a set of point coordinates), a 'SpatRaster' map of the predicted values for the entire evaluation region, in which case the 'pred' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
   \item{thresh}{threshold to separate predicted presences from predicted absences in 'model' or 'pred'; can be a numeric value between 0 and 1, or any of the options provided with \code{modEvAmethods("getThreshold")}. See Details in \code{\link{getThreshold}} for a description of the available options, and also Details below for a more informed choice.}
-  \item{measures}{character vector of the evaluation measures to use. By default, all measures available through \code{modEvAmethods("getThreshold")} are calculated.}
+  \item{measures}{character vector of the evaluation measures to use. By default, all measures available through \code{modEvAmethods("getThreshold")} are included, except for "OddsRatio" which usually yields overly large values that stand out in the plot.}
   \item{simplif}{logical, whether to calculate a faster, simplified version. Used internally by other functions in the package. Defaults to FALSE.}
   \item{plot}{logical, whether to produce a barplot of the calculated measures. Defaults to TRUE.}
+  \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "barplot" or "lollipop" (the default).}
   \item{plot.ordered}{logical, whether to plot the measures in decreasing order rather than in input order. Defaults to FALSE.}
   \item{standardize}{logical, whether to change measures that may range between -1 and +1 (namely kappa and TSS) to their corresponding value in the 0-to-1 scale (skappa and sTSS), so that they can compare directly to other measures (see \code{\link{standard01}}). The default is TRUE, but a message is displayed to inform the user about it.}
   \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
-  \item{ylim}{limits for the y axis.}
   \item{interval}{Numeric value, used if 'thresh' is a threshold optimization method such as "maxKappa" or "maxTSS", indicating the interval between the thresholds to test. The default is 0.01. Smaller values may provide more precise results but take longer to compute.}
   \item{quant}{Numeric value indicating the proportion of presences to discard if thresh="MTP" (minimum training presence). With the default value 0, MTP will be the threshold at which all observed presences are classified as such; with e.g. quant=0.05, MTP will be the threshold at which 5\% presences will be classified as absences.}
   \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}

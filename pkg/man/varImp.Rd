@@ -5,15 +5,16 @@
 This function gets, and optionally plots, variable importance for an input model object.
 }
 \usage{
-  varImp(model, reorder = TRUE, plot = TRUE, plot.type = "barplot",
-  col = c("darkblue", "salmon"), ci = TRUE, ci.type = "sd", legend = TRUE,
-  ...)
+  varImp(model, reorder = TRUE, plot = TRUE, plot.type = "lollipop",
+  ylim = "auto", col = c("darkturquoise", "salmon"), ci = TRUE, ci.type = "sd",
+  legend = TRUE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gbm", "randomForest" or "bart".}
   \item{reorder}{logical value indicating whether to reorder variables in decreasing order of importance. TRUE by default. If set to FALSE, the variables will retain their input order.}
   \item{plot}{logical value indicating whether to also produce a plot.}
-  \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Currently only "barplot" is implemented.}
+  \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "barplot" or "lollipop" (the default).}
+  \item{ylim}{either a numeric vector of length 2 specifying the limits (minimum, maximum) for the y axis, or "auto" (the default) to fit the axis to the existing values.}
   \item{col}{character or integer vector of length 1 or 2 specifying the plotting colours (if plot=TRUE) for the variables with positive and negative effect on the response, when available (e.g. for GLM).}
   \item{ci}{logical, whether or not to plot a confidence interval for variable importance. By default it is TRUE, but it only applies to input models of class "bart".}
   \item{ci.type}{character vector indicating the type of confidence interval to compute. Can be "range" for the minimum and maximum value across the prediction trees, or "sd" for the standard deviation.}

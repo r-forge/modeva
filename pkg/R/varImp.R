@@ -1,6 +1,6 @@
-varImp <- function(model, reorder = TRUE, plot = TRUE, plot.type = "barplot", col = c("darkblue", "salmon"), ci = TRUE, ci.type = "sd", legend = TRUE, ...) {
+varImp <- function(model, reorder = TRUE, plot = TRUE, plot.type = "lollipop", ylim = "auto", col = c("darkturquoise", "salmon"), ci = TRUE, ci.type = "sd", legend = TRUE, ...) {
 
-  # version 1.2 (22 Dec 2022)
+  # version 1.4 (5 Jan 2023)
 
   # if 'col' has length 2 and varImp has negative values (e.g. for z-value), those will get the second colour
 
@@ -38,7 +38,7 @@ varImp <- function(model, reorder = TRUE, plot = TRUE, plot.type = "barplot", co
   }
 
   else if (is(model, "bart")) {
-    ylab <- "Proportion of splits"
+    ylab <- "Proportion of splits used"
     varimps <- model$varcount / rowSums(model$varcount)
     varimp <- colMeans(varimps)
   }
@@ -63,25 +63,50 @@ varImp <- function(model, reorder = TRUE, plot = TRUE, plot.type = "barplot", co
 
   if (plot) {
     if (length(col) == 1) col <- rep(col, 2)
+    col <- ifelse(varimp > 0, col[1], col[2])
 
-    ymax <- ifelse(ci, max(varimps), max(varimp))
-
-    space <- 0.25  # space between bars in barplot
-
-    barplot(abs(varimp),
-            space = space,
-            col = ifelse(varimp > 0, col[1], col[2]),
-            names = names(varimp),
-            ylab = ylab,
-            ylim = c(0, ymax),
-            las = 2,
-            ...)
-
-    if (ci) {
-      nbars <- length(names(varimp))
-      xbars <- ((1 : nbars) - space) + space * (0 : (nbars - 1))
-      arrows(x0 = xbars, x1 = xbars, y0 = ci_lower, y1 = ci_upper, angle = 90, code = 3, length = 0.03)
+    if ("auto" %in% ylim) {
+      ymin <- ifelse(ci, min(varimps), min(abs(varimp)))
+      ymax <- ifelse(ci, max(varimps), max(abs(varimp)))
+      ylim <- c(ymin, ymax)
     }
+
+    if (plot.type == "barplot") {
+      space <- 0.25
+
+      barplot(abs(varimp),
+              col = col,
+              space = space,
+              names = names(varimp),
+              ylab = ylab,
+              ylim = ylim,
+              xpd = FALSE,
+              las = 2,
+              ...)
+
+      if (ci) {
+        nbars <- length(names(varimp))
+        xbars <- ((1 : nbars) - space) + space * (0 : (nbars - 1))
+        arrows(x0 = xbars, x1 = xbars, y0 = ci_lower, y1 = ci_upper, angle = 90, code = 3, length = 0.03)
+      }
+    }  # end if barplot
+
+    if (plot.type == "lollipop") {
+      sticks <- ifelse(ci, FALSE, TRUE)
+
+      lollipop(abs(varimp),
+               col = col,
+               names = names(varimp),
+               ylab = ylab,
+               ylim = ylim,
+               las = 2,
+               sticks = sticks,
+               ...)
+
+      if (ci) {
+        arrows(x0 = 1:length(varimp), x1 = 1:length(varimp), y0 = ci_lower, y1 = ci_upper, length = 0, col = col)
+      }
+    }  # end if lollipop
 
     if (legend && any(varimp < 0)) legend("topright", legend = c("positive", "negative"), fill = c(col[1], col[2]), bty = "n")
   }

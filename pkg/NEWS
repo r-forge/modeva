@@ -1,5 +1,34 @@
+===========================================
+modEvA v3.8.8 (committed 2023-01-05)
 ============================================
-modEvA v3.8.7 (committed 2022-12-  )
+
+## New functions:
+
+* RMSE
+
+* lollipop
+
+
+## Modified functions:
+
+* varImp
+- added "ylim" argument (default "auto"), and xpd=FALSE to 'barplot' call
+- changed default positive colour for better contrast with CI lines in barplot
+- new default plot.type = "lollipop"
+
+* threshMeasures
+- "OddsRatio" removed from default 'measures'
+- 'ylim' argument removed (default 0,1 not needed after OddsRation removal; 'ylim' can still be used under '...')
+- new argument 'plot.type'
+- new default plot.type = "lollipop"
+
+* RsqGLM
+- new argument 'plot.type'
+- new default plot.type = "lollipop"
+
+
+============================================
+modEvA v3.8.7 (committed 2022-12-22)
 ============================================
 
 ## New functions:

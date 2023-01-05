@@ -1,5 +1,5 @@
-RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs", plot = TRUE, ...) {
-  # version 1.8 (21 Dec 2021)
+RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs", plot = TRUE, plot.type = "lollipop", ...) {
+  # version 1.9 (5 Jan 2023)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -11,13 +11,13 @@ RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.comple
     pred <- model$fitted.values
 
   } else { # if model not provided
-    
+
     if (is.null(obs) | is.null(pred)) stop ("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'.")
     if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
-    
+
     pred[pred == 0] <- 2e-16  # avoid NaN in log below
     pred[pred == 1] <- 1 - 2e-16  # avoid NaN in log below
-    
+
     # new (15 Sep 2015):
     dat <- data.frame(obs, pred)
     n.in <- nrow(dat)
@@ -54,7 +54,7 @@ RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.comple
   #CoxSnell <- 1 - (loglike.0 / loglike.M) ^ (2 / N)
   #Nagelkerke <- CoxSnell / (1 - loglike.0 ^ (2 / N))
   McFadden <- 1 - (loglike.M / loglike.0)
-  
+
   if (family(model)$family == "binomial" & family(model)$link == "logit")
     #Tjur <- abs(diff(unique(ave(pred, obs))))
     #Tjur <- diff(tapply(pred, obs, mean))
@@ -63,11 +63,13 @@ RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.comple
     Tjur <- NA
     message("NOTE: Tjur R-squared applies only to binomial GLMs")
   }
-  
+
   sqPearson <- cor(obs, pred, use = use) ^ 2
-  
+
   if (plot) {
-    barplot(as.matrix(data.frame(CoxSnell = CoxSnell, Nagelkerke = Nagelkerke, McFadden = McFadden, Tjur = Tjur, sqPearson = sqPearson)), las = 2, ...)
+    m <- data.frame(CoxSnell = CoxSnell, Nagelkerke = Nagelkerke, McFadden = McFadden, Tjur = Tjur, sqPearson = sqPearson)
+    if (plot.type == "barplot") barplot(as.matrix(m), las = 2, ...)
+    if (plot.type == "lollipop") lollipop(unlist(as.vector(m)), las = 2, ymin = 0, ylab = "", ...)
   }
 
   return(list(CoxSnell = CoxSnell, Nagelkerke = Nagelkerke, McFadden = McFadden, Tjur = Tjur, sqPearson = sqPearson))
