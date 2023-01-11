@@ -21,7 +21,7 @@ This function creates a lollipop chart from a (optionally named) numeric vector.
   \item{\dots}{additional arguments that can be used for the plot, e.g. 'main'.}
 }
 \details{
-  According to modern recommendations in data viz, lollipop charts are generally a better alternative to bar charts, as they reduce the visual distortion caused by the length of the bars, making it easier to compare the values.
+  According to modern data viz recommendations, lollipop charts are generally a better alternative to bar charts, as they reduce the visual distortion caused by the length of the bars, making it easier to compare the values.
 }
 \value{
   This function produces a lollipop chart of the values in 'x'.

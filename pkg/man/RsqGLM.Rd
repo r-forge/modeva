@@ -13,7 +13,7 @@ plot = TRUE, plot.type = "lollipop", ...)
   \item{obs}{alternatively to 'model' and together with 'pred', a vector of observed presences (1) and absences (0) of a binary response variable. This argument is ignored if 'model' is provided.}
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as 'obs'. This argument is ignored if 'model' is provided.}
   \item{use}{argument to be passed to \code{\link{cor}} for handling mising values.}
-  \item{plot}{logical value indicating whether or not to display a barplot of the calculated measures.}
+  \item{plot}{logical value indicating whether or not to display a bar chart or (by default) a lollipop chart of the calculated measures.}
   \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "barplot" or "lollipop" (the default).}
   \item{\dots}{additional arguments to pass to the \code{\link{plot}} function (see Examples).}
 }

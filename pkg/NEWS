@@ -1,4 +1,25 @@
-===========================================
+============================================
+modEvA v3.8.9 (committed 2023-01-11)
+============================================
+
+## Modified functions:
+
+* varImp
+- implemented plot.points argument
+- arguments 'ci' and 'ci.type' replaced by argument 'error.bars'
+- 'error.bars' can also be a numeric for a x% confidence interval
+- added 'grid' argument
+- added "imp.type" argument (placeholder, so far only option "each")
+- set 'border' to NA in legend and barplot
+- fixed legend colour bug
+- added check for loaded 'gbm' when needed
+
+* predDensity
+- added 'ci' argument
+- added '...' for arguments to pass to 'hist'
+
+
+============================================
 modEvA v3.8.8 (committed 2023-01-05)
 ============================================
 

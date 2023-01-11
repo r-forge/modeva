@@ -1,4 +1,5 @@
-RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs", plot = TRUE, plot.type = "lollipop", ...) {
+RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs",
+                   plot = TRUE, plot.type = "lollipop", ...) {
   # version 1.9 (5 Jan 2023)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
