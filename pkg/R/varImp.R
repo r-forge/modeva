@@ -1,8 +1,19 @@
 varImp <- function(model, imp.type = "each", reorder = TRUE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, ...) {
 
-  # version 1.5 (11 Jan 2023)
+  # version 1.5 (12 Jan 2023)
 
   # if 'col' has length 2 and varImp has negative values (e.g. for z-value), those will get the second colour
+
+  stopifnot(imp.type == "each",
+            plot.type %in% c("lollipop", "barplot", "boxplot"),
+            # is.numeric(error.bars) || error.bars %in% c("sd", "range"),
+            is.logical(TRUE),
+            is.logical(plot),
+            is.logical(plot.points),
+            is.logical(legend),
+            is.logical(grid),
+            length(col) %in% 1:2
+            )
 
   if (is(model, "glm")) {  #  && !is(model, "Gam")
     error.bars <- NA
@@ -114,18 +125,21 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, plot = TRUE, plot.t
 
       if (grid) grid()
 
-      if (!is.na(error.bars)) {
+      if (plot.points || !is.na(error.bars)) {
         nbars <- length(names(varimp))
         xbars <- ((1 : nbars) - space) + space * (0 : (nbars - 1))
-        arrows(x0 = xbars, x1 = xbars, y0 = eb_lower, y1 = eb_upper, angle = 90, code = 3, length = 0.03, col = "#0d4970")
+      }
+
+      if (!is.na(error.bars)) {
+        arrows(x0 = xbars, x1 = xbars, y0 = eb_lower, y1 = eb_upper, angle = 90, code = 3, length = 0.03, col = "#10133a")
       }
     }  # end if barplot
 
     if (plot.type == "boxplot") {
-      if(is.na(error.bars)) vi <- t(as.data.frame(abs(varimp))) else vi <- varimps
+      if(is.na(error.bars)) vi <- t(as.data.frame(abs(varimp))) else vi <- varimps  # ifelse makes single boxplot for all vars
 
       boxplot(vi,
-              col = adjustcolor(colrs, alpha.f = 0.4),
+              col = adjustcolor(colrs, alpha.f = 0.2),
               border = colrs,
               ylab = ylab,
               ylim = ylim,
@@ -136,9 +150,11 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, plot = TRUE, plot.t
     }  # end if boxplot
 
     if (plot.points && is(model, "bart")) {
-      xx <- rep(1:ncol(varimps), each = nrow(varimps))
+      if (plot.type == "barplot") xx <- rep(xbars, each = nrow(varimps))
+      else xx <- rep(1:ncol(varimps), each = nrow(varimps))
       jj <- sapply(xx, jitter, amount = 0.1)
       points(x = jj, y = varimps, pch = 20, cex = 0.1, col = adjustcolor("#ffaabb", alpha.f = 0.3))
+      if (plot.type == "lollipop") arrows(x0 = 1:length(varimp), x1 = 1:length(varimp), y0 = eb_lower, y1 = eb_upper, code = 3, angle = 90, length = 0.03, col = colrs)  # re-plot error bars on top for better visibility
     }
 
     signs <- unique(sign(varimp)[sign(varimp) != 0])  # check for both negative and positive varimps

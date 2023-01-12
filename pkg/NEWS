@@ -1,4 +1,20 @@
 ============================================
+modEvA v3.9 (committed 2023-01-12)
+============================================
+
+## Modified functions:
+
+* varImp
+- corrected point locations (accounting for space between bars) for barplot
+- error.bars in lollipop chart re-plotted on top to improve visibility
+- help file cites Weissgerber et al.
+
+* predDensity
+- 'ci' now plotted as semi-transparent rectangle (rather than just vertical ablines)
+- added 'ci' example to help file
+
+
+============================================
 modEvA v3.8.9 (committed 2023-01-11)
 ============================================
 
