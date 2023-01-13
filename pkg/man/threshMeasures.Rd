@@ -21,7 +21,7 @@ verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
   \item{measures}{character vector of the evaluation measures to use. By default, all measures available through \code{modEvAmethods("getThreshold")} are included, except for "OddsRatio" which usually yields overly large values that stand out in the plot.}
   \item{simplif}{logical, whether to calculate a faster, simplified version. Used internally by other functions in the package. Defaults to FALSE.}
   \item{plot}{logical, whether to produce a bar chart or (by default) a lollipop chart of the calculated measures. Defaults to TRUE.}
-  \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "barplot" or "lollipop" (the default).}
+  \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "\code{\link{lollipop}}" (the default) or "\code{\link{barplot}}".}
   \item{plot.ordered}{logical, whether to plot the measures in decreasing order rather than in input order. Defaults to FALSE.}
   \item{standardize}{logical, whether to change measures that may range between -1 and +1 (namely kappa and TSS) to their corresponding value in the 0-to-1 scale (skappa and sTSS), so that they can compare directly to other measures (see \code{\link{standard01}}). The default is TRUE, but a message is displayed to inform the user about it.}
   \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}

@@ -6,7 +6,7 @@ This function creates a lollipop chart from a (optionally named) numeric vector.
 }
 \usage{
   lollipop(x, names = NULL, ymin = 0, sticks = TRUE, col = "royalblue",
-  grid = TRUE, cex = 1, cex.axis = 1, las = 1, ...)
+  grid = TRUE, cex = 1, cex.axis = 1, las = 2, ...)
 }
 \arguments{
   \item{x}{a numeric vector.}
@@ -17,7 +17,7 @@ This function creates a lollipop chart from a (optionally named) numeric vector.
   \item{grid}{logical, whether or not to add a grid to the plot. The default is TRUE.}
   \item{cex}{numeric value indicating the size of the lollipops. Will be passed as 'cex' to 'points' and as 'lwd' to 'arrows' (the lines or lollipop sticks).}
   \item{cex.axis}{numeric value indicating the size of the x and y axis labels.}
-  \item{las}{argument to pass to 'plot' indicating the orientation of the axis labels.}
+  \item{las}{argument to pass to \code{\link{par}} indicating the orientation of the axis labels.}
   \item{\dots}{additional arguments that can be used for the plot, e.g. 'main'.}
 }
 \details{
@@ -33,7 +33,9 @@ This function creates a lollipop chart from a (optionally named) numeric vector.
   \code{\link{barplot}}
 }
 \examples{
-lollipop(mtcars[,1], names = rownames(mtcars), las = 2, ylab = names(mtcars)[1], cex.axis = 0.6, main = "Lollipop chart")
+lollipop(mtcars[,1], names = rownames(mtcars), las = 2, ylab = names(mtcars)[1],
+cex.axis = 0.6, main = "Lollipop chart")
 
-lollipop(mtcars[,1], names = rownames(mtcars), las = 2, ylab = names(mtcars)[1], cex.axis = 0.6, main = "Lollipop chart", ymin = NA)
+lollipop(mtcars[,1], names = rownames(mtcars), las = 2, ylab = names(mtcars)[1],
+cex.axis = 0.6, main = "Lollipop chart", ymin = NA)
 }

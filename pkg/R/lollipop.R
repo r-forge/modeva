@@ -16,8 +16,8 @@
 #'
 #' @examples lollipop(mtcars[,1], names = rownames(mtcars), las = 2, ylab = names(mtcars)[1], cex.axis = 0.6, main = "Lollipop chart")
 
-lollipop <- function(x, names = NULL, ymin = 0, sticks = TRUE, col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 1, ...) {
-  # version 1.0 (5 Jan 2023)
+lollipop <- function(x, names = NULL, ymin = 0, sticks = TRUE, col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, ...) {
+  # version 1.1 (13 Jan 2023)
 
   if (is.na(ymin))  ymin <- min(x, na.rm = TRUE)
   plot(c(ymin, x), axes = FALSE, type = "n", xlab = "", ...)

@@ -14,7 +14,7 @@ plot = TRUE, plot.type = "lollipop", ...)
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability. Must be of the same length and in the same order as 'obs'. This argument is ignored if 'model' is provided.}
   \item{use}{argument to be passed to \code{\link{cor}} for handling mising values.}
   \item{plot}{logical value indicating whether or not to display a bar chart or (by default) a lollipop chart of the calculated measures.}
-  \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "barplot" or "lollipop" (the default).}
+  \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "\code{\link{lollipop}}" (the default) or "\code{\link{barplot}}".}
   \item{\dots}{additional arguments to pass to the \code{\link{plot}} function (see Examples).}
 }
 \details{
@@ -58,6 +58,5 @@ RsqGLM(obs = mod$y, pred = mod$fitted.values)
 par(mar = c(6, 3, 2, 1))
 
 RsqGLM(obs = mod$y, pred = mod$fitted.values, col = "seagreen", border = NA,
-ylim = c(0, 1), las = 2, main = "Pseudo-R-squared values")
-
+ylim = c(0, 1), main = "Pseudo-R-squared values")
 }
