@@ -7,8 +7,8 @@ Confusion matrix
 This function computes the confusion (or contingency) matrix for a binary-response model, containing the numbers of false positives, false negatives, true positives and true negatives, given a user-defined threshold value.
 }
 \usage{
-confusionMatrix(model = NULL, obs = NULL, pred = NULL, thresh, 
-interval = interval, quant = quant, verbosity = 2, na.rm = TRUE, rm.dup = FALSE)
+confusionMatrix(model = NULL, obs = NULL, pred = NULL, thresh,
+interval = 0.01, quant = 0, verbosity = 2, na.rm = TRUE, rm.dup = FALSE)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments (e.g. for external test data) instead of 'model'.}

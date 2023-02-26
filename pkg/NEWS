@@ -1,5 +1,25 @@
+
 ============================================
-modEvA v3.9 (committed 2023-01-12)
+modEvA v3.9.1 (committed 2023-02-26)
+============================================
+
+## Modified functions:
+
+* varImp
+- error if family is not 'binomial', to avoid obscure error otherwise because no 'z-value' column in summary
+
+* confusionMatrix, confusionLabel
+- changed defaults 'interval = interval, quant = quant' to 'interval = 0.01, quant = 0'
+
+
+## Other modified files:
+
+* CITATION
+- replaced old-style personList() with c(), and citEntry() with bibentry(), as per new CRAN requirements
+
+
+============================================
+modEvA v3.9 (committed 2023-01-12)  ->  CRAN
 ============================================
 
 ## Modified functions:

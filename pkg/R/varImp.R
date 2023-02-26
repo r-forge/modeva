@@ -1,6 +1,6 @@
 varImp <- function(model, imp.type = "each", reorder = TRUE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, ...) {
 
-  # version 1.5 (12 Jan 2023)
+  # version 1.6 (16 Jan 2023)
 
   # if 'col' has length 2 and varImp has negative values (e.g. for z-value), those will get the second colour
 
@@ -16,6 +16,9 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, plot = TRUE, plot.t
             )
 
   if (is(model, "glm")) {  #  && !is(model, "Gam")
+
+    if (family(model)$family != "binomial")  stop ("This function is currently only implemented for binary-response models of family 'binomial'.")
+
     error.bars <- NA
 
     #  if (measure == "z") {

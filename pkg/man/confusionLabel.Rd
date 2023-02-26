@@ -7,8 +7,8 @@ Label predictions according to their confusion matrix category
 This function labels the predictions of a binary-response model according to their confusion matrix categories, i.e., it classifies each prediction into a false positive, false negative, true positive or true negative, given a user-defined threshold value.
 }
 \usage{
-confusionLabel(model = NULL, obs = NULL, pred = NULL, thresh, 
-interval = interval, quant = quant, verbosity = 2, na.rm = FALSE, 
+confusionLabel(model = NULL, obs = NULL, pred = NULL, thresh,
+interval = 0.01, quant = 0, verbosity = 2, na.rm = FALSE,
 rm.dup = FALSE)
 }
 \arguments{
