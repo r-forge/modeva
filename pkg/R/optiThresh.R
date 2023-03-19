@@ -4,7 +4,7 @@ optiThresh <-
            optimize = modEvAmethods("optiThresh"), simplif = FALSE,
            plot = TRUE, sep.plots = FALSE, xlab = "Threshold",
            na.rm = TRUE, rm.dup = FALSE, ...) {
-    # version 3.1 (27 Oct 2022)
+    # version 3.2 (19 Mar 2023)
 
     wrong.measures <- measures[which(!(measures %in% modEvAmethods("threshMeasures")))]
     wrong.optimizers <- optimize[which(!(optimize %in% modEvAmethods("optiThresh")))]
@@ -21,8 +21,8 @@ optiThresh <-
     obs <- obspred[ , "obs"]
     pred <- obspred[ , "pred"]
 
-    if (all(obs == 0)) warning ("All obs = 0.")
-    if (all(obs == 1)) warning ("All obs = 1.")
+    if (all(obs == 0)) message ("No presences available, so can't compute metrics that require presences.")
+    if (all(obs == 1)) message ("All observations are presences, so can't compute metrics that require absences.")
 
     # if (!is.null(model)) {
     #   model <- NULL  # so the message is not repeated for each threshold
@@ -83,30 +83,30 @@ optiThresh <-
 
         for (m in 1 : Nmeasures) {
           if (measures[m] %in% (goodness.measures)) {  # optimal is maximum
-            optimals.each[m, "threshold"] <- as.numeric(
-              rownames(all.thresholds)[which.max(all.thresholds[ , m])])
+            th <- as.numeric(rownames(all.thresholds)[which.max(all.thresholds[ , m])])
+            if (length(th) > 0) optimals.each[m, "threshold"] <- th
+
             optimals.each[m, "value"] <- max(all.thresholds[ , m], na.rm = TRUE)
             optimals.each[m, "type"] <- "maximum"
           }  # end if measure in goodness
           else {
             if (measures[m] %in% (badness.measures)) {  # optimal is minimum
-              optimals.each[m, "threshold"] <- as.numeric(rownames(all.thresholds)[which.min(all.thresholds[, m])])
+              th <- as.numeric(rownames(all.thresholds)[which.min(all.thresholds[, m])])
+              if (length(th) > 0) optimals.each[m, "threshold"] <- th
               optimals.each[m, "value"] <- min(all.thresholds[ , m], na.rm = TRUE)
               optimals.each[m, "type"] <- "minimum"
             }  # end if measure in badness
             else {
               if (measures[m] %in% (change.measures)) {  # optimal is closest to zero
-                optimals.each[m, "threshold"] <- as.numeric(
-                  rownames(all.thresholds)[which.min(abs(all.thresholds[ , m]))])
-                optimals.each[m, "value"] <- min(abs(all.thresholds[ , m]),
-                                                 na.rm = TRUE)
+                th <- as.numeric(rownames(all.thresholds)[which.min(abs(all.thresholds[ , m]))])
+                if (length(th) > 0) optimals.each[m, "threshold"] <- th
+                optimals.each[m, "value"] <- min(abs(all.thresholds[ , m]), na.rm = TRUE)
                 optimals.each[m, "type"] <- "closest to zero"
               }  # end if measure in change
             }  # end 2nd else
           }  # end 1st else
         }  # end for m
-        if ("each" %in% input.optimize)  results <- c(results,
-                                                      optimals.each = list(optimals.each))  # add this to results
+        if ("each" %in% input.optimize)  results <- c(results, optimals.each = list(optimals.each))  # add this to results
       }  # end if each
 
       criteria <- optimize[optimize != "each"]
@@ -121,63 +121,56 @@ optiThresh <-
 
         if ("preval" %in% criteria) {
           for (m in 1 : Nmeasures) {
-            optimals.criteria[m, "preval"] <- threshMeasures(
-              obs = obs, pred = pred, thresh = "preval", measures = measures[m],
-              standardize = FALSE, simplif = TRUE)
+            suppressWarnings(optimals.criteria[m, "preval"] <- threshMeasures(obs = obs, pred = pred, thresh = "preval", measures = measures[m], standardize = FALSE, simplif = TRUE))
           }
         }  # end if preval
 
         if ("minSensSpecDiff" %in% criteria) {
-          all.thresholds$SensSpecDiff <- with(all.thresholds,
-                                              abs(Sensitivity - Specificity))
+          all.thresholds$SensSpecDiff <- with(all.thresholds, abs(Sensitivity - Specificity))
           minSensSpecDiff <- thresholds[which.min(all.thresholds$SensSpecDiff)]
-          for (m in 1:Nmeasures) {
-            optimals.criteria[m, "minSensSpecDiff"] <- threshMeasures(
-              obs = obs, pred = pred, thresh = minSensSpecDiff,
-              measures = measures[m], standardize = FALSE, simplif = TRUE)
+          if (length(minSensSpecDiff) > 0 && is.finite(minSensSpecDiff)) {
+            for (m in 1:Nmeasures) {
+              optimals.criteria[m, "minSensSpecDiff"] <- threshMeasures(obs = obs, pred = pred, thresh = minSensSpecDiff, measures = measures[m], standardize = FALSE, simplif = TRUE)
+            }
           }
         }
 
         if ("maxSensSpecSum" %in% criteria) {
-          all.thresholds$SensSpecSum <- with(all.thresholds,
-                                             Sensitivity + Specificity)
+          all.thresholds$SensSpecSum <- with(all.thresholds, Sensitivity + Specificity)
           maxSensSpecSum <- thresholds[which.max(all.thresholds$SensSpecSum)]
-          for (m in 1 : Nmeasures) {
-            optimals.criteria[m, "maxSensSpecSum"] <- threshMeasures(
-              obs = obs, pred = pred, thresh = maxSensSpecSum,
-              measures = measures[m], standardize = FALSE, simplif = TRUE)
+          if (length(maxSensSpecSum) > 0 && is.finite(maxSensSpecSum)) {
+            for (m in 1 : Nmeasures) {
+              optimals.criteria[m, "maxSensSpecSum"] <- threshMeasures(obs = obs, pred = pred, thresh = maxSensSpecSum, measures = measures[m], standardize = FALSE, simplif = TRUE)
+            }
           }
         }
 
         if ("maxKappa" %in% criteria) {
           if (!("kappa" %in% measures)) {
             for (t in 1 : Nthresholds) {
-              all.thresholds$kappa <- threshMeasures(
-                obs = obs, pred = pred, thresh = thresholds[t],
-                measures = "kappa", standardize = FALSE, simplif = TRUE)
+              all.thresholds$kappa <- threshMeasures(obs = obs, pred = pred, thresh = thresholds[t], measures = "kappa", standardize = FALSE, simplif = TRUE)
             }
           }
           maxKappa <- thresholds[which.max(all.thresholds$kappa)]
           for (m in 1 : Nmeasures) {
             optimals.criteria[m, "maxKappa"] <- threshMeasures(
-              obs = obs, pred = pred, thresh = maxKappa, measures = measures[m],
-              standardize = FALSE, simplif = TRUE)
+              obs = obs, pred = pred, thresh = maxKappa, measures = measures[m], standardize = FALSE, simplif = TRUE)
           }
         }
 
         if ("maxTSS" %in% criteria) {
           if (!("TSS" %in% measures)) {
             for (t in 1 : Nthresholds) {
-              all.thresholds$TSS <- threshMeasures(
-                obs = obs, pred = pred, thresh = thresholds[t], measures = "TSS",
-                standardize = FALSE, simplif = TRUE)
+              all.thresholds$TSS <- threshMeasures(obs = obs, pred = pred, thresh = thresholds[t], measures = "TSS", standardize = FALSE, simplif = TRUE)
             }
           }
           maxTSS <- thresholds[which.max(all.thresholds$TSS)]
-          for (m in 1 : Nmeasures) {
-            optimals.criteria[m, "maxTSS"] <- threshMeasures(
-              obs = obs, pred = pred, thresh = maxTSS, measures = measures[m],
-              standardize = FALSE, simplif = TRUE)
+          if (length(maxTSS) > 0 && is.finite(maxTSS)) {
+            for (m in 1 : Nmeasures) {
+              optimals.criteria[m, "maxTSS"] <- threshMeasures(
+                obs = obs, pred = pred, thresh = maxTSS, measures = measures[m],
+                standardize = FALSE, simplif = TRUE)
+            }
           }
         }
 
@@ -202,10 +195,14 @@ optiThresh <-
           par(mfrow = arrangePlots(n.input.measures))
         }  # end if sep.plots else
         for (m in 1 : n.input.measures) {
-          plot(all.thresholds[ , m] ~ thresholds, ylab = input.measures[m], ...)
-          if ("each" %in% input.optimize) {
-            abline(v = optimals.each[m, "threshold"], col = "grey", lty = 2)  # vertical line on optimal threshold
-            abline(h = optimals.each[m, "value"], col = "grey", lty = 2)  # horiz line on optimal value
+          if(any(is.finite(all.thresholds[ , m]))) {
+            plot(all.thresholds[ , m] ~ thresholds, ylab = input.measures[m], ...)
+            if ("each" %in% input.optimize) {
+              abline(v = optimals.each[m, "threshold"], col = "grey", lty = 2)  # vertical line on optimal threshold
+              abline(h = optimals.each[m, "value"], col = "grey", lty = 2)  # horiz line on optimal value
+            }
+          } else {
+            plot(thresholds, thresholds, ylab = input.measures[m], type = "n", ...)
           }
         }  # end for m
       }  # end if plot

@@ -1,11 +1,5 @@
-threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh,
-                           measures = modEvAmethods("threshMeasures")
-                           [-grep("OddsRatio", modEvAmethods("threshMeasures"))],
-                           simplif = FALSE, plot = TRUE, plot.type = "lollipop",
-                           plot.ordered = FALSE, standardize = TRUE,
-                           verbosity = 2, interval = 0.01, quant = 0,
-                           na.rm = TRUE, rm.dup = FALSE, ...) {
-  # version 3.5 (5 Jan 2023)
+threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh, measures = modEvAmethods("threshMeasures")[-grep("OddsRatio", modEvAmethods("threshMeasures"))], simplif = FALSE, plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE, standardize = TRUE, verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...) {
+  # version 3.6 (19 Mar 2023)
 
   # if (is.null(model)) {
   #   if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object.")
@@ -60,21 +54,26 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh,
   # b <- sum(obs0 & pred1, na.rm = TRUE)
   # c <- sum(obs1 & pred0, na.rm = TRUE)
   # d <- sum(obs0 & pred0, na.rm = TRUE)
-  conf_mat <- confusionMatrix(obs = obs, pred = pred, thresh = thresh)
-  a <- conf_mat["pred1", "obs1"]
-  b <- conf_mat["pred1", "obs0"]
-  c <- conf_mat["pred0", "obs1"]
-  d <- conf_mat["pred0", "obs0"]
-  N <- a + b + c + d
+
+  if (is.finite(thresh)) {
+    conf_mat <- confusionMatrix(obs = obs, pred = pred, thresh = thresh)
+    a <- conf_mat["pred1", "obs1"]
+    b <- conf_mat["pred1", "obs0"]
+    c <- conf_mat["pred0", "obs1"]
+    d <- conf_mat["pred0", "obs0"]
+    N <- a + b + c + d
+  } else {
+    a <- b <- c <- d <- N <- NA
+  }
 
   Nmeasures <- length(measures)
   measureValues <- as.vector(rep(NA, Nmeasures), mode = "numeric")
 
   for (i in 1:Nmeasures) {
     if (measures[i] == "AUC") measureValues[i] <- AUC(obs = obs, pred = pred, simplif = TRUE)
-    else if (measures[i] %in% modEvAmethods("threshMeasures")) {
+    else if (measures[i] %in% modEvAmethods("threshMeasures") && is.finite(thresh)) {
       measureValues[i] <- evaluate(a, b, c, d, measure = measures[i])  # , N
-      if (standardize == TRUE  &  measures[i] %in% c("TSS", "kappa")) {
+      if (standardize == TRUE && measures[i] %in% c("TSS", "kappa")) {
         measureValues[i] <- standard01(measureValues[i])
         measures[i] <- paste("s", measures[i], sep = "")
         if (verbosity > 0) message("\n", measures[i], " standardized to the 0-1 scale for direct comparability
@@ -99,11 +98,11 @@ type modEvAmethods('threshMeasures') for available options.")
       names(measureValues) <- measures
       measures.plot <- measureValues
       if (plot.ordered) {
-        measures.plot <- sort(measures.plot, decreasing = TRUE)
+        measures.plot <- sort(measures.plot, decreasing = TRUE, na.last = TRUE)
       }
       measures.plot[is.infinite(measures.plot)] <- NA
-      if (plot.type == "barplot") barplot(measures.plot, las = 3, ...)
-      if (plot.type == "lollipop") lollipop(measures.plot, las = 3, ymin = NA, ylab = "", ...)
+      if (plot.type == "barplot" && any(is.finite(measures.plot))) barplot(measures.plot[is.finite(measures.plot)], las = 3, ...)
+      if (plot.type == "lollipop" && any(is.finite(measures.plot))) lollipop(measures.plot[is.finite(measures.plot)], las = 3, ymin = NA, ylab = "", ...)
     }  # end if plot
     return(list(N = N, Prevalence = prev, Threshold = thresh,
                 ConfusionMatrix = conf.matrix, ThreshMeasures = Measures))

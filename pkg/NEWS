@@ -1,5 +1,23 @@
 
 ============================================
+modEvA v3.9.2 (committed 2023-03-19)
+============================================
+
+## Modified functions:
+
+* Boyce
+- explicit warning instead of obscure error if 'obs' has no presences
+- warning also when 'obs' has only presences (Boyce = NA)
+
+* optiThresh
+- explicit warning (and results NA) instead of obscure error if 'obs' has either no presences or no absences
+- empty plot instead of error for incalculable metrics
+
+* threshMeasures
+- explicit warning instead of obscure error if 'obs' has either no presences or no absences
+
+
+============================================
 modEvA v3.9.1 (committed 2023-02-26)
 ============================================
 
