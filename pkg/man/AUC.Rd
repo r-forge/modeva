@@ -7,11 +7,11 @@ Area Under the Curve
 This function calculates the Area Under the Curve of the receiver operating characteristic (ROC) plot, or alternatively the precision-recall (PR) plot, for either a model object or two matching vectors of observed binary (1 for occurrence vs. 0 for non-occurrence) and predicted continuous (e.g. occurrence probability) values, respectively.
 }
 \usage{
-AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, 
+AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
 interval = 0.01, FPR.limits = c(0, 1), curve = "ROC",
-method = "rank", plot = TRUE, diag = TRUE, diag.col = "grey", 
+method = NULL, plot = TRUE, diag = TRUE, diag.col = "grey",
 diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2,
-plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, 
+plot.values = TRUE, plot.digits = 3, plot.preds = FALSE,
 grid = FALSE, xlab = "auto", ylab = "auto", ticks = FALSE,
 na.rm = TRUE, rm.dup = FALSE, ...)
 }
@@ -83,6 +83,8 @@ mod <- rotif.mods$models[[1]]
 
 # compute the AUC:
 
+AUC(model = mod)
+
 AUC(model = mod, simplif = TRUE)
 
 AUC(model = mod, curve = "PR")
@@ -103,8 +105,6 @@ presabs <- mod$y
 prediction <- mod$fitted.values
 
 AUC(obs = presabs, pred = prediction)
-
-AUC(obs = presabs, pred = prediction, plot.preds = TRUE)
 
 
 # 'obs' can also be a table of presence point coordinates

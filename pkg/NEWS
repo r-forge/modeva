@@ -1,5 +1,21 @@
 
 ============================================
+modEvA v3.9.3 (committed 2023-04-14) -> CRAN
+============================================
+
+## Modified functions:
+
+* AUC
+- 'method' default now NULL, to avoid unsolicited warning when curve="PR" because default method was "rank"
+
+
+## Other modified files:
+
+* varImp.Rd
+- improved info on parameters for different plot types (e.g. cex.axis for lollipop, cex.names for barplot)
+
+
+============================================
 modEvA v3.9.2 (committed 2023-03-19)
 ============================================
 

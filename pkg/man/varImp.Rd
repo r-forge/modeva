@@ -21,12 +21,15 @@ This function gets, and optionally plots, variable importance for an input model
   \item{plot.points}{logical, whether or not to add to the plot the individual importance points (rather than just the mean importance value, and the error bar if error.bars=TRUE) for each variable. By default it is TRUE (following Weissgerber et al. 2015), but it only holds for model objects that include several possible importance values per variable (e.g. class "bart").}
   \item{legend}{logical, whether or not to draw a legend. Used only if plot=TRUE and if the output includes negative values (i.e., if 'model' is of class 'GLM' and has variables with positive and negative coefficients).}
   \item{grid}{logical, whether or not to add a grid to the plot. The default is TRUE.}
-  \item{\dots}{additional arguments that can be used for the plot, e.g. 'main', 'cex.axis', 'cex.names'.}
+  \item{\dots}{additional arguments that can be used for the plot (depending on 'plot.type'), e.g. 'main', 'cex.axis' (for \code{\link{lollipop}} or \code{\link{boxplot}}) or 'cex.names' (for \code{\link{barplot}}).}
 }
 \details{
   Variable importance in a model of class "glm" obtained with the \code{\link{glm}} function can be measured by the magnitude of the absolute z-value test statistic, which is provided with \code{summary(model)}. The 'varImp' function outputs the absolute z value of each variable, and in the plot (by default) uses different colours for variables with positive and negative relationships with the response.
+
   If the input model is of class "gbm" of the \pkg{gbm} package, variable importance is obtained from \code{summary.gbm(model)} and divided by 100 to get the result as a proportion rather than a percentage.
+
   If the input model is of class "randomForest" of the \pkg{randomForest} package, variable importance is obtained with \code{model$importance}.
+
   If the input model is of class "bart" of the \pkg{dbarts} package, variable importance is obtained as the mean number of tree splits each variable was chosen for. If 'error.bars' is not NA, the error is also computed according to the specified metric ("sd" or standard deviation by default).
   }
 \value{
@@ -48,14 +51,15 @@ Weissgerber T.L., Milic N.M., Winham S.J. & Garovic V,D, (2015) Beyond Bar and L
   # choose a particular model to play with:
   mod <- rotif.mods$models[[1]]
 
-
   # get variable importance for this model:
-  varImp(model = mod)
+  varImp(model = mod,
+    cex.axis = 0.6)
 
   # change some parameters:
   par(mar = c(10, 4, 2, 1))
   varImp(model = mod,
     col = c("darkgreen", "gold"),
     plot.type = "barplot",
+    cex.names = 0.8,
     main = "Variable importance in \n my model")
 }
