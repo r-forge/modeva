@@ -1,6 +1,6 @@
-varImp <- function(model, imp.type = "each", reorder = TRUE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, ...) {
+varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = TRUE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, ...) {
 
-  # version 1.6 (16 Jan 2023)
+  # version 1.7 (26 Apr 2023)
 
   # if 'col' has length 2 and varImp has negative values (e.g. for z-value), those will get the second colour
 
@@ -13,7 +13,7 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, plot = TRUE, plot.t
             is.logical(legend),
             is.logical(grid),
             length(col) %in% 1:2
-            )
+  )
 
   if (is(model, "glm")) {  #  && !is(model, "Gam")
 
@@ -60,7 +60,38 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, plot = TRUE, plot.t
     ylab <- "Proportion of splits used"
     varimps <- model$varcount / rowSums(model$varcount)
     varimp <- colMeans(varimps)
-  }
+
+    if (group.cats) {
+      cat.vars <- names(which(lapply(attr(model$fit$data@x, "drop"), length) > 1))
+      names.nosuffix <- names(varimp)
+      for (v in cat.vars) {
+        v.inds <- grep(v, colnames(model$fit$data@x))
+        names.nosuffix[v.inds] <- v
+      }
+
+      varimp.df <- data.frame(names = names.nosuffix, varimp, row.names = NULL)
+      varimp.df <- aggregate(varimp.df$varimp, by = list(varimp.df$names), FUN = sum)
+      varimp <- varimp.df$x
+      names(varimp) <- varimp.df$Group.1
+
+      colnames(varimps) <- names.nosuffix
+      varimps.agg <- apply(varimps, 1, aggregate, sum, by = list(colnames(varimps)))
+      varimps.agg <- lapply(varimps.agg, getElement, "x")
+      varimps <- do.call(rbind.data.frame, varimps.agg)
+      colnames(varimps) <- names(varimp)
+    }  # end if group.cats
+
+    dropped.vars <- names(which(unlist(attr(model$fit$data@x,"drop")) == 1))
+    n.dropped <- length(dropped.vars)
+    if (n.dropped > 0) {
+      message("The following variables had been automatically dropped by the model (e.g. for having no variability?):  ", paste(dropped.vars, collapse = ", "))
+      dropped.varimp <- rep(0, n.dropped)
+      names(dropped.varimp) <- dropped.vars
+      varimp <- c(varimp, dropped.varimp)
+      varimps[ , dropped.vars] <- 0
+    }
+
+  }  # end if bart
 
   else stop ("'model' is of a non-implemented class.")
 
@@ -156,8 +187,11 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, plot = TRUE, plot.t
       if (plot.type == "barplot") xx <- rep(xbars, each = nrow(varimps))
       else xx <- rep(1:ncol(varimps), each = nrow(varimps))
       jj <- sapply(xx, jitter, amount = 0.1)
-      points(x = jj, y = varimps, pch = 20, cex = 0.1, col = adjustcolor("#ffaabb", alpha.f = 0.3))
-      if (plot.type == "lollipop") arrows(x0 = 1:length(varimp), x1 = 1:length(varimp), y0 = eb_lower, y1 = eb_upper, code = 3, angle = 90, length = 0.03, col = colrs)  # re-plot error bars on top for better visibility
+      points(x = jj, y = as.matrix(varimps), pch = 20, cex = 0.1, col = adjustcolor("#ffaabb", alpha.f = 0.3))
+      if (plot.type == "lollipop") {
+        points(abs(varimp), pch = 20, col = colrs)
+        arrows(x0 = 1:length(varimp), x1 = 1:length(varimp), y0 = eb_lower, y1 = eb_upper, code = 3, angle = 90, length = 0.03, col = colrs)
+      }  # re-plot on top of points for better visibility
     }
 
     signs <- unique(sign(varimp)[sign(varimp) != 0])  # check for both negative and positive varimps

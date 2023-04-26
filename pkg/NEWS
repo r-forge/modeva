@@ -1,5 +1,15 @@
 
 ============================================
+modEvA v3.9.4 (committed 2023-04-26)
+============================================
+
+## Modified functions:
+
+* varImp
+- new argument group.cats=TRUE, for BART models, to sum up the contributions of (one-hot encoded) categorical variable levels
+
+
+============================================
 modEvA v3.9.3 (committed 2023-04-14) -> CRAN
 ============================================
 

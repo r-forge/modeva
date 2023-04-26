@@ -5,14 +5,16 @@
 This function gets, and optionally plots, variable importance for an input model object of an implemented class.
 }
 \usage{
-  varImp(model, imp.type = "each", reorder = TRUE, plot = TRUE,
-  plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa",
-  "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, ...)
+  varImp(model, imp.type = "each", reorder = TRUE, group.cats = TRUE,
+  plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto",
+  col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE,
+  grid = TRUE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gbm", "randomForest" or "bart".}
   \item{imp.type}{character value indicating the type of variable importance to output, i.e. the metric with which importance is measured. Currently the only option is "each", to extract the measure provided within each model object. Note that this is inconsistent across model classes -- see Details.}
   \item{reorder}{logical value indicating whether to sort the variables in decreasing order of importance. TRUE by default. If set to FALSE, the variables will retain their input order.}
+  \item{group.cats}{logical value indicating whether to aggregate all factor levels of each categorical variable into a single variable, by summing up their proportions of branches used. Used if 'model' is of class 'bart', in whose output the contributions of categorical variables split by their factor levels.}
   \item{plot}{logical value indicating whether to produce a plot with the results.}
   \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "\code{\link{lollipop}}" (the default), "\code{\link{barplot}}", or "\code{\link{boxplot}}". Note that the latter is only useful when 'model' contains several importance values per variable (i.e. for models of class "bart").}
   \item{error.bars}{character value indicating the type of error metric to compute (and plot, if plot=TRUE) if the input contains the necessary information (i.e., for models of class "bart") and if the 'plot.type' is appropriate (i.e. "lollipop" or "barplot"). Can be "sd" (the default) for the standard deviation; "range" for the minimum and maximum value across the ones available; a numeric value between 0 and 1 for the corresponding confidence interval (e.g. 0.95 for 95\%), computed with \code{\link{quantile}}; or NA for no error.bars.}

@@ -2,7 +2,7 @@ exportPattern("^[[:alpha:]]+")
 importFrom("graphics", "abline", "arrows", "axis", "barplot", "boxplot", "hist", "legend", "lines", "mtext", "par",
            "plot", "points", "polygon", "rect", "text")
 importFrom("grDevices", "adjustcolor", "rgb")
-importFrom("stats", "approx", "approxfun", "as.formula", "binomial", "complete.cases", "cor", "density", "family", "glm", "integrate", "lm", "logLik", "median", "na.omit", "pchisq", "qf",
+importFrom("stats", "aggregate", "approx", "approxfun", "as.formula", "binomial", "complete.cases", "cor", "density", "family", "glm", "integrate", "lm", "logLik", "median", "na.omit", "pchisq", "qf",
            "quantile", "qnorm", "resid", "sd", "xtabs", "fitted", "predict")
 importFrom("methods", "is")
 importFrom("terra", "rasterize", "nlyr", "values")
