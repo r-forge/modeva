@@ -1,6 +1,6 @@
-varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = TRUE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, ...) {
+varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, ...) {
 
-  # version 1.7 (26 Apr 2023)
+  # version 1.8 (2 May 2023)
 
   # if 'col' has length 2 and varImp has negative values (e.g. for z-value), those will get the second colour
 
@@ -15,11 +15,15 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = TRUE, 
             length(col) %in% 1:2
   )
 
+  is_bart <- is(model, "bart") || is(model, "pbart") || is(model, "lbart")
+  is_flexbart <- (is(model, "list") && c("varcounts", "trees") %in% names(model))
+
+  if (!(is_bart || !is_flexbart))  error.bars <- NA
+
+
   if (is(model, "glm")) {  #  && !is(model, "Gam")
 
     if (family(model)$family != "binomial")  stop ("This function is currently only implemented for binary-response models of family 'binomial'.")
-
-    error.bars <- NA
 
     #  if (measure == "z") {
     varimp <- summary(model)$coefficients[-1, "z value"]
@@ -39,7 +43,6 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = TRUE, 
   else if (is(model, "gbm")) {
     # requireNamespace("gbm")  # would require a suggest/depend
     if ("gbm" %in% .packages()) {
-      error.bars <- NA
       ylab <- "Relative influence"
       smry <- summary(model, plotit = FALSE)
       varimp <- smry[ , "rel.inf"] / 100
@@ -50,45 +53,65 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = TRUE, 
   }
 
   else if (is(model, "randomForest")) {
-    error.bars <- NA
     varimp <- model$importance  # / nrow(model$importance) / 100  # doesn't work well for mean accuracy decrease
     names(varimp) <- rownames(model$importance)
     ylab <- colnames(model$importance)
   }
 
-  else if (is(model, "bart")) {
+  else if (is_bart || is_flexbart) {
+
     ylab <- "Proportion of splits used"
-    varimps <- model$varcount / rowSums(model$varcount)
+
+    if ("varcounts" %in% names(model))  # in flexBART models
+      names(model)[grep("varcounts", names(model))] <- "varcount"  # to homogenize
+
+    varimps <- model[["varcount"]] / rowSums(model[["varcount"]])
+
     varimp <- colMeans(varimps)
 
     if (group.cats) {
-      cat.vars <- names(which(lapply(attr(model$fit$data@x, "drop"), length) > 1))
-      names.nosuffix <- names(varimp)
-      for (v in cat.vars) {
-        v.inds <- grep(v, colnames(model$fit$data@x))
-        names.nosuffix[v.inds] <- v
+      if (is(model, "bart")) {
+        cat.vars <- names(which(lapply(attr(model$fit$data@x, "drop"), length) > 1))
+        names.nosuffix <- names(varimp)
+        for (v in cat.vars) {
+          v.inds <- grep(v, colnames(model$fit$data@x))
+          names.nosuffix[v.inds] <- v
+        }
       }
 
-      varimp.df <- data.frame(names = names.nosuffix, varimp, row.names = NULL)
-      varimp.df <- aggregate(varimp.df$varimp, by = list(varimp.df$names), FUN = sum)
-      varimp <- varimp.df$x
-      names(varimp) <- varimp.df$Group.1
+       else if (is(model, "pbart") || is(model, "lbart")) {
+         names.nosuffix <- gsub("[0-9]+$", "", colnames(model$varcount))
+       }  # but WATCH OUT: other variables with numeric suffix (e.g. "o2" and "o3") will be grouped too! also cat vars with same name but different numeric suffix, e.g. "var" and "var2"
 
-      colnames(varimps) <- names.nosuffix
-      varimps.agg <- apply(varimps, 1, aggregate, sum, by = list(colnames(varimps)))
-      varimps.agg <- lapply(varimps.agg, getElement, "x")
-      varimps <- do.call(rbind.data.frame, varimps.agg)
-      colnames(varimps) <- names(varimp)
+      if(!is_flexbart) {
+
+        varimp.df <- data.frame(names = names.nosuffix, varimp, row.names = NULL)
+        varimp.df <- aggregate(varimp.df$varimp, by = list(varimp.df$names), FUN = sum)
+        varimp <- varimp.df$x
+        names(varimp) <- varimp.df$Group.1
+
+        colnames(varimps) <- names.nosuffix
+        varimps.agg <- apply(varimps, 1, aggregate, sum, by = list(colnames(varimps)))
+        varimps.agg <- lapply(varimps.agg, getElement, "x")
+        varimps <- do.call(rbind.data.frame, varimps.agg)
+        colnames(varimps) <- names(varimp)
+      }
     }  # end if group.cats
 
-    dropped.vars <- names(which(unlist(attr(model$fit$data@x,"drop")) == 1))
-    n.dropped <- length(dropped.vars)
-    if (n.dropped > 0) {
-      message("The following variables had been automatically dropped by the model (e.g. for having no variability?):  ", paste(dropped.vars, collapse = ", "))
-      dropped.varimp <- rep(0, n.dropped)
-      names(dropped.varimp) <- dropped.vars
-      varimp <- c(varimp, dropped.varimp)
-      varimps[ , dropped.vars] <- 0
+    if (is(model, "bart")) {  #  || is(model, "pbart") || is(model, "lbart")
+
+      # if (is(model, "bart")
+          dropped.vars <- names(which(unlist(attr(model$fit$data@x, "drop")) == 1))
+          # else dropped.vars <- colnames(model$varcount)[model$rm.const]  # no, because these names already have the cat vars divided and renamed according to their factor levels, so the 'rm.const' indices do not correctly match the original var names
+
+      n.dropped <- length(dropped.vars)
+      if (n.dropped > 0) {
+        message("The following variables had been automatically dropped by the model (e.g. for having no variability):  ", paste(dropped.vars, collapse = ", "))
+        dropped.varimp <- rep(0, n.dropped)
+        names(dropped.varimp) <- dropped.vars
+        varimp <- c(varimp, dropped.varimp)
+        varimps[ , dropped.vars] <- 0
+      }
     }
 
   }  # end if bart
@@ -97,7 +120,7 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = TRUE, 
 
   if (reorder) {
     varimp <- varimp[order(abs(varimp), decreasing = TRUE)]
-    if (is(model, "bart"))  varimps <- varimps[ , names(varimp)]
+    if (is_bart)  varimps <- varimps[ , names(varimp)]
   }
 
   if (!is.na(error.bars)) {
@@ -183,7 +206,7 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = TRUE, 
       if (grid) grid()
     }  # end if boxplot
 
-    if (plot.points && is(model, "bart")) {
+    if (plot.points && is_bart) {
       if (plot.type == "barplot") xx <- rep(xbars, each = nrow(varimps))
       else xx <- rep(1:ncol(varimps), each = nrow(varimps))
       jj <- sapply(xx, jitter, amount = 0.1)
@@ -191,6 +214,9 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = TRUE, 
       if (plot.type == "lollipop") {
         points(abs(varimp), pch = 20, col = colrs)
         arrows(x0 = 1:length(varimp), x1 = 1:length(varimp), y0 = eb_lower, y1 = eb_upper, code = 3, angle = 90, length = 0.03, col = colrs)
+      }  # re-plot on top of points for better visibility
+      if (plot.type == "barplot") {
+        arrows(x0 = xbars, x1 = xbars, y0 = eb_lower, y1 = eb_upper, angle = 90, code = 3, length = 0.03, col = "#10133a")
       }  # re-plot on top of points for better visibility
     }
 

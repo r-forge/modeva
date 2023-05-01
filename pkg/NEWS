@@ -1,5 +1,18 @@
 
 ============================================
+modEvA v3.9.5 (committed 2023-01-02)
+============================================
+
+## Modified functions:
+
+* varImp
+- barplot now also gets error bars replotted on top of points if plot.points=TRUE
+- implemented for models of class "lbart" and "pbart" of pkg 'BART' (though not ideal for group.cats = TRUE)
+- group.cats default now FALSE
+- started implementation for flexBART models (still imperfect because object has no var names; issue submitted at https://github.com/skdeshpande91/flexBART/issues/8)
+
+
+============================================
 modEvA v3.9.4 (committed 2023-04-26)
 ============================================
 
