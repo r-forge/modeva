@@ -16,9 +16,9 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
   )
 
   is_bart <- is(model, "bart") || is(model, "pbart") || is(model, "lbart")
-  is_flexbart <- (is(model, "list") && c("varcounts", "trees") %in% names(model))
+  is_flexbart <- is(model, "list") && c("varcounts", "trees") %in% names(model)
 
-  if (!(is_bart || !is_flexbart))  error.bars <- NA
+  if (!(is_bart || is_flexbart))  error.bars <- NA
 
 
   if (is(model, "glm")) {  #  && !is(model, "Gam")
