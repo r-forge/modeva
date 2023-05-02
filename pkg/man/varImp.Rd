@@ -13,7 +13,7 @@ This function gets, and optionally plots, variable importance for an input model
 \arguments{
   \item{model}{a binary-response model object of class "glm" (of \pkg{stats}), "gbm" (of \pkg{gbm}), "randomForest" (of \pkg{randomForest}), "bart" (of package \pkg{dbarts}), "pbart" or "lbart" (of package \pkg{BART}), or a list produced by function "probit_flexBART"" of package \pkg{flexBART}.}
   \item{imp.type}{character value indicating the type of variable importance to output, i.e. the metric with which importance is measured. Currently the only option is "each", to extract the measure provided within each model object. Note that this is inconsistent across model classes -- see Details.}
-  \item{reorder}{logical value indicating whether to sort the variables in decreasing order of importance. TRUE by default. If set to FALSE, the variables will retain their input order.}
+  \item{reorder}{logical value indicating whether to sort the variables in decreasing order of importance. TRUE by default, but automatically set to FALSE if 'model' is a 'flexBART' output, as these do not currently carry variable names. If FALSE, the variables retain their input order.}
   \item{group.cats}{logical value indicating whether to aggregate all factor levels of each (one-hot encoded) categorical variable into a single variable, by summing up their proportions of branches used. Used if 'model' is of class 'bart', 'pbart' or 'lbart', in whose outputs the contributions of categorical variables are split by their factor levels. The default is FALSE. Note that this may incorrectly group variables that have the same name with a different numeric suffix (e.g. "soil_type_1", "soil_type_2"), so revise your results if you set this to TRUE.}
   \item{plot}{logical value indicating whether to produce a plot with the results. The default is TRUE.}
   \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "\code{\link{lollipop}}" (the default), "\code{\link{barplot}}", or "\code{\link{boxplot}}". Note that the latter is only useful when 'model' contains several importance values per variable (i.e. for models of class "bart").}
@@ -65,5 +65,6 @@ Weissgerber T.L., Milic N.M., Winham S.J. & Garovic V,D, (2015) Beyond Bar and L
     col = c("darkgreen", "gold"),
     plot.type = "barplot",
     cex.names = 0.8,
+    ylim = c(0, 5),
     main = "Variable importance in \n my model")
 }

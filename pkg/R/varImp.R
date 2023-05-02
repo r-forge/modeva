@@ -18,8 +18,12 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
   is_bart <- is(model, "bart") || is(model, "pbart") || is(model, "lbart")
   is_flexbart <- is(model, "list") && c("varcounts", "trees") %in% names(model)
 
-  if (!(is_bart || is_flexbart))  error.bars <- NA
+  if (!is_bart && !is_flexbart)  error.bars <- NA
 
+  if (reorder && is_flexbart) {
+    reorder <- FALSE
+    message ("'reorder' set to FALSE, as 'flexBART' does not currently carry variable names, which would make it impossible to match variables with importance values. Variables are in the order in which they were provided to the 'flexBART' model, with the continuous preceding the categorical ones.")
+  }
 
   if (is(model, "glm")) {  #  && !is(model, "Gam")
 
@@ -57,6 +61,7 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
     names(varimp) <- rownames(model$importance)
     ylab <- colnames(model$importance)
   }
+
 
   else if (is_bart || is_flexbart) {
 
