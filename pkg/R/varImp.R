@@ -1,6 +1,6 @@
 varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, ...) {
 
-  # version 1.8 (2 May 2023)
+  # version 2.0 (27 Sep 2023)
 
   # if 'col' has length 2 and varImp has negative values (e.g. for z-value), those will get the second colour
 
@@ -30,8 +30,10 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
     if (family(model)$family != "binomial")  stop ("This function is currently only implemented for binary-response models of family 'binomial'.")
 
     #  if (measure == "z") {
+    metric <- "Absolute z value"
+    cat("\nMetric:", metric, "\n\n")
     varimp <- summary(model)$coefficients[-1, "z value"]
-    ylab <- "z value"
+    ylab <- metric
     #  }
 
     # if (measure == "Wald") {  # requires 'fuzzySim' and 'aod'
@@ -47,7 +49,9 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
   else if (is(model, "gbm")) {
     # requireNamespace("gbm")  # would require a suggest/depend
     if ("gbm" %in% .packages()) {
-      ylab <- "Relative influence"
+      metric <- "Relative influence"
+      cat("\nMetric:", metric, "\n\n")
+      ylab <- metric
       smry <- summary(model, plotit = FALSE)
       varimp <- smry[ , "rel.inf"] / 100
       names(varimp) <- smry[ , "var"]
@@ -57,15 +61,19 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
   }
 
   else if (is(model, "randomForest")) {
+    metric <- colnames(model$importance)
+    cat("\nMetric:", metric, "\n\n")
     varimp <- model$importance  # / nrow(model$importance) / 100  # doesn't work well for mean accuracy decrease
     names(varimp) <- rownames(model$importance)
-    ylab <- colnames(model$importance)
+    ylab <- metric
   }
 
 
   else if (is_bart || is_flexbart) {
 
-    ylab <- "Proportion of splits used"
+    metric <- "Proportion of splits used"
+    cat("\nMetric:", metric, "\n\n")
+    ylab <- metric
 
     if ("varcounts" %in% names(model))  # in flexBART models
       names(model)[grep("varcounts", names(model))] <- "varcount"  # to homogenize
@@ -88,7 +96,7 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
          names.nosuffix <- gsub("[0-9]+$", "", colnames(model$varcount))
        }  # but WATCH OUT: other variables with numeric suffix (e.g. "o2" and "o3") will be grouped too! also cat vars with same name but different numeric suffix, e.g. "var" and "var2"
 
-      if(!is_flexbart) {
+      if (!is_flexbart) {
 
         varimp.df <- data.frame(names = names.nosuffix, varimp, row.names = NULL)
         varimp.df <- aggregate(varimp.df$varimp, by = list(varimp.df$names), FUN = sum)
@@ -211,7 +219,7 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
       if (grid) grid()
     }  # end if boxplot
 
-    if (plot.points && is_bart) {
+    if (plot.points && (is_bart || is_flexbart)) {
       if (plot.type == "barplot") xx <- rep(xbars, each = nrow(varimps))
       else xx <- rep(1:ncol(varimps), each = nrow(varimps))
       jj <- sapply(xx, jitter, amount = 0.1)
@@ -223,13 +231,13 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
       if (plot.type == "barplot") {
         arrows(x0 = xbars, x1 = xbars, y0 = eb_lower, y1 = eb_upper, angle = 90, code = 3, length = 0.03, col = "#10133a")
       }  # re-plot on top of points for better visibility
-    }
+    }  # end if plot.points
 
     signs <- unique(sign(varimp)[sign(varimp) != 0])  # check for both negative and positive varimps
     if (legend && length(signs) > 1) legend("topright", legend = c("positive", "negative"), fill = col, border = NA, bty = "n")
   }  # end if plot
 
-  if (is.na(error.bars)) return(varimp)
+  if (is.na(error.bars)) return(abs(varimp))
 
   return (data.frame(Mean = varimp, Lower = eb_lower, Upper = eb_upper))
 }

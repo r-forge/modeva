@@ -62,7 +62,7 @@ Weissgerber T.L., Milic N.M., Winham S.J. & Garovic V,D, (2015) Beyond Bar and L
   # change some parameters:
   par(mar = c(10, 4, 2, 1))
   varImp(model = mod,
-    col = c("darkgreen", "gold"),
+    col = c("darkgreen", "orange"),
     plot.type = "barplot",
     cex.names = 0.8,
     ylim = c(0, 5),

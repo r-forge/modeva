@@ -59,6 +59,7 @@ If \code{simplif = TRUE}, the function returns only the AUC value (a numeric val
 \item{AUC}{the value of the AUC).}
 \item{AUCratio}{the ratio of the obtained AUC value to the null expectation (0.5).}
 \item{meanPrecision}{the arithmetic mean of precision (proportion of predicted presences actually observed as presences) across all threshold values (defined by 'interval'). It is close to the AUC of the precision-recall (PR) curve.}
+\item{GiniCoefficient}{the Gini coefficient, measured as the area between the ROC curve and the diagonal divided by the area of the upper triangle (2*AUC-1).}
 }
 \references{
 Lobo, J.M., Jimenez-Valverde, A. & Real, R. (2008). AUC: a misleading measure of the performance of predictive distribution models. Global Ecology and Biogeography 17: 145-151

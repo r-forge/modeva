@@ -157,5 +157,5 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   thresholds.df <- data.frame(thresholds, true.positives, true.negatives, sensitivity, specificity, precision, false.pos.rate, n.preds, prop.preds)
   rownames(thresholds.df) <- thresholds
 
-  return (list(thresholds = thresholds.df, N = N, prevalence = preval, AUC = AUC, AUCratio = AUC / 0.5, meanPrecision = precision_mean))
+  return (list(thresholds = thresholds.df, N = N, prevalence = preval, AUC = AUC, AUCratio = AUC / 0.5, meanPrecision = precision_mean, GiniCoefficient = 2 * AUC - 1))
 }

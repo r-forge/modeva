@@ -1,3 +1,19 @@
+============================================
+modEvA v3.9.6 (committed 2023-10-04)
+============================================
+
+## Modified functions:
+
+* Dsquared
+- warning emitted and Dsquared calculated correctly even when family binomial and response not binary (following bug report by Elic M. Weitzel)
+
+* varImp
+- metric reported in console result
+- absolute (rather than original) values now returned for z value (if model is glm)
+
+* AUC
+- added 'GiniCoefficient' to outputs when simplif=FALSE
+
 
 ============================================
 modEvA v3.9.5 (committed 2023-01-02)

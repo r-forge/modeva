@@ -6,7 +6,7 @@ Dsquared <- function(model = NULL,
                      npar = NULL,
                      na.rm = TRUE,
                      rm.dup = FALSE) {
-  # version 2.0 (20 Dec 2022)
+  # version 2.1 (4 Oct 2023)
 
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
   obs <- obspred[ , "obs"]
@@ -53,7 +53,7 @@ Dsquared <- function(model = NULL,
 
   dev <- function (obs, pred, family = family) {  # based on code from dismo::calc.deviance
     if (family %in% c("binomial", "bernoulli")) {
-      d <- -2 * sum((obs * log(pred)) + ((1 - obs) * log(1 - pred)))
+      d <- -2 * sum((obs * log(pred)) + ((1 - obs) * log(1 - pred)))  # NOTE: this only works correctly if 'obs' is binary (cf. Elic Weitzel email bug report)
     }
     else if (family == "poisson") {
       d <- 2 * sum(ifelse(obs == 0, 0, (obs * log(obs/pred))) - (obs - pred))
@@ -70,24 +70,38 @@ Dsquared <- function(model = NULL,
     return(mean(d))
   }  # end 'dev' function
 
+  if (family %in% c("binomial", "bernoulli") && !all(obs %in% c(0, 1))) {
+    warning("family is 'binomial' / 'bernoulli'\nbut response is not binary (with only values of 0 or 1).")
+
+    if (!model.provided) {
+      message("Using 'binomial' family with 'logit' link.")
+      link <- log(pred / (1 - pred))
+      model <- glm(obs ~ link, family = family)
+    }
+
+    deviance <- model$deviance
+    null.deviance <- model$null.deviance
+  } else {
   deviance <- dev(obs = obs, pred = pred, family = family)
   null.deviance <- dev(obs = obs, pred = mean(obs), family = family)
-  Dsq <- (null.deviance - deviance) / null.deviance
+}
 
-  if (adjust) {
-    if (model.provided && is(model, "glm")) {
-      n <- length(model$y)
-      #p <- length(model$coefficients)
-      p <- attributes(logLik(model))$df
-    } else {
-      if (is.null(npar)) stop ("'adjust=TRUE' requires either providing a 'model' argument of class 'glm', or specifying 'npar'.")
-      n <- length(na.omit(obs))
-      p <- npar
-    }  # end if model.provided else
+Dsq <- (null.deviance - deviance) / null.deviance
 
-    Dsq <- 1 - ((n - 1) / (n - p)) * (1 - Dsq)
-  }  # end if adjust
+if (adjust) {
+  if (model.provided && is(model, "glm")) {
+    n <- length(model$y)
+    #p <- length(model$coefficients)
+    p <- attributes(logLik(model))$df
+  } else {
+    if (is.null(npar)) stop ("'adjust=TRUE' requires either providing a 'model' argument of class 'glm', or specifying 'npar'.")
+    n <- length(na.omit(obs))
+    p <- npar
+  }  # end if model.provided else
 
-  # Dsq <- round(Dsq, 4)  # result can be slightly inexact beyond 4 decimals
-  return(Dsq)
+  Dsq <- 1 - ((n - 1) / (n - p)) * (1 - Dsq)
+}  # end if adjust
+
+# Dsq <- round(Dsq, 4)  # result can be slightly inexact beyond 4 decimals
+return(Dsq)
 }
