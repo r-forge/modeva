@@ -1,4 +1,21 @@
 ============================================
+modEvA v3.8.0 (committed 2023-11-10)
+============================================
+
+## New functions:
+
+* quantReclass
+
+* similarity
+
+
+## Modified functions:
+
+* modevaMethods
+- added methods for similarity()
+
+
+============================================
 modEvA v3.9.6 (committed 2023-10-04)
 ============================================
 
