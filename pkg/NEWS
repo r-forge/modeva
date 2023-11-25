@@ -1,5 +1,15 @@
 ============================================
-modEvA v3.10 (committed 2023-11-10)
+modEvA v3.11 (committed 2023-11-25) -> CRAN
+============================================
+
+## Modified functions:
+
+* Dsquared
+- added dismo.version argument: if FALSE, uses the previous version of Dsquared, as the dismo version sometimes produces negative or NaN results
+
+
+============================================
+modEvA v3.10 (committed 2023-11-10) -> CRAN
 ============================================
 
 ## New functions:
@@ -11,7 +21,7 @@ modEvA v3.10 (committed 2023-11-10)
 
 ## Modified functions:
 
-* modevaMethods
+* modEvAmethods
 - added methods for similarity()
 
 

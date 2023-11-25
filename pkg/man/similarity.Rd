@@ -4,9 +4,10 @@
 Similarity measures
 }
 \description{
-This function computes similarity indices for evaluating the classification accuracy of a species distribution (or ecological niche, or bioclimatic envelope...) model against observed presence-absence data (Leroy et al. 2018), upon the choice of a threshold value above which the model is considered to predict that the species should be present rather than absent.
+This function computes similarity indices for evaluating the classification accuracy of a species distribution (or ecological niche, or bioclimatic envelope...) model against observed presence-absence data, upon the choice of a threshold value above which the model is considered to predict that the species should be present rather than absent.
 }
 \usage{
+
 similarity(model = NULL, obs = NULL, pred = NULL, thresh,
 measures = modEvAmethods("similarity"), simplif = FALSE,
 plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE,
@@ -30,7 +31,7 @@ verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
   \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{
-Commonly used threshold-based metrics of model evaluation, such as the True Skill Statistic (TSS) implemented in the \code{\link{threshMeasures}} function, are conditioned by species prevalence in the modelled sample. To overcome this, Leroy et al. (2018) propose to use of similary indices for model evaluation, which they show to be independent of prevalence. This function implements such indices in a model evaluation context.
+Commonly used threshold-based metrics of model evaluation, such as the True Skill Statistic (TSS) implemented in the \code{\link{threshMeasures}} function, are conditioned by species prevalence in the modelled sample. To overcome this, Leroy et al. (2018) propose the use of similary indices for model evaluation, which they show to be independent of prevalence. This function implements such indices in a model evaluation context.
 }
 \value{
 If 'simplif=TRUE', the output is a numeric matrix with the name and value of each measure. If 'simplif=FALSE' (the default), the ouptut is a list with the following components:

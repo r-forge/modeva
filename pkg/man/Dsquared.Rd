@@ -8,7 +8,8 @@ This function computes the (adjusted) amount of deviance accounted for by a mode
 }
 \usage{
 Dsquared(model = NULL, obs = NULL, pred = NULL, family = NULL,
-adjust = FALSE, npar = NULL, na.rm = TRUE, rm.dup = FALSE)
+adjust = FALSE, npar = NULL, na.rm = TRUE, rm.dup = FALSE,
+dismo.version = FALSE)
 }
 \arguments{
   \item{model}{a model object of class implemented in \code{\link{mod2obspred}}. If this argument is provided, 'obs' and 'pred' will be extracted with that function. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -19,6 +20,7 @@ adjust = FALSE, npar = NULL, na.rm = TRUE, rm.dup = FALSE)
   \item{npar}{integer value indicating the number of parameters in the model. This argument is ignored and taken from \code{model} if this argument is provided and of class GLM, or if \code{adjust = FALSE}.}
     \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
   \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
+    \item{dismo.version}{Logical value indicating whether the deviance should be computed with code from the dismo::calc.deviance() function. The default is FALSE, for back-compatibility.}
 }
 \details{
 Linear models have an R-squared value (commonly provided with the model summary) which measures the proportion of variation that the model accounts for. For generalized linear models (GLMs) and others based on non-continuous response variables, an equivalent is the amount of deviance accounted for (D-squared; Guisan & Zimmermann 2000), though this value is not routinely provided with the model summary. The \code{Dsquared} function calculates it as the proportion of the null deviance (i.e. the deviance of a model with no predictor variables) that is accounted for by the model. There is also an option to compute the adjusted D-squared, which takes into account the number of observations and the number of parameters, thus allowing direct comparison among the output for different models (Weisberg 1980, Guisan & Zimmermann 2000).

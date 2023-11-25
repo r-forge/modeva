@@ -5,7 +5,7 @@
 This function computes the prediction threshold under a given criterion.
 }
 \usage{
-getThreshold(model = NULL, obs = NULL, pred = NULL, threshMethod, 
+getThreshold(model = NULL, obs = NULL, pred = NULL, threshMethod,
 interval = 0.01, quant = 0, na.rm = TRUE)
 }
 \arguments{
@@ -18,7 +18,7 @@ interval = 0.01, quant = 0, na.rm = TRUE)
   \item{na.rm}{Logical value indicating whether NA values should be ignored. Defaults to TRUE.}
 }
 \details{
-Several criteria have been proposed for selecting a threshold with which to convert continuous model predictions (of presence probability, habitat suitability or alike) into binary predictions of presence or absence. A threshold is required for computing threshold-based model evaluation metrics, such as those in \code{\link{threshMeasures}}. This function implements a few of these threshold selection criteria, including those outlined in Liu et al. (2005, 2013) and a couple more:
+Several criteria have been proposed for selecting a threshold with which to convert continuous model predictions (of presence probability, habitat suitability or alike) into binary predictions of presence or absence. Such threshold is required for computing threshold-based model evaluation metrics, such as those in \code{\link{threshMeasures}}. This function implements a few of these threshold selection criteria, including those outlined in Liu et al. (2005, 2013) and a couple more:
 
 - "preval", "trainPrev": prevalence (proportion of presences) in the supplied 'model' or 'obs'
 
@@ -28,7 +28,7 @@ Several criteria have been proposed for selecting a threshold with which to conv
 
 - "maxKappa": threshold that maximizes Cohen's kappa
 
-- "maxCCR", "maxOA", "maxOPS": threshold that maximizes the Correct Classification Rate, aka Overall Accuracy, aka Overall Prediction Success 
+- "maxCCR", "maxOA", "maxOPS": threshold that maximizes the Correct Classification Rate, aka Overall Accuracy, aka Overall Prediction Success
 
 - "maxF": threshold that maximizes the F value
 
@@ -84,7 +84,7 @@ getThreshold(obs = presabs, pred = prediction, threshMethod = "maxTSS")
 
 getThreshold(obs = presabs, pred = prediction, threshMethod = "MTP")
 
-getThreshold(obs = presabs, pred = prediction, threshMethod = "MTP", 
+getThreshold(obs = presabs, pred = prediction, threshMethod = "MTP",
 quant = 0.05)
 
 
