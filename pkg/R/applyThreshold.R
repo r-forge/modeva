@@ -1,6 +1,6 @@
-applyThreshold <- function(model = NULL, obs = NULL, pred = NULL, thresh, right = FALSE, interval = 0.01, quant = 0, na.rm = TRUE) {
+applyThreshold <- function(model = NULL, obs = NULL, pred = NULL, thresh, right = FALSE, interval = 0.01, quant = 0, na.rm = TRUE, verbosity = 2) {
 
-  # version 1.2 (28 Oct 2022)
+  # version 1.3 (28 Nov 2023)
 
   if(!(length(thresh) %in% 1:2)) stop ("'thresh' must be of length 1 or 2.")
   if (!(is.numeric(thresh) || all(thresh %in% modEvAmethods("getThreshold"))))
@@ -8,7 +8,7 @@ applyThreshold <- function(model = NULL, obs = NULL, pred = NULL, thresh, right 
 
   pred_in <- pred  # in case input is raster, so final reclass is also raster
 
-  obspred <- inputMunch(model, obs, pred)
+  obspred <- inputMunch(model, obs, pred, verbosity = verbosity)
   if (!is.null(obs) || !is.null(model)) obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 

@@ -1,4 +1,42 @@
 ============================================
+modEvA v3.12 (committed 2023-12-14)
+============================================
+
+## Modified functions:
+
+* applyThreshold, inputMunch
+- added 'verbosity' argument to pass to ptsrast2obspred()
+
+* AUC
+- added 'grid.lty' argument (used e.g. in modevapp)
+- 'grid' now at 0.1 (not threshold) intervals
+
+* getThreshold
+- finished implementing 'maxF'
+- implemented maxJaccard, maxSorensen (= maxF)
+
+* optiThresh
+- replaced single with double ||, &&
+- added modEvAmethods("similarity") to default 'measures'
+- added maxJaccard and maxSorensen criteria
+
+* modEvAmethods
+- added Jaccard, Sorensen and their maximizations
+
+* arrangePlots
+- return c(1, 1) if n.plots <= 1
+
+
+## Other modified files:
+
+* Boyce.Rd
+- 'Note' now mentions that Boyce is designed for suitability or favourability, not probability
+
+* similarity.Rd
+- 'Description' and 'Details' now mention equivalence to Li & Guo's F-measures
+
+
+============================================
 modEvA v3.11 (committed 2023-11-25) -> CRAN
 ============================================
 
@@ -391,7 +429,7 @@ modEvA v3.3 (committed 2022-05-03)
 * confusionLabel, getBins
 - added 'na.rm' argument
 
-* threshMeasures 
+* threshMeasures
 - 'thresh' argument now calls new 'getThreshold' function to include more options
 
 * ptsrast2obspred
@@ -568,7 +606,7 @@ modEvA v2.4 (committed 2021-10-30)
 - added warning when method = "trapezoid" and interval >= 0.01, noting result is more accurate with smaller intervals
 
 * threshMeasures
-- added 'ylim' argument with default c(0, 1) to avoid error when no selected measure has finite values 
+- added 'ylim' argument with default c(0, 1) to avoid error when no selected measure has finite values
 
 
 ## Other modified files:
@@ -585,7 +623,7 @@ modEvA v2.3 (committed 2021-09-30)
 
 * prevalence
 - added 'model' argument, which can now be provided instead of 'obs'
-- help file includes examples with 'model' and with character 'obs' 
+- help file includes examples with 'model' and with character 'obs'
 - error message when 'obs' not a vector and when 'event' not in 'obs'
 - warning when 'obs' ignored in favour of 'model'
 
@@ -681,7 +719,7 @@ modEvA v2.0 (committed 2020-01-20)
 ## Other modified files:
 
 * threshMeasures.Rd, optiThresh.Rd, optiPair.Rd
-- added "Note" saying sens=recall and PPP=precision, and defining F1score 
+- added "Note" saying sens=recall and PPP=precision, and defining F1score
 
 
 ==========================================

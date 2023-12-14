@@ -21,6 +21,7 @@ confusionLabel <- function(model = NULL, obs = NULL, pred = NULL, thresh, interv
     finite_pixels <- is.finite(terra::values(pred_in))
     terra::values(pred_in)[finite_pixels] <- as.integer(as.factor(res))
     res <- pred_in
+    # levels(res) <-
   }
 
   res

@@ -1,5 +1,5 @@
-AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01, FPR.limits = c(0, 1), curve = "ROC", method = NULL, plot = TRUE, diag = TRUE, diag.col = "grey", diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, xlab = "auto", ylab = "auto", ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, ...) {
-  # version 2.9 (12 Apr 2023)
+AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01, FPR.limits = c(0, 1), curve = "ROC", method = NULL, plot = TRUE, diag = TRUE, diag.col = "grey", diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto", ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, ...) {
+  # version 3.0 (13 Dec 2023)
 
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
 
@@ -52,7 +52,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   if (any(pred < 0, na.rm = TRUE) || any(pred > 1, na.rm = TRUE) && (simplif == FALSE || plot == TRUE)) warning("Some of the 'pred' values are outside the [0, 1] interval within which thresholds are calculated and plotted.")
 
   N <- length(obs)
-  preval <- suppressWarnings(prevalence(obs))
+  preval <- suppressWarnings(prevalence(obs = obs))
   thresholds <- seq(0, 1, by = interval)
   Nthresh <- length(thresholds)
   true.positives <- true.negatives <- sensitivity <- specificity <- precision <- false.pos.rate <- n.preds <- prop.preds <- numeric(Nthresh)
@@ -126,13 +126,18 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
       if (ylab == "auto") ylab <- c("Precision", "(positive predictive value)")
     }
 
+    if (curve == "ROC") diag_vals <- c(0, 1)
+    if (curve == "PR") diag_vals <- c(1, 0)
     d <- ifelse(diag, "l", "n")  # to plot the 0.5 diagonal (or not if diag=FALSE)
-    if (curve == "ROC") plot(x = c(0, 1), y = c(0, 1), type = d, xlab = xlab, ylab = ylab, col = diag.col, lty = diag.lty, ...)
-    if (curve == "PR") plot(x = c(0, 1), y = c(1, 0), type = d, xlab = xlab, ylab = ylab, col = diag.col, lty = diag.lty, ...)
+    plot(x = c(0, 1), y = diag_vals, type = d, xlab = xlab, ylab = ylab, col = diag.col, lty = diag.lty, ...)
 
-    if (grid) abline(h = thresholds, v = thresholds, col = "lightgrey")
+    # if (grid) abline(h = thresholds, v = thresholds, lty = grid.lty, col = "lightgrey")
+    grid.seq <- seq(0, 1, by = 0.1)
+    if (grid) abline(h = grid.seq, v = grid.seq, lty = grid.lty, col = "lightgrey")
 
     if (curve == "PR" && any(is.nan(yy))) lines(x = xx, y = yy_noNaN, col = "coral", lty = 3, lwd = min(1, curve.lwd))  # plots the interpolated (noNaN) curve underneath the curve with actual precision values
+
+    # draw the curve:
     lines(x = xx, y = yy, col = curve.col, lty = curve.lty, lwd = curve.lwd)
 
     # if (plot.preds == TRUE) plot.preds <- c("curve", "bottom")  # for back-compatibility

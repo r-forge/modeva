@@ -1,12 +1,13 @@
 optiThresh <-
   function(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
-           measures = modEvAmethods("threshMeasures"),
+           measures = c(modEvAmethods("threshMeasures"),
+                        modEvAmethods("similarity")),
            optimize = modEvAmethods("optiThresh"), simplif = FALSE,
            plot = TRUE, sep.plots = FALSE, xlab = "Threshold",
            na.rm = TRUE, rm.dup = FALSE, ...) {
-    # version 3.2 (19 Mar 2023)
+    # version 3.3 (14 Dec 2023)
 
-    wrong.measures <- measures[which(!(measures %in% modEvAmethods("threshMeasures")))]
+    wrong.measures <- measures[which(!(measures %in% c(modEvAmethods("threshMeasures"), modEvAmethods("similarity"))))]
     wrong.optimizers <- optimize[which(!(optimize %in% modEvAmethods("optiThresh")))]
     if (length(wrong.measures) > 0) {
       warning("'", paste(wrong.measures, collapse = ", "), "'", " invalid under 'measures'; see modEvAmethods('threshMeasures') for available options.")
@@ -21,16 +22,18 @@ optiThresh <-
     obs <- obspred[ , "obs"]
     pred <- obspred[ , "pred"]
 
-    if (all(obs == 0)) message ("No presences available, so can't compute metrics that require presences.")
-    if (all(obs == 1)) message ("All observations are presences, so can't compute metrics that require absences.")
+    if (all(obs == 0)) message ("No presences available, so can't compute measures that require presences.")
+    if (all(obs == 1)) message ("All observations are presences, so can't compute measures that require absences.")
 
     # if (!is.null(model)) {
     #   model <- NULL  # so the message is not repeated for each threshold
     # }  # end if model
 
     input.measures <- measures
+    similarity.measures <- modEvAmethods("similarity")
+    thresh.measures <- measures[!(measures %in% similarity.measures)]
 
-    if ("minSensSpecDiff" %in% optimize | "maxSensSpecSum" %in% optimize) {
+    if ("minSensSpecDiff" %in% optimize || "maxSensSpecSum" %in% optimize) {
       if (!("Sensitivity" %in% measures)) {
         measures <- c(measures, "Sensitivity")
       }  # end if !Sensitivity
@@ -39,12 +42,20 @@ optiThresh <-
       }  # end if !Specificity
     }  # end if minSensSpecDiff
 
-    if("maxKappa" %in% optimize & !("kappa" %in% measures)) {
+    if("maxKappa" %in% optimize && !("kappa" %in% measures)) {
       measures <- c(measures, "kappa")
     }
 
-    if("maxTSS" %in% optimize & !("TSS" %in% measures)) {
+    if("maxTSS" %in% optimize && !("TSS" %in% measures)) {
       measures <- c(measures, "TSS")
+    }
+
+    if("maxJaccard" %in% optimize && !("Jaccard" %in% measures)) {
+      measures <- c(measures, "Jaccard")
+    }
+
+    if("maxSorensen" %in% optimize && !("Sorensen" %in% measures)) {
+      measures <- c(measures, "Sorensen")
     }
 
     thresholds <- seq(from = 0, to = 1, by = interval)
@@ -54,13 +65,25 @@ optiThresh <-
                                         nrow = Nthresholds,
                                         ncol = Nmeasures),
                                  row.names = thresholds)
-    colnames(all.thresholds) = measures
+    colnames(all.thresholds) <- measures
 
     for (t in 1 : Nthresholds) for (m in 1 : Nmeasures) {
-      all.thresholds[t, m] <- threshMeasures(obs = obs, pred = pred,
-                                             thresh = thresholds[t],
-                                             measures = measures[m],
-                                             standardize = FALSE, simplif = TRUE)
+      if (measures[m] %in% similarity.measures) {
+        all.thresholds[t, m] <- similarity(obs = obs, pred = pred,
+                                           thresh = thresholds[t],
+                                           measures = measures[m],
+                                           simplif = TRUE,
+                                           plot = FALSE,
+                                           verbosity = 0)
+      } else {
+        all.thresholds[t, m] <- threshMeasures(obs = obs, pred = pred,
+                                               thresh = thresholds[t],
+                                               measures = measures[m],
+                                               standardize = FALSE,
+                                               simplif = TRUE,
+                                               plot = FALSE,
+                                               verbosity = 0)
+      }
     }  # end for t for m
 
     if (simplif) {  # shorter version for use with e.g. the optiPair function
@@ -71,13 +94,13 @@ optiThresh <-
 
       input.optimize <- optimize
 
-      if (plot == TRUE & !("each" %in% optimize)) optimize <- c("each", optimize)
+      if (plot == TRUE && !("each" %in% optimize)) optimize <- c("each", optimize)
 
       if ("each" %in% optimize) {
         optimals.each <- data.frame(matrix(data = NA, nrow = Nmeasures, ncol = 4))
         colnames(optimals.each) <- c("measure", "threshold", "value", "type")
         optimals.each[1] <- measures
-        goodness.measures <- c("CCR", "Sensitivity", "Specificity", "PPP", "NPP", "kappa", "TSS", "NMI", "OddsRatio", "F1score", "Precision", "Recall")
+        goodness.measures <- c("CCR", "Sensitivity", "Specificity", "PPP", "NPP", "kappa", "TSS", "NMI", "OddsRatio", "F1score", "Precision", "Recall", similarity.measures)
         badness.measures <- c("Omission", "Commission", "Misclass", "UPR", "OPR")
         change.measures <- c("PPI", "PAI")
 
@@ -121,7 +144,11 @@ optiThresh <-
 
         if ("preval" %in% criteria) {
           for (m in 1 : Nmeasures) {
-            suppressWarnings(optimals.criteria[m, "preval"] <- threshMeasures(obs = obs, pred = pred, thresh = "preval", measures = measures[m], standardize = FALSE, simplif = TRUE))
+            if (measures[m] %in% similarity.measures) {
+              suppressWarnings(optimals.criteria[m, "preval"] <- similarity(obs = obs, pred = pred, thresh = "preval", measures = measures[m], simplif = TRUE, plot = FALSE, verbosity = 0))
+            } else {
+              suppressWarnings(optimals.criteria[m, "preval"] <- threshMeasures(obs = obs, pred = pred, thresh = "preval", measures = measures[m], standardize = FALSE, simplif = TRUE, plot = FALSE, verbosity = 0))
+            }
           }
         }  # end if preval
 
@@ -130,7 +157,11 @@ optiThresh <-
           minSensSpecDiff <- thresholds[which.min(all.thresholds$SensSpecDiff)]
           if (length(minSensSpecDiff) > 0 && is.finite(minSensSpecDiff)) {
             for (m in 1:Nmeasures) {
-              optimals.criteria[m, "minSensSpecDiff"] <- threshMeasures(obs = obs, pred = pred, thresh = minSensSpecDiff, measures = measures[m], standardize = FALSE, simplif = TRUE)
+              if (measures[m] %in% similarity.measures) {
+                suppressWarnings(optimals.criteria[m, "minSensSpecDiff"] <- similarity(obs = obs, pred = pred, thresh = minSensSpecDiff, measures = measures[m], simplif = TRUE, plot = FALSE, verbosity = 0))
+              } else {
+                optimals.criteria[m, "minSensSpecDiff"] <- threshMeasures(obs = obs, pred = pred, thresh = minSensSpecDiff, measures = measures[m], standardize = FALSE, simplif = TRUE, plot = FALSE, verbosity = 0)
+              }
             }
           }
         }
@@ -140,7 +171,11 @@ optiThresh <-
           maxSensSpecSum <- thresholds[which.max(all.thresholds$SensSpecSum)]
           if (length(maxSensSpecSum) > 0 && is.finite(maxSensSpecSum)) {
             for (m in 1 : Nmeasures) {
-              optimals.criteria[m, "maxSensSpecSum"] <- threshMeasures(obs = obs, pred = pred, thresh = maxSensSpecSum, measures = measures[m], standardize = FALSE, simplif = TRUE)
+              if (measures[m] %in% similarity.measures) {
+                suppressWarnings(optimals.criteria[m, "maxSensSpecSum"] <- similarity(obs = obs, pred = pred, thresh = maxSensSpecSum, measures = measures[m], simplif = TRUE, plot = FALSE, verbosity = 0))
+              } else {
+                optimals.criteria[m, "maxSensSpecSum"] <- threshMeasures(obs = obs, pred = pred, thresh = maxSensSpecSum, measures = measures[m], standardize = FALSE, simplif = TRUE, plot = FALSE, verbosity = 0)
+              }
             }
           }
         }
@@ -153,8 +188,11 @@ optiThresh <-
           }
           maxKappa <- thresholds[which.max(all.thresholds$kappa)]
           for (m in 1 : Nmeasures) {
-            optimals.criteria[m, "maxKappa"] <- threshMeasures(
-              obs = obs, pred = pred, thresh = maxKappa, measures = measures[m], standardize = FALSE, simplif = TRUE)
+            if (measures[m] %in% similarity.measures) {
+              suppressWarnings(optimals.criteria[m, "maxKappa"] <- similarity(obs = obs, pred = pred, thresh = maxKappa, measures = measures[m], simplif = TRUE, plot = FALSE, verbosity = 0))
+            } else {
+              optimals.criteria[m, "maxKappa"] <- threshMeasures(obs = obs, pred = pred, thresh = maxKappa, measures = measures[m], standardize = FALSE, simplif = TRUE, plot = FALSE, verbosity = 0)
+            }
           }
         }
 
@@ -167,19 +205,57 @@ optiThresh <-
           maxTSS <- thresholds[which.max(all.thresholds$TSS)]
           if (length(maxTSS) > 0 && is.finite(maxTSS)) {
             for (m in 1 : Nmeasures) {
-              optimals.criteria[m, "maxTSS"] <- threshMeasures(
-                obs = obs, pred = pred, thresh = maxTSS, measures = measures[m],
-                standardize = FALSE, simplif = TRUE)
-            }
-          }
-        }
+              if (measures[m] %in% similarity.measures) {
+                suppressWarnings(optimals.criteria[m, "maxTSS"] <- similarity(obs = obs, pred = pred, thresh = maxTSS, measures = measures[m], simplif = TRUE, plot = FALSE, verbosity = 0))
+              } else {
+                optimals.criteria[m, "maxTSS"] <- threshMeasures(obs = obs, pred = pred, thresh = maxTSS, measures = measures[m], standardize = FALSE, simplif = TRUE, plot = FALSE, verbosity = 0)
+              }
+            }  # end for m
+          }  # end if finite maxTSS
+        }  # end if maxTSS
 
         if ("0.5" %in% criteria) {
           for (m in 1 : Nmeasures) {
             optimals.criteria[m,"0.5"] <- all.thresholds[rownames(
               all.thresholds) == 0.5, m]
           }
-        }
+        }  # end if 0.5
+
+        if ("maxJaccard" %in% criteria) {
+          if (!("Jaccard" %in% measures)) {
+            for (t in 1 : Nthresholds) {
+              all.thresholds$Jaccard <- similarity(obs = obs, pred = pred, thresh = thresholds[t], simplif = TRUE, plot = FALSE, verbosity = 0)["Jaccard", "Value"]
+            }
+          }
+          maxJaccard <- thresholds[which.max(all.thresholds$Jaccard)]
+          if (length(maxJaccard) > 0 && is.finite(maxJaccard)) {
+            for (m in 1 : Nmeasures) {
+              if (measures[m] %in% similarity.measures) {
+                suppressWarnings(optimals.criteria[m, "maxJaccard"] <- similarity(obs = obs, pred = pred, thresh = maxJaccard, measures = measures[m], simplif = TRUE, plot = FALSE, verbosity = 0))
+              } else {
+                optimals.criteria[m, "maxJaccard"] <- threshMeasures(obs = obs, pred = pred, thresh = maxJaccard, measures = measures[m], standardize = FALSE, simplif = TRUE, plot = FALSE, verbosity = 0)
+              }
+            }
+          }
+        }  # end if maxJaccard
+
+        if ("maxSorensen" %in% criteria) {
+          if (!("Sorensen" %in% measures)) {
+            for (t in 1 : Nthresholds) {
+              all.thresholds$Sorensen <- similarity(obs = obs, pred = pred, thresh = thresholds[t], simplif = TRUE, plot = FALSE, verbosity = 0)["Sorensen", "Value"]
+            }
+          }
+          maxSorensen <- thresholds[which.max(all.thresholds$Sorensen)]
+          if (length(maxSorensen) > 0 && is.finite(maxSorensen)) {
+            for (m in 1 : Nmeasures) {
+              if (measures[m] %in% similarity.measures) {
+                suppressWarnings(optimals.criteria[m, "maxSorensen"] <- similarity(obs = obs, pred = pred, thresh = maxSorensen, measures = measures[m], simplif = TRUE, plot = FALSE, verbosity = 0))
+              } else {
+                optimals.criteria[m, "maxSorensen"] <- threshMeasures(obs = obs, pred = pred, thresh = maxSorensen, measures = measures[m], standardize = FALSE, simplif = TRUE, plot = FALSE, verbosity = 0)
+              }
+            }  # end for m
+          }
+        }  # end if maxSorensen
 
         results <- c(results, optimals.criteria = list(optimals.criteria))  # add this to results
       }  # end if Ncriteria > 0

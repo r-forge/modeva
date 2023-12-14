@@ -6,9 +6,9 @@ Boyce Index
 \description{
 This function computes the (continuous) Boyce index (Boyce 2002; Hirzel et al. 2006) for either: 1) a model object; or 2) two paired numeric vectors of observed (binary, 1 for occurrence vs. 0 for no occurrence records) and predicted (continuous, e.g. occurrence probability) values; or 3) a set of presence point coordinates and a raster map with the predicted values for the entire model evaluation area. This metric is designed for evaluating model predictions against presence/background data (i.e. presence/available, where "available" includes both presences and absences; Boyce 2002), so the function uses the model predictions for the presence sites (ones) against the predictions for the entire dataset (ones and zeros).
 }
-\usage{Boyce(model = NULL, obs = NULL, pred = NULL, n.bins = NA, 
-bin.width = "default", res = 100, method = "spearman", rm.dup.classes = FALSE, 
-rm.dup.points = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, 
+\usage{Boyce(model = NULL, obs = NULL, pred = NULL, n.bins = NA,
+bin.width = "default", res = 100, method = "spearman", rm.dup.classes = FALSE,
+rm.dup.points = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE,
 plot.digits = 3, na.rm = TRUE, ...)}
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments (e.g. for external test data) instead of 'model'.}
@@ -28,18 +28,20 @@ plot.digits = 3, na.rm = TRUE, ...)}
   \item{\dots}{some additional arguments can be passed to \code{\link{plot}}, e.g. 'main' or 'xlim'.}
 }
 \details{
-The Boyce index is the correlation between model predictions and area-adjusted frequencies (i.e., observed vs. expected proportion of occurrences) along different prediction classes. In other words, it measures how model predictions differ from a random distribution of the observed presences across the prediction gradient (Boyce et al. 2002). It can take values between -1 and 1. Positive values indicate that presences are more frequent than expected by chance (given availability) in areas with higher predicted values. Values close to zero mean that predictions are no better than random, and negative values indicate counter predictions, i.e. that presences are more frequent in areas with lower predicted values.
+The Boyce index is the correlation between model predictions and area-adjusted frequencies (i.e., observed vs. expected proportion of occurrences) along different prediction classes (bins). In other words, it measures how model predictions differ from a random distribution of the observed presences across the prediction gradient (Boyce et al. 2002). It can take values between -1 and 1. Positive values indicate that presences are more frequent than expected by chance (given availability) in areas with higher predicted values. Values close to zero mean that predictions are no better than random (i.e. presences are distributed among prediction classes as expected by chance), and negative values indicate counter predictions (i.e., presences are more frequent in areas with lower predicted values).
 
-The code is largely based on the 'ecospat.boyce' function in the \pkg{ecospat} package (version 3.2.1), but it is modified to match the input types in the remaining functions of 'modEvA', and to return a more complete output.
+The R code is largely based on the 'ecospat.boyce' function in the \pkg{ecospat} package (version 3.2.1), but it is modified to match the input types in the remaining functions of 'modEvA', and to return a more complete and informative output.
 }
 \note{
+This index is designed for evaluating predictions of habitat suitability, not presence probability (which also depends on the species' presence/absence ratio: rare species do not usually show high proportions of presences, even in highly suitable areas). If your predictions are of presence probability with a prevalence different from 50\% presences, you should convert those predictions e.g. with the \code{Fav} function of package \pkg{fuzzySim}, before evaluating them with the Boyce index.
+
 In bins with overly small sample sizes, the comparison between median prediction and random expectation may not be meaningful, although these bins will equally contribute to the overall Boyce index. When there are bins with less than 30 values, a warning is emitted and their points are plotted in red, but mind that 30 is a largely arbitrary number. See the $bins$bin.N section of the console output, and use the 'bin.width' argument to enlarge the bins.
 }
 \value{
 This function returns a \code{list} with the following components:
 \item{bins}{a data frame with the number of values in each bin, their median and range of predicted values, and the corresponding predicted/expected ratio of presences.}
 \item{B}{the numeric value of the Boyce index, i.e. the coefficient of correlation between the median predicted value in each bin and the corresponding predicted/expected ratio.}
-If plot=TRUE (the default), the function also plots the predicted/expected ratio for the utilized bins along the prediction range. A good model should yield a monotonically increasing curve (but see Note). 
+If plot=TRUE (the default), the function also plots the predicted/expected ratio for the utilized bins along the prediction range. A good model should yield a monotonically increasing curve (but see Note).
 }
 \author{
 A. Marcia Barbosa, with significant chunks of code from the 'ecospat::ecospat.boyce' function by Blaise Petitpierre and Frank Breiner (\pkg{ecospat} package version 3.2.1).

@@ -4,10 +4,9 @@
 Similarity measures
 }
 \description{
-This function computes similarity indices for evaluating the classification accuracy of a species distribution (or ecological niche, or bioclimatic envelope...) model against observed presence-absence data, upon the choice of a threshold value above which the model is considered to predict that the species should be present rather than absent.
+This function computes similarity indices for evaluating the classification accuracy of a species distribution (or ecological niche, or bioclimatic envelope...) model against observed presence-absence data, upon the choice of a threshold value above which the model is considered to predict that the species is expected to be present rather than absent. These metrics were proposed for model evaluation by Li & Guo (2013) and Leroy et al. (2018) -- see Details.
 }
 \usage{
-
 similarity(model = NULL, obs = NULL, pred = NULL, thresh,
 measures = modEvAmethods("similarity"), simplif = FALSE,
 plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE,
@@ -28,10 +27,12 @@ verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
   \item{quant}{Numeric value indicating the proportion of presences to discard if thresh="MTP" (minimum training presence). With the default value 0, MTP will be the threshold at which all observed presences are classified as such; with e.g. quant=0.05, MTP will be the threshold at which 5\% presences will be classified as absences.}
   \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
   \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
-  \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function.}
+  \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function, e.g. ylim=c(0, 1).}
 }
 \details{
-Commonly used threshold-based metrics of model evaluation, such as the True Skill Statistic (TSS) implemented in the \code{\link{threshMeasures}} function, are conditioned by species prevalence in the modelled sample. To overcome this, Leroy et al. (2018) propose the use of similary indices for model evaluation, which they show to be independent of prevalence. This function implements such indices in a model evaluation context.
+Commonly used threshold-based metrics of model evaluation, such as the True Skill Statistic (TSS) implemented in the \code{\link{threshMeasures}} function, are conditioned by species prevalence in the modelled sample. To overcome this, Leroy et al. (2018) propose using the similary indices of Sorensen and Jaccard for model evaluation, which they show to be (unlike the TSS) independent of prevalence. This function implements such indices in a model evaluation context.
+
+Leroy et al. (2018) point out that Sorensen's index is equivalent to the F-measure (or F1 score, which is also implemented in the \code{\link{threshMeasures}} function), and that Jaccard's index is half the proxy of the F-measure previously proposed by Li & Guo (2013) for evaluating presence-background models.
 }
 \value{
 If 'simplif=TRUE', the output is a numeric matrix with the name and value of each measure. If 'simplif=FALSE' (the default), the ouptut is a list with the following components:
@@ -41,12 +42,14 @@ If 'simplif=TRUE', the output is a numeric matrix with the name and value of eac
 }
 \references{
 Leroy B., Delsol R., Hugueny B., Meynard C.M., Barhoumi C., Barbet-Massin M. & Bellard C. (2018) Without quality presence-absence data, discrimination metrics such as TSS can be misleading measures of model performance. Journal of Biogeography 45(9):1994-2002
+
+Li W. & Guo Q. (2013) How to assess the prediction accuracy of species presence-absence models without absence data? Ecography 36(7):788-799
 }
 \author{
 A. Marcia Barbosa
 }
 \seealso{
-\code{\link{threshMeasures}}, \code{\link{optiThresh}}, \code{\link{optiPair}}
+\code{\link{threshMeasures}}, \code{\link{optiThresh}}
 }
 \examples{
 # load sample models:
@@ -57,15 +60,15 @@ mod <- rotif.mods$models[[1]]
 
 similarity(model = mod, thresh = 0.5)
 
-similarity(model = mod, thresh = "preval", simplif = TRUE)
+similarity(model = mod, thresh = 0.5, simplif = TRUE, ylim = c(0, 1))
 
-similarity(model = mod, measures = "Jaccard", thresh = "maxTSS")
-
+similarity(model = mod, thresh = "maxJaccard")
+# or thresh = "maxTSS", "MTP", etc.
 
 # you can also use similarity with vectors of observed and
 # predicted values instead of with a model object:
 
-similarity(obs = mod$y, pred = mod$fitted.values, thresh = "preval")
+similarity(obs = mod$y, pred = mod$fitted.values, thresh = "maxJaccard")
 
 
 # 'obs' can also be a table of presence point coordinates
