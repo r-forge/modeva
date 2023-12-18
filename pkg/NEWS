@@ -1,4 +1,16 @@
 ============================================
+modEvA v3.12.1 (committed 2023-12-  )
+============================================
+
+
+
+## Other modified files:
+
+* AUC.Rd
+- unimplemented argument 'FPR.limits' now suggests using 'pROC::roc'
+
+
+============================================
 modEvA v3.12 (committed 2023-12-14)
 ============================================
 
