@@ -23,7 +23,7 @@ rm.dup = FALSE)
   \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
 }
 \value{
-This function returns a character vector of the same length as 'obs' and 'pred', or of the same number of rows as the data in 'model', containing the confusion matrix label for each value.
+This function returns a character vector (or a categorical SpatRaster, if 'pred' is of that class) of the same length as 'pred', or of the same number of rows as the data in 'model', containing the confusion matrix label for each value.
 }
 \author{
 A. Marcia Barbosa
