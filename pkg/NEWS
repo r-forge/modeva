@@ -6,7 +6,7 @@ modEvA v3.13.1 (committed 2024-01-17)
 
 * confusionLabel
 - assign consistent colours to output raster categories
-- add plot=TRUE argument
+- add plot=TRUE and ... arguments
 
 
 ============================================

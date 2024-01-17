@@ -1,4 +1,4 @@
-confusionLabel <- function(model = NULL, obs = NULL, pred = NULL, thresh, interval = 0.01, quant = 0, verbosity = 2, na.rm = FALSE, rm.dup = FALSE, plot = TRUE) {
+confusionLabel <- function(model = NULL, obs = NULL, pred = NULL, thresh, interval = 0.01, quant = 0, verbosity = 2, na.rm = FALSE, rm.dup = FALSE, plot = TRUE, ...) {
   # version 1.9 (17 Jan 2024)
 
   pred_in <- pred  # in case input is raster, so final reclass is also raster
@@ -32,7 +32,7 @@ confusionLabel <- function(model = NULL, obs = NULL, pred = NULL, thresh, interv
       values = droplevels(colr_table$lev[existing_levs]),
       cols = colr_table$col[existing_levs])
 
-    if (plot) terra::plot(out_rast, mar = c(2, 2, 2, 5))
+    if (plot) terra::plot(out_rast, ...)
 
     return(out_rast)
   }
