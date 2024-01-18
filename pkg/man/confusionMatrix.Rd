@@ -7,8 +7,9 @@ Confusion matrix
 This function computes the confusion (or contingency) matrix for a binary-response model, containing the numbers of false positives, false negatives, true positives and true negatives, given a user-defined threshold value.
 }
 \usage{
-confusionMatrix(model = NULL, obs = NULL, pred = NULL, thresh,
-interval = 0.01, quant = 0, verbosity = 2, na.rm = TRUE, rm.dup = FALSE)
+confusionMatrix(model = NULL, obs = NULL, pred = NULL, thresh, interval = 0.01,
+quant = 0, verbosity = 2, na.rm = TRUE, rm.dup = FALSE, plot = TRUE,
+classes = FALSE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments (e.g. for external test data) instead of 'model'.}
@@ -19,7 +20,10 @@ interval = 0.01, quant = 0, verbosity = 2, na.rm = TRUE, rm.dup = FALSE)
   \item{quant}{numeric value indicating the proportion of presences to discard if thresh="MTP" (minimum training presence). With the default value 0, MTP will be the threshold at which all observed presences are classified as such; with e.g. quant=0.05, MTP will be the threshold at which 5\% presences will be classified as absences.}
     \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{na.rm}{logical argument indicating whether to remove (with a warning saying how many) rows with NA in any of the 'obs' or 'pred' values. The default is FALSE.}
-  \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
+  \item{rm.dup}{if \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
+  \item{plot}{logical argument indicating whether to also plot the matrix as an image. The default is TRUE.}
+  \item{classes}{logical argument indicating whether the matrix image (if plot=TRUE) should have qualitative colours, matching the output of \code{\link{confusionLabel}} for SpatRasters. The default is FALSE, in which case the colours are proportional to the values in each section of the matrix, and the palette can be user-specified with the 'col' argument for 'plot' (see Examples).}
+  \item{\dots}{some additional arguments can be passed to \code{\link{image}} (and through to \code{\link{plot}}) if plot=TRUE, such as 'main', 'font.main' or 'cex.main' (not 'axes', 'xlab' or 'ylab', which are already defined by confusionMatrix).}
 }
 \value{
 This function returns a data frame containing the four values of the confusion matrix.
@@ -37,7 +41,13 @@ data(rotif.mods)
 # choose a particular model to play with:
 mod <- rotif.mods$models[[1]]
 
+confusionMatrix(model = mod, thresh = 0.5, plot = FALSE)
+
 confusionMatrix(model = mod, thresh = 0.5)
+
+confusionMatrix(model = mod, thresh = 0.5, col = hcl.colors(100, "blues"))
+
+confusionMatrix(model = mod, thresh = 0.5, classes = TRUE, main = "Confusion matrix")
 
 
 # you can instead use vectors of observed and predicted values:

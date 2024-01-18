@@ -26,7 +26,7 @@ confusionLabel <- function(model = NULL, obs = NULL, pred = NULL, thresh, interv
     levels(out_rast) <- data.frame(id = as.integer(unique(levs)), cat = unique(out_chr))
 
     # set colours for raster categories:
-    colr_table <- data.frame(lev = as.factor(c("TruePos", "FalsePos", "TrueNeg", "FalseNeg")), col = c("blue", "lightblue", "red", "orange"))
+    colr_table <- data.frame(lev = as.factor(c("TruePos", "FalsePos", "TrueNeg", "FalseNeg")), col = c("royalblue", "lightblue", "red", "orange"))
     existing_levs <- colr_table$lev %in% levels(out_rast)[[1]]$cat
     terra::coltab(out_rast) <- data.frame(
       values = droplevels(colr_table$lev[existing_levs]),
