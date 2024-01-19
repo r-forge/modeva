@@ -1,5 +1,5 @@
-confusionMatrix <- function(model = NULL, obs = NULL, pred = NULL, thresh, interval = 0.01, quant = 0, verbosity = 2, na.rm = TRUE, rm.dup = FALSE, plot = TRUE, classes = FALSE, ...) {
-  # version 1.1 (17 Jan 2024)
+confusionMatrix <- function(model = NULL, obs = NULL, pred = NULL, thresh, interval = 0.01, quant = 0, verbosity = 2, na.rm = TRUE, rm.dup = FALSE, plot = FALSE, classes = FALSE, ...) {
+  # version 1.2 (19 Jan 2024)
 
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
   obs <- obspred[ , "obs"]
@@ -21,15 +21,18 @@ confusionMatrix <- function(model = NULL, obs = NULL, pred = NULL, thresh, inter
   out <- data.frame(obs1 = c(a, c), obs0 = c(b, d))
   rownames(out) <- c("pred1", "pred0")
 
-  if (plot) {
+  if (plot == TRUE) {
+
+    rotate <- function(x) t(apply(x, 2, rev))  # because image() rotates the matrix, as per its help file; 'rotate' function obtained from https://stackoverflow.com/a/16497058/3447652
 
     if (classes) {
       graphics::image(x = 1:2, y = 1:2,
-                      z = matrix(1:4, ncol = 2, byrow = TRUE),
-                      col = c("orange", "royalblue", "red", "lightblue"),
+                      # z = matrix(1:4, ncol = 2, byrow = TRUE),
+                      # col = c("orange", "royalblue", "red", "lightblue"),
+                      z = rotate(matrix(1:4, ncol = 2, byrow = TRUE)),
+                      col = c("royalblue", "lightblue", "orange", "red"),
                       axes = FALSE, xlab = "", ylab = "", ...)
     } else {
-      rotate <- function(x) t(apply(x, 2, rev))  # because image() rotates the matrix, as per the help file; 'rotate' function obtained from https://stackoverflow.com/a/16497058/3447652
       graphics::image(x = 1:2, y = 1:2,
                       z = rotate(as.matrix(out)),
                       axes = FALSE, xlab = "", ylab = "", ...)

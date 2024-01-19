@@ -56,7 +56,7 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh, measur
   # d <- sum(obs0 & pred0, na.rm = TRUE)
 
   if (is.finite(thresh)) {
-    conf_mat <- confusionMatrix(obs = obs, pred = pred, thresh = thresh)
+    conf_mat <- confusionMatrix(obs = obs, pred = pred, thresh = thresh, plot = FALSE)
     a <- conf_mat["pred1", "obs1"]
     b <- conf_mat["pred1", "obs0"]
     c <- conf_mat["pred0", "obs1"]

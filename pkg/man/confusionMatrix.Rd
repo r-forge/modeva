@@ -8,7 +8,7 @@ This function computes the confusion (or contingency) matrix for a binary-respon
 }
 \usage{
 confusionMatrix(model = NULL, obs = NULL, pred = NULL, thresh, interval = 0.01,
-quant = 0, verbosity = 2, na.rm = TRUE, rm.dup = FALSE, plot = TRUE,
+quant = 0, verbosity = 2, na.rm = TRUE, rm.dup = FALSE, plot = FALSE,
 classes = FALSE, ...)
 }
 \arguments{
@@ -21,7 +21,7 @@ classes = FALSE, ...)
     \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{na.rm}{logical argument indicating whether to remove (with a warning saying how many) rows with NA in any of the 'obs' or 'pred' values. The default is FALSE.}
   \item{rm.dup}{if \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
-  \item{plot}{logical argument indicating whether to also plot the matrix as an image. The default is TRUE.}
+  \item{plot}{logical argument indicating whether to also plot the matrix as an image. The default is FALSE (for back-compatibility).}
   \item{classes}{logical argument indicating whether the matrix image (if plot=TRUE) should have qualitative colours, matching the output of \code{\link{confusionLabel}} for SpatRasters. The default is FALSE, in which case the colours are proportional to the values in each section of the matrix, and the palette can be user-specified with the 'col' argument for 'plot' (see Examples).}
   \item{\dots}{some additional arguments can be passed to \code{\link{image}} (and through to \code{\link{plot}}) if plot=TRUE, such as 'main', 'font.main' or 'cex.main' (not 'axes', 'xlab' or 'ylab', which are already defined by confusionMatrix).}
 }
@@ -41,13 +41,15 @@ data(rotif.mods)
 # choose a particular model to play with:
 mod <- rotif.mods$models[[1]]
 
-confusionMatrix(model = mod, thresh = 0.5, plot = FALSE)
-
 confusionMatrix(model = mod, thresh = 0.5)
 
-confusionMatrix(model = mod, thresh = 0.5, col = hcl.colors(100, "blues"))
+confusionMatrix(model = mod, thresh = 0.5, plot = TRUE)
 
-confusionMatrix(model = mod, thresh = 0.5, classes = TRUE, main = "Confusion matrix")
+confusionMatrix(model = mod, thresh = 0.5, plot = TRUE,
+col = hcl.colors(100, "blues"))
+
+confusionMatrix(model = mod, thresh = 0.5, plot = TRUE, classes = TRUE,
+main = "Confusion matrix")
 
 
 # you can instead use vectors of observed and predicted values:
@@ -55,7 +57,7 @@ confusionMatrix(model = mod, thresh = 0.5, classes = TRUE, main = "Confusion mat
 presabs <- mod$y
 prediction <- mod$fitted.values
 
-confusionMatrix(obs = presabs, pred = prediction, thresh = 0.5)
+confusionMatrix(obs = presabs, pred = prediction, thresh = 0.5, plot = TRUE)
 
 
 # 'obs' can also be a table of presence point coordinates

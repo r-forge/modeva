@@ -1,5 +1,18 @@
+==============================================
+modEvA v3.13.3 (committed 2024-01-19) -> CRAN
+==============================================
+
+## Modified functions:
+
+* threshMeasures
+- set plot=FALSE on confusionMatrix() call
+
+* confusionMatrix
+- set default 'plot' to FALSE (for back-compatibility)
+
+
 ============================================
-modEvA v3.13.2 (committed 2024-01-17)
+modEvA v3.13.2 (committed 2024-01-18)
 ============================================
 
 ## Modified functions:
