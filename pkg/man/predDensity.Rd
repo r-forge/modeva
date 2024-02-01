@@ -7,9 +7,10 @@ Plot the density of predicted values for presences and absences.
 This function produces a histogram and/or a kernel density plot of predicted values for a binary-response model, possibly separately for the observed presences and absences, given a model object or a vector of predicted values and (optionally) a vector of the corresponding observed values. When there are multiple predicted values for each site, it can also plot a confidence interval.
 }
 \usage{
-predDensity(model = NULL, obs = NULL, pred = NULL, separate = TRUE,
-type = "both", ci = NA, legend.pos = "topright", main = "Density of predicted values",
-na.rm = TRUE, rm.dup = FALSE, ...)
+predDensity(model = NULL, obs = NULL, pred = NULL,
+separate = TRUE, type = "both", ci = NA, legend.pos = "topright",
+main = "Density of predicted values", na.rm = TRUE, rm.dup = FALSE,
+xlim = NULL, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'pred' (and optionally 'obs') argument(s) instead of 'model'.}
@@ -22,7 +23,8 @@ na.rm = TRUE, rm.dup = FALSE, ...)
   \item{main}{main title for the plot.}
   \item{na.rm}{logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
   \item{rm.dup}{if \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
-  \item{\dots}{additional arguments to pass to \code{\link{hist}}, e.g. 'breaks'.}
+  \item{xlim}{numeric vector of length 2 setting the limits for the x axis of the plot. The default is NULL, for the range of the \code{\link{density}} of predicted values.}
+  \item{\dots}{additional arguments to pass to \code{\link{hist}}, e.g. 'breaks' or 'border'.}
 }
 \details{
 For more details, please refer to the documentation of the functions mentioned under "See Also".
@@ -60,12 +62,12 @@ predDensity(model = mod, ci = 0.975)
 # you can also use 'predDensity' with vectors of
 # observed and predicted values, instead of a model object:
 
-presabs <- mod$y
-prediction <- mod$fitted.values
+obs <- mod$y
+pred <- mod$fitted.values
 
-predDensity(obs = presabs, pred = prediction)
+predDensity(obs = obs, pred = pred)
 
-predDensity(pred = prediction, ci = 0.95)
+predDensity(pred = pred, ci = 0.95)
 
 
 # 'obs' can also be a table of presence point coordinates

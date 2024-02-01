@@ -1,5 +1,7 @@
-predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, type = "both", ci = NA, legend.pos = "topright", main = "Density of predicted values", na.rm = TRUE, rm.dup = FALSE, ...) {
-  # version 1.6 (9 Jan 2023)
+predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, type = "both", ci = NA, legend.pos = "topright", main = "Density of predicted values", na.rm = TRUE, rm.dup = FALSE, xlim = NULL, ...) {
+  # version 1.7 (2 Fev 2024)
+
+  stopifnot(is.null(xlim) || (is.numeric(xlim) && is.finite(xlim) && length(xlim) == 2))
 
   if (!is.na(ci)) {
     # if (separate) {
@@ -43,13 +45,15 @@ predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
   if (type %in% c("density", "both")) {  # "density" %in% type
     if (!separate) {
       dens <- density(pred)
-      xrange <- range(dens$x, finite = TRUE)
+      xrange <- xlim
+      if (is.null(xlim)) xrange <- range(dens$x, finite = TRUE)
       yrange <- range(dens$y, finite = TRUE)
       rslt[["density"]] <- dens
     } else {
       dens0 <- density(pred0)
       dens1 <- density(pred1)
-      xrange <- range(dens0$x, dens1$x, finite = TRUE)
+      xrange <- xlim
+      if (is.null(xlim)) xrange <- range(c(dens0$x, dens1$x), finite = TRUE)
       yrange <- range(dens0$y, dens1$y, finite = TRUE)
       rslt[["density_obs1"]] <- dens1
       rslt[["density_obs0"]] <- dens0
