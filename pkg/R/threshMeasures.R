@@ -1,5 +1,5 @@
 threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh, measures = modEvAmethods("threshMeasures")[-grep("OddsRatio", modEvAmethods("threshMeasures"))], simplif = FALSE, plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE, standardize = TRUE, verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...) {
-  # version 3.6 (19 Mar 2023)
+  # version 3.7 (25 Mar 2024)
 
   # if (is.null(model)) {
   #   if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object.")
@@ -73,7 +73,7 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh, measur
     if (measures[i] == "AUC") measureValues[i] <- AUC(obs = obs, pred = pred, simplif = TRUE)
     else if (measures[i] %in% modEvAmethods("threshMeasures") && is.finite(thresh)) {
       measureValues[i] <- evaluate(a, b, c, d, measure = measures[i])  # , N
-      if (standardize == TRUE && measures[i] %in% c("TSS", "kappa")) {
+      if (standardize == TRUE && measures[i] %in% c("TSS", "kappa", "ORSS")) {
         measureValues[i] <- standard01(measureValues[i])
         measures[i] <- paste("s", measures[i], sep = "")
         if (verbosity > 0) message("\n", measures[i], " standardized to the 0-1 scale for direct comparability

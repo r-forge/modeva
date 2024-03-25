@@ -4,7 +4,7 @@
 Threshold-based measures of model evaluation
 }
 \description{
-This function calculates a number of measures for evaluating the classification accuracy of a species distribution (or ecological niche, or bioclimatic envelope...) model against observed presence-absence data (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013), upon the choice of a threshold value above which the model is considered to predict that the species should be present.
+This function calculates a number of measures for evaluating the classification accuracy of a species distribution (or ecological niche, or bioclimatic envelope...) model against observed presence-absence data (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013; Wunderlich et al. 2019), upon the choice of a threshold value above which the model is considered to predict that the species should be present.
 }
 \usage{
 threshMeasures(model = NULL, obs = NULL, pred = NULL, thresh,
@@ -32,6 +32,8 @@ verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
   \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{
+The metrics implemented in this function are based on the confusion (or contingency) matrix, and they are described in dedicated publications (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013; Wunderlich et al. 2019). All of them require a threshold value to separate continuous into binary predictions.
+
 The threshold value can be chosen according to a number of criteria (see e.g. Liu et al. 2005, 2013; Jimenez-Valverde & Lobo 2007; Nenzen & Araujo 2011). You can choose a fixed numeric value, or set 'thresh' to "preval" (species' prevalence or proportion of presences \bold{in the data input to this function}), or calculate optimal threshold values according to different criteria with the \code{\link{getThreshold}}, \code{\link{optiThresh}} or \code{\link{optiPair}} function. If you are using "environmental favourability" as input 'pred' data (Real et al. 2006; see 'Fav' function in R package \pkg{fuzzySim}), then the 0.5 threshold equates to using training prevalence in logistic regression (GLM with binomial error distribution and logit link function).
 
 While most of these threshold-based measures range from 0 to 1, some of them (such as kappa and TSS) may range from -1 to 1 (Allouche et al. 2006), so their raw scores are not directly comparable. 'threshMeasures' includes an option (used by default) to standardize these measures to 0-1 (Barbosa 2015) using the \code{\link{standard01}} function, so that you obtain the standardized versions skappa and sTSS.
@@ -68,6 +70,8 @@ Liu C., White M. & Newell G. (2013) Selecting thresholds for the prediction of s
 Nenzen H.K. & Araujo M.B. (2011) Choice of threshold alters projections of species range shifts under climate change. Ecological Modelling 222: 3346-3354
 
 Real R., Barbosa A.M. & Vargas J.M. (2006) Obtaining environmental favourability functions from logistic regression. Environmental and Ecological Statistics 13: 237-245
+
+Wunderlich R.F., Lin Y.-P., Anthony J., Petway J.R. (2019) Two alternative evaluation metrics to replace the true skill statistic in the assessment of species distribution models. Nature Conservation 35: 97-116
 }
 \author{
 A. Marcia Barbosa
@@ -76,7 +80,7 @@ A. Marcia Barbosa
 "Sensitivity" is the same as "Recall", and "PPP" (positive predictive power) is the same as "Precision". Some of these measures (like NMI, UPR, OPR, PPP, NPP) cannot be calculated for thresholds at which there are zeros in the confusion matrix, so they can yield NaN values.
 }
 \seealso{
-\code{\link{optiThresh}}, \code{\link{optiPair}}, \code{\link{AUC}}
+\code{\link{similarity}}, \code{\link{optiThresh}}, \code{\link{optiPair}}, \code{\link{AUC}}
 }
 \examples{
 # load sample models:

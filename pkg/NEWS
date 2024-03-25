@@ -1,4 +1,14 @@
 ==============================================
+modEvA v3.15 (committed 2024-03-25)
+==============================================
+
+## Modified functions:
+
+* threshMeasures, evaluate, modEvAmethods
+- added 'ORSS' and 'SEDI' metrics (Wunderlich et al. 2019)
+
+
+==============================================
 modEvA v3.14 (committed 2024-02-01)
 ==============================================
 
