@@ -36,9 +36,9 @@ MESS analysis is implemented in the MAXENT software (Phillips et al.
 variables in raster format. This implies not only the use of complex spatial
 data structures, but also that the units of analysis are rectangular pixels,
 whereas we often need to model distribution data recorded on less regular
-units (e.g. provinces, river basins), or on equal-area cells that are not 
-necessarily rectangular (e.g. UTM cells, equal-area hexagons or other geometric 
-shapes). The MESS function computes this analysis for variables in a data frame, 
+units (e.g. provinces, river basins), or on equal-area cells that are not
+necessarily rectangular (e.g. UTM cells, equal-area hexagons or other geometric
+shapes). The MESS function computes this analysis for variables in a data frame,
 where localities (in rows) may be of any size or shape.
 }
 \value{
@@ -70,7 +70,7 @@ Alberto Jimenez-Valverde, A. Marcia Barbosa
 Newer and apparently more complete methods for analysing environmental dissimilarities have been developed, such as extrapolation detection (ExDet; Mesgaran et al. 2014) and Mobility-Oriented Parity analysis (MOP; Owens et al. 2013).
 }
 \seealso{
-\code{\link{OA}}; \code{mess} in package \pkg{dismo}; \code{ecospat.climan} in package \pkg{ecospat}; \code{kuenm_mop} and \code{kuenm_mmop} in package \pkg{kuenm}
+\code{\link{OA}}; \code{mess} in packages \pkg{dismo} and \pkg{predicts}; \code{ecospat.climan} in package \pkg{ecospat}; \code{kuenm_mop} and \code{kuenm_mmop} in package \pkg{kuenm}
 }
 \examples{
 \dontrun{
@@ -99,7 +99,7 @@ names(rotif.env)  # variables are in columns 5:17
 
 west <- subset(rotif.env, HEMISPHERE == "Western", select = 5:17)
 east <- subset(rotif.env, HEMISPHERE == "Eastern", select = 5:17)
-east.with.ID <- subset(rotif.env, HEMISPHERE == "Eastern", 
+east.with.ID <- subset(rotif.env, HEMISPHERE == "Eastern",
 select = c(1, 5:17))
 
 head(east)

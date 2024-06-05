@@ -47,7 +47,7 @@ This function gets, and optionally plots, variable importance for an input model
 Weissgerber T.L., Milic N.M., Winham S.J. & Garovic V,D, (2015) Beyond Bar and Line Graphs: Time for a New Data Presentation Paradigm. PLOS Biol 13:e1002128. https://doi.org/10.1371/JOURNAL.PBIO.1002128
 }
 \seealso{
-  \code{\link{summary.glm}}
+  \code{\link{summary.glm}}; \code{varImportance} in package \pkg{predicts}; \code{bm_VariablesImportance} in package \pkg{biomod2}; \code{var_importance} in package \pkg{enmpa}; \code{varimp} in package \pkg{embarcadero}
 }
 \examples{
   # load sample models:
