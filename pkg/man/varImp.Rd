@@ -5,14 +5,15 @@
 This function gets, and optionally plots, variable importance for an input model object of an implemented class.
 }
 \usage{
-  varImp(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
-  plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto",
-  col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE,
-  grid = TRUE, ...)
+  varImp(model, imp.type = "each", relative = TRUE, reorder = TRUE,
+  group.cats = FALSE, plot = TRUE, plot.type = "lollipop", error.bars = "sd",
+  ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE,
+  legend = TRUE, grid = TRUE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm" (of \pkg{stats}), "gbm" (of \pkg{gbm}), "randomForest" (of \pkg{randomForest}), "bart" (of package \pkg{dbarts}), "pbart" or "lbart" (of package \pkg{BART}), or a list produced by function "probit_flexBART"" of package \pkg{flexBART}.}
   \item{imp.type}{character value indicating the type of variable importance to output, i.e. the metric with which importance is measured. Currently the only option is "each", to extract the measure provided within each model object. Note that this is inconsistent across model classes -- see Details.}
+  \item{relative}{logical value indicating whether to divide the absolute importance values by their total sum, to get a measure of relative variable importance. The default is TRUE. Currently only applies to glm() z values.}
   \item{reorder}{logical value indicating whether to sort the variables in decreasing order of importance. TRUE by default, but automatically set to FALSE if 'model' is a 'flexBART' output, as these do not currently carry variable names. If FALSE, the variables retain their input order.}
   \item{group.cats}{logical value indicating whether to aggregate all factor levels of each (one-hot encoded) categorical variable into a single variable, by summing up their proportions of branches used. Used if 'model' is of class 'bart', 'pbart' or 'lbart', in whose outputs the contributions of categorical variables are split by their factor levels. The default is FALSE. Note that this may incorrectly group variables that have the same name with a different numeric suffix (e.g. "soil_type_1", "soil_type_2"), so revise your results if you set this to TRUE.}
   \item{plot}{logical value indicating whether to produce a plot with the results. The default is TRUE.}
@@ -26,7 +27,7 @@ This function gets, and optionally plots, variable importance for an input model
   \item{\dots}{additional arguments that can be used for the plot (depending on 'plot.type'), e.g. 'main', 'cex.axis' (for \code{\link{lollipop}} or \code{\link{boxplot}}) or 'cex.names' (for \code{\link{barplot}}).}
 }
 \details{
-  Variable importance in a model of class "glm" obtained with the \code{\link{glm}} function can be measured by the magnitude of the absolute z-value test statistic, which is provided with \code{summary(model)}. The 'varImp' function outputs the absolute z value of each variable, and in the plot (by default) uses different colours for variables with positive and negative relationships with the response.
+  Variable importance in a model of class "glm" obtained with the \code{\link{glm}} function can be measured by the magnitude of the absolute z-value test statistic, which is provided with \code{summary(model)}. The 'varImp' function outputs the absolute z value of each variable (or, if relative=TRUE, the relative z value after dividing by the sum of absolute z values), and in the plot (by default) it uses different colours for variables with positive and negative relationships with the response.
 
   If the input model is of class "gbm" of the \pkg{gbm} package, variable importance is obtained from \code{summary.gbm(model)} and divided by 100 to get the result as a proportion rather than a percentage.
 

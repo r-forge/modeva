@@ -9,7 +9,7 @@ The 'optiThresh' function calculates optimal thresholds for a number of model ev
 optiThresh(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
 measures = c(modEvAmethods("threshMeasures"), modEvAmethods("similarity")),
 optimize = modEvAmethods("optiThresh"), simplif = FALSE, plot = TRUE,
-sep.plots = FALSE, xlab = "Threshold", na.rm = TRUE, rm.dup = FALSE, ...)
+sep.plots = FALSE, xlab = "Threshold", na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -18,12 +18,13 @@ sep.plots = FALSE, xlab = "Threshold", na.rm = TRUE, rm.dup = FALSE, ...)
   \item{interval}{numeric value between 0 and 1 indicating the interval between the thresholds at which to calculate the evaluation measures. Defaults to 0.01.}
   \item{measures}{character vector indicating the names of the model evaluation measures for which to calculate optimal thresholds. The default is using all measures available in 'c(modEvAmethods("threshMeasures"), modEvAmethods("similarity"))'.}
   \item{optimize}{character vector indicating the threshold optimization criteria to use; "each" calculates the optimal threshold for each model evaluation measure, while the remaining options optimize all measures according to the specified criterion. The default is using all criteria available in 'modEvAmethods("optiThresh")'.}
-  \item{simplif}{logical, whether to calculate a faster simplified version. Used internally in other functions.}
-  \item{plot}{logical, whether to plot the values of each evaluation measure at all thresholds.}
+  \item{simplif}{logical, whether to compute a faster simplified version. Used internally in other functions.}
+  \item{plot}{logical, whether to plot the values of each evaluation measure at all thresholds. Ignored if simplif=TRUE.}
   \item{sep.plots}{logical. If TRUE, each plot is presented separately (you need to be recording R plot history to be able to browse through them all); if FALSE(the default), all plots are presented together in the same plotting window.}
   \item{xlab}{character vector indicating the label of the x axis.}
   \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
   \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
+  \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{\dots}{additional arguments to pass to \code{\link{plot}}.}
 }
 \value{

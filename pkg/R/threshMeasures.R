@@ -33,7 +33,7 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh, measur
   # if (!all(obs %in% c(0, 1)))
   #   stop ("'obs' must consist of binary observations of 0 or 1")
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 

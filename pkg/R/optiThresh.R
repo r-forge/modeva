@@ -4,8 +4,8 @@ optiThresh <-
                         modEvAmethods("similarity")),
            optimize = modEvAmethods("optiThresh"), simplif = FALSE,
            plot = TRUE, sep.plots = FALSE, xlab = "Threshold",
-           na.rm = TRUE, rm.dup = FALSE, ...) {
-    # version 3.3 (14 Dec 2023)
+           na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
+    # version 3.4 (5 Jun 2024)
 
     wrong.measures <- measures[which(!(measures %in% c(modEvAmethods("threshMeasures"), modEvAmethods("similarity"))))]
     wrong.optimizers <- optimize[which(!(optimize %in% modEvAmethods("optiThresh")))]
@@ -18,7 +18,7 @@ optiThresh <-
       optimize <- optimize[!(optimize %in% wrong.optimizers)]
     }
 
-    obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
+    obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)
     obs <- obspred[ , "obs"]
     pred <- obspred[ , "pred"]
 
@@ -86,10 +86,10 @@ optiThresh <-
       }
     }  # end for t for m
 
-    if (simplif) {  # shorter version for use with e.g. the optiPair function
+    if (isTRUE(simplif)) {  # shorter version for use with e.g. the optiPair function
       return(all.thresholds)
-    }  # end if simplif
-    else {
+
+    } else {  # if !simplif
       results <- list(all.thresholds = all.thresholds)  # start a list of results
 
       input.optimize <- optimize
@@ -183,7 +183,7 @@ optiThresh <-
         if ("maxKappa" %in% criteria) {
           if (!("kappa" %in% measures)) {
             for (t in 1 : Nthresholds) {
-              all.thresholds$kappa <- threshMeasures(obs = obs, pred = pred, thresh = thresholds[t], measures = "kappa", standardize = FALSE, simplif = TRUE)
+              all.thresholds$kappa <- threshMeasures(obs = obs, pred = pred, thresh = thresholds[t], measures = "kappa", standardize = FALSE, simplif = TRUE, verbosity = 0)
             }
           }
           maxKappa <- thresholds[which.max(all.thresholds$kappa)]
@@ -264,19 +264,25 @@ optiThresh <-
         opar <- par(no.readonly = TRUE)
         on.exit(par(opar))
         n.input.measures <- length(input.measures)
+
         if (sep.plots) {
           par(mfrow = c(1, 1))
+
         } else {
           if (n.input.measures > 4)  par(mar = c(2, 4.5, 0.5, 0.5))
           par(mfrow = arrangePlots(n.input.measures))
         }  # end if sep.plots else
+
         for (m in 1 : n.input.measures) {
           if(any(is.finite(all.thresholds[ , m]))) {
             plot(all.thresholds[ , m] ~ thresholds, ylab = input.measures[m], ...)
-            if ("each" %in% input.optimize) {
+
+            opt <- gsub("min|max", "", input.optimize)
+            if ("each" %in% input.optimize || isTRUE(all.equal(opt, measures))) {
               abline(v = optimals.each[m, "threshold"], col = "grey", lty = 2)  # vertical line on optimal threshold
               abline(h = optimals.each[m, "value"], col = "grey", lty = 2)  # horiz line on optimal value
             }
+
           } else {
             plot(thresholds, thresholds, ylab = input.measures[m], type = "n", ...)
           }

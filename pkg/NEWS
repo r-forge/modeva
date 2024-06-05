@@ -1,11 +1,28 @@
 ==============================================
+modEvA v3.16 (committed 2024-06-05)
+==============================================
+
+## Modified functions:
+
+* optiThresh
+- added 'verbosity' argument to pass to inputMunch()
+- abline() now plotted also if 'optimize' is a specific measure name, not necessarily "each"
+
+* AUC
+- added 'verbosity' argument to pass to inputMunch()
+
+* varImp
+- added 'relative' argument for z value (suggested by Alba Estrada)
+
+
+==============================================
 modEvA v3.15 (committed 2024-03-25)
 ==============================================
 
 ## Modified functions:
 
 * threshMeasures, evaluate, modEvAmethods
-- added 'ORSS' and 'SEDI' metrics (Wunderlich et al. 2019)
+- added 'ORSS' and 'SEDI' metrics (Wunderlich et al. 2019) (suggested by Jose Carlos Guerrero)
 
 
 ==============================================

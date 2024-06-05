@@ -13,7 +13,7 @@ method = NULL, plot = TRUE, diag = TRUE, diag.col = "grey",
 diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2,
 plot.values = TRUE, plot.digits = 3, plot.preds = FALSE,
 grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto",
-ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, ...)
+ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -41,6 +41,7 @@ ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, ...)
   \item{ticks}{logical, whether or not to add blue tick marks at the bottom of the plot to mark the thresholds at which there were values from which to to draw the curve. Defaults to FALSE.}
   \item{na.rm}{Logical value indicating if missing values should be ignored in computations. The default is TRUE.}
   \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
+  \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{\dots}{further arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{

@@ -1,6 +1,6 @@
-varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, ...) {
+varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, group.cats = FALSE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, ...) {
 
-  # version 2.0 (27 Sep 2023)
+  # version 2.1 (5 Jun 2024)
 
   # if 'col' has length 2 and varImp has negative values (e.g. for z-value), those will get the second colour
 
@@ -29,12 +29,13 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
 
     if (family(model)$family != "binomial")  stop ("This function is currently only implemented for binary-response models of family 'binomial'.")
 
-    #  if (measure == "z") {
-    metric <- "Absolute z value"
-    cat("\nMetric:", metric, "\n\n")
-    varimp <- summary(model)$coefficients[-1, "z value"]
-    ylab <- metric
-    #  }
+    # if (measure == "z") {
+      metric <- ifelse(isTRUE(relative), "Relative z value", "Absolute z value")
+      cat("\nMetric:", metric, "\n\n")
+      varimp <- summary(model)$coefficients[-1, "z value"]
+      if (isTRUE(relative)) varimp <- varimp / sum(abs(varimp))
+      ylab <- metric
+    # }
 
     # if (measure == "Wald") {  # requires 'fuzzySim' and 'aod'
     #   ylab <- "Wald"
@@ -72,6 +73,7 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
   else if (is_bart || is_flexbart) {
 
     metric <- "Proportion of splits used"
+    # metric <- ifelse(isTRUE(relative), "Proportion of splits used", "Number of splits used")
     cat("\nMetric:", metric, "\n\n")
     ylab <- metric
 
@@ -92,9 +94,9 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
         }
       }
 
-       else if (is(model, "pbart") || is(model, "lbart")) {
-         names.nosuffix <- gsub("[0-9]+$", "", colnames(model$varcount))
-       }  # but WATCH OUT: other variables with numeric suffix (e.g. "o2" and "o3") will be grouped too! also cat vars with same name but different numeric suffix, e.g. "var" and "var2"
+      else if (is(model, "pbart") || is(model, "lbart")) {
+        names.nosuffix <- gsub("[0-9]+$", "", colnames(model$varcount))
+      }  # but WATCH OUT: other variables with numeric suffix (e.g. "o2" and "o3") will be grouped too! also cat vars with same name but different numeric suffix, e.g. "var" and "var2"
 
       if (!is_flexbart) {
 
@@ -114,8 +116,8 @@ varImp <- function(model, imp.type = "each", reorder = TRUE, group.cats = FALSE,
     if (is(model, "bart")) {  #  || is(model, "pbart") || is(model, "lbart")
 
       # if (is(model, "bart")
-          dropped.vars <- names(which(unlist(attr(model$fit$data@x, "drop")) == 1))
-          # else dropped.vars <- colnames(model$varcount)[model$rm.const]  # no, because these names already have the cat vars divided and renamed according to their factor levels, so the 'rm.const' indices do not correctly match the original var names
+      dropped.vars <- names(which(unlist(attr(model$fit$data@x, "drop")) == 1))
+      # else dropped.vars <- colnames(model$varcount)[model$rm.const]  # no, because these names already have the cat vars divided and renamed according to their factor levels, so the 'rm.const' indices do not correctly match the original var names
 
       n.dropped <- length(dropped.vars)
       if (n.dropped > 0) {
