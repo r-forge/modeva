@@ -5,9 +5,10 @@ modEvA v3.17 (committed 2024-06-06)
 ## Modified functions:
 
 * varImp
-- added 'verbosity' argument
-- adapted to latest version of flexBART, which does carry variable names
 - 'relative' argument now applies also to BART and flexBART models
+- adapted to latest version of flexBART, which does carry variable names
+- informative error messages when model is BART and doesn't have the required info
+- added 'verbosity' argument
 
 
 ==============================================

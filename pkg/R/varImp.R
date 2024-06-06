@@ -30,11 +30,11 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     if (family(model)$family != "binomial")  stop ("This function is currently only implemented for binary-response models of family 'binomial'.")
 
     # if (measure == "z") {
-      metric <- ifelse(isTRUE(relative), "Relative z value", "Absolute z value")
-      if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
-      varimp <- summary(model)$coefficients[-1, "z value"]
-      if (isTRUE(relative)) varimp <- varimp / sum(abs(varimp))
-      ylab <- metric
+    metric <- ifelse(isTRUE(relative), "Relative z value", "Absolute z value")
+    if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
+    varimp <- summary(model)$coefficients[-1, "z value"]
+    if (isTRUE(relative)) varimp <- varimp / sum(abs(varimp))
+    ylab <- metric
     # }
 
     # if (measure == "Wald") {  # requires 'fuzzySim' and 'aod'
@@ -77,8 +77,9 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
     ylab <- metric
 
-    if ("varcounts" %in% names(model))  # in flexBART models
+    if ("varcounts" %in% names(model)) { # in flexBART models
       names(model)[grep("varcounts", names(model))] <- "varcount"  # to homogenize
+    }
 
     # varimps <- model[["varcount"]] / rowSums(model[["varcount"]])
     varimps <- model[["varcount"]]
@@ -115,8 +116,16 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     }  # end if group.cats
 
     if (is(model, "bart")) {  #  || is(model, "pbart") || is(model, "lbart")
+      if (is.null(model$fit)) {
+        stop("'model' does not contain the required info; please compute it with keeptrees=TRUE")
+      }
 
-      # if (is(model, "bart")
+      if (is.null(colnames(model$fit$data@x))) {
+        # colnames(model$fit$data@x) <- paste0("X", 1:ncol(model$fit$data@x))  # didn't work, pbb because other attributes were missing
+        stop("'model' does not have predictor attributes; please compute it with column names in the predictor variables")
+      }
+
+      # if (is(model, "bart"))
       dropped.vars <- names(which(unlist(attr(model$fit$data@x, "drop")) == 1))
       # else dropped.vars <- colnames(model$varcount)[model$rm.const]  # no, because these names already have the cat vars divided and renamed according to their factor levels, so the 'rm.const' indices do not correctly match the original var names
 
