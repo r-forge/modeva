@@ -109,7 +109,7 @@ echo $contents; } ?>
 
 <h2>Find out more</h2>
 
-<p> Here's a quick <b><a href="modEvA-tutorial.html">illustrated <big>tutorial</big></a></b>. Read the functions' <b>help files</b> for full documentation. There's also a (somewhat outdated) <a href="http://modeva.r-forge.r-project.org/Guia_modelacion_fuzzySim_modEvA.html">course manual on model building with <i>fuzzySim</i> and model evaluation with <i>modEvA</i> (<b>in Spanish</b>)</a></p>
+<p> Here's a quick <b><a href="modEvA-tutorial.html">illustrated <big>tutorial</big></a> on <i>modEvA</i></b>. Read the functions' <b>help files</b> for full documentation. There's also a (somewhat outdated) <a href="http://modeva.r-forge.r-project.org/Guia_modelacion_fuzzySim_modEvA.html">course manual on model building with <i>fuzzySim</i> and model evaluation with <i>modEvA</i> (<b>in Spanish</b>)</a></p>
 
 <p> Click <a href="http://modtools.wordpress.com/packages/modeva/">here</a> for <b>further info</b> on the package and its origins. </p>
 <p> The R-Forge project summary page you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/">here</a>. </p>
