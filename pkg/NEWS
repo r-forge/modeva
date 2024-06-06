@@ -1,4 +1,16 @@
 ==============================================
+modEvA v3.17 (committed 2024-06-06)
+==============================================
+
+## Modified functions:
+
+* varImp
+- added 'verbosity' argument
+- adapted to latest version of flexBART, which does carry variable names
+- 'relative' argument now applies also to BART and flexBART models
+
+
+==============================================
 modEvA v3.16 (committed 2024-06-05)
 ==============================================
 
