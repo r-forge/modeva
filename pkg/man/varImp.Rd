@@ -59,14 +59,15 @@ Weissgerber T.L., Milic N.M., Winham S.J. & Garovic V,D, (2015) Beyond Bar and L
 
   # get variable importance for this model:
   varImp(model = mod,
-    cex.axis = 0.6)
+         cex.axis = 0.6)
 
   # change some parameters:
-  par(mar = c(10, 4, 2, 1))
+  par(mar = c(9, 4, 2.5, 1))
   varImp(model = mod,
-    col = c("darkgreen", "orange"),
-    plot.type = "barplot",
-    cex.names = 0.8,
-    ylim = c(0, 5),
-    main = "Variable importance in \n my model")
+         relative = FALSE,
+         col = c("darkgreen", "orange"),
+         plot.type = "barplot",
+         cex.names = 0.85,
+         ylim = c(0, 5),
+         main = "Variable importance in \n my model")
 }

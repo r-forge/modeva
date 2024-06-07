@@ -1,5 +1,15 @@
 ==============================================
-modEvA v3.17 (committed 2024-06-06)
+modEvA v3.17.1 (committed 2024-06-07)
+==============================================
+
+## Modified files:
+
+* varImp
+- second example now uses new argument 'relative'
+
+
+==============================================
+modEvA v3.17 (committed 2024-06-06)  ->  CRAN
 ==============================================
 
 ## Modified functions:
