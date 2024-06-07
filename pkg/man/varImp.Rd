@@ -2,7 +2,7 @@
 \alias{varImp}
 \title{Variable importance.}
 \description{
-This function gets, and optionally plots, variable importance for an input model object of an implemented class.
+This function computes, and optionally plots, variable importance for an input model object of an implemented class. Note that "importance" is a vague concept which can be measured in different ways (see Details).
 }
 \usage{
   varImp(model, imp.type = "each", relative = TRUE, reorder = TRUE,
@@ -12,7 +12,7 @@ This function gets, and optionally plots, variable importance for an input model
 }
 \arguments{
   \item{model}{a (binary-response) model object of class "glm" (of package \pkg{stats}), "gbm" (of package \pkg{gbm}), "randomForest" (of package \pkg{randomForest}), "bart" (of package \pkg{dbarts}), "pbart" or "lbart" (of package \pkg{BART}), or a list produced by function "flexBART" or "probit_flexBART" of package \pkg{flexBART}.}
-  \item{imp.type}{character value indicating the type of variable importance to output, i.e. the metric with which importance is measured. Currently the only option is "each", to extract the measure provided within each model object. Note that this is inconsistent across model classes -- see Details.}
+  \item{imp.type}{character value indicating the type of variable importance to output, i.e. the metric with which importance is measured. Currently the only option is "each", to extract the measure provided by each model object or summary. Note that this is different across model classes -- see Details.}
   \item{relative}{logical value indicating whether to divide the absolute importance values by their total sum, to get a measure of relative variable importance. The default is TRUE. Applies to GLM and BART models.}
   \item{reorder}{logical value indicating whether to sort the variables in decreasing order of importance. The default is TRUE. If set to FALSE, the variables retain their input order.}
   \item{group.cats}{logical value indicating whether to aggregate all factor levels of each (one-hot encoded) categorical variable into a single variable, by summing up their proportions of branches used. Used if 'model' is of class 'bart', 'pbart' or 'lbart', in whose outputs the contributions of categorical variables are split by their factor levels. The default is FALSE. Note that this may incorrectly group variables that have the same name with a different numeric suffix (e.g. "soil_type_1", "soil_type_2"), so revise your results if you set this to TRUE.}
@@ -28,18 +28,18 @@ This function gets, and optionally plots, variable importance for an input model
   \item{\dots}{additional arguments that can be used for the plot (depending on 'plot.type'), e.g. 'main', 'cex.axis' (for \code{\link{lollipop}} or \code{\link{boxplot}}) or 'cex.names' (for \code{\link{barplot}}).}
 }
 \details{
-  Variable importance in a model of class "glm" obtained with the \code{\link{glm}} function can be measured by the magnitude of the absolute z-value test statistic, which is provided with \code{summary(model)}. The 'varImp' function outputs the absolute z value of each variable (or, if relative=TRUE, the relative z value after dividing by the sum of absolute z values), and in the plot (by default) it uses different colours for variables with positive and negative relationships with the response.
+  Variable importance is a non-objective characteristic which can be measured in a variety of ways -- e.g., the weight of a variable in a model (e.g. how strong its coefficient is, or how many times it is used); how much worse the model would be without it (according to a given performance metric); or how different the predictions would be if the variable were shuffled or not used. If you compute variable importance with different methods (e.g. with the functions suggested in the "See also" section), you are likely to get varied results.
 
-  If the input model is of class "gbm" of the \pkg{gbm} package, variable importance is obtained from \code{summary.gbm(model)} and divided by 100 to get the result as a proportion rather than a percentage (for consistency).
+  In this function, variable importance in a model of class "glm" (obtained with the \code{\link{glm}} function) can be measured by the magnitude of the absolute z-value test statistic, which is provided with \code{summary(model)}. The 'varImp' function outputs the absolute z value of each variable (or, if relative=TRUE - the default, the relative z value after dividing the absolute value by the sum of absolute values). In the plot (by default), different colours are used for variables with positive and negative relationships with the response.
 
-  If the input model is of class "randomForest" of the \pkg{randomForest} package, variable importance is obtained with \code{model$importance}.
+  If the input model is of class "gbm" of the \pkg{gbm} package, variable importance is obtained from \code{summary.gbm(model)} and divided by 100 to get the result as a proportion rather than a percentage (for consistency). See the help file of that function for details.
+
+  If the input model is of class "randomForest" of the \pkg{randomForest} package, variable importance is obtained with \code{model$importance}. See the help file of randomForest for details.
 
   If the input model is of class "bart" of the \pkg{dbarts} package, or of class "pbart" or "lbart" of the \pkg{BART} package, or a list produced by function "probit_flexBART" of the \pkg{flexBART} package, variable importance is obtained as the mean (if relative=TRUE, the default) or the total number (if relative=FALSE) of regression tree splits where each variable is used. If 'error.bars' is not NA, the error is also computed according to the specified metric ("sd" or standard deviation by default).
   }
 \value{
-  This function outputs, and optionally plots, a named numeric vector of variable importance, as measured by 'imp.type' (see Details). If the model is Bayesian (BART) and 'error.bars' is not NA, the output is a row-named data frame with the mean and the lower and upper bounds of the error bars of variable importance.
-
-  Note that variable names can currently not be provided for 'flexBART' models, as the object does not include them. The names will match \code{c(colnames(X_cont_train), colnames(X_cat_train))} in the inputs that were provided to 'flexBART'.
+  This function outputs, and optionally plots, a named numeric vector of variable importance, as measured by 'imp.type' (see Details). If the model is Bayesian (BART) and 'error.bars' is not NA, the output is a row-named data frame with the mean as well as the lower and upper bounds of the error bars of variable importance.
 }
 \author{
   A. Marcia Barbosa
