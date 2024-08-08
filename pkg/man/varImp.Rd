@@ -11,7 +11,7 @@ This function computes, and optionally plots, variable importance for an input m
   legend = TRUE, grid = TRUE, verbosity = 2, ...)
 }
 \arguments{
-  \item{model}{a (binary-response) model object of class "glm" (of package \pkg{stats}), "gbm" (of package \pkg{gbm}), "randomForest" (of package \pkg{randomForest}), "bart" (of package \pkg{dbarts}), "pbart" or "lbart" (of package \pkg{BART}), or a list produced by function "flexBART" or "probit_flexBART" of package \pkg{flexBART}.}
+  \item{model}{a (binary-response) model object of class "glm" (of package \pkg{stats}), "gbm" (of package \pkg{gbm}), "GBMFit" (of package \pkg{gbm3}), "randomForest" (of package \pkg{randomForest}), "bart" (of package \pkg{dbarts}), "pbart" or "lbart" (of package \pkg{BART}), or a list produced by function "flexBART" or "probit_flexBART" of package \pkg{flexBART}.}
   \item{imp.type}{character value indicating the type of variable importance to output, i.e. the metric with which importance is measured. Currently the only option is "each", to extract the measure provided by each model object or summary. Note that this is different across model classes -- see Details.}
   \item{relative}{logical value indicating whether to divide the absolute importance values by their total sum, to get a measure of relative variable importance. The default is TRUE. Applies to GLM and BART models.}
   \item{reorder}{logical value indicating whether to sort the variables in decreasing order of importance. The default is TRUE. If set to FALSE, the variables retain their input order.}
@@ -30,7 +30,7 @@ This function computes, and optionally plots, variable importance for an input m
 \details{
   Variable importance is a non-objective characteristic which can be measured in a variety of ways -- e.g., the weight of a variable in a model (e.g. how strong its coefficient is, or how many times it is used); how much worse the model would be without it (according to a given performance metric); or how different the predictions would be if the variable were shuffled or not used. If you compute variable importance with different methods (e.g. with the functions suggested in the "See also" section), you are likely to get varied results.
 
-  In this function, variable importance in a model of class "glm" (obtained with the \code{\link{glm}} function) can be measured by the magnitude of the absolute z-value test statistic, which is provided with \code{summary(model)}. The 'varImp' function outputs the absolute z value of each variable (or, if relative=TRUE - the default, the relative z value after dividing the absolute value by the sum of absolute values). In the plot (by default), different colours are used for variables with positive and negative relationships with the response.
+  In this function, variable importance in a model of class "glm" (obtained with the \code{\link{glm}} function) can be measured by the magnitude of the absolute z-value test statistic, which is provided with \code{summary(model)}. The 'varImp' function outputs the absolute z value of each variable (or, if relative=TRUE - the default, the relative z value, obtained by dividing the absolute z value by the sum of z absolute values in the model). In the plot (by default), different colours are used for variables with positive and negative relationships with the response.
 
   If the input model is of class "gbm" of the \pkg{gbm} package, variable importance is obtained from \code{summary.gbm(model)} and divided by 100 to get the result as a proportion rather than a percentage (for consistency). See the help file of that function for details.
 
@@ -48,7 +48,7 @@ This function computes, and optionally plots, variable importance for an input m
 Weissgerber T.L., Milic N.M., Winham S.J. & Garovic V,D, (2015) Beyond Bar and Line Graphs: Time for a New Data Presentation Paradigm. PLOS Biol 13:e1002128. https://doi.org/10.1371/JOURNAL.PBIO.1002128
 }
 \seealso{
-  \code{\link{summary.glm}}; \code{varImportance} in package \pkg{predicts}; \code{bm_VariablesImportance} in package \pkg{biomod2}; \code{var_importance} in package \pkg{enmpa}; \code{varimp} in package \pkg{embarcadero}
+\code{\link{summary.glm}}; \code{varImp} in package \pkg{caret}; \code{varimp} in package \pkg{embarcadero}; \code{var_importance} in package \pkg{enmpa}; \code{varImportance} in package \pkg{predicts}; \code{bm_VariablesImportance} in package \pkg{biomod2}
 }
 \examples{
   # load sample models:

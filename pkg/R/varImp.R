@@ -1,6 +1,6 @@
 varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, group.cats = FALSE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, verbosity = 2, ...) {
 
-  # version 2.2 (6 Jun 2024)
+  # version 2.3 (8 Aug 2024)
 
   # if 'col' has length 2 and varImp has negative values (e.g. for z-value), those will get the second colour
 
@@ -15,8 +15,8 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
             length(col) %in% 1:2
   )
 
-  is_bart <- is(model, "bart") || is(model, "pbart") || is(model, "lbart")
-  is_flexbart <- is(model, "list") && c("varcounts", "trees") %in% names(model)
+  is_bart <- methods::is(model, "bart") || methods::is(model, "pbart") || methods::is(model, "lbart")
+  is_flexbart <- methods::is(model, "list") && c("varcounts", "trees") %in% names(model)
 
   if (!is_bart && !is_flexbart)  error.bars <- NA
 
@@ -25,7 +25,7 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     if (verbosity > 0) message ("'reorder' set to FALSE, as this version of 'flexBART' does not carry variable names, which would make it impossible to match variables with importance values. Variables are in the order in which they were provided to the 'flexBART' model, with the continuous preceding the categorical ones. Update 'flexBART' if you want the variables named and reordered.")
   }
 
-  if (is(model, "glm")) {  #  && !is(model, "Gam")
+  if (methods::is(model, "glm")) {  #  && !methods::is(model, "Gam")
 
     if (family(model)$family != "binomial")  stop ("This function is currently only implemented for binary-response models of family 'binomial'.")
 
@@ -47,7 +47,7 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     # }
   }  # end if glm
 
-  else if (is(model, "gbm")) {
+  else if (methods::is(model, "gbm")) {
     # requireNamespace("gbm")  # would require a suggest/depend
     if ("gbm" %in% .packages()) {
       metric <- "Relative influence"
@@ -61,7 +61,20 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     }
   }
 
-  else if (is(model, "randomForest")) {
+  else if (methods::is(model, "GBMFit")) {
+    if ("gbm3" %in% .packages()) {
+      metric <- "Relative influence"
+      if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
+      ylab <- metric
+      smry <- summary(model, plot_it = FALSE)
+      varimp <- smry[ , "rel_inf"] / 100
+      names(varimp) <- smry[ , "var"]
+    } else {
+      stop("package 'gbm3' needs to be loaded first.")
+    }
+  }
+
+  else if (methods::is(model, "randomForest")) {
     metric <- colnames(model$importance)
     if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
     varimp <- model$importance  # / nrow(model$importance) / 100  # doesn't work well for mean accuracy decrease
@@ -87,7 +100,7 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     varimp <- colMeans(varimps)
 
     if (group.cats) {
-      if (is(model, "bart")) {
+      if (methods::is(model, "bart")) {
         cat.vars <- names(which(lapply(attr(model$fit$data@x, "drop"), length) > 1))
         names.nosuffix <- names(varimp)
         for (v in cat.vars) {
@@ -96,7 +109,7 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
         }
       }
 
-      else if (is(model, "pbart") || is(model, "lbart")) {
+      else if (methods::is(model, "pbart") || methods::is(model, "lbart")) {
         names.nosuffix <- gsub("[0-9]+$", "", colnames(model$varcount))
       }  # but WATCH OUT: other variables with numeric suffix (e.g. "o2" and "o3") will be grouped too! also cat vars with same name but different numeric suffix, e.g. "var" and "var2"
 
@@ -115,7 +128,7 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
       }
     }  # end if group.cats
 
-    if (is(model, "bart")) {  #  || is(model, "pbart") || is(model, "lbart")
+    if (methods::is(model, "bart")) {  #  || methods::is(model, "pbart") || methods::is(model, "lbart")
       if (is.null(model$fit)) {
         stop("'model' does not contain the required info; please compute it with keeptrees=TRUE")
       }
@@ -125,7 +138,7 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
         stop("'model' does not have predictor attributes; please compute it with column names in the predictor variables")
       }
 
-      # if (is(model, "bart"))
+      # if (methods::is(model, "bart"))
       dropped.vars <- names(which(unlist(attr(model$fit$data@x, "drop")) == 1))
       # else dropped.vars <- colnames(model$varcount)[model$rm.const]  # no, because these names already have the cat vars divided and renamed according to their factor levels, so the 'rm.const' indices do not correctly match the original var names
 

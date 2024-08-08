@@ -1,4 +1,14 @@
 ==============================================
+modEvA v3.18 (committed 2024-08-08)
+==============================================
+
+## Modified functions:
+
+* mod2obspred, varImp
+- implemented class 'GBMFit' from pkg 'gbm3'
+
+
+==============================================
 modEvA v3.17.1 (committed 2024-06-07)
 ==============================================
 
@@ -6,6 +16,7 @@ modEvA v3.17.1 (committed 2024-06-07)
 
 * varImp
 - second example now uses new argument 'relative'
+- improved descriptions and Details
 
 
 ==============================================
