@@ -1,21 +1,21 @@
 \name{predDensity}
 \alias{predDensity}
 \title{
-Plot the density of predicted values for presences and absences.
+Plot the density of predicted or predictor values for presences and absences.
 }
 \description{
-This function produces a histogram and/or a kernel density plot of predicted values for a binary-response model, possibly separately for the observed presences and absences, given a model object or a vector of predicted values and (optionally) a vector of the corresponding observed values. When there are multiple predicted values for each site, it can also plot a confidence interval.
+This function produces a histogram and/or a kernel density plot of predicted or predictor values for a binary-response model, possibly separately for the observed presences and absences, given either a model object or a vector of predicted (or predictor) values and (optionally) a vector of the corresponding observed values. When there are multiple predicted values for each site (e.g. for BART models), it can also plot a confidence interval.
 }
 \usage{
 predDensity(model = NULL, obs = NULL, pred = NULL,
 separate = TRUE, type = "both", ci = NA, legend.pos = "topright",
-main = "Density of predicted values", na.rm = TRUE, rm.dup = FALSE,
+main = "Density of pred values", na.rm = TRUE, rm.dup = FALSE,
 xlim = NULL, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'pred' (and optionally 'obs') argument(s) instead of 'model'.}
   \item{obs}{alternatively to 'model' and together with 'pred', an optional numeric vector (in the same order of 'pred') of observed presences (1) and absences (0) of a binary response variable. Alternatively (and if 'pred' is a 'SpatRaster'), a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points, in which case the 'obs' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument may be omitted (to show the density plot of all 'pred' values combined), and it is ignored if 'model' is provided.}
-  \item{pred}{alternatively to 'model', a vector of predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs' (if the latter is provided). Alternatively (and if 'obs' is a set of point coordinates), a 'SpatRaster' map of the predicted values for the entire evaluation region, in which case the 'pred' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
+  \item{pred}{alternatively to 'model', a vector of predicted values of presence probability, habitat suitability, environmental favourability or alike; or a vector of values of a continuous predictor variable. Must be of the same length and in the same order as 'obs' (if the latter is provided). Alternatively (and if 'obs' is a set of point coordinates), a 'SpatRaster' map of the predicted values for the entire evaluation region, in which case the 'pred' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
   \item{separate}{logical value indicating whether prediction densities should be computed separately for observed presences (ones) and absences (zeros). Defaults to TRUE, but it is automatically changed to FALSE if either 'model' or 'obs' are not provided, or if 'ci' is not NULL.}
   \item{type}{character vector specifying whether to produce a "histogram", a "density" plot, or "both" (the default). Partial argument matching is used.}
   \item{ci}{numeric value for a confidence interval to add to the plot, e.g. 0.95 for 95\%. The default is NA.}

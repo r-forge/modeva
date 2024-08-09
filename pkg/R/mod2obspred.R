@@ -1,5 +1,5 @@
 mod2obspred <- function(model, obs.only = FALSE) {
-  # version 1.2 (7 Aug 2024)
+  # version 1.3 (9 Aug 2024)
 
   if (methods::is(model, "glm") || methods::is(model, "gam")) {
     obs <- model$y
@@ -7,12 +7,19 @@ mod2obspred <- function(model, obs.only = FALSE) {
 
   } else if (methods::is(model, "gbm")) {
     obs <- model$data$y
-    # logit <- function(x) exp(x) / (1 + exp(x))
-    if (!obs.only) pred <- suppressMessages(predict(model, type = "response"))  # logit(model$fit)
+    if (!obs.only) {
+      pred <- suppressMessages(predict(model, type = "response"))  # checked same as:
+      # logit <- function(x) exp(x) / (1 + exp(x))
+      # pred <- logit(model$fit)  # but this applies only to binary response
+    }
 
   } else if (methods::is(model, "GBMFit")) {
     obs <- model$gbm_data_obj$y
-    if (!obs.only) pred <- suppressMessages(predict(model, type = "response"))
+    if (!obs.only) {
+      pred <- suppressMessages(predict(model, type = "response", newdata = model$gbm_data_obj$original_data, n.trees = length(model$trees)))  # checked same as:
+      # logit <- function(x) exp(x) / (1 + exp(x))
+      # pred <- logit(model$fit)  # but this applies only to binary response
+    }
 
   } else if (methods::is(model, "randomForest")) {
     obs <- as.integer(as.character(model$y))
