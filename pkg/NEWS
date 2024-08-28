@@ -1,5 +1,22 @@
 
 ==============================================
+modEvA v3.18.2 (committed 2024-08-28)
+==============================================
+
+## Modified functions:
+
+* predDensity
+- slightly improved plot colours for better contrast
+- added legend when CI not NA
+
+
+## Other modified files:
+
+* predDensity.Rd
+- slight improvements to increase clarity
+
+
+==============================================
 modEvA v3.18.1 (committed 2024-08-09)
 ==============================================
 
