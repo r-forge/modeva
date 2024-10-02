@@ -1,7 +1,31 @@
 
-==============================================
-modEvA v3.18.2 (committed 2024-08-28)
-==============================================
+===============================================
+modEvA v3.19 (committed 2024-10-02)
+===============================================
+
+## New functions:
+
+* errorMeasures (incl. RMSE, MSE, Brier score)
+
+
+## Modified functions:
+
+* RMSE
+- warning: function deprecated in favour of errorMeasures
+
+
+## Other modified files:
+
+* quantReclass.Rd
+- update Formoso-Freire ref with publication date
+
+* DESCRIPTION
+- added contributors
+
+
+===============================================
+modEvA v3.18.2 (committed 2024-08-28)  ->  CRAN
+===============================================
 
 ## Modified functions:
 

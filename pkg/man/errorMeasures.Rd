@@ -1,13 +1,13 @@
-\name{RMSE}
-\alias{RMSE}
+\name{errorMeasures}
+\alias{errorMeasures}
 \title{
-Root mean square error
+Measures of model prediction error.
 }
 \description{
-This function computes the root mean square error of a model object or a set of observed and predicted values or maps. THIS FUNCTION IS NOW DEPRECATED, AS THE RMSE HAS BEEN INCLUDED ALONG OTHER METRICS IN THE NEW errorMeasures() FUNCTION.
+This function computes metrics such as the (root) mean square error or the Brier score, of a model object or a set of observed and predicted values or maps. The smaller the returned values, the better the modol predictions fit the observations.
 }
 \usage{
-RMSE(model = NULL, obs = NULL, pred = NULL, na.rm = TRUE, rm.dup = FALSE)
+errorMeasures(model = NULL, obs = NULL, pred = NULL, na.rm = TRUE, rm.dup = FALSE)
 }
 \arguments{
   \item{model}{a model object of class implemented in \code{\link{mod2obspred}}. If this argument is provided, 'obs' and 'pred' will be extracted with that function. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -17,10 +17,12 @@ RMSE(model = NULL, obs = NULL, pred = NULL, na.rm = TRUE, rm.dup = FALSE)
   \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
 }
 \details{
-The root mean square error is computed as the square root of the mean of the squared differences between observed and predicted values. It is (approximately) the same as the standard deviation of the model residuals (prediction errors), i.e., a measure of how spread out these residuals are, or how concentrated the observations are around the model prediction line. The smaller the RMSE, the better.
+The Brier score measures the accuracy of probabilistic predictions against a binary response variable. It is computed as the mean of the squared differences between observed and predicted values, i.e. the mean square error (MSE). It may take values between 0 and 1. The smaller the score, the better the model fit.
+
+The root mean square error is more usually applied to models of coninuous response variables. It is computed as the square root of the mean of the squared differences between observed and predicted values. It is (approximately) the same as the standard deviation of the model residuals (prediction errors), i.e., a measure of how spread out these residuals are, or how concentrated the observations are around the model prediction line.
 }
 \value{
-The function returns a numeric value indicating the root mean square error of the model predictions.
+This function returns a named list of numeric values indicating various measures of model error.
 }
 \references{
 Kenney J.F. & Keeping E.S. (1962) Root Mean Square. "Mathematics of Statistics", 3rd ed. Princeton, NJ: Van Nostrand, pp. 59-60.
@@ -29,7 +31,7 @@ Kenney J.F. & Keeping E.S. (1962) Root Mean Square. "Mathematics of Statistics",
 A. Marcia Barbosa
 }
 \seealso{
-\code{errorMeasures}, \code{\link{plotGLM}}, \code{\link{RsqGLM}}, \code{Dsquared}
+\code{\link{RMSE}}, \code{\link{plotGLM}}, \code{\link{RsqGLM}}, \code{Dsquared}
 }
 \examples{
 # load sample models:
@@ -38,16 +40,16 @@ data(rotif.mods)
 # choose a particular model to play with:
 mod <- rotif.mods$models[[1]]
 
-RMSE(model = mod)
+errorMeasures(model = mod)
 
 
-# you can also use RMSE with vectors of observed and predicted values
+# you can also use errorMeasures with vectors of observed and predicted values
 # instead of with a model object:
 
 presabs <- mod$y
 prediction <- mod$fitted.values
 
-RMSE(obs = presabs, pred = prediction)
+errorMeasures(obs = presabs, pred = prediction)
 
 
 # 'obs' can also be a table of presence point coordinates
