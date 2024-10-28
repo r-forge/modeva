@@ -1,6 +1,6 @@
-inputMunch <- function(model = NULL, obs = NULL, pred = NULL, rm.dup = FALSE, na.rm = FALSE, verbosity = 2) {
+inputMunch <- function(model = NULL, obs = NULL, pred = NULL, rm.dup = FALSE, na.rm = FALSE, pbg = FALSE, verbosity = 2) {
 
-  # version 1.2 (15 May 2022)
+  # version 1.3 (28 Oct 2028)
 
   if (!is.null(model)) {
     if (!is.null(obs)) message("Argument 'obs' ignored in favour of 'model'.")
@@ -42,6 +42,12 @@ inputMunch <- function(model = NULL, obs = NULL, pred = NULL, rm.dup = FALSE, na
 
     if (is.null(obs)) obspred <- data.frame(pred = dat$pred)
     else obspred <- data.frame(obs = dat$obs, pred = dat$pred)
+  }
+
+  if (isTRUE(pbg)) {  # presence/background
+    nrow_in <- nrow(obspred)
+    obspred <- rbind(obspred, obspred[obspred$obs == 1, ])
+    obspred[(nrow_in + 1):nrow(obspred), "obs"] <- 0
   }
 
   return(obspred)

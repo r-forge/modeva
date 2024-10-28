@@ -1,10 +1,10 @@
-getThreshold <- function(model = NULL, obs = NULL, pred = NULL, threshMethod, interval = 0.01, quant = 0, na.rm = TRUE) {
+getThreshold <- function(model = NULL, obs = NULL, pred = NULL, threshMethod, interval = 0.01, quant = 0, na.rm = TRUE, pbg = FALSE) {
 
-  # version 1.2 (14 Dec 2023)
+  # version 1.3 (28 Oct 2024)
 
   stopifnot(length(threshMethod) == 1)
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, pbg = pbg)
   if (!is.null(obs) || !is.null(model)) obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 

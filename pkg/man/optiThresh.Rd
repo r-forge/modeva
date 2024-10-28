@@ -8,13 +8,15 @@ The 'optiThresh' function calculates optimal thresholds for a number of model ev
 \usage{
 optiThresh(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
 measures = c(modEvAmethods("threshMeasures"), modEvAmethods("similarity")),
-optimize = modEvAmethods("optiThresh"), simplif = FALSE, plot = TRUE,
-sep.plots = FALSE, xlab = "Threshold", na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...)
+optimize = modEvAmethods("optiThresh"), simplif = FALSE, pbg = FALSE,
+plot = TRUE, sep.plots = FALSE, xlab = "Threshold", na.rm = TRUE, rm.dup = FALSE,
+verbosity = 2, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
   \item{obs}{alternatively to 'model' and together with 'pred', a numeric vector of observed presences (1) and absences (0) of a binary response variable. Alternatively (and if 'pred' is a 'SpatRaster'), a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points, in which case the 'obs' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. Alternatively (and if 'obs' is a set of point coordinates), a 'SpatRaster' map of the predicted values for the entire evaluation region, in which case the 'pred' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
+  \item{pbg}{logical value to pass to \code{\link{inputMunch}} indicating whether to use presence/background (rather than presence/absence) data. Default FALSE.}
   \item{interval}{numeric value between 0 and 1 indicating the interval between the thresholds at which to calculate the evaluation measures. Defaults to 0.01.}
   \item{measures}{character vector indicating the names of the model evaluation measures for which to calculate optimal thresholds. The default is using all measures available in 'c(modEvAmethods("threshMeasures"), modEvAmethods("similarity"))'.}
   \item{optimize}{character vector indicating the threshold optimization criteria to use; "each" calculates the optimal threshold for each model evaluation measure, while the remaining options optimize all measures according to the specified criterion. The default is using all criteria available in 'modEvAmethods("optiThresh")'.}

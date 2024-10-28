@@ -1,5 +1,5 @@
-threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh, measures = modEvAmethods("threshMeasures")[-grep("OddsRatio", modEvAmethods("threshMeasures"))], simplif = FALSE, plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE, standardize = TRUE, verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...) {
-  # version 3.7 (25 Mar 2024)
+threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh, measures = modEvAmethods("threshMeasures")[-grep("OddsRatio", modEvAmethods("threshMeasures"))], simplif = FALSE, pbg = FALSE, plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE, standardize = TRUE, verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...) {
+  # version 3.8 (28 Oct 2024)
 
   # if (is.null(model)) {
   #   if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object.")
@@ -33,7 +33,7 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh, measur
   # if (!all(obs %in% c(0, 1)))
   #   stop ("'obs' must consist of binary observations of 0 or 1")
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity, pbg = pbg)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 
@@ -43,7 +43,7 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh, measur
   # if (thresh == "preval")  thresh <- prevalence(obs)
   if (!(is.numeric(thresh) || thresh %in% modEvAmethods("getThreshold")))
     stop("'thresh' must be either a numeric value between 0 and 1, or one of the options obtained with modEvAmethods('getThreshold')")
-  if (thresh %in% modEvAmethods("getThreshold"))  thresh <- getThreshold(obs = obs, pred = pred, threshMethod = thresh, interval = interval, quant = quant, na.rm = na.rm)
+  if (thresh %in% modEvAmethods("getThreshold"))  thresh <- getThreshold(obs = obs, pred = pred, threshMethod = thresh, interval = interval, quant = quant, na.rm = na.rm, pbg = pbg)
 
   # next lines moved to new 'confusionMatrix' function:
   # obs0 <- obs == 0

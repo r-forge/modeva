@@ -1,5 +1,19 @@
 
 ===============================================
+modEvA v3.20 (committed 2024-10-28)
+===============================================
+
+## Modified functions:
+
+* inputMunch, applyThreshold, AUC, Boyce, Dsquared, getThreshold, optiPair, optiThresh, predPlot, similarity, threshMeasures (not confusionMatrix, confusionLabel, errorMeasures, getBins, HLfit, logLike, MillerCalib, plotGLM, RMSE)
+- added 'pbg' argument
+
+* predDensity
+- added also 'verbosity' argument
+- message when 'separate' automatically set to FALSE because 'ci' not NA
+
+
+===============================================
 modEvA v3.19 (committed 2024-10-02)
 ===============================================
 

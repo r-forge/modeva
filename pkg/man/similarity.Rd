@@ -8,9 +8,9 @@ This function computes similarity indices for evaluating the classification accu
 }
 \usage{
 similarity(model = NULL, obs = NULL, pred = NULL, thresh,
-measures = modEvAmethods("similarity"), simplif = FALSE,
-plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE,
-verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
+measures = modEvAmethods("similarity"), simplif = FALSE, pbg = FALSE,
+plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE, verbosity = 2,
+interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -19,6 +19,7 @@ verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
   \item{thresh}{threshold to separate predicted presences from predicted absences in 'model' or 'pred'; can be a numeric value between 0 and 1, or any of the options provided with \code{modEvAmethods("getThreshold")}. See Details in \code{\link{getThreshold}} for a description of the available options, and also Details below for a more informed choice.}
   \item{measures}{character vector of the similarity indices to use. By default, all metrics available through \code{modEvAmethods("similarity")} are included.}
   \item{simplif}{logical, whether to calculate a faster, simplified version. Used internally by other functions in the package. Defaults to FALSE.}
+    \item{pbg}{logical value to pass to \code{\link{inputMunch}} indicating whether to use presence/background (rather than presence/absence) data. Default FALSE.}
   \item{plot}{logical, whether to produce a bar chart or (by default) a lollipop chart of the calculated measures. Defaults to TRUE.}
   \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "\code{\link{lollipop}}" (the default) or "\code{\link{barplot}}".}
   \item{plot.ordered}{logical, whether to plot the measures in decreasing order rather than in input order. Defaults to FALSE.}

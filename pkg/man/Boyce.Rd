@@ -8,8 +8,8 @@ This function computes the (continuous) Boyce index (Boyce 2002; Hirzel et al. 2
 }
 \usage{Boyce(model = NULL, obs = NULL, pred = NULL, n.bins = NA,
 bin.width = "default", res = 100, method = "spearman", rm.dup.classes = FALSE,
-rm.dup.points = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE,
-plot.digits = 3, na.rm = TRUE, ...)}
+rm.dup.points = FALSE, pbg = FALSE, plot = TRUE, plot.lines = TRUE,
+plot.values = TRUE, plot.digits = 3, na.rm = TRUE, ...)}
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments (e.g. for external test data) instead of 'model'.}
   \item{obs}{alternatively to 'model' and together with 'pred', a numeric vector of observed presences (1) and absences (0) of a binary response variable. Alternatively (and if 'pred' is a 'SpatRaster'), a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points, in which case the 'obs' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
@@ -20,6 +20,7 @@ plot.digits = 3, na.rm = TRUE, ...)}
   \item{method}{argument to be passed to \code{\link{cor}} indicating which correlation coefficient to use. The default is \code{'spearman'} as per Boyce et al. (2002), but \code{'pearson'} and \code{'kendall'} can also be used.}
   \item{rm.dup.classes}{if \code{TRUE} (as in 'ecospat::ecospat.boyce') and if there are different bins with the same predicted/expected ratio, only one of each is used to compute the correlation. See Examples.}
   \item{rm.dup.points}{if \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
+  \item{pbg}{logical value to pass to \code{\link{inputMunch}} indicating whether to use presence/background (rather than presence/absence) data. Default FALSE.}
   \item{plot}{logical, whether or not to plot the predicted/expected ratio against the median prediction of each bin. Defaults to TRUE.}
   \item{plot.lines}{logical, whether or not to add lines connecting the points in the plot (if plot=TRUE). Defaults to TRUE.}
   \item{plot.values}{logical, whether or not to show in the plot the value of the Boyce index. Defaults to TRUE.}

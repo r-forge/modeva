@@ -8,8 +8,8 @@ This function can optimize a model's classification threshold based on a pair of
 }
 \usage{
 optiPair(model = NULL, obs = NULL, pred = NULL,
-measures = c("Sensitivity", "Specificity"), interval = 0.01, 
-plot = TRUE, plot.sum = FALSE, plot.diff = FALSE, ylim = NULL, 
+measures = c("Sensitivity", "Specificity"), interval = 0.01, pbg = FALSE,
+plot = TRUE, plot.sum = FALSE, plot.diff = FALSE, ylim = NULL,
 na.rm = TRUE, exclude.zeros = TRUE, rm.dup = FALSE, ...)
 }
 \arguments{
@@ -18,6 +18,7 @@ na.rm = TRUE, exclude.zeros = TRUE, rm.dup = FALSE, ...)
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. Alternatively (and if 'obs' is a set of point coordinates), a 'SpatRaster' map of the predicted values for the entire evaluation region, in which case the 'pred' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
   \item{measures}{a character vector of length 2 indicating the pair of measures whose curves to plot and whose combined threshold to optimize. Available measures can be obtained with 'modEvAmethods("threshMeasures")', but note that this function expects you to use two measures that counter-balance one another, such as c("Sensitivity", "Specificity") [the default], c("Omission", "Commission"), or c("Precision", "Recall").}
   \item{interval}{the interval of thresholds at which to calculate the measures. The default is 0.01.}
+  \item{pbg}{logical value to pass to \code{\link{inputMunch}} indicating whether to use presence/background (rather than presence/absence) data. Default FALSE.}
   \item{plot}{logical indicating whether or not to plot the pair of measures.}
   \item{plot.sum}{logical, whether to plot the sum (+) of both measures in the pair. Defaults to FALSE.}
   \item{plot.diff}{logical, whether to plot the difference (-) between both measures in the pair. Defaults to FALSE.}
@@ -68,7 +69,7 @@ optiPair(model = mod, measures = c("UPR", "OPR"))
 optiPair(model = mod, measures = c("CCR", "F1score"))
 
 
-# you can also use 'optiPair' with vectors of observed 
+# you can also use 'optiPair' with vectors of observed
 # and predicted values, instead of a model object:
 
 optiPair(obs = mod$y, pred = mod$fitted.values)

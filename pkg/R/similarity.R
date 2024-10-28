@@ -1,7 +1,7 @@
-similarity <- function(model = NULL, obs = NULL, pred = NULL, thresh, measures = modEvAmethods("similarity"), simplif = FALSE, plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE, verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...) {
-  # version 1.0 (10 Nov 2023)
+similarity <- function(model = NULL, obs = NULL, pred = NULL, thresh, measures = modEvAmethods("similarity"), simplif = FALSE, pbg = FALSE, plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE, verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...) {
+  # version 1.1 (28 Oct 2024)
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, pbg = pbg)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 
@@ -11,7 +11,7 @@ similarity <- function(model = NULL, obs = NULL, pred = NULL, thresh, measures =
   # if (thresh == "preval")  thresh <- prevalence(obs)
   if (!(is.numeric(thresh) || thresh %in% modEvAmethods("getThreshold")))
     stop("'thresh' must be either a numeric value between 0 and 1, or one of the options obtained with modEvAmethods('getThreshold')")
-  if (thresh %in% modEvAmethods("getThreshold"))  thresh <- getThreshold(obs = obs, pred = pred, threshMethod = thresh, interval = interval, quant = quant, na.rm = na.rm)
+  if (thresh %in% modEvAmethods("getThreshold"))  thresh <- getThreshold(obs = obs, pred = pred, threshMethod = thresh, interval = interval, quant = quant, na.rm = na.rm, pbg = pbg)
 
   if (is.finite(thresh)) {
     pred01 <- pred

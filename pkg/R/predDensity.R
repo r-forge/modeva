@@ -1,14 +1,14 @@
-predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, type = "both", ci = NA, legend.pos = "topright", main = "Density of pred values", na.rm = TRUE, rm.dup = FALSE, xlim = NULL, ...) {
-  # version 1.7 (2 Fev 2024)
+predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, type = "both", ci = NA, pbg = FALSE, legend.pos = "topright", main = "Density of pred values", na.rm = TRUE, rm.dup = FALSE, xlim = NULL, verbosity = 2, ...) {
+  # version 1.8 (28 Oct 2024)
 
   stopifnot(is.null(xlim) || (is.numeric(xlim) && is.finite(xlim) && length(xlim) == 2))
 
   if (!is.na(ci)) {
-    # if (separate) {
-    # message("Because 'ci' is not NULL, 'separate' was changed to FALSE.")
-    separate <- FALSE
-    # }
-    if (!is.numeric(ci) || length(ci) != 1 || ci < 0 || ci > 1) stop("'ci' must be either NULL or a numeric value between 0 and 1.")  # new
+    if (isTRUE(separate) && verbosity > 0) {
+      message("Because 'ci' is not NA, 'separate' was changed to FALSE.")
+      separate <- FALSE
+    }
+    if (!is.numeric(ci) || length(ci) != 1 || ci < 0 || ci > 1) stop("'ci' must be either NA, or a numeric value between 0 and 1.")  # new
   }
 
   if (is.null(obs) && is.null(model)) {
@@ -17,7 +17,7 @@ predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
     obs <- sample(c(0, 1), length(pred), replace = TRUE)  # dummy variable
   }
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, pbg = pbg)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 

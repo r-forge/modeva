@@ -1,7 +1,7 @@
-predPlot <- function(model = NULL, obs = NULL, pred = NULL, thresh = "preval", main = "Classified predicted values", legend.pos = "n", pch = 1, cex = 0.5, col = c("black", "grey"), na.rm = TRUE, rm.dup = FALSE, interval = 0.01, quant = 0) {
-  # version 1.7 (26 Oct 2022)
+predPlot <- function(model = NULL, obs = NULL, pred = NULL, thresh = "preval", pbg = FALSE, main = "Classified predicted values", legend.pos = "n", pch = 1, cex = 0.5, col = c("black", "grey"), na.rm = TRUE, rm.dup = FALSE, interval = 0.01, quant = 0) {
+  # version 1.8 (28 Oct 2024)
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, pbg = pbg)
   if (!is.null(obs) || !is.null(model)) obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
   pred0 <- pred[obs == 0]
@@ -14,7 +14,7 @@ predPlot <- function(model = NULL, obs = NULL, pred = NULL, thresh = "preval", m
       stop("'thresh' must be either NA, NULL, a numeric value, or one of the options obtained with modEvAmethods('getThreshold')")
     if (thresh %in% modEvAmethods("getThreshold"))
       # if (thresh == "meanPred") obs <- 0  # so it works even if 'obs' not provided (it's not used)
-      thresh <- getThreshold(obs = obs, pred = pred, threshMethod = thresh, interval = interval, quant = quant, na.rm = na.rm)
+      thresh <- getThreshold(obs = obs, pred = pred, threshMethod = thresh, interval = interval, quant = quant, na.rm = na.rm, pbg = pbg)
   }
 
   # opar <- par(no.readonly = TRUE)

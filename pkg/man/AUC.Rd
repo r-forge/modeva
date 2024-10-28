@@ -8,7 +8,7 @@ This function calculates the Area Under the Curve of the receiver operating char
 }
 \usage{
 AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
-interval = 0.01, FPR.limits = c(0, 1), curve = "ROC",
+interval = 0.01, FPR.limits = c(0, 1), curve = "ROC", pbg = FALSE,
 method = NULL, plot = TRUE, diag = TRUE, diag.col = "grey",
 diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2,
 plot.values = TRUE, plot.digits = 3, plot.preds = FALSE,
@@ -22,6 +22,7 @@ ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...)
   \item{simplif}{logical, whether to use a faster version that returns only the AUC value (and the plot if 'plot = TRUE').}
   \item{FPR.limits}{(NOT YET IMPLEMENTED) numerical vector of length 2 indicating the limits of false positive rate between which to calculate a partial AUC. The default is c(0, 1), for considering the whole AUC. Pending implementation. Meanwhile, you can try e.g. the \code{roc} function in the \pkg{pROC} package.}
   \item{curve}{character indicating whether to compute the "ROC" (receiver operating charateristic) or the "PR" (precision-recall) curve.}
+  \item{pbg}{logical value to pass to \code{\link{inputMunch}} indicating whether to use presence/background (rather than presence/absence) data. Default FALSE.}
   \item{interval}{interval of threshold values at which to calculate the true and false positive rates. Defaults to 0.01 for relatively quick while still relatively accurate computation. Note that, if method = "rank" (the default if curve = "ROC"), this does not affect the obtained AUC value (although it can affect the size of the plotted curve, especially when prevalence is low), as the AUC is calculated with the Mann-Whitney-Wilcoxon statistic and is therefore threshold-independent. If method != "rank" (or, by extension, if curve = "PR" -- see 'method' argument), setting 'interval' to smaller values will provide more accurate AUC values. The size of the 'interval' also affects the resulting 'meanPrecision', as this is averaged across all threshold values.}
   \item{method}{character indicating with which method to calculate the AUC value. Available options are "rank" (the default and most accurate, but implemented only if curve = "ROC") and "trapezoid" (the default if curve = "PR"). The latter is computed more accurately if 'interval' is decreased (see 'interval' argument).}
   \item{plot}{logical, whether or not to plot the curve. Defaults to TRUE.}

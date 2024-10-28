@@ -1,13 +1,13 @@
 optiPair <- function (model = NULL, obs = NULL, pred = NULL,
-          measures = c("Sensitivity", "Specificity"), 
-          interval = 0.01, plot = TRUE, plot.sum = FALSE, 
-          plot.diff = FALSE, ylim = NULL, na.rm = TRUE, exclude.zeros = TRUE, 
+          measures = c("Sensitivity", "Specificity"),
+          interval = 0.01, pbg = FALSE, plot = TRUE, plot.sum = FALSE,
+          plot.diff = FALSE, ylim = NULL, na.rm = TRUE, exclude.zeros = TRUE,
           rm.dup = FALSE, ...) {
-  # version 2.1 (6 May 2022)
+  # version 2.2 (28 Oct 2024)
 
   if (length(measures) != 2) stop ("'measures' must contain two elements.")
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, pbg = pbg)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 
@@ -19,7 +19,7 @@ optiPair <- function (model = NULL, obs = NULL, pred = NULL,
   if (any(pred < 0 | pred > 1)) stop ("'pred' must range between 0 and 1")
 
   measures.values <- optiThresh(obs = obs, pred = pred, interval = interval, measures = measures, optimize = "each", simplif = TRUE)
-  
+
   measures.values$Difference <- abs(measures.values[, 1] - measures.values[, 2])
   measures.values$Sum <- rowSums(measures.values[ , 1:2])
   measures.values$Mean <- rowMeans(measures.values[ , 1:2])
@@ -27,7 +27,7 @@ optiPair <- function (model = NULL, obs = NULL, pred = NULL,
 
   measures.values.trimmed <- measures.values
   if (exclude.zeros)  measures.values.trimmed <- measures.values.trimmed[is.finite(rowSums(measures.values.trimmed[ , 1:2])) & rowSums(measures.values.trimmed[ , 1:2] > 0), ]
-  
+
   MinDiff <- min(measures.values.trimmed$Difference, na.rm = na.rm)
   MaxSum <- max(measures.values.trimmed$Sum, na.rm = na.rm)
   MaxMean <- max(measures.values.trimmed$Mean, na.rm = na.rm)

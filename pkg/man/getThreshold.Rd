@@ -6,7 +6,7 @@ This function computes the prediction threshold under a given criterion.
 }
 \usage{
 getThreshold(model = NULL, obs = NULL, pred = NULL, threshMethod,
-interval = 0.01, quant = 0, na.rm = TRUE)
+interval = 0.01, quant = 0, na.rm = TRUE, pbg = FALSE)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -16,6 +16,7 @@ interval = 0.01, quant = 0, na.rm = TRUE)
   \item{interval}{Argument to pass to \code{\link{optiThresh}} indicating the interval between the thresholds to test. The default is 0.01. Smaller values may provide more precise results but take longer to compute.}
   \item{quant}{Numeric value indicating the proportion of presences to discard if threshMethod="MTP" (minimum training presence). With the default value 0, MTP will be the threshold at which all observed presences are classified as such; with e.g. quant=0.05, MTP will be the threshold at which 5\% presences will be classified as absences.}
   \item{na.rm}{Logical value indicating whether NA values should be ignored. Defaults to TRUE.}
+  \item{pbg}{logical value to pass to \code{\link{inputMunch}} indicating whether to use presence/background (rather than presence/absence) data. Default FALSE.}
 }
 \details{
 Several criteria have been proposed for selecting a threshold with which to convert continuous model predictions (of presence probability, habitat suitability or alike) into binary predictions of presence or absence. Such threshold is required for computing threshold-based model evaluation metrics, such as those in \code{\link{threshMeasures}}. This function implements a few of these threshold selection criteria, including those outlined in Liu et al. (2005, 2013) and a couple more:
