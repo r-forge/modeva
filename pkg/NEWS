@@ -12,6 +12,9 @@ modEvA v3.20 (committed 2024-10-28)
 - added also 'verbosity' argument
 - message when 'separate' automatically set to FALSE because 'ci' not NA
 
+* Boyce
+- changed colour of plot text to grey50, to increase visibility when overlapping points
+
 
 ===============================================
 modEvA v3.19 (committed 2024-10-02)

@@ -97,7 +97,8 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
     if (length(small_bins) > 0) warning ("Some bins (plotted in red) have less than 30 values, so their result may not be meaningful (see 'bin.N' column in console output). Consider increasing 'bin.width'.")
     points(HS[r][small_bins], f[r][small_bins], pch = 19, cex = 0.5, col = "red")  # my add
 
-    if (plot.values) text(x = max(HS), y = diff(range(f)) / 10, paste("B =", round(b, plot.digits)), adj = 1)  # my add
+    if (plot.values) text(x = max(HS), y = diff(range(f)) / 10, paste("B =", round(b, plot.digits)), adj = 1, col = "grey50")  # my add
+    # if (plot.values) text(x = mean(HS), y = diff(range(f)) / 10, paste("B =", round(b, plot.digits)), adj = 0.5)  # my add
   }
 
   # the following is different from 'ecospat.boyce':
