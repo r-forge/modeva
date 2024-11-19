@@ -1,8 +1,8 @@
-Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width = "default", res = 100, method = "spearman", rm.dup.classes = FALSE, rm.dup.points = FALSE, pbg = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, na.rm = TRUE, ...) {
+Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width = "default", res = 100, method = "spearman", rm.dup.classes = FALSE, rm.dup.points = FALSE, pbg = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, na.rm = TRUE, verbosity = 2, ...) {
 
-  # version 1.5 (28 Oct 2024)
+  # version 1.6 (19 Nov 2024)
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup.points, pbg = pbg)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup.points, pbg = pbg, verbosity = verbosity)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 

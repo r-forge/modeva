@@ -1,7 +1,7 @@
 confusionMatrix <- function(model = NULL, obs = NULL, pred = NULL, thresh, interval = 0.01, quant = 0, verbosity = 2, na.rm = TRUE, rm.dup = FALSE, plot = FALSE, classes = FALSE, ...) {
-  # version 1.2 (19 Jan 2024)
+  # version 1.3 (19 Nov 2024)
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 

@@ -1,7 +1,7 @@
 similarity <- function(model = NULL, obs = NULL, pred = NULL, thresh, measures = modEvAmethods("similarity"), simplif = FALSE, pbg = FALSE, plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE, verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...) {
-  # version 1.1 (28 Oct 2024)
+  # version 1.2 (19 Nov 2024)
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, pbg = pbg)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, pbg = pbg, verbosity = verbosity)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 

@@ -1,7 +1,7 @@
 HLfit <- function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15, min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, verbosity = 2, alpha = 0.05, plot = TRUE, plot.values = TRUE, plot.bin.size = TRUE, xlab = "Predicted probability", ylab = "Observed prevalence", na.rm = TRUE, rm.dup = FALSE, ...) {
   # version 2.1 (6 May 2022)
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)  
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)  
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
   

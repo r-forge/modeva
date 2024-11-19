@@ -9,8 +9,8 @@ The 'optiThresh' function calculates optimal thresholds for a number of model ev
 optiThresh(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
 measures = c(modEvAmethods("threshMeasures"), modEvAmethods("similarity")),
 optimize = modEvAmethods("optiThresh"), simplif = FALSE, pbg = FALSE,
-plot = TRUE, sep.plots = FALSE, xlab = "Threshold", na.rm = TRUE, rm.dup = FALSE,
-verbosity = 2, ...)
+plot = TRUE, sep.plots = FALSE, reset.par = TRUE, xlab = "Threshold",
+na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -22,7 +22,8 @@ verbosity = 2, ...)
   \item{optimize}{character vector indicating the threshold optimization criteria to use; "each" calculates the optimal threshold for each model evaluation measure, while the remaining options optimize all measures according to the specified criterion. The default is using all criteria available in 'modEvAmethods("optiThresh")'.}
   \item{simplif}{logical, whether to compute a faster simplified version. Used internally in other functions.}
   \item{plot}{logical, whether to plot the values of each evaluation measure at all thresholds. Ignored if simplif=TRUE.}
-  \item{sep.plots}{logical. If TRUE, each plot is presented separately (you need to be recording R plot history to be able to browse through them all); if FALSE(the default), all plots are presented together in the same plotting window.}
+  \item{sep.plots}{logical. If TRUE, each plot is shown separately (you need to be recording R plot history to be able to browse through them all); if FALSE (the default), plots are combined (using \code{\link{arrangePlots}}) in the same plotting window; if NA, the current \code{par()["mfrow"]} is used.}
+  \item{reset.par}{logical. If TRUE (the default), plotting \code{\link{par}}ameters are reset in the end. FALSE can be useful if the user wants to set their own parameters and combine this with other plots.}
   \item{xlab}{character vector indicating the label of the x axis.}
   \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
   \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}

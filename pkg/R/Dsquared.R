@@ -7,10 +7,11 @@ Dsquared <- function(model = NULL,
                      na.rm = TRUE,
                      rm.dup = FALSE,
                      pbg = FALSE,
-                     dismo.version = FALSE) {
-  # version 2.3 (28 Oct 2024)
+                     dismo.version = FALSE,
+                     verbosity = 2) {
+  # version 2.4 (19 Nov 2024)
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, pbg = pbg)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, pbg = pbg, verbosity = verbosity)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 

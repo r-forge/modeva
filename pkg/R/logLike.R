@@ -2,10 +2,11 @@ logLike <- function(model = NULL,
                     obs = NULL,
                     pred = NULL,
                     na.rm = TRUE,
-                    plot = TRUE) {
-  # version 1.0 (1 Feb 2024)
+                    plot = TRUE,
+                    verbosity = 2) {
+  # version 1.1 (19 Nov 2024)
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, verbosity)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 

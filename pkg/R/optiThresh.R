@@ -3,8 +3,9 @@ optiThresh <-
            measures = c(modEvAmethods("threshMeasures"),
                         modEvAmethods("similarity")),
            optimize = modEvAmethods("optiThresh"), simplif = FALSE,
-           pbg = FALSE, plot = TRUE, sep.plots = FALSE, xlab = "Threshold",
-           na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
+           pbg = FALSE, plot = TRUE, sep.plots = FALSE, reset.par = TRUE,
+           xlab = "Threshold", na.rm = TRUE, rm.dup = FALSE, verbosity = 2,
+           ...) {
     # version 3.5 (28 Oct 2024)
 
     wrong.measures <- measures[which(!(measures %in% c(modEvAmethods("threshMeasures"), modEvAmethods("similarity"))))]
@@ -262,13 +263,13 @@ optiThresh <-
 
       if (plot) {
         opar <- par(no.readonly = TRUE)
-        on.exit(par(opar))
+        if (reset.par) on.exit(par(opar))
         n.input.measures <- length(input.measures)
 
-        if (sep.plots) {
+        if (!is.na(sep.plots) && isTRUE(sep.plots)) {
           par(mfrow = c(1, 1))
 
-        } else {
+        } else if (!is.na(sep.plots) && isFALSE(sep.plots)) {
           if (n.input.measures > 4)  par(mar = c(2, 4.5, 0.5, 0.5))
           par(mfrow = arrangePlots(n.input.measures))
         }  # end if sep.plots else

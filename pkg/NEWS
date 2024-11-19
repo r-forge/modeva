@@ -1,6 +1,23 @@
 
 ===============================================
-modEvA v3.20 (committed 2024-10-28)
+modEvA v3.21 (committed 2024-11-19)
+===============================================
+
+## Modified functions:
+
+* optiThresh
+- added 'reset.par' argument
+- 'sep.plots' argument can be set to NA
+
+* Boyce, Dsquared, errorMeasures, getThreshold, logLike, MillerCalib, optiPair, plotGLM, predPlot, RMSE
+- added 'verbosity' argument and passed it to inputMunch()
+
+* confusionMatrix, getBins, HLfit, predDensity, similarity
+- passed 'verbosity' argument to inputMunch()
+
+
+===============================================
+modEvA v3.20 (committed 2024-10-28)  ->  CRAN
 ===============================================
 
 ## Modified functions:

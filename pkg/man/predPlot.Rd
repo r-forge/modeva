@@ -10,7 +10,7 @@ This function plots predicted values separated into observed presences and absen
 predPlot(model = NULL, obs = NULL, pred = NULL, thresh = "preval", pbg = FALSE,
 main = "Classified predicted values", legend.pos = "n", pch = 1, cex = 0.5,
 col = c("black", "grey"), na.rm = TRUE, rm.dup = FALSE, interval = 0.01,
-quant = 0)
+quant = 0, verbosity = 2)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -27,6 +27,7 @@ quant = 0)
   \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
   \item{interval}{Argument to pass to \code{\link{optiThresh}} indicating the interval between the thresholds to test, if 'thresh' implies optimizing a threshold-based measure. The default is 0.01. Smaller values may provide more precise results but take longer to compute.}
   \item{quant}{Numeric value indicating the proportion of presences to discard if thresh="MTP" (minimum training presence). With the default value 0, MTP will be the threshold at which all observed presences are classified as such; with e.g. quant=0.05, MTP will be the threshold at which 5\% presences will be classified as absences.}
+  \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
 }
 \note{
 Points are \code{\link{jitter}}ed randomly along the y axis to minimize visual overlap. So, each run of 'predPlot' (unless you use \code{\link{set.seed}} first) will produce a different arrangement of points for the same data, although their x-axis values are faithful.

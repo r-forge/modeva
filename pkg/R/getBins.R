@@ -3,9 +3,9 @@ getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
                      min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, 
                      verbosity = 2, na.rm = TRUE, rm.dup = FALSE)  {
   
-  # version 2.7 (6 May 2022)
+  # version 2.8 (19 Nov 2022)
   
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)  
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)  
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
   

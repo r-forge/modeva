@@ -3,7 +3,7 @@ confusionLabel <- function(model = NULL, obs = NULL, pred = NULL, thresh, interv
 
   pred_in <- pred  # in case input is raster, so final reclass is also raster
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 

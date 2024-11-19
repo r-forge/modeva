@@ -7,7 +7,7 @@ Log-likelihood
 This function computes the log-likelihood of a model, given a model object or a set of observed and predicted values (or presence points and raster predictions).
 }
 \usage{
-logLike(model = NULL, obs = NULL, pred = NULL, na.rm = TRUE, plot = TRUE)
+logLike(model = NULL, obs = NULL, pred = NULL, na.rm = TRUE, plot = TRUE, verbosity = 2)
 }
 \arguments{
   \item{model}{a model object of class implemented in \code{\link{mod2obspred}}. If this argument is provided, 'obs' and 'pred' will be extracted with that function. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -15,6 +15,7 @@ logLike(model = NULL, obs = NULL, pred = NULL, na.rm = TRUE, plot = TRUE)
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values, of the same length and in the same order as 'obs'. Alternatively (and if 'obs' is a set of point coordinates), a 'SpatRaster' map of the predicted values for the entire evaluation region, in which case the 'pred' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
     \item{na.rm}{logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
     \item{plot}{logical value indicating whether to plot the sorted values in log() (see Details). The default is TRUE.}
+  \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
 }
 \details{
 The log-likelihood can be a measure of model calibration (Lawson et al. 2014, Fithian et al. 2015, Fletcher & Fortin 2018). The higher the value, the better the predictions fit the observations.

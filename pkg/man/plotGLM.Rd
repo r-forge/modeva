@@ -10,7 +10,7 @@ This function plots the observed (presence/absence) data and the predicted (prob
 plotGLM(model = NULL, obs = NULL, pred = NULL, link = "logit", 
 plot.values = TRUE, plot.digits = 3, xlab = "Logit (Y)", 
 ylab = "Predicted probability", main = "Model plot", na.rm = TRUE, 
-rm.dup = FALSE, ...)
+rm.dup = FALSE, verbosity = 2, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "\code{\link{glm}}". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -24,6 +24,7 @@ rm.dup = FALSE, ...)
   \item{main}{character string specifying the title for the plot.}
   \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
   \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
+  \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{\dots}{additional arguments to pass to \code{\link{plot}}.}
 }
 \value{

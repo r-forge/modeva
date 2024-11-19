@@ -22,7 +22,7 @@ rm.dup = FALSE, plot = TRUE, ...)
   \item{na.rm}{logical argument indicating whether to remove (with a warning saying how many) rows with NA in any of the 'obs' or 'pred' values. The default is FALSE.}
   \item{rm.dup}{if \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
   \item{plot}{if \code{TRUE} (the default) and if 'pred' is a SpatRaster, the output (also a SpatRaster) is automatically plotted. Map categories have a set colour table, built with terra::coltab().}
-    \item{\dots}{additional arguments to pass to terra::plot() (if 'pred' is a SpatRaster and plot=TRUE), such as 'mar', 'axes' or 'legend'.}
+  \item{\dots}{additional arguments to pass to terra::plot() (if 'pred' is a SpatRaster and plot=TRUE), such as 'mar', 'axes' or 'legend'.}
 }
 \value{
 This function returns a character vector (or a categorical SpatRaster, if 'pred' is of that class) of the same length as 'pred', or of the same number of rows as the data in 'model', containing the confusion matrix label for each value.

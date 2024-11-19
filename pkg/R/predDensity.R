@@ -17,7 +17,7 @@ predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
     obs <- sample(c(0, 1), length(pred), replace = TRUE)  # dummy variable
   }
 
-  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, pbg = pbg)
+  obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, pbg = pbg, verbosity = verbosity)
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 
@@ -61,6 +61,9 @@ predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
     plot(x = xrange, y = yrange, xlab = "Pred value", ylab = "Density", type = "n", main = main)
   }
 
+  if (isFALSE(pbg)) lgd <- c("absence", "presence")
+  else lgd <- c("background", "presence")
+
   if (type %in% c("histogram", "both")) {  # "histogram" %in% type
     #brks <- ifelse(is.null(breaks), "Sturges", breaks)
     hist0 <- hist(pred0, plot = FALSE, ...)
@@ -79,7 +82,7 @@ predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
       hist(pred0, freq = FALSE, col = "paleturquoise", density = 40, angle = 45, add = TRUE, ...)
       rslt[["histogram_obs1"]] <- hist1
       rslt[["histogram_obs0"]] <- hist0
-      if (legend.pos != "n" && type == "histogram") legend(legend.pos, legend = c("absence", "presence"), fill = c("paleturquoise", "darkblue"), border = c("paleturquoise", "black"), density = c(40, NA), text.col = "plum4", bty = "n")
+      if (legend.pos != "n" && type == "histogram") legend(legend.pos, legend = lgd, cex = 0.8, fill = c("paleturquoise", "darkblue"), border = c("paleturquoise", "black"), density = c(40, NA), text.col = "plum4", bty = "n")
     }
   }
 
@@ -89,8 +92,8 @@ predDensity <- function(model = NULL, obs = NULL, pred = NULL, separate = TRUE, 
     } else {
       lines(dens1, col = "navyblue", lwd = 2)
       lines(dens0, col = "darkturquoise", lty = 5, lwd = 2)
-      if (!is.na(legend.pos) && legend.pos != "n" && type == "density") legend(legend.pos, legend = c("absence", "presence"), col = c("darkturquoise", "navyblue"), lty = c(5, 1), text.col = "plum4", bty = "n")
-      if (!is.na(legend.pos) && legend.pos != "n" && type == "both") legend(legend.pos, legend = c("absence", "presence"), fill = c("paleturquoise", "darkblue"), border = c("paleturquoise", "navyblue"), lty = c(5, 1), col = c("darkturquoise", "navyblue"), density = c(40, NA), text.col = "plum4", bty = "n")
+      if (!is.na(legend.pos) && legend.pos != "n" && type == "density") legend(legend.pos, legend = lgd, cex = 0.8, col = c("darkturquoise", "navyblue"), lty = c(5, 1), text.col = "plum4", bty = "n")
+      if (!is.na(legend.pos) && legend.pos != "n" && type == "both") legend(legend.pos, legend = lgd, cex = 0.8, fill = c("paleturquoise", "darkblue"), border = c("paleturquoise", "navyblue"), lty = c(5, 1), col = c("darkturquoise", "navyblue"), density = c(40, NA), text.col = "plum4", bty = "n")
     }
   }
 
