@@ -7,7 +7,7 @@ This function computes, and optionally plots, variable importance for an input m
 \usage{
   varImp(model, imp.type = "each", relative = TRUE, reorder = TRUE,
   group.cats = FALSE, plot = TRUE, plot.type = "lollipop", error.bars = "sd",
-  ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE,
+  ylim = "auto0", col = c("#4477aa", "#ee6677"), plot.points = TRUE,
   legend = TRUE, grid = TRUE, verbosity = 2, ...)
 }
 \arguments{
@@ -19,7 +19,7 @@ This function computes, and optionally plots, variable importance for an input m
   \item{plot}{logical value indicating whether to produce a plot with the results. The default is TRUE.}
   \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "\code{\link{lollipop}}" (the default), "\code{\link{barplot}}", or "\code{\link{boxplot}}". Note that the latter is only useful when 'model' contains several importance values per variable (e.g. for models of class "bart").}
   \item{error.bars}{character value indicating the type of error metric to compute (and plot, if plot=TRUE) if the input contains the necessary information (i.e., for Bayesian models like BART) and if the 'plot.type' is appropriate (i.e. "lollipop" or "barplot"). Can be "sd" (the default) for the standard deviation; "range" for the minimum and maximum value across the ones available; a numeric value between 0 and 1 for the corresponding confidence interval (e.g. 0.95 for 95\%), computed with \code{\link{quantile}}; or NA for no error bars.}
-  \item{ylim}{either a numeric vector of length 2 specifying the limits (minimum, maximum) for the y axis, or "auto" (the default) to fit the axis to the existing values.}
+  \item{ylim}{either a numeric vector of length 2 specifying the limits (minimum, maximum) for the y axis; or "auto" to fit the y axis to the existing minimum and maximum values; or "auto0" (the new default) to fit the top of the y axis to the maximum existing values, and the bottom to zero.}
   \item{col}{character or integer vector of length 1 or 2 specifying the plotting colours (if plot=TRUE) for the variables with positive and negative effect on the response, when this info is available (e.g. for models of class "glm").}
   \item{plot.points}{logical, whether or not to add to the plot the individual importance points (rather than just the mean importance value, and the error bar if error.bars=TRUE) for each variable. By default it is TRUE (following Weissgerber et al. 2015), but it only holds for model objects that include several possible importance values per variable (i.e. BART models).}
   \item{legend}{logical, whether or not to draw a legend. Used only if plot=TRUE and if the output includes negative values (i.e., if 'model' is of class 'GLM' and has variables with positive and negative coefficients).}

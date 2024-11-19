@@ -1,6 +1,6 @@
-varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, group.cats = FALSE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, verbosity = 2, ...) {
+varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, group.cats = FALSE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto0", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, verbosity = 2, ...) {
 
-  # version 2.3 (8 Aug 2024)
+  # version 2.4 (19 Nov 2024)
 
   # if 'col' has length 2 and varImp has negative values (e.g. for z-value), those will get the second colour
 
@@ -180,8 +180,9 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     if (length(col) == 1) col <- rep(col, 2)
     colrs <- ifelse(varimp >= 0, col[1], col[2])
 
-    if ("auto" %in% ylim) {
-      ymin <- ifelse(!is.na(error.bars), min(varimps), min(abs(varimp)))
+    if (length(grep("auto", ylim)) > 0) {
+      if ("auto0" %in% ylim) ymin <- 0
+      else ymin <- ifelse(!is.na(error.bars), min(varimps), min(abs(varimp)))
       ymax <- ifelse(!is.na(error.bars), max(varimps), max(abs(varimp)))
       ylim <- c(ymin, ymax)
     }

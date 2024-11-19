@@ -1,9 +1,22 @@
 
 ===============================================
+modEvA v3.22 (committed 2024-11-19)
+===============================================
+
+## Modified functions:
+
+* varImp
+- new default "auto0" for 'ylim'
+
+
+===============================================
 modEvA v3.21 (committed 2024-11-19)
 ===============================================
 
 ## Modified functions:
+
+* predDensity
+- in plot legend, changed "absences" to "background" if pbg = TRUE
 
 * optiThresh
 - added 'reset.par' argument
