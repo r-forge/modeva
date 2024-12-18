@@ -1,5 +1,5 @@
 similarity <- function(model = NULL, obs = NULL, pred = NULL, thresh, measures = modEvAmethods("similarity"), simplif = FALSE, pbg = FALSE, plot = TRUE, plot.type = "lollipop", plot.ordered = FALSE, verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...) {
-  # version 1.2 (19 Nov 2024)
+  # version 1.3 (24 Nov 2024)
 
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, pbg = pbg, verbosity = verbosity)
   obs <- obspred[ , "obs"]
@@ -42,18 +42,21 @@ type modEvAmethods('similarity') for available options.")
 
   Measures <- matrix(data = measureValues, nrow = Nmeasures, ncol = 1, dimnames = list(measures, "Value"))
   if (simplif) {  # shorter version for use with e.g. optiThresh function
-    return(Measures)
+    out <- Measures
   } else {
-    if (plot) {
-      measures.plot <- measureValues
-      if (plot.ordered) {
-        measures.plot <- sort(measures.plot, decreasing = TRUE, na.last = TRUE)
-      }
-      measures.plot[is.infinite(measures.plot)] <- NA
-      if (plot.type == "barplot" && any(is.finite(measures.plot))) barplot(measures.plot[is.finite(measures.plot)], las = 3, ...)
-      if (plot.type == "lollipop" && any(is.finite(measures.plot))) lollipop(measures.plot[is.finite(measures.plot)], las = 3, ymin = NA, ylab = "", ...)
-    }  # end if plot
-    return(list(N = N, Threshold = thresh,
-                similarity = Measures))
+    out <- list(N = N, Threshold = thresh,
+                similarity = Measures)
   }  # end else
+  if (plot) {
+    measures.plot <- measureValues
+    if (plot.ordered) {
+      measures.plot <- sort(measures.plot, decreasing = TRUE, na.last = TRUE)
+    }
+    measures.plot[is.infinite(measures.plot)] <- NA
+    if (plot.type == "barplot" && any(is.finite(measures.plot))) 
+      barplot(measures.plot[is.finite(measures.plot)], las = 3, ...)
+    if (plot.type == "lollipop" && any(is.finite(measures.plot))) 
+      lollipop(measures.plot[is.finite(measures.plot)], las = 3, ylab = "", ...)
+  }  # end if plot
+  return(out)
 }

@@ -1,5 +1,5 @@
-MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line.col = "black", diag = TRUE, diag.col = "grey", plot.values = TRUE, digits = 2, xlab = "", ylab = "", main = "Miller calibration", na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
-  # version 1.9 (19 Nov 2022)
+MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line.col = "darkblue", diag = TRUE, diag.col = "royalblue", plot.values = TRUE, digits = 2, xlab = "", ylab = "", main = "Miller calibration", na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
+  # version 2.0 (18 Dec 2024)
 
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)
   obs <- obspred[ , "obs"]
@@ -30,11 +30,11 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line
     ymin <- min(0, intercept)
     ymax <- max(1, intercept + 0.3)
     plot(c(0, 1), c(ymin, ymax), type = "n", xlab = xlab, ylab = ylab, main = main, ...)
-    if (diag) abline(0, 1, col = diag.col, lty = 2)
-    abline(intercept, slope, col = line.col)
+    if (diag) abline(0, 1, lty = 2, col = diag.col)
+    abline(intercept, slope, lwd = 2, col = line.col)
     if (plot.values) {
       # plotext <- paste("intercept =" , round(intercept, digits), "\nslope =", round(slope, digits), "\nslope p-value =", round(slope.p, digits))
-      plotext <- paste0("slope = " , round(slope, digits), "\nintercept = ", round(intercept, digits))
+      plotext <- paste0("slope = " , round(slope, digits), "\n(intercept = ", round(intercept, digits), ")")
       text(x = 1, y = ymin + 0.15 * (ymax - ymin), adj = 1, labels = plotext)
     }  # end if plot.values
   }  # end if plot

@@ -1,6 +1,6 @@
 RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs",
                    plot = TRUE, plot.type = "lollipop", ...) {
-  # version 1.9 (5 Jan 2023)
+  # version 1.95 (24 Nov 2024)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -70,8 +70,10 @@ RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.comple
   if (plot) {
     plot.type <- match.arg(plot.type, c("lollipop", "barplot"))
     m <- data.frame(CoxSnell = CoxSnell, Nagelkerke = Nagelkerke, McFadden = McFadden, Tjur = Tjur, sqPearson = sqPearson)
-    if (plot.type == "barplot") barplot(as.matrix(m), las = 2, ...)
-    if (plot.type == "lollipop") lollipop(unlist(as.vector(m)), las = 2, ymin = 0, ylab = "", ...)
+    if (plot.type == "barplot") 
+      barplot(as.matrix(m), las = 2, ...)
+    if (plot.type == "lollipop") 
+      lollipop(unlist(as.vector(m)), las = 2, ylab = "", ...)
     else message("Invalid 'plot.type'. Plot not produced.")
   }
 

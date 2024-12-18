@@ -1,6 +1,6 @@
 multModEv <-
   function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmethods("multModEv"), standardize = FALSE, thresh = NULL, bin.method = NULL, verbosity = 0, ...) {
-    # version 2.3 (21 Jan 2020)
+    # version 2.4 (24 Nov 2024)
     
     #  if (Favourability == TRUE & thresh == "preval") {
     #    thresh <- 0.5
@@ -99,7 +99,7 @@ multModEv <-
       
       if (any(measures %in% modEvAmethods("threshMeasures"))) {
         for (m in 1:n.models)  for (tm in thresh.measures) {
-          results[m, tm] <- threshMeasures(obs = obs.data[ , m], pred = pred.data[ , m], measures = tm, thresh = thresh, standardize = standardize, simplif = TRUE, verbosity = verbosity)
+          results[m, tm] <- threshMeasures(obs = obs.data[ , m], pred = pred.data[ , m], measures = tm, thresh = thresh, standardize = standardize, simplif = TRUE, plot = FALSE, verbosity = verbosity)
         }; rm(m, tm)
       }  # end if measures in modEvAmethods("threshMeasures")
       # thresh.measures <- optiThresh(obs = obs.data[ , m], pred = pred.data[ , m], plot = FALSE, optimize = "each")

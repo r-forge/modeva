@@ -16,15 +16,22 @@
 #'
 #' @examples lollipop(mtcars[,1], names = rownames(mtcars), las = 2, ylab = names(mtcars)[1], cex.axis = 0.6, main = "Lollipop chart")
 
-lollipop <- function(x, names = NULL, ymin = 0, sticks = TRUE, col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, ...) {
-  # version 1.1 (13 Jan 2023)
-
-  if (is.na(ymin))  ymin <- min(x, na.rm = TRUE)
-  plot(c(ymin, x), axes = FALSE, type = "n", xlab = "", ...)
+lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, ...) {
+  # version 1.2 (24 Nov 2024)
+  
+  if (length(grep("auto", ylim)) > 0) {
+    ymin <- min(x, na.rm = TRUE)
+    if ("auto0" %in% ylim)
+      ymin <- min(0, ymin)
+    ylim <- c(ymin, max(x, na.rm = TRUE))
+  }
+  
+  plot(rep(ylim, max(1, length(x)/2)), 
+       axes = FALSE, type = "n", xlab = "", ...)
   if (grid) grid()
   if (is.null(names)) names <- names(x)
   axis(1, at = 1:length(x), labels = names, las = las, cex.axis = cex.axis)
-  axis(2, ylim = c(ymin, max(x, na.rm = TRUE)), cex.axis = cex.axis)
+  axis(2, ylim = ylim, cex.axis = cex.axis)
   points(x, pch = 20, col = col, cex = cex)
   if (sticks)  arrows(x0 = 1:length(x), x1 = 1:length(x), y0 = 0, y1 = x, length = 0, col = col, lwd = cex)
 }

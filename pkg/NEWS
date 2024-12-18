@@ -1,3 +1,32 @@
+===============================================
+modEvA v3.24 (committed 2024-12-  )
+===============================================
+
+## Modified functions:
+
+* MillerCalib
+- changed default line colours to blues
+- lwd = 2 for calibration line
+- intercept in parentheses in plot text
+- help file now mentions Baquero et al.'s thresholds for a good slope
+
+
+===============================================
+modEvA v3.23 (committed 2024-11-24)  ->  CRAN
+===============================================
+
+## Modified functions:
+
+* lollipop
+- new argument ylim [to replace ymin, futurely deprecated], default "auto0"
+
+* threshMeasures, similarity
+- change default ymin to 0 (default ylim "auto0") when min value is >0, to avoid deceiving plots
+- allow plot=TRUE with simplif=FALSE
+
+* optiThresh, multModEv
+- added plot=FALSE to some threshMeasures() calls
+
 
 ===============================================
 modEvA v3.22 (committed 2024-11-19)
@@ -6,7 +35,7 @@ modEvA v3.22 (committed 2024-11-19)
 ## Modified functions:
 
 * varImp
-- new default "auto0" for 'ylim'
+- new default "auto0" for 'ylim', to avoid deceiving plots
 
 
 ===============================================

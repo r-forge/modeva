@@ -10,8 +10,8 @@ This function calculates a number of measures for evaluating the classification 
 threshMeasures(model = NULL, obs = NULL, pred = NULL, thresh,
 measures = modEvAmethods("threshMeasures")[-grep("OddsRatio",
 modEvAmethods("threshMeasures"))], simplif = FALSE, pbg = FALSE, plot = TRUE,
-plot.type = "lollipop", plot.ordered = FALSE, standardize = TRUE, verbosity = 2,
-interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
+plot.type = "lollipop", ylim = "auto0", plot.ordered = FALSE, standardize = TRUE,
+verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -23,6 +23,7 @@ interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
     \item{pbg}{logical value to pass to \code{\link{inputMunch}} indicating whether to use presence/background (rather than presence/absence) data. Default FALSE.}
   \item{plot}{logical, whether to produce a bar chart or (by default) a lollipop chart of the calculated measures. Defaults to TRUE.}
   \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "\code{\link{lollipop}}" (the default) or "\code{\link{barplot}}".}
+    \item{ylim}{either a numeric vector of length 2 specifying the limits (minimum, maximum) for the y axis; or "auto" to fit the y axis to the existing minimum and maximum values; or "auto0" (the new default) to fit the top of the y axis to the maximum existing values, and the bottom to zero or the minimum existing value (whichever is lower).}
   \item{plot.ordered}{logical, whether to plot the measures in decreasing order rather than in input order. Defaults to FALSE.}
   \item{standardize}{logical, whether to change measures that may range between -1 and +1 (namely kappa and TSS) to their corresponding value in the 0-to-1 scale (skappa and sTSS), so that they can compare directly to other measures (see \code{\link{standard01}}). The default is TRUE, but a message is displayed to inform the user about it.}
   \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}

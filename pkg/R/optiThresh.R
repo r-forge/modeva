@@ -6,7 +6,7 @@ optiThresh <-
            pbg = FALSE, plot = TRUE, sep.plots = FALSE, reset.par = TRUE,
            xlab = "Threshold", na.rm = TRUE, rm.dup = FALSE, verbosity = 2,
            ...) {
-    # version 3.5 (28 Oct 2024)
+    # version 3.6 (24 Nov 2024)
 
     wrong.measures <- measures[which(!(measures %in% c(modEvAmethods("threshMeasures"), modEvAmethods("similarity"))))]
     wrong.optimizers <- optimize[which(!(optimize %in% modEvAmethods("optiThresh")))]
@@ -184,7 +184,7 @@ optiThresh <-
         if ("maxKappa" %in% criteria) {
           if (!("kappa" %in% measures)) {
             for (t in 1 : Nthresholds) {
-              all.thresholds$kappa <- threshMeasures(obs = obs, pred = pred, thresh = thresholds[t], measures = "kappa", standardize = FALSE, simplif = TRUE, verbosity = 0)
+              all.thresholds$kappa <- threshMeasures(obs = obs, pred = pred, thresh = thresholds[t], measures = "kappa", standardize = FALSE, simplif = TRUE, plot = FALSE, verbosity = 0)
             }
           }
           maxKappa <- thresholds[which.max(all.thresholds$kappa)]
@@ -200,7 +200,7 @@ optiThresh <-
         if ("maxTSS" %in% criteria) {
           if (!("TSS" %in% measures)) {
             for (t in 1 : Nthresholds) {
-              all.thresholds$TSS <- threshMeasures(obs = obs, pred = pred, thresh = thresholds[t], measures = "TSS", standardize = FALSE, simplif = TRUE)
+              all.thresholds$TSS <- threshMeasures(obs = obs, pred = pred, thresh = thresholds[t], measures = "TSS", standardize = FALSE, simplif = TRUE, plot = FALSE)
             }
           }
           maxTSS <- thresholds[which.max(all.thresholds$TSS)]

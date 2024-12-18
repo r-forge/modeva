@@ -39,7 +39,7 @@ This function computes, and optionally plots, variable importance for an input m
   If the input model is of class "bart" of the \pkg{dbarts} package, or of class "pbart" or "lbart" of the \pkg{BART} package, or a list produced by function "probit_flexBART" of the \pkg{flexBART} package, variable importance is obtained as the mean (if relative=TRUE, the default) or the total number (if relative=FALSE) of regression tree splits where each variable is used. If 'error.bars' is not NA, the error is also computed according to the specified metric ("sd" or standard deviation by default).
   }
 \value{
-  This function outputs, and optionally plots, a named numeric vector of variable importance, as measured by 'imp.type' (see Details). If the model is Bayesian (BART) and 'error.bars' is not NA, the output is a row-named data frame with the mean as well as the lower and upper bounds of the error bars of variable importance.
+  This function outputs, and optionally plots, a named numeric vector of variable importance, as measured by 'imp.type' (see Details). If the model is Bayesian (BART) and 'error.bars' is not NA, the output is a row-named data frame with the mean as well as the lower and upper bounds of the error bars (according to the specified error metric - the default is standard deviation) of variable importance.
 }
 \author{
   A. Marcia Barbosa
