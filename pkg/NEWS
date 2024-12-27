@@ -1,5 +1,33 @@
 ===============================================
-modEvA v3.24 (committed 2024-12-  )
+modEvA v3.25 (committed 2024-12-27)
+===============================================
+
+## Modified functions:
+
+* AUC
+- new default line colour and diagonal line type
+- xlab closer to axis, to match 2nd line of ylab and fit in default margins
+- values also closer to axes
+
+* Boyce
+- labels and values closer to axes
+- new colours for points and for plot text
+- new position for plot text
+- new symbol (triangle) for red points
+
+* optiPair
+- plot values closer to axes
+- new arguments 'col1' and 'col2' for plot point colours
+
+* optiThresh
+- plot values and axis labels closer to axes
+- new plot arguments 'pch', 'cex' and 'col', with new default colours and symbols
+- plot margins adjusted also when fewer than 4 measures
+- fixed 'xlab' argument, which wasn't being considered
+
+
+===============================================
+modEvA v3.24 (committed 2024-12-18)
 ===============================================
 
 ## Modified functions:

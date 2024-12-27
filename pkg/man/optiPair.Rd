@@ -9,8 +9,9 @@ This function can optimize a model's classification threshold based on a pair of
 \usage{
 optiPair(model = NULL, obs = NULL, pred = NULL,
 measures = c("Sensitivity", "Specificity"), interval = 0.01, pbg = FALSE,
-plot = TRUE, plot.sum = FALSE, plot.diff = FALSE, ylim = NULL,
-na.rm = TRUE, exclude.zeros = TRUE, rm.dup = FALSE, verbosity = 2, ...)
+plot = TRUE, plot.sum = FALSE, plot.diff = FALSE, col1 = "darkblue", 
+col2 = "lightblue3", ylim = NULL, na.rm = TRUE, exclude.zeros = TRUE, 
+rm.dup = FALSE, verbosity = 2, ...)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -22,6 +23,8 @@ na.rm = TRUE, exclude.zeros = TRUE, rm.dup = FALSE, verbosity = 2, ...)
   \item{plot}{logical indicating whether or not to plot the pair of measures.}
   \item{plot.sum}{logical, whether to plot the sum (+) of both measures in the pair. Defaults to FALSE.}
   \item{plot.diff}{logical, whether to plot the difference (-) between both measures in the pair. Defaults to FALSE.}
+  \item{col1}{plot colour for the 1st element in 'measures'.}
+  \item{col2}{plot colour for the 2nd element in 'measures'.}
   \item{ylim}{a character vector of length 2 indicating the lower and upper limits for the y axis. The default is NULL for an automatic definition of 'ylim' based on the values of the measures and their sum and/or difference if any of these are set to TRUE.}
   \item{na.rm}{logical, whether NA values should be removed from the calculation of minimum/maximum/mean values to get the optimized measures. Defaults to TRUE.}
   \item{exclude.zeros}{logical, whether non-finite and zero values should be removed from the calculation of minimum/maximum/mean values to get the optimized measures. Defaults to TRUE.}

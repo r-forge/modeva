@@ -1,12 +1,5 @@
-optiThresh <-
-  function(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
-           measures = c(modEvAmethods("threshMeasures"),
-                        modEvAmethods("similarity")),
-           optimize = modEvAmethods("optiThresh"), simplif = FALSE,
-           pbg = FALSE, plot = TRUE, sep.plots = FALSE, reset.par = TRUE,
-           xlab = "Threshold", na.rm = TRUE, rm.dup = FALSE, verbosity = 2,
-           ...) {
-    # version 3.6 (24 Nov 2024)
+optiThresh <- function(model = NULL, obs = NULL, pred = NULL, interval = 0.01, measures = c(modEvAmethods("threshMeasures"), modEvAmethods("similarity")), optimize = modEvAmethods("optiThresh"), simplif = FALSE, pbg = FALSE, plot = TRUE, sep.plots = FALSE, reset.par = TRUE, xlab = "Threshold", na.rm = TRUE, rm.dup = FALSE, pch = 20, cex = 0.2, col = "darkblue", verbosity = 2, ...) {
+    # version 3.7 (26 Dec 2024)
 
     wrong.measures <- measures[which(!(measures %in% c(modEvAmethods("threshMeasures"), modEvAmethods("similarity"))))]
     wrong.optimizers <- optimize[which(!(optimize %in% modEvAmethods("optiThresh")))]
@@ -264,24 +257,27 @@ optiThresh <-
       if (plot) {
         opar <- par(no.readonly = TRUE)
         if (reset.par) on.exit(par(opar))
+        par(mgp = c(1.8, 0.7, 0))
+        
         n.input.measures <- length(input.measures)
 
         if (!is.na(sep.plots) && isTRUE(sep.plots)) {
           par(mfrow = c(1, 1))
 
         } else if (!is.na(sep.plots) && isFALSE(sep.plots)) {
-          if (n.input.measures > 4)  par(mar = c(2, 4.5, 0.5, 0.5))
+          # if (n.input.measures > 4)  
+            par(mar = c(3, 2.8, 0.5, 0.5))
           par(mfrow = arrangePlots(n.input.measures))
         }  # end if sep.plots else
 
         for (m in 1 : n.input.measures) {
           if(any(is.finite(all.thresholds[ , m]))) {
-            plot(all.thresholds[ , m] ~ thresholds, ylab = input.measures[m], ...)
+            plot(all.thresholds[ , m] ~ thresholds, ylab = input.measures[m], pch = pch, cex = cex, col = col, xlab = xlab)
 
             opt <- gsub("min|max", "", input.optimize)
             if ("each" %in% input.optimize || isTRUE(all.equal(opt, measures))) {
-              abline(v = optimals.each[m, "threshold"], col = "grey", lty = 2)  # vertical line on optimal threshold
-              abline(h = optimals.each[m, "value"], col = "grey", lty = 2)  # horiz line on optimal value
+              abline(v = optimals.each[m, "threshold"], col = "darkgrey", lty = 2)  # vertical line on optimal threshold
+              abline(h = optimals.each[m, "value"], col = "darkgrey", lty = 2)  # horiz line on optimal value
             }
 
           } else {

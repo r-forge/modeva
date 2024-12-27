@@ -9,8 +9,8 @@ This function calculates the Area Under the Curve of the receiver operating char
 \usage{
 AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
 interval = 0.01, FPR.limits = c(0, 1), curve = "ROC", pbg = FALSE,
-method = NULL, plot = TRUE, diag = TRUE, diag.col = "grey",
-diag.lty = 1, curve.col = "black", curve.lty = 1, curve.lwd = 2,
+method = NULL, plot = TRUE, diag = TRUE, diag.col = "lightblue3",
+diag.lty = 2, curve.col = "darkblue", curve.lty = 1, curve.lwd = 2,
 plot.values = TRUE, plot.digits = 3, plot.preds = FALSE,
 grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto",
 ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...)

@@ -1,9 +1,5 @@
-optiPair <- function (model = NULL, obs = NULL, pred = NULL,
-          measures = c("Sensitivity", "Specificity"),
-          interval = 0.01, pbg = FALSE, plot = TRUE, plot.sum = FALSE,
-          plot.diff = FALSE, ylim = NULL, na.rm = TRUE, exclude.zeros = TRUE,
-          rm.dup = FALSE, verbosity = 2, ...) {
-  # version 2.3 (19 Nov 2024)
+optiPair <- function (model = NULL, obs = NULL, pred = NULL, measures = c("Sensitivity", "Specificity"), interval = 0.01, pbg = FALSE, plot = TRUE, plot.sum = FALSE, plot.diff = FALSE, col1 = "darkblue", col2 = "lightblue3", ylim = NULL, na.rm = TRUE, exclude.zeros = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
+  # version 2.4 (26 Dec 2024)
 
   if (length(measures) != 2) stop ("'measures' must contain two elements.")
 
@@ -37,7 +33,10 @@ optiPair <- function (model = NULL, obs = NULL, pred = NULL,
   ThreshMean <- with(measures.values.trimmed, Threshold[which.max(Mean)])
 
   if (plot) {
-
+    opar <- par(no.readonly = TRUE)
+    par(mgp = c(3, 0.7, 0))
+    on.exit(par(opar))
+    
     finite <- as.matrix(measures.values[ , 1:2])
     finite <- finite[is.finite(finite)]
     if (is.null(ylim)) {
@@ -45,11 +44,11 @@ optiPair <- function (model = NULL, obs = NULL, pred = NULL,
       else ylim <- c(min(finite), max(finite))
     }  # end if null ylim
 
-    plot(measures.values[ , 1] ~ measures.values$Threshold, pch = 19, xlab = "", ylab = "", ylim = ylim, ...)
-    mtext(side = 1, text = "Threshold", line = 2, col = "black")
-    mtext(side = 2, text = measures[1], line = 3, col = "black")
-    mtext(side = 2, text = measures[2], line = 2, col = "darkgrey")
-    points(measures.values[ , 2] ~ measures.values$Threshold, pch = 20, col = "darkgrey")
+    plot(measures.values[ , 1] ~ measures.values$Threshold, pch = 19, xlab = "", ylab = "", ylim = ylim, col = col1, ...)
+    mtext(side = 1, text = "Threshold", line = 2)
+    mtext(side = 2, text = measures[1], line = 3, col = col1)
+    mtext(side = 2, text = measures[2], line = 2, col = col2)
+    points(measures.values[ , 2] ~ measures.values$Threshold, pch = 20, col = col2)
     abline(h = measures.values[which.min(measures.values.trimmed$Difference), 1], col = "lightgrey", lty = 2)
     abline(v = ThreshDiff, col = "lightgrey", lty = 2)
 
