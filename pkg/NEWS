@@ -1,4 +1,21 @@
 ===============================================
+modEvA v3.26 (committed 2025-01-27)
+===============================================
+
+## Modified functions:
+
+* lollipop
+- new argument "horizontal"
+- "sticks" can also be a matrix of confidence limits
+
+
+## New functions:
+
+* plotCoefs
+- uses lollipop() with confidence intervals
+
+
+===============================================
 modEvA v3.25 (committed 2024-12-27)
 ===============================================
 

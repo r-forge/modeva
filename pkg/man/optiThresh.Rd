@@ -32,7 +32,7 @@ verbosity = 2, ...)
   \item{cex}{character expansion (size), argument to pass to \code{\link{plot}}.}
   \item{col}{colour, argument to pass to \code{\link{plot}}.}
   \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
-  \item{\dots}{additional arguments tat ban be pass to \code{\link{plot}}.}
+  \item{\dots}{additional arguments that can be passed to \code{\link{plot}}.}
 }
 \value{
 This function returns a list with the following components:
