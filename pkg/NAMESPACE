@@ -1,8 +1,9 @@
 exportPattern("^[[:alpha:]]+")
 
 importFrom("graphics",
-           "abline", "arrows", "axis", "barplot", "boxplot", "hist", "legend",
-           "lines", "mtext", "par", "plot", "points", "polygon", "rect", "text")
+           "abline", "arrows", "axis", "barplot", "box", "boxplot", "hist", 
+           "legend", "lines", "mtext", "par", "plot", "plot.default", "points", 
+           "polygon", "rect", "text")
 
 importFrom("grDevices",
            "adjustcolor", "rgb")

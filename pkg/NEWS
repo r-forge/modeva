@@ -1,4 +1,23 @@
 ===============================================
+modEvA v3.27 (committed 2025-01-28)
+===============================================
+
+## Modified functions:
+
+* lollipop
+- 'bold' default FALSE, not NULL
+
+* plotCoeffs
+- empty plot if no variables in model
+
+
+## Other modified files:
+
+* lollipop.Rd, plotCoeffs.Rd, varImp.Rd
+- improved Description, Examples, and See also
+
+
+===============================================
 modEvA v3.26 (committed 2025-01-27)
 ===============================================
 
@@ -11,8 +30,14 @@ modEvA v3.26 (committed 2025-01-27)
 
 ## New functions:
 
-* plotCoefs
+* plotCoeffs
 - uses lollipop() with confidence intervals
+
+
+## Other modified files:
+
+* evaluate.Rd
+- improved definitions of a, b, c, and d, relating with TP, FP, TN, FN
 
 
 ===============================================

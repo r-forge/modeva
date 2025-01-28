@@ -7,7 +7,7 @@ This function creates a lollipop chart (by default), a points chart (if \code{st
 \usage{
   lollipop(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, 
   col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, 
-  horizontal = FALSE, bold = NULL, ...)
+  horizontal = FALSE, bold = FALSE, ...)
 }
 \arguments{
   \item{x}{a numeric vector.}
@@ -34,7 +34,7 @@ This function creates a lollipop chart (by default), a points chart (if \code{st
   A. Marcia Barbosa
 }
 \seealso{
-  \code{\link{barplot}}; \code{\link[ggplot2:geom_pointrange]{ggplot2::geom_pointrange()}}
+  \code{\link{plotCoeffs}}; \code{\link{barplot}}; \code{\link[ggplot2:geom_pointrange]{ggplot2::geom_pointrange()}}
 }
 \examples{
 lollipop(mtcars[,1], names = rownames(mtcars), las = 2, ylab = names(mtcars)[1],

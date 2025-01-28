@@ -1,4 +1,4 @@
-lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, horizontal = FALSE, bold = NULL, ...) {
+lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, horizontal = FALSE, bold = FALSE, ...) {
   # version 2.0 (27 Jan 2025)
 
   if (is.matrix(sticks))
@@ -39,7 +39,7 @@ lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, c
     } else if (is.matrix(sticks) || is.data.frame(sticks)) {
       arrows(x0 = sticks[, 1], x1 = sticks[, 2], y0 = 1:length(x), y1 = 1:length(x), code = 3, length = 0, col = col, lwd = cex)
     }
-    mtext(side = 2, at = 1:length(x), text = names, las = las, font = ifelse(isTRUE(bold), 2, 1), cex = cex.axis, line = 1)
+    mtext(side = 2, at = 1:length(x), text = names, las = las, font = ifelse(bold, 2, 1), cex = cex.axis, line = 1)
     
   } else {  # if !horizontal
     plot(rep(ylim, max(1, length(x)/2)), 
@@ -54,6 +54,6 @@ lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, c
     } else if (inherits(sticks, "data.frame")) {
       arrows(x0 = 1:length(x), x1 = 1:length(x), y0 = sticks[, 1], y1 = sticks[, 2], code = 3, length = 0, col = col, lwd = cex)
     }
-    mtext(side = 1, at = 1:length(x), text = names, las = las, font = ifelse(isTRUE(bold), 2, 1), cex = cex.axis, line = 1)
+    mtext(side = 1, at = 1:length(x), text = names, las = las, font = ifelse(bold, 2, 1), cex = cex.axis, line = 1)
   }  # end if !horizontal
 }

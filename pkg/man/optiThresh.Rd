@@ -4,7 +4,7 @@
 Optimize threshold for model evaluation.
 }
 \description{
-The 'optiThresh' function calculates optimal thresholds for a number of model evaluation measures (see \code{\link{threshMeasures}}). Optimization is given for each measure, and/or for all measures according to particular criteria (e.g. Jimenez-Valverde & Lobo 2007; Liu et al. 2005; Nenzen & Araujo 2011). Results are given numerically and in plots.}
+The 'optiThresh' function computes optimal thresholds for a number of model evaluation measures (see \code{\link{threshMeasures}}). Optimization is given for each measure, and/or for all measures according to particular criteria (e.g. Jimenez-Valverde & Lobo 2007; Liu et al. 2005; Nenzen & Araujo 2011). Results are given numerically and in plots.}
 \usage{
 optiThresh(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
 measures = c(modEvAmethods("threshMeasures"), modEvAmethods("similarity")),

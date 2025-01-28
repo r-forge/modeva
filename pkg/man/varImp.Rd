@@ -48,7 +48,7 @@ This function computes, and optionally plots, variable importance for an input m
 Weissgerber T.L., Milic N.M., Winham S.J. & Garovic V,D, (2015) Beyond Bar and Line Graphs: Time for a New Data Presentation Paradigm. PLOS Biol 13:e1002128. https://doi.org/10.1371/JOURNAL.PBIO.1002128
 }
 \seealso{
-\code{\link{summary.glm}}; \code{varImp} in package \pkg{caret}; \code{varimp} in package \pkg{embarcadero}; \code{var_importance} in package \pkg{enmpa}; \code{varImportance} in package \pkg{predicts}; \code{bm_VariablesImportance} in package \pkg{biomod2}
+\code{\link{plotCoeffs}}; \code{\link{summary.glm}}; \code{varImp} in package \pkg{caret}; \code{varimp} in package \pkg{embarcadero}; \code{var_importance} in package \pkg{enmpa}; \code{varImportance} in package \pkg{predicts}; \code{bm_VariablesImportance} in package \pkg{biomod2}
 }
 \examples{
   # load sample models:

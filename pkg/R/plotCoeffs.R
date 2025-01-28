@@ -6,14 +6,16 @@ plotCoeffs <- function(model, ...) {
     smry <- smry[-intercept, , drop = FALSE]
   
   if (nrow(smry) == 0) {
-    # args <- list(...)
-    # # plot.new(...)
-    # # args_not_base_plot <- grep("horiz", names(args))
-    # # if ("xlab" %in% names(args)) xlab <- args$xlab else xlab <- ""
-    # # if ("ylab" %in% names(args)) ylab <- args$ylab else ylab <- ""
-    # # plot(0:1, 0:1, type = "n", axes = FALSE, xlab = xlab, ylab = ylab, ...)
+    args <- as.list(match.call(expand.dots = TRUE))  # [-1] removes the function name from the list
+    plot_args <- names(formals(plot.default))
+    args <- args[names(args) %in% plot_args]  # to exclude arguments for lollipop not base plot
+    args$xlab <- args$ylab <- ""
+    args$axes <- FALSE
     # plot(0:1, 0:1, type = "n", axes = FALSE, ...)
-    # text(x = 0.5, y = 0.5, "No variables in model.")
+    do.call(plot, c(list(0:1, 0:1), type = "n", args))
+    text(x = 0.5, y = 0.5, "No variables\nin model.")
+    box()
+    # message(deparse(substitute(model)), " has no coefficients apart from the intercept;\nno plot produced.")
     return(NULL)
   }
   
