@@ -1,4 +1,25 @@
 ===============================================
+modEvA v3.28 (committed 2025-02-10)
+===============================================
+
+## Modified functions:
+
+* lollipop
+- better distribution between plot limits when two lollipops
+- renamed argument "horizontal" to "horiz", to match barplot()
+- added 'axis.lab' argument, to use as xlab or ylab depending on 'horiz'
+
+* plotCoeffs
+- added 'labels' argument
+
+* varImp
+- fixed when horizontal = TRUE
+
+* threshMeasures, similarity
+- changed 'las' from 3 to 2
+
+
+===============================================
 modEvA v3.27 (committed 2025-01-28)
 ===============================================
 

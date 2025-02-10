@@ -4,7 +4,7 @@
 Root mean square error
 }
 \description{
-This function computes the root mean square error of a model object or a set of observed and predicted values or maps. THIS FUNCTION IS NOW DEPRECATED, AS THE RMSE HAS BEEN INCLUDED ALONG OTHER METRICS IN THE NEW errorMeasures() FUNCTION.
+This function computes the root mean square error of a model object or a set of observed and predicted values or maps. THIS FUNCTION IS NOW DEPRECATED, AS THE RMSE HAS BEEN INCLUDED ALONG OTHER METRICS IN THE NEW \code{\link{errorMeasures}} FUNCTION.
 }
 \usage{
 RMSE(model = NULL, obs = NULL, pred = NULL, na.rm = TRUE, rm.dup = FALSE, 

@@ -5,10 +5,11 @@
   Plots the coefficients of a model with their 95\% confidence intervals, using a point range plot.
 }
 \usage{
-  plotCoeffs(model, ...)
+  plotCoeffs(model, labels = NULL, ...)
 }
 \arguments{
   \item{model}{A model object of class "glm", "lm" or "phylolm".}
+  \item{labels}{Optional two-column matrix or data frame, with the first column containing names of variables that appear in 'model' (in no particular order), and the second column containing the corresponding names to use as labels in the plot. Can be useful when the model contains abbreviated variable names, and you want more complete variable names in the plot.}
   \item{...}{Additional arguments to pass to \code{\link{lollipop}}, e.g. horizontal = TRUE.}
 }
 \details{
@@ -24,28 +25,25 @@
   \code{\link{varImp}}, \code{\link{lollipop}}
 }
 \examples{
-# get example data and model:
+# get example model:
 
-dat <- subset(iris, iris$Species \%in\% c("setosa", "versicolor"))
-
-dat$Species <- ifelse(dat$Species == "setosa", 1, 0)
-
-mod <- glm(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width, data = dat)
+mod <- glm(am ~ mpg + wt + gear + carb, data = as.data.frame(scale(mtcars)))
 
 summary(mod)
 
 
 # default plot:
 
-par(mar = c(6, 3, 2, 1))
-
 plotCoeffs(mod)
 
 
 # with some tweaks:
 
-par(mar = c(3, 6, 2, 1))
+vars <- c("gear", "wt", "mpg", "carb")
+labs <- c("Number of gears", "Weight", "Miles par gallon", "Number of carburators")
 
-plotCoeffs(mod, horiz = TRUE, cex = 2, grid = FALSE,
-xlab = "Coefficients", main = substitute(italic("I. setosa vs. I. versicolor")))
+par(mar = c(3, 10, 2, 1))
+
+plotCoeffs(mod, horiz = TRUE, cex = 2, grid = FALSE, axis.lab = "Coefficients", 
+main = "Transmission", labels = data.frame(vars, labs), col = "purple")
 }

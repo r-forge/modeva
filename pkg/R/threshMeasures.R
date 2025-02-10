@@ -1,5 +1,5 @@
 threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh, measures = modEvAmethods("threshMeasures")[-grep("OddsRatio", modEvAmethods("threshMeasures"))], simplif = FALSE, pbg = FALSE, plot = TRUE, plot.type = "lollipop", ylim = "auto0", plot.ordered = FALSE, standardize = TRUE, verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...) {
-  # version 3.9 (24 Nov 2024)
+  # version 4.0 (19 Feb 2025)
   
   # if (is.null(model)) {
   #   if (is.null(obs) | is.null(pred)) stop ("You must provide either the 'obs' and 'pred' vectors, or a 'model' object.")
@@ -105,9 +105,9 @@ type modEvAmethods('threshMeasures') for available options.")
     }
     
     if (plot.type == "barplot" && any(is.finite(measures.plot)))
-      barplot(measures.plot[is.finite(measures.plot)], las = 3, ylim = ylim, ...)
+      barplot(measures.plot[is.finite(measures.plot)], las = 2, ylim = ylim, ...)
     else if (plot.type == "lollipop" && any(is.finite(measures.plot)))
-      lollipop(measures.plot[is.finite(measures.plot)], las = 3, ylim = ylim, ylab = "", ...)
+      lollipop(measures.plot[is.finite(measures.plot)], las = 2, ylim = ylim, axis.lab = "", ...)
   }  # end if plot
   
   if (simplif) {  # shorter version for use with e.g. optiThresh function

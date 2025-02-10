@@ -1,11 +1,11 @@
-lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, horizontal = FALSE, bold = FALSE, ...) {
-  # version 2.0 (27 Jan 2025)
-
+lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, horiz = FALSE, bold = FALSE, axis.lab = deparse(substitute(x)), ...) {
+  # version 2.2 (10 Feb 2025)
+  
   if (is.matrix(sticks))
     sticks <- as.data.frame(sticks)
   if (!(is.logical(sticks) || inherits(sticks, "data.frame")))
     stop ("Invalid 'sticks'.")
-
+  
   if (is.na(ymin))
     ymin <- min(x, na.rm = TRUE)
   if (length(ylim) == 1 && is.na(ylim)) {
@@ -25,10 +25,15 @@ lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, c
   par(mgp = c(1.9, 0.7, 0))  # values and labels closer to axis
   on.exit(par(opar))
   
-  if (isTRUE(horizontal)) {
-    plot(c(0, max(x, na.rm = TRUE)), 
-         c(1, length(x)), 
-         axes = FALSE, type = "n", xlim = ylim, ylab = "", ...)
+  # args <- as.list(match.call(expand.dots = TRUE))
+  # axis.lab <- c(args$xlab, args$ylab)
+  # if (is.null(axis.lab)) axis.lab <- deparse(substitute(x))
+  # args$xlab <- args$ylab <- NULL
+  
+  if (isTRUE(horiz)) {
+    plot(x = c(0, max(x, na.rm = TRUE)), 
+         y = if (length(x) == 2) c(0.5, 2.5) else c(1, length(x)), 
+         axes = FALSE, type = "n", xlim = ylim, xlab = axis.lab, ylab = "", ...)
     if (is.null(names)) names <- names(x)
     if (grid) grid()  # draw grid before lollipops
     axis(2, at = 1:length(x), labels = FALSE, las = las, cex.axis = cex.axis)
@@ -41,9 +46,10 @@ lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, c
     }
     mtext(side = 2, at = 1:length(x), text = names, las = las, font = ifelse(bold, 2, 1), cex = cex.axis, line = 1)
     
-  } else {  # if !horizontal
-    plot(rep(ylim, max(1, length(x)/2)), 
-         axes = FALSE, type = "n", ylim = ylim, xlab = "", ...)
+  } else {  # if !horiz
+    plot(x = if (length(x) == 2) c(0.5, 2.5) else c(1, length(x)), 
+         y = ylim, axes = FALSE, type = "n", ylim = ylim, 
+         ylab = axis.lab, xlab = "", ...)
     if (is.null(names)) names <- names(x)
     if (grid) grid()  # draw grid before lollipops
     axis(1, at = 1:length(x), labels = FALSE, las = las, cex.axis = cex.axis)
@@ -55,5 +61,5 @@ lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, c
       arrows(x0 = 1:length(x), x1 = 1:length(x), y0 = sticks[, 1], y1 = sticks[, 2], code = 3, length = 0, col = col, lwd = cex)
     }
     mtext(side = 1, at = 1:length(x), text = names, las = las, font = ifelse(bold, 2, 1), cex = cex.axis, line = 1)
-  }  # end if !horizontal
+  }  # end if !horiz
 }

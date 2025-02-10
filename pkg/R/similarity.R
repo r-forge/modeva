@@ -54,9 +54,9 @@ type modEvAmethods('similarity') for available options.")
     }
     measures.plot[is.infinite(measures.plot)] <- NA
     if (plot.type == "barplot" && any(is.finite(measures.plot))) 
-      barplot(measures.plot[is.finite(measures.plot)], las = 3, ...)
+      barplot(measures.plot[is.finite(measures.plot)], las = 2, ...)
     if (plot.type == "lollipop" && any(is.finite(measures.plot))) 
-      lollipop(measures.plot[is.finite(measures.plot)], las = 3, ylab = "", ...)
+      lollipop(measures.plot[is.finite(measures.plot)], las = 2, axis.lab = "", ...)
   }  # end if plot
   return(out)
 }

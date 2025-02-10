@@ -1,4 +1,4 @@
-plotCoeffs <- function(model, ...) {
+plotCoeffs <- function(model, labels = NULL, ...) {
   
   smry <- summary(model)$coefficients
   intercept <- grep("intercept", tolower(rownames(smry)))
@@ -31,6 +31,15 @@ plotCoeffs <- function(model, ...) {
   upperci <- coefs + 1.96 * se
   pvals <- smry[ , pval_column, drop = FALSE]
   
-  lollipop(coefs, names = rownames(coefs), sticks = cbind(lowerci, upperci), bold = ifelse(pvals <= 0.05, TRUE, FALSE), ...)
+  
+  if (is.null(labels)) {
+    lollipop_names <- rownames(coefs)
+  } else {
+    matches <- match(rownames(coefs), labels[ , 1])
+    lollipop_names <- labels[matches, 2]
+    lollipop_names[is.na(lollipop_names)] <- rownames(coefs)[is.na(lollipop_names)]
+  }
+  
+  lollipop(coefs, names = lollipop_names, sticks = cbind(lowerci, upperci), bold = ifelse(pvals <= 0.05, TRUE, FALSE), ...)
   box()
 }
