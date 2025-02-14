@@ -1,4 +1,15 @@
 ===============================================
+modEvA v3.29 (committed 2025-02-14)  ->  CRAN
+===============================================
+
+## Modified functions:
+
+* lollipop (-> varImp, ploCoeffs, threshMeasures, similarity, RsqGLM)
+- removed 'axis.lab' argument for back-compatibility issues
+- improved handling of plot arguments provided under \dots, namely xlab and ylab when horiz is either TRUE or FALSE
+
+
+===============================================
 modEvA v3.28 (committed 2025-02-10)
 ===============================================
 

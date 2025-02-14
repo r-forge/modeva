@@ -7,8 +7,8 @@ plotCoeffs <- function(model, labels = NULL, ...) {
   
   if (nrow(smry) == 0) {
     args <- as.list(match.call(expand.dots = TRUE))  # [-1] removes the function name from the list
-    plot_args <- names(formals(plot.default))
-    args <- args[names(args) %in% plot_args]  # to exclude arguments for lollipop not base plot
+    plot.args <- names(formals(plot.default))
+    args <- args[names(args) %in% plot.args]  # to exclude arguments for lollipop not base plot
     args$xlab <- args$ylab <- ""
     args$axes <- FALSE
     # plot(0:1, 0:1, type = "n", axes = FALSE, ...)

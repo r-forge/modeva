@@ -7,7 +7,7 @@ This function creates a lollipop chart (by default), a points chart (if \code{st
 \usage{
   lollipop(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, 
   col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, 
-  horiz = FALSE, bold = FALSE, axis.lab = deparse(substitute(x)), ...)
+  horiz = FALSE, bold = FALSE, ...)
 }
 \arguments{
   \item{x}{a numeric vector.}
@@ -22,8 +22,7 @@ This function creates a lollipop chart (by default), a points chart (if \code{st
   \item{las}{argument to pass to \code{\link{par}} indicating the orientation of the axis labels.}
   \item{horiz}{logical value (default FALSE) indicating whether the plot should be drawn horizontally rather than vertically.}
   \item{bold}{logical vector (recycled if shorter than \code{x}, default FALSE) indicating which name labels should appear in bold font. Can be used e.g. to highlight significant values (see e.g. \code{\link{plotCoeffs}}).}
-  \item{axis.lab}{argument to pass to \code{\link{plot}} to be used as 'xlab' if horiz=TRUE, or as 'ylab' otherwise. The default is the name of the plotted object.}
-  \item{\dots}{additional arguments that can be passed to \code{\link{plot}}, e.g. 'main'.}
+  \item{\dots}{additional arguments that can be passed to \code{\link{plot}}, e.g. 'main', 'xlab' or 'ylab'.}
 }
 \details{
   According to modern data viz recommendations, lollipop charts (or instead point charts) are generally a better alternative to bar charts, as they reduce the visual distortion caused by the length of the bars, making it easier to visually compare the values.
@@ -41,15 +40,15 @@ This function creates a lollipop chart (by default), a points chart (if \code{st
 par(mar = c(6, 3, 2, 1))
 
 lollipop(mtcars[,1], names = rownames(mtcars), las = 2, 
-axis.lab = names(mtcars)[1], cex.axis = 0.6)
+ylab = names(mtcars)[1], cex.axis = 0.6)
 
 lollipop(mtcars[,1], names = rownames(mtcars), las = 2, 
-axis.lab = names(mtcars)[1], cex.axis = 0.6, ylim = NA)
+ylab = names(mtcars)[1], cex.axis = 0.6, ylim = NA)
 
 
 par(mar = c(3, 6, 2, 1))
 
 lollipop(mtcars[,1], names = rownames(mtcars), las = 2, 
-axis.lab = "Miles/gallon", cex.axis = 0.6, main = "Lollipop chart of mtcars", 
+xlab = "Miles/gallon", cex.axis = 0.6, main = "Lollipop chart of mtcars", 
 horiz = TRUE)
 }

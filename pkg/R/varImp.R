@@ -177,6 +177,14 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
   }  # end if error.bars
   
   if (plot) {
+    plot.args <- list(...)  # https://www.r-bloggers.com/2020/11/some-notes-when-using-dot-dot-dot-in-r/
+    if (!("horiz" %in% names(plot.args)))
+      plot.args$horiz <- FALSE
+    if (!("xlab" %in% names(plot.args)))
+      plot.args$xlab <- ifelse(isTRUE(plot.args$horiz), metric, "")
+    if (!("ylab" %in% names(plot.args)))
+      plot.args$ylab <- ifelse(isTRUE(plot.args$horiz), "", metric)
+    
     if (length(col) == 1) col <- rep(col, 2)
     colrs <- ifelse(varimp >= 0, col[1], col[2])
     
@@ -190,15 +198,15 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     if (plot.type == "lollipop") {
       sticks <- ifelse(is.na(error.bars), TRUE, FALSE)
       
-      lollipop(abs(varimp),
-               col = colrs,
-               names = names(varimp),
-               axis.lab = ylab,
-               ylim = ylim,
-               las = 2,
-               sticks = sticks,
-               grid = grid,
-               ...)
+      do.call(lollipop,
+              c(list(abs(varimp),
+                     col = colrs,
+                     names = names(varimp),
+                     ylim = ylim,
+                     las = 2,
+                     sticks = sticks,
+                     grid = grid),
+                plot.args))
       
       if (!is.na(error.bars)) {
         arrows(x0 = 1:length(varimp), x1 = 1:length(varimp), y0 = eb_lower, y1 = eb_upper, code = 3, angle = 90, length = 0.03, col = colrs)
@@ -208,11 +216,6 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     
     if (plot.type == "barplot") {
       
-      plot.args <- list(...)
-      if (!("horiz" %in% names(plot.args))) {
-        plot.args$horiz <- FALSE
-      }  # https://www.r-bloggers.com/2020/11/some-notes-when-using-dot-dot-dot-in-r/
-      
       space <- 0.25  # re-used if plot.points & error.bars
       
       do.call(barplot,
@@ -221,8 +224,6 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
                      border = NA,
                      space = space,
                      names = names(varimp),
-                     xlab = ifelse(isTRUE(plot.args$horiz), ylab, ""),
-                     ylab = ifelse(isTRUE(plot.args$horiz), "", ylab),
                      ylim = ylim,
                      xpd = FALSE,
                      las = 2),
@@ -249,7 +250,7 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
       boxplot(vi,
               col = adjustcolor(colrs, alpha.f = 0.2),
               border = colrs,
-              axis.lab = ylab,
+              ylab = ylab,
               ylim = ylim,
               las = 2,
               ...)

@@ -72,7 +72,7 @@ RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.comple
     if (plot.type == "barplot") 
       barplot(as.matrix(m), las = 2, ...)
     if (plot.type == "lollipop") 
-      lollipop(unlist(as.vector(m)), las = 2, axis.lab = "", ...)
+      lollipop(unlist(as.vector(m)), las = 2, xlab = "", ylab = "", ...)
     else message("Invalid 'plot.type'. Plot not produced.")
   }
 

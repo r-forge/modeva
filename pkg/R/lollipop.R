@@ -1,4 +1,4 @@
-lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, horiz = FALSE, bold = FALSE, axis.lab = deparse(substitute(x)), ...) {
+lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, horiz = FALSE, bold = FALSE, ...) {
   # version 2.2 (10 Feb 2025)
   
   if (is.matrix(sticks))
@@ -30,10 +30,19 @@ lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, c
   # if (is.null(axis.lab)) axis.lab <- deparse(substitute(x))
   # args$xlab <- args$ylab <- NULL
   
+  plot.args <- list(...)  # https://www.r-bloggers.com/2020/11/some-notes-when-using-dot-dot-dot-in-r/
+  if (!("xlab" %in% names(plot.args))) {
+    plot.args$xlab <- ifelse(horiz, deparse(substitute(x)), "")
+  }
+  if (!("ylab" %in% names(plot.args))) {
+    plot.args$ylab <- ifelse(horiz, "", deparse(substitute(x)))
+  }
+  
   if (isTRUE(horiz)) {
-    plot(x = c(0, max(x, na.rm = TRUE)), 
-         y = if (length(x) == 2) c(0.5, 2.5) else c(1, length(x)), 
-         axes = FALSE, type = "n", xlim = ylim, xlab = axis.lab, ylab = "", ...)
+    do.call(plot, c(list(x = c(0, max(x, na.rm = TRUE)), 
+                         y = if (length(x) == 2) c(0.5, 2.5) else c(1, length(x)), 
+                         axes = FALSE, type = "n", xlim = ylim),
+            plot.args))
     if (is.null(names)) names <- names(x)
     if (grid) grid()  # draw grid before lollipops
     axis(2, at = 1:length(x), labels = FALSE, las = las, cex.axis = cex.axis)
@@ -47,9 +56,9 @@ lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, c
     mtext(side = 2, at = 1:length(x), text = names, las = las, font = ifelse(bold, 2, 1), cex = cex.axis, line = 1)
     
   } else {  # if !horiz
-    plot(x = if (length(x) == 2) c(0.5, 2.5) else c(1, length(x)), 
-         y = ylim, axes = FALSE, type = "n", ylim = ylim, 
-         ylab = axis.lab, xlab = "", ...)
+    do.call(plot, c(list(x = if (length(x) == 2) c(0.5, 2.5) else c(1, length(x)),
+                        y = ylim, axes = FALSE, type = "n", ylim = ylim), 
+                 plot.args))
     if (is.null(names)) names <- names(x)
     if (grid) grid()  # draw grid before lollipops
     axis(1, at = 1:length(x), labels = FALSE, las = las, cex.axis = cex.axis)

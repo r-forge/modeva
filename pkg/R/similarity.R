@@ -56,7 +56,7 @@ type modEvAmethods('similarity') for available options.")
     if (plot.type == "barplot" && any(is.finite(measures.plot))) 
       barplot(measures.plot[is.finite(measures.plot)], las = 2, ...)
     if (plot.type == "lollipop" && any(is.finite(measures.plot))) 
-      lollipop(measures.plot[is.finite(measures.plot)], las = 2, axis.lab = "", ...)
+      lollipop(measures.plot[is.finite(measures.plot)], las = 2, xlab = "", ylab = "", ...)
   }  # end if plot
   return(out)
 }

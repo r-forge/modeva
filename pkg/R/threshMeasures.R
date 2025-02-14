@@ -107,7 +107,7 @@ type modEvAmethods('threshMeasures') for available options.")
     if (plot.type == "barplot" && any(is.finite(measures.plot)))
       barplot(measures.plot[is.finite(measures.plot)], las = 2, ylim = ylim, ...)
     else if (plot.type == "lollipop" && any(is.finite(measures.plot)))
-      lollipop(measures.plot[is.finite(measures.plot)], las = 2, ylim = ylim, axis.lab = "", ...)
+      lollipop(measures.plot[is.finite(measures.plot)], las = 2, ylim = ylim, xlab = "", ylab = "", ...)
   }  # end if plot
   
   if (simplif) {  # shorter version for use with e.g. optiThresh function
