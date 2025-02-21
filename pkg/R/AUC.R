@@ -119,10 +119,10 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   
   if (plot) {
     
-    opar <- par(no.readonly = TRUE)
+    par_mgp <- par()$mgp
+    on.exit(par(mgp = par_mgp))
     par(mgp = c(3, 0.7, 0))
-    on.exit(par(opar))
-    
+
     if (curve == "ROC") {
       if (xlab == "auto") xlab <- c("False positive rate", "(1-specificity)")
       if (ylab == "auto") ylab <- c("True positive rate", "(sensitivity)")

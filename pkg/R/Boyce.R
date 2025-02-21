@@ -84,10 +84,10 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
   HS <- HS[to.keep]
 
   if (plot && length(f) > 0) {
-    opar <- par(no.readonly = TRUE)
+    par_mgp <- par()$mgp
+    on.exit(par(mgp = par_mgp))
     par(mgp = c(1.8, 0.7, 0))  # values and labels closer to axis
-    on.exit(par(opar))
-    
+
     plot(HS, f, ylim = c(0, max(f, na.rm = TRUE)), xlab = "Prediction class", ylab = "Predicted/expected ratio", col = "grey", cex = 0.5, ...)  # includes duplicate P/E values; 'ylim' was my add
     if (plot.lines) {  # my add
       lines(HS, f, col = "grey")

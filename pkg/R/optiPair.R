@@ -33,10 +33,10 @@ optiPair <- function (model = NULL, obs = NULL, pred = NULL, measures = c("Sensi
   ThreshMean <- with(measures.values.trimmed, Threshold[which.max(Mean)])
 
   if (plot) {
-    opar <- par(no.readonly = TRUE)
+    par_mgp <- par()$mgp
+    on.exit(par(mgp = par_mgp))
     par(mgp = c(3, 0.7, 0))
-    on.exit(par(opar))
-    
+
     finite <- as.matrix(measures.values[ , 1:2])
     finite <- finite[is.finite(finite)]
     if (is.null(ylim)) {

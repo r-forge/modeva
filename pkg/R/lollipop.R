@@ -21,10 +21,10 @@ lollipop <- function(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, c
     ylim <- range(c(ylim, sticks), na.rm = TRUE)
   }
   
-  opar <- par(no.readonly = TRUE)
+  par_mgp <- par()$mgp
+  on.exit(par(mgp = par_mgp))
   par(mgp = c(1.9, 0.7, 0))  # values and labels closer to axis
-  on.exit(par(opar))
-  
+
   # args <- as.list(match.call(expand.dots = TRUE))
   # axis.lab <- c(args$xlab, args$ylab)
   # if (is.null(axis.lab)) axis.lab <- deparse(substitute(x))

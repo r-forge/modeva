@@ -1,4 +1,14 @@
 ===============================================
+modEvA v3.30 (committed 2025-02-21)  ->  CRAN
+===============================================
+
+## Modified functions:
+
+* AUC, Boyce, lollipop (affecting threshMeasures), optiPair
+- fixed opar() reset bug: reset only the changed parameter 'mgp'
+
+
+===============================================
 modEvA v3.29 (committed 2025-02-14)  ->  CRAN
 ===============================================
 
