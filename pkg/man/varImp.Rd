@@ -6,18 +6,27 @@ This function computes, and optionally plots, variable importance for an input m
 }
 \usage{
   varImp(model, imp.type = "each", relative = TRUE, reorder = TRUE,
-  group.cats = FALSE, plot = TRUE, plot.type = "lollipop", error.bars = "sd",
-  ylim = "auto0", col = c("#4477aa", "#ee6677"), plot.points = TRUE,
-  legend = TRUE, grid = TRUE, verbosity = 2, ...)
+  group.cats = FALSE, n.per = 10, data = NULL, n.trees = 100, plot = TRUE, 
+  plot.type = "lollipop", error.bars = "sd", ylim = "auto0", 
+  col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, 
+  verbosity = 2, ...)
 }
 \arguments{
-  \item{model}{a (binary-response) model object of class "glm" (of package \pkg{stats}), "gbm" (of package \pkg{gbm}), "GBMFit" (of package \pkg{gbm3}), "randomForest" (of package \pkg{randomForest}), "bart" (of package \pkg{dbarts}), "pbart" or "lbart" (of package \pkg{BART}), or a list produced by function "flexBART" or "probit_flexBART" of package \pkg{flexBART}.}
-  \item{imp.type}{character value indicating the type of variable importance to output, i.e. the metric with which importance is measured. Currently the only option is "each", to extract the measure provided by each model object or summary. Note that this is different across model classes -- see Details.}
-  \item{relative}{logical value indicating whether to divide the absolute importance values by their total sum, to get a measure of relative variable importance. The default is TRUE. Applies to GLM and BART models.}
+  \item{model}{a (binary-response) model object of class "glm" (of package \pkg{stats}), "gbm" (of package \pkg{gbm}), "GBMFit" (of package \pkg{gbm3}), "randomForest" (of package \pkg{randomForest}), "maxnet" (of package \pkg{maxnet}), "bart" (of package \pkg{dbarts}), "pbart" or "lbart" (of package \pkg{BART}), or a list produced by function "flexBART" or "probit_flexBART" of package \pkg{flexBART}.}
+  \item{imp.type}{character value indicating the type of variable importance to compute, i.e. the metric with which importance is measured. Partial argument matching is used. Implemented options are:
+  \itemize{
+    \item "each" (the default), to extract the measure provided by each model object or summary (note that this is different across model classes -- see Details)
+    \item "permutation", to randomly shuffle each variable in turn (a given number of times) and average the root mean squared difference between the actual model predictions and those obtained with the shuffled variable. Note this can be considerably slower, especially for computationally intensive models.
+    }
+  }
+  \item{relative}{logical value (default TRUE) indicating whether to divide the absolute importance values by their total sum, to get a measure of relative variable importance ranging from 0 to 1. Applies when imp.type="permutation", or to GLM and BART models when imp.type="each".}
   \item{reorder}{logical value indicating whether to sort the variables in decreasing order of importance. The default is TRUE. If set to FALSE, the variables retain their input order.}
-  \item{group.cats}{logical value indicating whether to aggregate all factor levels of each (one-hot encoded) categorical variable into a single variable, by summing up their proportions of branches used. Used if 'model' is of class 'bart', 'pbart' or 'lbart', in whose outputs the contributions of categorical variables are split by their factor levels. The default is FALSE. Note that this may incorrectly group variables that have the same name with a different numeric suffix (e.g. "soil_type_1", "soil_type_2"), so revise your results if you set this to TRUE.}
+  \item{group.cats}{logical value indicating whether to aggregate all factor levels of each (one-hot encoded) categorical variable into a single variable, by summing up their proportions of branches used. Used if 'model' is of class 'bart', 'pbart' or 'lbart', in whose outputs the contributions of categorical variables are split by their factor levels. The default is FALSE. Note that this may incorrectly group variables that have the same name with a different numeric suffix (e.g. "soil_type_1", "soil_type_2"), so revise your results if you set this to TRUE!}
+  \item{n.per}{number of permutations for each variable (if imp.type="permutation"). The default is 10. Use set.seed() first if you want exactly reproducible results.}
+  \item{data}{matrix or data frame with the predictor variables for which to compute permutation importance (if imp.type="permutation"). The default is to extract from the model object if it contains this information (e.g. for models of class "glm", "GBMFit", or "bart" computed with keeptrees=TRUE), or an error message otherwise.}
+  \item{n.trees}{(if imp.type="permutation") argument required by predict.GBMFit() if 'model' is of class "GBMFit". The default is 100.}
   \item{plot}{logical value indicating whether to produce a plot with the results. The default is TRUE.}
-  \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "\code{\link{lollipop}}" (the default), "\code{\link{barplot}}", or "\code{\link{boxplot}}". Note that the latter is only useful when 'model' contains several importance values per variable (e.g. for models of class "bart").}
+  \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "\code{\link{lollipop}}" (the default), "\code{\link{barplot}}", or "\code{\link{boxplot}}". Note that the latter is only useful when 'model' contains several importance values per variable (e.g. for models of class "bart"). Partial argument matching is used.}
   \item{error.bars}{character value indicating the type of error metric to compute (and plot, if plot=TRUE) if the input contains the necessary information (i.e., for Bayesian models like BART) and if the 'plot.type' is appropriate (i.e. "lollipop" or "barplot"). Can be "sd" (the default) for the standard deviation; "range" for the minimum and maximum value across the ones available; a numeric value between 0 and 1 for the corresponding confidence interval (e.g. 0.95 for 95\%), computed with \code{\link{quantile}}; or NA for no error bars.}
   \item{ylim}{either a numeric vector of length 2 specifying the limits (minimum, maximum) for the y axis; or "auto" to fit the y axis to the existing minimum and maximum values; or "auto0" (the new default) to fit the top of the y axis to the maximum existing values, and the bottom to zero.}
   \item{col}{character or integer vector of length 1 or 2 specifying the plotting colours (if plot=TRUE) for the variables with positive and negative effect on the response, when this info is available (e.g. for models of class "glm").}
@@ -52,16 +61,27 @@ Weissgerber T.L., Milic N.M., Winham S.J. & Garovic V,D, (2015) Beyond Bar and L
 }
 \examples{
   # load sample models:
+
   data(rotif.mods)
 
+
   # choose a particular model to play with:
+
   mod <- rotif.mods$models[[1]]
 
+
   # get variable importance for this model:
+
   varImp(model = mod,
          cex.axis = 0.6)
 
-  # change some parameters:
+  varImp(model = mod,
+        imp.type = "perm",
+        cex.axis = 0.6)
+
+
+  # change some more parameters:
+
   par(mar = c(9, 4, 2.5, 1))
   varImp(model = mod,
          relative = FALSE,

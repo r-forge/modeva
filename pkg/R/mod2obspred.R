@@ -1,5 +1,21 @@
-mod2obspred <- function(model, obs.only = FALSE) {
-  # version 1.3 (9 Aug 2024)
+mod2obspred <- function(model, obs.only = FALSE, x.only = FALSE) {
+  # version 2.0 (4 Mar 2025)
+  
+  if (x.only) {  # new (4 Mar 2025)
+    if (methods::is(model, "glm"))
+      return(model$model[ , -1])
+    
+    if (methods::is(model, "GBMFit"))
+      return(model$gbm_data_obj$x)
+    
+    if (methods::is(model, "bart")) {
+      if (is.null(model$fit$data)) stop("'$fit$data' section not present in 'model'. Try running 'bart()' with 'keeptrees=TRUE'.")
+      return(model$fit$data@x)  # requires model ran with keeptrees=TRUE
+    }
+    
+    stop("\n'data' (x, predictors) cannot be extracted from a 'model' of this class.")
+  }  # end if x.only
+  
 
   if (methods::is(model, "glm") || methods::is(model, "gam")) {
     obs <- model$y

@@ -1,6 +1,6 @@
-AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = 0.01, FPR.limits = c(0, 1), curve = "ROC", pbg = FALSE, method = NULL, plot = TRUE, diag = TRUE, diag.col = "lightblue3", diag.lty = 2, curve.col = "darkblue", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto", ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
-
-  # version 3.3 (26 Dec 2024)
+AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = "auto", FPR.limits = c(0, 1), curve = "ROC", pbg = FALSE, method = NULL, plot = TRUE, diag = TRUE, diag.col = "lightblue3", diag.lty = 2, curve.col = "darkblue", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto", ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
+  
+  # version 3.4 (4 Mar 2025)
   
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
   
@@ -13,18 +13,21 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   incalculable <- FALSE
   if (all(obs == 0) || all(obs == 1)) {
     incalculable <- TRUE
-    warning("AUC can't be computed if there aren't two response states (i.e. ones and zeros) to compare their predictions.")
+    warning("AUC can't be computed if there aren't two response states\n(i.e. both ones and zeros) to compare their predictions.")
   }
   
   stopifnot(
     obs %in% c(0,1),
     #pred >= 0,
     #pred <= 1,
-    interval > 0,
-    interval < 1,
+    interval == "auto" || (interval > 0 && interval < 1),
     curve %in% c("ROC", "PR"),
     is.null(method) || (length(method) == 1 && method %in% c("rank", "trapezoid", "integrate"))
   )
+  
+  if (interval == "auto"){
+    interval <- round(0.01 - (abs(mean(pred) - 0.5) * 0.018), 3)  # makes interval range between 0.001 and 0.01, proportionally to how close mean(pred) is to 0.5
+  }
   
   if (is.null(method)) {
     method <- ifelse(curve == "ROC", "rank", "trapezoid")
@@ -47,6 +50,9 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     xy <- c(pred[obs == 0], pred[obs == 1])
     rnk <- rank(xy)
     AUC <- ((n0 * n1) + ((n0 * (n0 + 1))/2) - sum(rnk[1 : n0])) / (n0 * n1)
+    
+    # AUC <- as.numeric(wilcox.test(pred[obs == 0], pred[obs == 1]) $ statistic) / (sum(obs == 0) * sum(obs == 1))
+    
     if (simplif && !plot) return(AUC)
   }
   
@@ -122,7 +128,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     par_mgp <- par()$mgp
     on.exit(par(mgp = par_mgp))
     par(mgp = c(3, 0.7, 0))
-
+    
     if (curve == "ROC") {
       if (xlab == "auto") xlab <- c("False positive rate", "(1-specificity)")
       if (ylab == "auto") ylab <- c("True positive rate", "(sensitivity)")
@@ -170,11 +176,36 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   thresholds.df <- data.frame(thresholds, true.positives, true.negatives, sensitivity, specificity, precision, false.pos.rate, n.preds, prop.preds)
   rownames(thresholds.df) <- thresholds
   
-  return (list(thresholds = thresholds.df,
-               N = N,
-               prevalence = preval,
-               AUC = AUC,
-               AUCratio = AUC / 0.5,
-               meanPrecision = precision_mean,
-               GiniCoefficient = 2 * AUC - 1))
+  output <- list(thresholds = thresholds.df,
+                 N = N,
+                 prevalence = preval,
+                 AUC = AUC,
+                 AUCratio = AUC / 0.5,
+                 meanPrecision = precision_mean,
+                 GiniCoefficient = 2 * AUC - 1)
+  
+  # if (ci) {  # https://www.ncss.com/wp-content/themes/ncss/pdf/Procedures/PASS/Confidence_Intervals_for_the_Area_Under_an_ROC_Curve.pdf
+  #   tbl <- table(obs)
+  #   n1 <- tbl[1]
+  #   n2 <- tbl[2]
+  #   q1 <- AUC / (2 - AUC)
+  #   q2 <- (2 * AUC ^ 2) / (1 + AUC)
+  #   numerator <- AUC * (1 - AUC) + (n1 - 1) * (q1 - AUC ^ 2) + (n2 - 1) * (q2 - AUC ^ 2)
+  #   se <- sqrt(numerator / n1 * n2)
+  #   upper <- AUC + 1.96 * se
+  #   lower <- AUC - 1.96 * se
+  #   
+  #   output <- list(thresholds = thresholds.df,
+  #                  N = N,
+  #                  prevalence = preval,
+  #                  AUC = AUC,
+  #                  AUCratio = AUC / 0.5,
+  #                  AUCse = se,
+  #                  AUCupper = upper,
+  #                  AUClower = lower,
+  #                  meanPrecision = precision_mean,
+  #                  GiniCoefficient = 2 * AUC - 1)
+  # }
+  
+  return(output)
 }

@@ -1,22 +1,27 @@
-varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, group.cats = FALSE, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto0", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, verbosity = 2, ...) {
+varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, group.cats = FALSE, n.per = 10, data = NULL, n.trees = 100, plot = TRUE, plot.type = "lollipop", error.bars = "sd", ylim = "auto0", col = c("#4477aa", "#ee6677"), plot.points = TRUE, legend = TRUE, grid = TRUE, verbosity = 2, ...) {
   
-  # version 2.5 (10 Feb 2025)
+  # version 2.7 (6 Mar 2025)
   
   # if 'col' has length 2 and varImp has negative values (e.g. for z-value), those will get the second colour
   
-  stopifnot(imp.type == "each",
-            plot.type %in% c("lollipop", "barplot", "boxplot"),
-            # is.numeric(error.bars) || error.bars %in% c("sd", "range"),
-            is.logical(TRUE),
-            is.logical(plot),
-            is.logical(plot.points),
-            is.logical(legend),
-            is.logical(grid),
-            length(col) %in% 1:2
+  imp.type <- match.arg(imp.type, c("each", "permutation"))
+  plot.type <- match.arg(plot.type, c("lollipop", "barplot", "boxplot"))
+  
+  stopifnot(# is.numeric(error.bars) || error.bars %in% c("sd", "range"),
+    is.logical(TRUE),
+    is.logical(plot),
+    is.logical(plot.points),
+    is.logical(legend),
+    is.logical(grid),
+    length(col) %in% 1:2
   )
   
   is_bart <- methods::is(model, "bart") || methods::is(model, "pbart") || methods::is(model, "lbart")
   is_flexbart <- methods::is(model, "list") && c("varcounts", "trees") %in% names(model)
+  
+  if ((is_bart || is_flexbart) && imp.type == "permutation")
+    stop("imp.type='permutation' not yet implemented for BART models")
+    
   
   if (!is_bart && !is_flexbart)  error.bars <- NA
   
@@ -25,141 +30,216 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     if (verbosity > 0) message ("'reorder' set to FALSE, as this version of 'flexBART' does not carry variable names, which would make it impossible to match variables with importance values. Variables are in the order in which they were provided to the 'flexBART' model, with the continuous preceding the categorical ones. Update 'flexBART' if you want the variables named and reordered.")
   }
   
-  if (methods::is(model, "glm")) {  #  && !methods::is(model, "Gam")
-    
-    if (family(model)$family != "binomial")  stop ("This function is currently only implemented for binary-response models of family 'binomial'.")
-    
-    # if (measure == "z") {
-    metric <- ifelse(isTRUE(relative), "Relative z value", "Absolute z value")
-    if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
-    varimp <- summary(model)$coefficients[-1, "z value"]
-    if (isTRUE(relative)) varimp <- varimp / sum(abs(varimp))
-    ylab <- metric
-    # }
-    
-    # if (measure == "Wald") {  # requires 'fuzzySim' and 'aod'
-    #   ylab <- "Wald"
-    #   legend <- FALSE
-    #   smry <- summaryWald(model, interceptLast = FALSE)[-1, ]
-    #   varimp <- smry[ , "Wald"]
-    #   names(varimp) <- rownames(smry)
-    #   varimp <- varimp[order(varimp, decreasing = TRUE)]
-    # }
-  }  # end if glm
   
-  else if (methods::is(model, "gbm")) {
-    # requireNamespace("gbm")  # would require a suggest/depend
-    if ("gbm" %in% .packages()) {
-      metric <- "Relative influence"
+  if (imp.type == "each") {
+    
+    if (methods::is(model, "glm")) {  #  && !methods::is(model, "Gam")
+      
+      if (family(model)$family != "binomial")  stop ("This function is currently only implemented for binary-response models of family 'binomial'.")
+      
+      # if (measure == "z") {
+      metric <- ifelse(isTRUE(relative), "Relative z value", "Absolute z value")
+      if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
+      varimp <- summary(model)$coefficients[-1, "z value"]
+      if (isTRUE(relative)) varimp <- varimp / sum(abs(varimp))
+      ylab <- metric
+      # }
+      
+      # if (measure == "Wald") {  # requires 'fuzzySim' and 'aod'
+      #   ylab <- "Wald"
+      #   legend <- FALSE
+      #   smry <- summaryWald(model, interceptLast = FALSE)[-1, ]
+      #   varimp <- smry[ , "Wald"]
+      #   names(varimp) <- rownames(smry)
+      #   varimp <- varimp[order(varimp, decreasing = TRUE)]
+      # }
+    }  # end if glm
+    
+    else if (methods::is(model, "gbm")) {
+      # requireNamespace("gbm")  # would require a suggest/depend
+      if ("gbm" %in% .packages()) {
+        metric <- "Relative influence"
+        if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
+        ylab <- metric
+        smry <- summary(model, plotit = FALSE)
+        varimp <- smry[ , "rel.inf"] / 100
+        names(varimp) <- smry[ , "var"]
+      } else {
+        stop("package 'gbm' needs to be loaded first.")
+      }
+    }
+    
+    else if (methods::is(model, "GBMFit")) {
+      if ("gbm3" %in% .packages()) {
+        metric <- "Relative influence"
+        if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
+        ylab <- metric
+        smry <- summary(model, plot_it = FALSE)
+        varimp <- smry[ , "rel_inf"] / 100
+        names(varimp) <- smry[ , "var"]
+      } else {
+        stop("package 'gbm3' needs to be loaded first.")
+      }
+    }
+    
+    else if (methods::is(model, "randomForest")) {
+      metric <- colnames(model$importance)
+      if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
+      varimp <- model$importance  # / nrow(model$importance) / 100  # doesn't work well for mean accuracy decrease
+      names(varimp) <- rownames(model$importance)
+      ylab <- metric
+    }
+    
+    
+    else if (is_bart || is_flexbart) {
+      
+      # metric <- "Proportion of splits used"
+      metric <- ifelse(isTRUE(relative), "Proportion of splits used", "Number of splits used")
       if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
       ylab <- metric
-      smry <- summary(model, plotit = FALSE)
-      varimp <- smry[ , "rel.inf"] / 100
-      names(varimp) <- smry[ , "var"]
-    } else {
-      stop("package 'gbm' needs to be loaded first.")
-    }
-  }
-  
-  else if (methods::is(model, "GBMFit")) {
-    if ("gbm3" %in% .packages()) {
-      metric <- "Relative influence"
-      if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
-      ylab <- metric
-      smry <- summary(model, plot_it = FALSE)
-      varimp <- smry[ , "rel_inf"] / 100
-      names(varimp) <- smry[ , "var"]
-    } else {
-      stop("package 'gbm3' needs to be loaded first.")
-    }
-  }
-  
-  else if (methods::is(model, "randomForest")) {
-    metric <- colnames(model$importance)
-    if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
-    varimp <- model$importance  # / nrow(model$importance) / 100  # doesn't work well for mean accuracy decrease
-    names(varimp) <- rownames(model$importance)
-    ylab <- metric
-  }
-  
-  
-  else if (is_bart || is_flexbart) {
-    
-    # metric <- "Proportion of splits used"
-    metric <- ifelse(isTRUE(relative), "Proportion of splits used", "Number of splits used")
-    if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
-    ylab <- metric
-    
-    if ("varcounts" %in% names(model)) { # in flexBART models
-      names(model)[grep("varcounts", names(model))] <- "varcount"  # to homogenize
-    }
-    
-    # varimps <- model[["varcount"]] / rowSums(model[["varcount"]])
-    varimps <- model[["varcount"]]
-    if (isTRUE(relative)) varimps <- varimps / rowSums(model[["varcount"]])
-    varimp <- colMeans(varimps)
-    
-    if (group.cats) {
-      if (methods::is(model, "bart")) {
-        cat.vars <- names(which(lapply(attr(model$fit$data@x, "drop"), length) > 1))
-        names.nosuffix <- names(varimp)
-        for (v in cat.vars) {
-          v.inds <- grep(v, colnames(model$fit$data@x))
-          names.nosuffix[v.inds] <- v
+      
+      if ("varcounts" %in% names(model)) { # in flexBART models
+        names(model)[grep("varcounts", names(model))] <- "varcount"  # to homogenize
+      }
+      
+      # varimps <- model[["varcount"]] / rowSums(model[["varcount"]])
+      varimps <- model[["varcount"]]
+      if (isTRUE(relative)) varimps <- varimps / rowSums(model[["varcount"]])
+      varimp <- colMeans(varimps)
+      
+      if (group.cats) {
+        if (methods::is(model, "bart")) {
+          cat.vars <- names(which(lapply(attr(model$fit$data@x, "drop"), length) > 1))
+          names.nosuffix <- names(varimp)
+          for (v in cat.vars) {
+            v.inds <- grep(v, colnames(model$fit$data@x))
+            names.nosuffix[v.inds] <- v
+          }
+        }
+        
+        else if (methods::is(model, "pbart") || methods::is(model, "lbart")) {
+          names.nosuffix <- gsub("[0-9]+$", "", colnames(model$varcount))
+        }  # but WATCH OUT: other variables with numeric suffix (e.g. "o2" and "o3") will be grouped too! also cat vars with same name but different numeric suffix, e.g. "var" and "var2"
+        
+        if (!is_flexbart) {
+          
+          varimp.df <- data.frame(names = names.nosuffix, varimp, row.names = NULL)
+          varimp.df <- aggregate(varimp.df$varimp, by = list(varimp.df$names), FUN = sum)
+          varimp <- varimp.df$x
+          names(varimp) <- varimp.df$Group.1
+          
+          colnames(varimps) <- names.nosuffix
+          varimps.agg <- apply(varimps, 1, aggregate, sum, by = list(colnames(varimps)))
+          varimps.agg <- lapply(varimps.agg, getElement, "x")
+          varimps <- do.call(rbind.data.frame, varimps.agg)
+          colnames(varimps) <- names(varimp)
+        }
+      }  # end if group.cats
+      
+      if (methods::is(model, "bart")) {  #  || methods::is(model, "pbart") || methods::is(model, "lbart")
+        if (is.null(model$fit)) {
+          stop("'model' does not contain the required info; please compute it with keeptrees=TRUE")
+        }
+        
+        if (is.null(colnames(model$fit$data@x))) {
+          # colnames(model$fit$data@x) <- paste0("X", 1:ncol(model$fit$data@x))  # didn't work, pbb because other attributes were missing
+          stop("'model' does not have predictor attributes; please compute it with column names in the predictor variables")
+        }
+        
+        # if (methods::is(model, "bart"))
+        dropped.vars <- names(which(unlist(attr(model$fit$data@x, "drop")) == 1))
+        # else dropped.vars <- colnames(model$varcount)[model$rm.const]  # no, because these names already have the cat vars divided and renamed according to their factor levels, so the 'rm.const' indices do not correctly match the original var names
+        
+        n.dropped <- length(dropped.vars)
+        if (n.dropped > 0) {
+          if (verbosity > 0) message("The following variables had been automatically dropped by the model (e.g. for having no variability):  ", paste(dropped.vars, collapse = ", "))
+          dropped.varimp <- rep(0, n.dropped)
+          names(dropped.varimp) <- dropped.vars
+          varimp <- c(varimp, dropped.varimp)
+          varimps[ , dropped.vars] <- 0
         }
       }
       
-      else if (methods::is(model, "pbart") || methods::is(model, "lbart")) {
-        names.nosuffix <- gsub("[0-9]+$", "", colnames(model$varcount))
-      }  # but WATCH OUT: other variables with numeric suffix (e.g. "o2" and "o3") will be grouped too! also cat vars with same name but different numeric suffix, e.g. "var" and "var2"
-      
-      if (!is_flexbart) {
-        
-        varimp.df <- data.frame(names = names.nosuffix, varimp, row.names = NULL)
-        varimp.df <- aggregate(varimp.df$varimp, by = list(varimp.df$names), FUN = sum)
-        varimp <- varimp.df$x
-        names(varimp) <- varimp.df$Group.1
-        
-        colnames(varimps) <- names.nosuffix
-        varimps.agg <- apply(varimps, 1, aggregate, sum, by = list(colnames(varimps)))
-        varimps.agg <- lapply(varimps.agg, getElement, "x")
-        varimps <- do.call(rbind.data.frame, varimps.agg)
-        colnames(varimps) <- names(varimp)
-      }
-    }  # end if group.cats
+    }  # end if bart
     
-    if (methods::is(model, "bart")) {  #  || methods::is(model, "pbart") || methods::is(model, "lbart")
-      if (is.null(model$fit)) {
-        stop("'model' does not contain the required info; please compute it with keeptrees=TRUE")
+    else if (methods::is(model, "maxnet")) {
+      
+      if (imp.type == "each") {
+        if (verbosity > 0) message("'imp.type' changed to 'permutation', as 'each' is not implemented for this class of 'model'.")
+        imp.type <- "permutation"
       }
       
-      if (is.null(colnames(model$fit$data@x))) {
-        # colnames(model$fit$data@x) <- paste0("X", 1:ncol(model$fit$data@x))  # didn't work, pbb because other attributes were missing
-        stop("'model' does not have predictor attributes; please compute it with column names in the predictor variables")
-      }
+    }
       
-      # if (methods::is(model, "bart"))
-      dropped.vars <- names(which(unlist(attr(model$fit$data@x, "drop")) == 1))
-      # else dropped.vars <- colnames(model$varcount)[model$rm.const]  # no, because these names already have the cat vars divided and renamed according to their factor levels, so the 'rm.const' indices do not correctly match the original var names
-      
-      n.dropped <- length(dropped.vars)
-      if (n.dropped > 0) {
-        if (verbosity > 0) message("The following variables had been automatically dropped by the model (e.g. for having no variability):  ", paste(dropped.vars, collapse = ", "))
-        dropped.varimp <- rep(0, n.dropped)
-        names(dropped.varimp) <- dropped.vars
-        varimp <- c(varimp, dropped.varimp)
-        varimps[ , dropped.vars] <- 0
-      }
+    
+    else stop ("'model' is of a non-implemented class.")
+    
+  }  # end if imp.type = "each"
+  
+  
+  if (imp.type == "permutation") {  # do not add 'else', to allow imp.type changes above
+    
+    metric <- "Permutation importance"
+    
+    
+    if (methods::is(model, "glm") || methods::is(model, "Gam") || methods::is(model, "gbm") || methods::is(model, "GBMFit"))
+      pred.type <- "response"
+    
+    else if (methods::is(model, "randomForest"))
+      pred.type <- "prob"
+    
+    else if (is_bart)
+      pred.type <- "ev"
+    
+    else if (methods::is(model, "maxnet"))
+      pred.type <- "cloglog"
+    
+    
+    if (is.null(data)) {
+      data <- as.data.frame(mod2obspred(model, x.only = TRUE))
+      names(data) <- gsub("s\\(|\\)", "", names(data))  # for gam models
     }
     
-  }  # end if bart
+    
+    if (inherits(model, "bart"))
+      original_predictions <- as.vector(dbarts:::predict.bart(model, as.data.frame(data), type = pred.type))
+    else
+      original_predictions <- as.vector(predict(model, as.data.frame(data), type = pred.type, n.trees = n.trees))
+    
+    varimp <- numeric(ncol(data))
+    
+    for (v in seq_along(varimp)) {
+      permuted_scores <- numeric(n.per)
+      
+      for (p in 1:n.per) {
+        permuted_data <- data
+        permuted_data[ , v] <- sample(permuted_data[ , v])
+        if (inherits(model, "bart"))
+          permuted_predictions <- as.vector(dbarts:::predict.bart(model, as.data.frame(data)))
+        else
+          permuted_predictions <- as.vector(predict(model, as.data.frame(permuted_data), type = pred.type))
+        permuted_scores[p] <- sqrt(mean((original_predictions - permuted_predictions) ^ 2))  # RMSE
+      }
+      
+      varimp[v] <- mean(permuted_scores)
+    }  # end for v
+    
+    if (relative) {
+      divisor <- sum(varimp)
+      if (isTRUE(all.equal(divisor, 0))) divisor <- divisor + 0.00001
+      varimp <- varimp / divisor
+    }
+    
+    names(varimp) <- colnames(data)
+    
+  }  # end if imp.type="perm"
   
-  else stop ("'model' is of a non-implemented class.")
   
   if (reorder) {
     varimp <- varimp[order(abs(varimp), decreasing = TRUE)]
     if (is_bart)  varimps <- varimps[ , names(varimp)]
   }
+  
   
   if (!is.na(error.bars)) {
     if (error.bars == "sd") {
@@ -175,6 +255,7 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
       eb_upper <- quants[2, ]
     } else stop ("Invalid 'error.bars' argument; see help for valid options.")
   }  # end if error.bars
+  
   
   if (plot) {
     plot.args <- list(...)  # https://www.r-bloggers.com/2020/11/some-notes-when-using-dot-dot-dot-in-r/

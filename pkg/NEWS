@@ -1,4 +1,23 @@
 ===============================================
+modEvA v3.31 (committed 2025-03-05)
+===============================================
+
+## Modified functions:
+
+* varImp
+- added option "permutation" for argument 'imp.type' (pending implementation for BART models)
+- added partial argument matching
+- added arguments 'n.per', 'data' and 'n.trees' for some model classes when imp.type="permutation"
+- implemented also for 'maxnet' models if imp.type = "permutation"
+
+* mod2obspred
+- added option x.only = FALSE; if TRUE, the values of the predictors are returned instead (for varImp if imp.type = "permutation")
+
+* AUC
+- 'interval' new default "auto", to make it smaller as 'pred' mean departs from 0.5
+
+
+===============================================
 modEvA v3.30 (committed 2025-02-21)  ->  CRAN
 ===============================================
 

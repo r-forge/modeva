@@ -4,7 +4,7 @@
 Threshold-based measures of model evaluation
 }
 \description{
-This function calculates a number of measures for evaluating the classification accuracy of a species distribution (or ecological niche, or bioclimatic envelope...) model against observed presence-absence data (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013; Wunderlich et al. 2019), upon the choice of a threshold value above which the model is considered to predict that the species should be present.
+This function calculates a number of measures (described in Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013; Wunderlich et al. 2019) for evaluating the classification accuracy of a species distribution (or ecological niche, or bioclimatic envelope) model against observed presence-(pseudo)absence data, upon the choice of a threshold value above which the model is considered to predict that the species should be present.
 }
 \usage{
 threshMeasures(model = NULL, obs = NULL, pred = NULL, thresh,
