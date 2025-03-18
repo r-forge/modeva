@@ -202,7 +202,7 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     
     
     if (inherits(model, "bart"))
-      original_predictions <- as.vector(dbarts:::predict.bart(model, as.data.frame(data), type = pred.type))
+      original_predictions <- as.vector(predict(model, as.data.frame(data), type = pred.type))
     else
       original_predictions <- as.vector(predict(model, as.data.frame(data), type = pred.type, n.trees = n.trees))
     
@@ -215,7 +215,7 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
         permuted_data <- data
         permuted_data[ , v] <- sample(permuted_data[ , v])
         if (inherits(model, "bart"))
-          permuted_predictions <- as.vector(dbarts:::predict.bart(model, as.data.frame(data)))
+          permuted_predictions <- as.vector(predict(model, as.data.frame(data)))
         else
           permuted_predictions <- as.vector(predict(model, as.data.frame(permuted_data), type = pred.type))
         permuted_scores[p] <- sqrt(mean((original_predictions - permuted_predictions) ^ 2))  # RMSE

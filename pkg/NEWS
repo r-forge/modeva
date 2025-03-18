@@ -1,4 +1,15 @@
 ===============================================
+modEvA v3.32 (committed 2025-03-18)
+===============================================
+
+## Modified functions:
+
+* plotCoeffs
+- return also data frame with the results 
+- improve Details section
+
+
+===============================================
 modEvA v3.31 (committed 2025-03-05)
 ===============================================
 
