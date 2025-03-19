@@ -6,7 +6,7 @@ This function creates a lollipop chart (by default), a points chart (if \code{st
 }
 \usage{
   lollipop(x, names = NULL, ymin = 0, ylim = "auto0", sticks = TRUE, 
-  col = "royalblue", grid = TRUE, cex = 1, cex.axis = 1, las = 2, 
+  col = "royalblue4", grid = TRUE, cex = 1, cex.axis = 1, las = 2, 
   horiz = FALSE, bold = FALSE, ...)
 }
 \arguments{

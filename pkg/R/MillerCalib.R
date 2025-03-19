@@ -1,4 +1,4 @@
-MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line.col = "darkblue", diag = TRUE, diag.col = "royalblue", plot.values = TRUE, digits = 2, xlab = "", ylab = "", main = "Miller calibration", na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
+MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line.col = "darkblue", diag = TRUE, diag.col = "lightblue3", plot.values = TRUE, digits = 2, xlab = "", ylab = "", main = "Miller calibration", na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
   # version 2.0 (18 Dec 2024)
 
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)

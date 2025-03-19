@@ -6,7 +6,7 @@ This function calculates Miller's (1991) calibration statistics for a presence p
 }
 \usage{
 MillerCalib(model = NULL, obs = NULL, pred = NULL, plot = TRUE,
-line.col = "darkblue", diag = TRUE, diag.col = "royalblue", 
+line.col = "darkblue", diag = TRUE, diag.col = "lightblue3", 
 plot.values = TRUE, digits = 2, xlab = "", ylab = "", 
 main = "Miller calibration", na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...)
 }

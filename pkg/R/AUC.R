@@ -1,4 +1,4 @@
-AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = "auto", FPR.limits = c(0, 1), curve = "ROC", pbg = FALSE, method = NULL, plot = TRUE, diag = TRUE, diag.col = "lightblue3", diag.lty = 2, curve.col = "darkblue", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto", ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
+AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = "auto", FPR.limits = c(0, 1), curve = "ROC", pbg = FALSE, method = NULL, plot = TRUE, diag = TRUE, diag.col = "lightblue3", diag.lty = 2, curve.col = "darkblue", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto", cex.lab = 0.9, ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
   
   # version 3.4 (4 Mar 2025)
   
@@ -127,7 +127,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     
     par_mgp <- par()$mgp
     on.exit(par(mgp = par_mgp))
-    par(mgp = c(3, 0.7, 0))
+    par(mgp = c(2.7, 0.7, 0))
     
     if (curve == "ROC") {
       if (xlab == "auto") xlab <- c("False positive rate", "(1-specificity)")
@@ -142,8 +142,9 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     if (curve == "PR") diag_vals <- c(1, 0)
     d <- ifelse(diag, "l", "n")  # to plot the 0.5 diagonal (or not if diag=FALSE)
     
-    plot(x = c(0, 1), y = diag_vals, type = d, xlab = "", ylab = ylab, col = diag.col, lty = diag.lty, ...)
-    mtext(xlab, side = 1, line = c(2, 3))
+    plot(x = c(0, 1), y = diag_vals, type = d, xlab = "", ylab = "", col = diag.col, lty = diag.lty, ...)
+    mtext(xlab, side = 1, line = c(2, 3), cex = cex.lab)
+    mtext(ylab, side = 2, line = c(3, 2), cex = cex.lab)
     
     # if (grid) abline(h = thresholds, v = thresholds, lty = grid.lty, col = "lightgrey")
     grid.seq <- seq(0, 1, by = 0.1)
