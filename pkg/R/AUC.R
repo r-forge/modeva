@@ -26,7 +26,10 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
   )
   
   if (interval == "auto"){
-    interval <- round(0.01 - (abs(mean(pred) - 0.5) * 0.018), 3)  # makes interval range between 0.001 and 0.01, proportionally to how close mean(pred) is to 0.5
+    # interval <- round(0.01 - (abs(mean(pred) - 0.5) * 0.018), 3)  # makes interval range between 0.001 and 0.01, proportionally to how close mean(pred) is to 0.5
+    coverage <- table(cut(pred, breaks = seq(0, 1, by = 1/3)))
+    if (all(coverage > 0)) interval <- 0.01
+    else interval <- 0.001
   }
   
   if (is.null(method)) {

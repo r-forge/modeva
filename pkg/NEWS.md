@@ -5,7 +5,8 @@
 ### Modified functions:
 
 * AUC
-    - added cex.lab argument 
+    - interval="auto" now 0.01 or 0.001 depending on 'pred' coverage
+    - added cex.lab argument
     - improved axis labels
 
 * MillerCalib, lollipop
