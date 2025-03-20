@@ -1,5 +1,6 @@
 
-# Version 3.33 (committed 2025-03-19)  ->  CRAN
+# Version 3.33 
+## (Committed 2025-03-19) -> CRAN
 
 
 ### Modified functions:
@@ -20,7 +21,8 @@
     
     
 
-# Version 3.32 (committed 2025-03-18)
+# Version 3.32 
+## (Committed 2025-03-18)
 
 
 ### Modified functions:
@@ -31,7 +33,8 @@
 
 
 
-# Version 3.31 (committed 2025-03-05)
+# Version 3.31 
+## (Committed 2025-03-05)
 
 
 ### Modified functions:
@@ -50,7 +53,8 @@
 
 
 
-# Version 3.30 (committed 2025-02-21)  ->  CRAN
+# Version 3.30 
+## (Committed 2025-02-21) -> CRAN
 
 
 ### Modified functions:
@@ -60,7 +64,8 @@
 
 
 
-# Version 3.29 (committed 2025-02-14)  ->  CRAN
+# Version 3.29 
+## (Committed 2025-02-14) -> CRAN
 
 
 ### Modified functions:
@@ -71,7 +76,8 @@
 
 
 
-# Version 3.28 (committed 2025-02-10)
+# Version 3.28 
+## (Committed 2025-02-10)
 
 
 ### Modified functions:
@@ -92,7 +98,8 @@
 
 
 
-# Version 3.27 (committed 2025-01-28)
+# Version 3.27 
+## (Committed 2025-01-28)
 
 
 ### Modified functions:
@@ -111,7 +118,8 @@
 
 
 
-# Version 3.26 (committed 2025-01-27)
+# Version 3.26 
+## (Committed 2025-01-27)
 
 
 ### Modified functions:
@@ -134,7 +142,8 @@
 
 
 
-# Version 3.25 (committed 2024-12-27)
+# Version 3.25 
+## (Committed 2024-12-27)
 
 
 ### Modified functions:
@@ -162,7 +171,8 @@
 
 
 
-# Version 3.24 (committed 2024-12-18)
+# Version 3.24 
+## (Committed 2024-12-18)
 
 
 ### Modified functions:
@@ -175,7 +185,8 @@
 
 
 
-# Version 3.23 (committed 2024-11-24)  ->  CRAN
+# Version 3.23 
+## (Committed 2024-11-24) -> CRAN
 
 
 ### Modified functions:
@@ -192,7 +203,8 @@
 
 
 
-# Version 3.22 (committed 2024-11-19)
+# Version 3.22 
+## (Committed 2024-11-19)
 
 
 ### Modified functions:
@@ -202,7 +214,8 @@
 
 
 
-# Version 3.21 (committed 2024-11-19)
+# Version 3.21 
+## (Committed 2024-11-19)
 
 
 ### Modified functions:
@@ -222,7 +235,8 @@
 
 
 
-# Version 3.20 (committed 2024-10-28)  ->  CRAN
+# Version 3.20 
+## (Committed 2024-10-28) -> CRAN
 
 
 ### Modified functions:
@@ -239,7 +253,8 @@
 
 
 
-# Version 3.19 (committed 2024-10-02)
+# Version 3.19 
+## (Committed 2024-10-02)
 
 
 ### New functions:
@@ -263,7 +278,8 @@
 
 
 
-# Version 3.18.2 (committed 2024-08-28)  ->  CRAN
+# Version 3.18.2 
+## (Committed 2024-08-28) -> CRAN
 
 
 ### Modified functions:
@@ -280,7 +296,8 @@
 
 
 
-# Version 3.18.1 (committed 2024-08-09)
+# Version 3.18.1 
+## (Committed 2024-08-09)
 
 
 ### Modified functions:
@@ -303,7 +320,8 @@
 
 
 
-# Version 3.18 (committed 2024-08-08)
+# Version 3.18 
+## (Committed 2024-08-08)
 
 
 ### Modified functions:
@@ -313,7 +331,8 @@
 
 
 
-# Version 3.17.1 (committed 2024-06-07)
+# Version 3.17.1 
+## (Committed 2024-06-07)
 
 
 ### Modified files:
@@ -324,7 +343,8 @@
 
 
 
-# Version 3.17 (committed 2024-06-06)  ->  CRAN
+# Version 3.17 
+## (Committed 2024-06-06) -> CRAN
 
 
 ### Modified functions:
@@ -337,7 +357,8 @@
 
 
 
-# Version 3.16 (committed 2024-06-05)
+# Version 3.16 
+## (Committed 2024-06-05)
 
 
 ### Modified functions:
@@ -354,7 +375,8 @@
 
 
 
-# Version 3.15 (committed 2024-03-25)
+# Version 3.15 
+## (Committed 2024-03-25)
 
 
 ### Modified functions:
@@ -364,7 +386,8 @@
 
 
 
-# Version 3.14 (committed 2024-02-01)
+# Version 3.14 
+## (Committed 2024-02-01)
 
 
 ### New functions:
@@ -379,7 +402,8 @@
 
 
 
-# Version 3.13.3 (committed 2024-01-19) -> CRAN
+# Version 3.13.3 
+## (Committed 2024-01-19) -> CRAN
 
 
 ### Modified functions:
@@ -392,7 +416,8 @@
 
 
 
-# Version 3.13.2 (committed 2024-01-18)
+# Version 3.13.2 
+## (Committed 2024-01-18)
 
 
 ### Modified functions:
@@ -402,7 +427,8 @@
 
 
 
-# Version 3.13.1 (committed 2024-01-17)
+# Version 3.13.1 
+## (Committed 2024-01-17)
 
 
 ### Modified functions:
@@ -413,7 +439,8 @@
 
 
 
-# Version 3.13 (committed 2024-01-16)
+# Version 3.13 
+## (Committed 2024-01-16)
 
 
 ### Modified functions:
@@ -429,7 +456,8 @@
 
 
 
-# Version 3.12 (committed 2023-12-14)
+# Version 3.12 
+## (Committed 2023-12-14)
 
 
 ### Modified functions:
@@ -467,7 +495,8 @@
 
 
 
-# Version 3.11 (committed 2023-11-25) -> CRAN
+# Version 3.11 
+## (Committed 2023-11-25) -> CRAN
 
 
 ### Modified functions:
@@ -477,7 +506,8 @@
 
 
 
-# Version 3.10 (committed 2023-11-10) -> CRAN
+# Version 3.10 
+## (Committed 2023-11-10) -> CRAN
 
 
 ### New functions:
@@ -494,7 +524,8 @@
 
 
 
-# Version 3.9.6 (committed 2023-10-04)
+# Version 3.9.6 
+## (Committed 2023-10-04)
 
 
 ### Modified functions:
@@ -511,7 +542,8 @@
 
 
 
-# Version 3.9.5 (committed 2023-01-02)
+# Version 3.9.5 
+## (Committed 2023-01-02)
 
 
 ### Modified functions:
@@ -524,7 +556,8 @@
 
 
 
-# Version 3.9.4 (committed 2023-04-26)
+# Version 3.9.4 
+## (Committed 2023-04-26)
 
 
 ### Modified functions:
@@ -534,7 +567,8 @@
 
 
 
-# Version 3.9.3 (committed 2023-04-14) -> CRAN
+# Version 3.9.3 
+## (Committed 2023-04-14) -> CRAN
 
 
 ### Modified functions:
@@ -550,7 +584,8 @@
 
 
 
-# Version 3.9.2 (committed 2023-03-19)
+# Version 3.9.2 
+## (Committed 2023-03-19)
 
 
 ### Modified functions:
@@ -568,7 +603,8 @@
 
 
 
-# Version 3.9.1 (committed 2023-02-26)
+# Version 3.9.1 
+## (Committed 2023-02-26)
 
 
 ### Modified functions:
@@ -587,7 +623,8 @@
 
 
 
-# Version 3.9 (committed 2023-01-12)  ->  CRAN
+# Version 3.9 
+## (Committed 2023-01-12) -> CRAN
 
 
 ### Modified functions:
@@ -603,7 +640,8 @@
 
 
 
-# Version 3.8.9 (committed 2023-01-11)
+# Version 3.8.9 
+## (Committed 2023-01-11)
 
 
 ### Modified functions:
@@ -624,7 +662,8 @@
 
 
 
-# Version 3.8.8 (committed 2023-01-05)
+# Version 3.8.8 
+## (Committed 2023-01-05)
 
 
 ### New functions:
@@ -653,7 +692,8 @@
 
 
 
-# Version 3.8.7 (committed 2022-12-22)
+# Version 3.8.7 
+## (Committed 2022-12-22)
 
 
 ### New functions:
@@ -668,7 +708,8 @@
 
 
 
-# Version 3.8.6 (committed 2022-12-20)
+# Version 3.8.6 
+## (Committed 2022-12-20)
 
 
 ### Modified functions:
@@ -679,7 +720,8 @@
 
 
 
-# Version 3.8.5 (committed 2022-11-06)
+# Version 3.8.5 
+## (Committed 2022-11-06)
 
 
 ### Modified functions:
@@ -692,7 +734,8 @@
 
 
 
-# Version 3.8.4 (committed 2022-10-28) -> CRAN
+# Version 3.8.4 
+## (Committed 2022-10-28) -> CRAN
 
 
 ### Modified functions:
@@ -702,7 +745,8 @@
 
 
 
-# Version 3.8.3 (committed 2022-10-27)
+# Version 3.8.3 
+## (Committed 2022-10-27)
 
 
 ### Modified functions:
@@ -722,7 +766,8 @@
 
 
 
-# Version 3.82 (committed 2022-07-21)
+# Version 3.8.2 
+## (Committed 2022-07-21)
 
 
 ### Modified functions:
@@ -733,7 +778,8 @@
 
 
 
-# Version 3.81 (committed 2022-07-20)
+# Version 3.8.1 
+## (Committed 2022-07-20)
 
 
 ### Modified functions:
@@ -743,7 +789,8 @@
 
 
 
-# Version 3.8 (committed 2022-07-20)
+# Version 3.8 
+## (Committed 2022-07-20)
 
 
 ### Modified functions:
@@ -755,7 +802,8 @@
 
 
 
-# Version 3.7 (committed 2022-07-10)
+# Version 3.7 
+## (Committed 2022-07-10)
 
 
 ### Modified functions:
@@ -771,7 +819,8 @@
 
 
 
-# Version 3.6 (committed 2022-06-14)
+# Version 3.6 
+## (Committed 2022-06-14)
 
 
 ### New functions:
@@ -791,7 +840,8 @@
 
 
 
-# Version 3.5 (committed 2022-05-16) -> CRAN
+# Version 3.5 
+## (Committed 2022-05-16) -> CRAN
 
 
 ### New functions:
@@ -822,7 +872,8 @@
 
 
 
-# Version 3.4 (committed 2022-05-06)
+# Version 3.4 
+## (Committed 2022-05-06)
 
 
 ### Modified functions:
@@ -836,7 +887,8 @@
 
 
 
-# Version 3.3 (committed 2022-05-03)
+# Version 3.3 
+## (Committed 2022-05-03)
 
 
 ### New functions:
@@ -881,7 +933,8 @@
 
 
 
-# Version 3.2 (committed 2022-03-13)
+# Version 3.2 
+## (Committed 2022-03-13)
 
 
 ### Modified functions:
@@ -902,7 +955,8 @@
 
 
 
-# Version 3.1 (committed 2022-02-22)
+# Version 3.1 
+## (Committed 2022-02-22)
 
 
 ### New functions:
@@ -925,7 +979,8 @@
 
 
 
-# Version 3.0 (committed 2021-12-20) -> CRAN
+# Version 3.0 
+## (Committed 2021-12-20) -> CRAN
 
 
 ### Modified functions:
@@ -944,7 +999,8 @@
 
 
 
-# Version 2.8 (committed 2021-12-03)
+# Version 2.8 
+## (Committed 2021-12-03)
 
 
 ### Modified functions:
@@ -956,7 +1012,8 @@
 
 
 
-# Version 2.7 (committed 2021-11-26)
+# Version 2.7 
+## (Committed 2021-11-26)
 
 
 ### New functions:
@@ -978,7 +1035,8 @@
 
 
 
-# Version 2.6 (committed 2021-11-01)
+# Version 2.6 
+## (Committed 2021-11-01)
 
 
 ### Modified functions:
@@ -1008,7 +1066,8 @@
 
 
 
-# Version 2.5 (committed 2021-10-31)
+# Version 2.5 
+## (Committed 2021-10-31)
 
 
 ### Modified functions:
@@ -1024,7 +1083,8 @@
 
 
 
-# Version 2.4 (committed 2021-10-30)
+# Version 2.4 
+## (Committed 2021-10-30)
 
 
 ### Modified functions:
@@ -1046,7 +1106,8 @@
 
 
 
-# Version 2.3 (committed 2021-09-30)
+# Version 2.3 
+## (Committed 2021-09-30)
 
 
 ### Modified functions:
@@ -1059,7 +1120,8 @@
 
 
 
-# Version 2.2 (committed 2021-09-08)
+# Version 2.2 
+## (Committed 2021-09-08)
 
 
 ### Modified functions:
@@ -1075,7 +1137,8 @@
 
 
 
-# Version 2.1 (committed 2021-01-15)
+# Version 2.1 
+## (Committed 2021-01-15)
 
 
 ### New functions:
@@ -1104,7 +1167,8 @@
 
 
 
-# Version 2.0 (committed 2020-01-21) -> CRAN
+# Version 2.0 
+## (Committed 2020-01-21) -> CRAN
 
 
 ### Modified functions:
@@ -1123,7 +1187,8 @@
 
 
 
-# Version 2.0 (committed 2020-01-20)
+# Version 2.0 
+## (Committed 2020-01-20)
 
 
 ### Modified functions:
@@ -1153,7 +1218,8 @@
 
 
 
-# Version 1.8 (committed 2020-01-17)
+# Version 1.8 
+## (Committed 2020-01-17)
 
 
 ### Modified functions:
@@ -1170,7 +1236,8 @@
 
 
 
-# Version 1.7 (committed 2020-01-16)
+# Version 1.7 
+## (Committed 2020-01-16)
 
 
 ### Modified functions:
@@ -1185,7 +1252,8 @@
 
 
 
-# Version 1.5 (committed 2020-01-15)
+# Version 1.5 
+## (Committed 2020-01-15)
 
 
 ### New functions:
@@ -1212,7 +1280,8 @@
 
 
 
-# Version 1.4.2 (committed 2020-01-03)
+# Version 1.4.2 
+## (Committed 2020-01-03)
 
 
 ### Modified functions:
@@ -1222,7 +1291,8 @@
 
 
 
-# Version 1.4.1 (committed 2019-10-18)
+# Version 1.4.1 
+## (Committed 2019-10-18)
 
 
 ### Modified functions:
@@ -1232,7 +1302,8 @@
 
 
 
-# Version 1.4 (committed 2018-11-28)
+# Version 1.4 
+## (Committed 2018-11-28)
 
 
 ### Modified functions:
@@ -1252,7 +1323,8 @@
 
 
 
-# Version 1.3.3 (committed 2017-03-24)
+# Version 1.3.3 
+## (Committed 2017-03-24)
 
 
 ### Modified functions:
@@ -1262,7 +1334,8 @@
 
 
 
-# Version 1.3.2 (committed 2016-07-12)
+# Version 1.3.2 
+## (Committed 2016-07-12)
 
 
 ### Modified functions:
@@ -1275,7 +1348,8 @@
 
 
 
-# Version 1.3.1 (committed 2016-06-27)
+# Version 1.3.1 
+## (Committed 2016-06-27)
 
 
 ### Modified functions:
@@ -1298,7 +1372,8 @@
 
 
 
-# Version 1.3 (committed 2016-06-16)
+# Version 1.3 
+## (Committed 2016-06-16)
 
 
 ### Modified functions:
@@ -1313,7 +1388,8 @@
 
 
 
-# Version 1.2.9 (committed 2016-06-06)
+# Version 1.2.9 
+## (Committed 2016-06-06)
 
 
 ### Modified functions:
@@ -1332,7 +1408,8 @@
 
 
 
-# Version 1.2.8 (committed 2016-04-18)
+# Version 1.2.8 
+## (Committed 2016-04-18)
 
 
 ### Modified functions:
@@ -1351,7 +1428,8 @@
 
 
 
-# Version 1.2.7 (committed 2016-04-15)
+# Version 1.2.7 
+## (Committed 2016-04-15)
 
 
 ### Modified functions:
@@ -1364,7 +1442,8 @@
 
 
 
-# Version 1.2.6 (committed 2016-04-13)
+# Version 1.2.6 
+## (Committed 2016-04-13)
 
 
 ### Modified functions:
@@ -1386,7 +1465,8 @@
 
 
 
-# Version 1.2.5 (committed 2016-03-30)
+# Version 1.2.5 
+## (Committed 2016-03-30)
 
 
 ### Modified functions:
@@ -1408,7 +1488,8 @@
 
 
 
-# Version 1.2.4 (committed 2016-03-22)
+# Version 1.2.4 
+## (Committed 2016-03-22)
 
 
 ### Modified functions:
@@ -1418,7 +1499,8 @@
 
 
 
-# Version 1.2.3 (committed 2015-12-10)
+# Version 1.2.3 
+## (Committed 2015-12-10)
 
 
 ### Modified functions:
@@ -1428,7 +1510,8 @@
 
 
 
-# Version 1.2.2 (committed 2015-11-27)
+# Version 1.2.2 
+## (Committed 2015-11-27)
 
 
 ### Modified functions:
@@ -1438,7 +1521,8 @@
 
 
 
-# Version 1.2.1 (committed 2015-11-26)
+# Version 1.2.1 
+## (Committed 2015-11-26)
 
 
 ### Modified functions:
