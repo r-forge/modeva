@@ -19,18 +19,20 @@ confusionLabel <- function(model = NULL, obs = NULL, pred = NULL, thresh, interv
   if (inherits(pred_in, "SpatRaster")) {
     finite_pixels <- which(is.finite(terra::values(pred_in)))
     out_rast <- pred_in
-    levs <- as.factor(out_chr)
+    # levs <- as.factor(out_chr)
+    levs <- factor(out_chr, levels = c("TrueNeg", "FalseNeg", "FalsePos", "TruePos"))  # for ordered levels, low to high
     terra::values(out_rast)[finite_pixels] <- levs  # only 'finite_pixels' because out_chr vector is shorter when input has NAs
 
     # convert to categorical raster:
     levels(out_rast) <- data.frame(id = as.integer(unique(levs)), cat = unique(out_chr))
 
     # set colours for raster categories:
-    colr_table <- data.frame(lev = as.factor(c("TruePos", "FalsePos", "TrueNeg", "FalseNeg")), col = c("royalblue", "lightblue", "red", "orange"))
-    existing_levs <- colr_table$lev %in% levels(out_rast)[[1]]$cat
-    terra::coltab(out_rast) <- data.frame(
-      values = droplevels(colr_table$lev[existing_levs]),
-      cols = colr_table$col[existing_levs])
+    # colr_table <- data.frame(lev = as.factor(c("TruePos", "FalsePos", "TrueNeg", "FalseNeg")), col = c("royalblue", "lightblue", "red", "orange"))
+    # colr_table <- data.frame(lev = as.factor(c("TrueNeg", "FalseNeg", "FalsePos", "TruePos")), col = c("red", "orange", "lightblue", "royalblue"))
+    # existing_levs <- colr_table$lev %in% levels(out_rast)[[1]]$cat
+    # terra::coltab(out_rast) <- data.frame(
+    #   values = droplevels(colr_table$lev[existing_levs]),
+    #   cols = colr_table$col[existing_levs])
 
     if (plot) terra::plot(out_rast, ...)
 

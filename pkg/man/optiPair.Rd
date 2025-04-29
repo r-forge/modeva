@@ -54,7 +54,7 @@ Liu C., White M., & Newell G. (2011) Measuring and comparing the accuracy of spe
 A. Marcia Barbosa
 }
 \seealso{
-\code{\link{optiThresh}}, \code{\link{threshMeasures}}
+\code{\link{getThreshold}}, \code{\link{optiThresh}}, \code{\link{threshMeasures}}
 }
 \examples{
 # load sample models:

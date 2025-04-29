@@ -33,9 +33,11 @@ MillerCalib <- function(model = NULL, obs = NULL, pred = NULL, plot = TRUE, line
     if (diag) abline(0, 1, lty = 2, col = diag.col)
     abline(intercept, slope, lwd = 2, col = line.col)
     if (plot.values) {
-      # plotext <- paste("intercept =" , round(intercept, digits), "\nslope =", round(slope, digits), "\nslope p-value =", round(slope.p, digits))
-      plotext <- paste0("slope = " , round(slope, digits), "\n(intercept = ", round(intercept, digits), ")")
-      text(x = 1, y = ymin + 0.15 * (ymax - ymin), adj = 1, labels = plotext)
+      # plotext <- paste0("slope = " , round(slope, digits), "\n(intercept = ", round(intercept, digits), ")")
+      # text(x = 1, y = ymin + 0.15 * (ymax - ymin), adj = 1, labels = plotext)
+      text(x = 1, y = ymin + 0.175 * (ymax - ymin), adj = 1, labels = paste0("slope = " , round(slope, digits)))
+      text(x = 1, y = ymin + 0.115 * (ymax - ymin), adj = 1, labels = paste0("intercept = ", round(intercept, digits)), col = "darkgrey", cex = 0.9)
+      text(x = 1, y = ymin + 0.05 * (ymax - ymin), adj = 1, labels = paste0("slope - 1 = ", round(slope - 1, digits)), col = "red", cex = 0.9)
     }  # end if plot.values
   }  # end if plot
 

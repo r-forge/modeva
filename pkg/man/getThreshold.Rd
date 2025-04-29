@@ -15,8 +15,8 @@ interval = 0.01, quant = 0, na.rm = TRUE, verbosity = 2, pbg = FALSE)
   \item{threshMethod}{Criterion under which to compute the threshold. Run modEvAmethods("getThreshold") for available options.}
   \item{interval}{Argument to pass to \code{\link{optiThresh}} indicating the interval between the thresholds to test. The default is 0.01. Smaller values may provide more precise results but take longer to compute.}
   \item{quant}{Numeric value indicating the proportion of presences to discard if threshMethod="MTP" (minimum training presence). With the default value 0, MTP will be the threshold at which all observed presences are classified as such; with e.g. quant=0.05, MTP will be the threshold at which 5\% presences will be classified as absences.}
-  \item{na.rm}{Logical value indicating whether NA values should be ignored. Defaults to TRUE.}
-  \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
+  \item{na.rm}{Logical value (default TRUE) indicating whether NA values should be ignored.}
+  \item{verbosity}{integer indicating the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{pbg}{logical value to pass to \code{\link{inputMunch}} indicating whether to use presence/background (rather than presence/absence) data. Default FALSE.}
 }
 \details{
@@ -64,7 +64,7 @@ Liu C., White M. & Newell G. (2013) Selecting thresholds for the prediction of s
 A. Marcia Barbosa
 }
 \seealso{
-\code{\link{threshMeasures}}, \code{\link{optiThresh}}
+\code{\link{optiThresh}}, \code{\link{optiPair}}, \code{\link{threshMeasures}}
 }
 \examples{
 # load sample models:

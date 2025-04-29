@@ -2,7 +2,7 @@
 \alias{MillerCalib}
 \title{Miller's calibration satistics for logistic regression models}
 \description{
-This function calculates Miller's (1991) calibration statistics for a presence probability model -- namely, the intercept and slope of a logistic regression of the response variable on the logit of predicted probabilities. Optionally and by default, it also plots the corresponding regression line over the reference diagonal (identity line). If the model is well calibrated, the line should lie along (or at least be nearly parallel to) the reference diagonal, i.e. the slope should ideally equal 1 (i.e., 45 degrees).
+This function calculates Miller's (1991) calibration statistics for a presence probability model -- namely, the intercept and slope of a logistic regression of the response variable on the logit of predicted probabilities. Optionally and by default, it also plots the corresponding regression line over the reference diagonal (identity line). If the model is well calibrated, the line should lie along (or at least be nearly parallel to) the reference diagonal, i.e. the slope should ideally equal 1.
 }
 \usage{
 MillerCalib(model = NULL, obs = NULL, pred = NULL, plot = TRUE,
@@ -14,16 +14,16 @@ main = "Miller calibration", na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...)
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
   \item{obs}{alternatively to 'model' and together with 'pred', a numeric vector of observed presences (1) and absences (0) of a binary response variable. Alternatively (and if 'pred' is a 'SpatRaster'), a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points, in which case the 'obs' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
   \item{pred}{alternatively to 'model' and together with 'obs', a vector with the corresponding predicted values of presence probability, habitat suitability, environmental favourability or alike. Must be of the same length and in the same order as 'obs'. Alternatively (and if 'obs' is a set of point coordinates), a 'SpatRaster' map of the predicted values for the entire evaluation region, in which case the 'pred' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
-  \item{plot}{logical, whether or not to produce a plot of the Miller regression line. Defaults to TRUE.}
+  \item{plot}{logical (default TRUE), whether or not to produce a plot of the Miller regression line.}
   \item{line.col}{colour for the Miller regression line (if plot = TRUE).}
-  \item{diag}{logical, whether or not to add the reference diagonal (if plot = TRUE). Defaults to TRUE.}
+  \item{diag}{logical (default TRUE), whether or not to add the reference diagonal (if plot = TRUE).}
   \item{diag.col}{line colour for the reference diagonal.}
-  \item{plot.values}{logical, whether or not to report the values of the intercept and slope on the plot. Defaults to TRUE.}
+  \item{plot.values}{logical (default TRUE), whether or not to report the values of the intercept and slope on the plot.}
   \item{digits}{integer number indicating the number of digits to which the values in the plot should be rounded. Dafaults to 2. This argument is ignored if 'plot' or 'plot.values' are set to FALSE.}
   \item{xlab}{label for the x axis.}
   \item{ylab}{label for the y axis.}
   \item{main}{title for the plot.}
-  \item{na.rm}{Logical value indicating whether missing values should be ignored in computations. Defaults to TRUE.}
+  \item{na.rm}{Logical value (default TRUE) indicating whether missing values should be ignored in computations.}
   \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
   \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{\dots}{additional arguments to pass to \code{\link{plot}}.}
@@ -43,7 +43,7 @@ Miller's calibration slope (though not the intercept) is also adequate to assess
 This function returns a list of two integer values:
 \item{intercept}{the calibration intercept.}
 \item{slope}{the calibration slope.}
-If \code{plot = TRUE}, a plot will be produced with the model calibration line, optionally (if diag = TRUE) over the reference diagonal, and optionally (if plot.values = TRUE) with the intercept and slope values printed on it.
+If \code{plot = TRUE}, a plot will be produced with the model calibration line, optionally (if diag = TRUE) over the reference diagonal, and also optionally (if plot.values = TRUE) with the intercept and slope values printed on it, as well as the difference between the slope and its optimal value.
 }
 \references{
 Baquero R.A., Barbosa A.M., Ayllon D., Guerra C., Sanchez E., Araujo M.B. & Nicola G.G. (2021) Potential distributions of invasive vertebrates in the Iberian Peninsula under projected changes in climate extreme events. Diversity and Distributions, 27(11): 2262-2276

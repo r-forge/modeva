@@ -4,7 +4,7 @@
 Optimize threshold for model evaluation.
 }
 \description{
-The 'optiThresh' function computes optimal thresholds for a number of model evaluation measures (see \code{\link{threshMeasures}}). Optimization is given for each measure, and/or for all measures according to particular criteria (e.g. Jimenez-Valverde & Lobo 2007; Liu et al. 2005; Nenzen & Araujo 2011). Results are given numerically and in plots.}
+This function computes a number of model evaluation measures at optimal thresholds (see \code{\link{threshMeasures}}). Optimization is given for each measure, and/or for all measures according to particular criteria (e.g. Jimenez-Valverde & Lobo 2007; Liu et al. 2005; Nenzen & Araujo 2011). Results are given numerically and in plots. See \code{\link{getThreshold}} if you're after the optimized threshold rather than the threshold-optimized evaluation measures.}
 \usage{
 optiThresh(model = NULL, obs = NULL, pred = NULL, interval = 0.01,
 measures = c(modEvAmethods("threshMeasures"), modEvAmethods("similarity")),
@@ -41,7 +41,7 @@ This function returns a list with the following components:
   \item{optimals.criteria}{a data frame with the values of measure at the threshold that maximizes each of the criteria specified in 'optimize' (except for "each", see above).}
 }
 \note{
-"Sensitivity" is the same as "Recall", and "PPP" (positive predictive power) is the same as "Precision". "F1score"" is the harmonic mean of precision and recall.
+"Sensitivity" is the same as "Recall", and "PPP" (positive predictive power) is the same as "Precision". "F1score" is the harmonic mean of precision and recall.
 }
 \references{
 Jimenez-Valverde A. & Lobo J.M. (2007) Threshold criteria for conversion of probability of species presence to either-or presence-absence. Acta Oecologica 31: 361-369.
@@ -57,7 +57,7 @@ A. Marcia Barbosa
 Some measures cannot be calculated for thresholds at which there are zeros in the confusion matrix, hence the eventual 'NaN' or 'Inf' in results. Also, optimization may be deceiving for some measures; use 'plot = TRUE' and inspect the plot(s).
 }
 \seealso{
-\code{\link{threshMeasures}}, \code{\link{optiPair}}
+\code{\link{getThreshold}}, \code{\link{optiPair}}, \code{\link{threshMeasures}}
 }
 \examples{
 # load sample models:

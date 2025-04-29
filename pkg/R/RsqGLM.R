@@ -1,5 +1,5 @@
-RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs", plot = TRUE, plot.type = "lollipop", ...) {
-  # version 1.96 (10 Feb 2025)
+RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs", plot = TRUE, plot.type = "lollipop", na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
+  # version 2.0 (29 Apr 2025)
 
   model.provided <- ifelse(is.null(model), FALSE, TRUE)
 
@@ -13,8 +13,13 @@ RsqGLM <- function(model = NULL, obs = NULL, pred = NULL, use = "pairwise.comple
   } else { # if model not provided
 
     if (is.null(obs) | is.null(pred)) stop ("You must provide either 'obs' and 'pred', or a 'model' object of class 'glm'.")
-    if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
-
+    # if (length(obs) != length(pred))  stop ("'obs' and 'pred' must have the same number of values (and in the same order).")
+    
+    # new (29 Apr 2025):
+    obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)  
+    obs <- obspred[ , "obs"]
+    pred <- obspred[ , "pred"]
+    
     pred[pred == 0] <- 2e-16  # avoid NaN in log below
     pred[pred == 1] <- 1 - 2e-16  # avoid NaN in log below
 

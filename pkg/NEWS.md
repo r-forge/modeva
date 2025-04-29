@@ -1,4 +1,22 @@
 
+# Version 3.34
+## (Committed 2025-04-29)
+
+### Modified functions:
+
+* MillerCalib
+    - plot text now grey for intercept
+    - plot text now includes 1-slope (in red)
+    
+* confusionLabel
+    - reordered output categories, low to high rather than alphabetical
+    - removed colour table for rasters
+    
+* RsqGLM
+    - implemented for raster inputs
+    
+
+
 # Version 3.33 
 ## (Committed 2025-03-19) -> CRAN
 
@@ -17,7 +35,7 @@
 ## Other modified files:
 
 * NEWS
-    - reformatted and converted to .md
+    - reformatted and converted to .md to work with news()
     
     
 
