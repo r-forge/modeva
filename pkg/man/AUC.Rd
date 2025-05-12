@@ -51,7 +51,7 @@ In the case of the "ROC" curve (the default), the AUC is a measure of the overal
 
 If 'curve' is set to "PR", or if 'method' is manually set to "trapezoid", the AUC value will be more accurate if 'interval' is decreased (see 'method' and 'interval' arguments above). The plotted curve will also be more accurate with smaller 'interval' values, especially for imbalanced datasets (which can cause an apparent disagreement between the look of the curve and the actual value of the AUC).
 
-Mind that the AUC has been widely criticized (e.g. Lobo et al. 2008, Jimenez-Valverde et al. 2013), but is still among the most widely used metrics in model evaluation. It is highly correlated with species prevalence (as are all model discrimination and classification metrics), so prevalence is also output by the AUC function (if \code{simplif = FALSE}, the default) for reference.
+Swets (1988) proposed the following thresholds for interpreting ROC AUC scores: below 0.6 = fail; 0.6 to 0.7 = poor; 0.7 to 0.8 = fair; 0.8 to 0.9 = good; 0.9 or higher = excellent. Mind that the ROC AUC has been widely criticized (e.g. Lobo et al. 2008, Jimenez-Valverde et al. 2013), though is still a widely used metric in model evaluation. It is highly correlated with species prevalence (as are the generality of discrimination and classification metrics, including TSS), so prevalence is also output by the AUC function (if \code{simplif = FALSE}, the default) for reference.
 
 Although there are functions to calculate the AUC in other R packages (e.g. \pkg{ROCR}, \pkg{PresenceAbsence}, \pkg{verification}, \pkg{Epi}, \pkg{PRROC}, \pkg{PerfMeas}, \pkg{precrec}), the \code{AUC} function is more compatible with the remaining functions in \pkg{modEvA}, and it can be applied not only to a set of observed vs. predicted values, but also directly to a model object of class "glm", "gam", "gbm", "randomForest" or "bart".
 }
@@ -66,11 +66,13 @@ If \code{simplif = TRUE}, the function returns only the AUC value (a numeric val
 \item{GiniCoefficient}{the Gini coefficient, measured as the area between the ROC curve and the diagonal divided by the area of the upper triangle (2*AUC-1).}
 }
 \references{
-Lobo, J.M., Jimenez-Valverde, A. & Real, R. (2008). AUC: a misleading measure of the performance of predictive distribution models. Global Ecology and Biogeography 17: 145-151
+Lobo, J.M., Jimenez-Valverde, A. & Real, R. (2008) AUC: a misleading measure of the performance of predictive distribution models. Global Ecology and Biogeography 17: 145-151
 
-Jimenez-Valverde, A., Acevedo, P., Barbosa, A.M., Lobo, J.M. & Real, R. (2013). Discrimination capacity in species distribution models depends on the representativeness of the environmental domain. Global Ecology and Biogeography 22: 508-516
+Jimenez-Valverde, A., Acevedo, P., Barbosa, A.M., Lobo, J.M. & Real, R. (2013) Discrimination capacity in species distribution models depends on the representativeness of the environmental domain. Global Ecology and Biogeography 22: 508-516
 
 Sofaer, H.R., Hoeting, J.A. & Jarnevich, C.S. (2019). The area under the precision-recall curve as a performance metric for rare binary events. Methods in Ecology and Evolution, 10: 565-577
+
+Swets, J.A. (1988) Measuring the accuracy of diagnostic systems. Science, 240: 1285-1293 (doi: 10.1126/science.3287615)
 }
 \author{
 A. Marcia Barbosa

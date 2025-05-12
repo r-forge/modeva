@@ -22,7 +22,9 @@ verbosity = 2, ...)
   \item{\dots}{additional arguments to pass to the plotting function (see Examples).}
 }
 \details{
-Implemented measures include the R-squareds of McFadden (1974), Cox-Snell (1989), Nagelkerke (1991, which corresponds to the corrected Cox-Snell, eliminating its upper bound), and Tjur (2009). See Allison (2014) for a brief review of these measures.
+Implemented measures include the R-squared metrics of McFadden (1974), Cox-Snell (1989), Nagelkerke (1991, which corresponds to the corrected Cox-Snell, eliminating its upper bound), and Tjur (2009). See Allison (2014) for a brief review of these measures.
+
+Note that pseudo R-squared values tend to be considerably lower than those of the R-squared for ordinary regression analysis, and they should not be judged by the same standards for a "good fit". For example, for McFadden's R-squared, values of 0.2 to 0.4 represent an excellent fit (McFadden, 1979).
 }
 \value{The function returns a named list of the calculated R-squared values.}
 \references{
@@ -31,6 +33,8 @@ Allison P. (2014) Measures of fit for logistic regression. SAS Global Forum, Pap
 Cox, D.R. & Snell E.J. (1989) The Analysis of Binary Data, 2nd ed. Chapman and Hall, London
 
 McFadden, D. (1974) Conditional logit analysis of qualitative choice behavior. In: Zarembka P. (ed.) Frontiers in Economics. Academic Press, New York
+
+McFadden, D. (1979) Quantitative Methods for Analyzing Travel Behaviour on Individuals: Some Recent Developments. Chapter 15 in Behavioural Travel Modelling. Edited by David Hensher and Peter Stopher.
 
 Nagelkerke, N.J.D. (1991) A note on a general definition of the coefficient of determination. Biometrika, 78: 691-692
 

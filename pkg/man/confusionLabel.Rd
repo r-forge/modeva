@@ -25,7 +25,7 @@ rm.dup = FALSE, plot = TRUE, ...)
   \item{\dots}{additional arguments to pass to terra::plot() (if 'pred' is a SpatRaster and plot=TRUE), such as 'mar', 'axes' or 'legend'.}
 }
 \value{
-This function returns a character vector (or a categorical SpatRaster, if 'pred' is of that class) of the same length as 'pred', or of the same number of rows as the data in 'model', containing the confusion matrix label for each value.
+This function returns a categorical (factor) vector (or a categorical 'SpatRaster' if 'pred' is of that class) of the same length as 'pred', or of the same number of rows as the data in 'model', containing the confusion matrix label for each value.
 }
 \author{
 A. Marcia Barbosa

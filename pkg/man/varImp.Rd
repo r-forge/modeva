@@ -56,10 +56,12 @@ This function computes, and optionally plots, variable importance for an input m
   A. Marcia Barbosa
 }
 \references{
-Weissgerber T.L., Milic N.M., Winham S.J. & Garovic V,D, (2015) Beyond Bar and Line Graphs: Time for a New Data Presentation Paradigm. PLOS Biol 13:e1002128. https://doi.org/10.1371/JOURNAL.PBIO.1002128
+Greenwell B.M. & Boehmke B.C. (2020) Variable Importance Plots - An Introduction to the vip Package". The R Journal, 2020: https://journal.r-project.org/articles/RJ-2020-013/
+
+Weissgerber T.L., Milic N.M., Winham S.J. & Garovic V.D. (2015) Beyond Bar and Line Graphs: Time for a New Data Presentation Paradigm. PLOS Biol 13:e1002128. https://doi.org/10.1371/JOURNAL.PBIO.1002128
 }
 \seealso{
-\code{\link{plotCoeffs}}; \code{\link{summary.glm}}; \code{varImp} in package \pkg{caret}; \code{varimp} in package \pkg{embarcadero}; \code{var_importance} in package \pkg{enmpa}; \code{varImportance} in package \pkg{predicts}; \code{bm_VariablesImportance} in package \pkg{biomod2}
+\code{\link{plotCoeffs}}; \code{\link{summary.glm}}; \code{caret::varImp}; \code{embarcadero::varimp}; \code{enmpa::var_importance}; \code{predicts::varImportance}; \code{biomod2::bm_VariablesImportance}; \code{iml::FeatureImp}; \code{ingredients::feature_importance}; \code{mmpf::permutationImportance}; package \pkg{varImp}; package \pkg{vip}
 }
 \examples{
   # load sample models:

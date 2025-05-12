@@ -1,19 +1,43 @@
-
-# Version 3.34
-## (Committed 2025-04-29)
+# Version 3.35
+## (Committed 2025-05-12)
 
 ### Modified functions:
 
-* MillerCalib
-    - plot text now grey for intercept
-    - plot text now includes 1-slope (in red)
-    
+* confusionLabel
+    - vector output now also ordered factor rather than character (as for raster inputs)
+
+
+### Other modified files:
+
+* AUC.Rd
+- mention Swets AUC-ROC interpretation thresholds
+
+* RsqGLM.Rd
+- mention McFadden R-squared interpretation thresholds
+
+* threshMeasures.Rd
+- mention prevalence dependence and add reference on TSS
+
+* VarImp.Rd
+- mention {vip} and other packages in See Also and References
+
+
+
+# Version 3.34
+## (Committed 2025-04-29) -> CRAN
+
+### Modified functions:
+
 * confusionLabel
     - reordered output categories, low to high rather than alphabetical
     - removed colour table for rasters
     
 * RsqGLM
     - implemented for raster inputs
+
+* MillerCalib
+    - plot text now grey for intercept
+    - plot text now includes 1-slope (in red)
     
 
 
