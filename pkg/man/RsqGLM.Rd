@@ -2,7 +2,7 @@
 \alias{RsqGLM}
 \title{R-squared measures for GLMs}
 \description{
-This function calculates some (pseudo) R-squared statistics for binomial Generalized Linear Models.
+This function calculates some (pseudo) R-squared statistics for binomial Generalized Linear Models. It is now DEPRECATED, please use \code{\link{pseudoRsq}} instead.
 }
 \usage{
 RsqGLM(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs",
@@ -46,25 +46,5 @@ Tjur's R-squared can only be calculated for models with binomial response variab
 }
 \seealso{\code{\link{Dsquared}}, \code{\link{AUC}}, \code{\link{threshMeasures}}, \code{\link{HLfit}}}
 \examples{
-# load sample models:
-data(rotif.mods)
-
-# choose a particular model to play with:
-mod <- rotif.mods$models[[1]]
-
-RsqGLM(model = mod)
-
-
-# you can also use RsqGLM with vectors of observed and predicted values
-# instead of a model object:
-
-RsqGLM(obs = mod$y, pred = mod$fitted.values)
-
-
-# plotting arguments can be modified:
-
-par(mar = c(6, 3, 2, 1))
-
-RsqGLM(obs = mod$y, pred = mod$fitted.values, col = "seagreen", border = NA,
-ylim = c(0, 1), main = "Pseudo-R-squared values")
+# This function is now DEPRECATED, please see \code{\link{pseudoRsq}} instead.
 }

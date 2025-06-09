@@ -1,3 +1,19 @@
+# Version 3.36
+## (Committed 2025-06-09)
+
+### Modified functions:
+
+* RsqGLM
+    - renamed to pseudoRsq
+
+* MillerCalib
+    - changed colour of slope-1 value on plot, from red (too dramatic) to pink3
+    - moved slope-1 value on plot to just after slope, before intercept
+
+* optiThresh
+    - added '...' which was missing in 'plot(all.thresholds, )'
+
+
 # Version 3.35
 ## (Committed 2025-05-12)
 

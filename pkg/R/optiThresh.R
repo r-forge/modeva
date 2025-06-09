@@ -272,7 +272,7 @@ optiThresh <- function(model = NULL, obs = NULL, pred = NULL, interval = 0.01, m
 
         for (m in 1 : n.input.measures) {
           if(any(is.finite(all.thresholds[ , m]))) {
-            plot(all.thresholds[ , m] ~ thresholds, ylab = input.measures[m], pch = pch, cex = cex, col = col, xlab = xlab)
+            plot(all.thresholds[ , m] ~ thresholds, ylab = input.measures[m], pch = pch, cex = cex, col = col, xlab = xlab, ...)
 
             opt <- gsub("min|max", "", input.optimize)
             if ("each" %in% input.optimize || isTRUE(all.equal(opt, measures))) {
