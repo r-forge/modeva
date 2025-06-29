@@ -1,3 +1,12 @@
+# Version 3.38
+## (Committed 2025-06-29)
+
+### Modified functions:
+
+* MillerCalib
+    - moved intercept value on plot back to just after slope
+
+
 # Version 3.37
 ## (Committed 2025-06-21)
 
