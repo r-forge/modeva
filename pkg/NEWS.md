@@ -7,6 +7,12 @@
     - moved intercept value on plot back to just after slope
 
 
+### Other modified files:
+
+* RsqGLM.Rd, pseudoRsq.Rd
+    - removed duplicated info to avoid future mismatches; slightly improved text
+
+
 # Version 3.37
 ## (Committed 2025-06-21)
 
