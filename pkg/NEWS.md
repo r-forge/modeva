@@ -5,6 +5,9 @@
 
 * MillerCalib
     - moved intercept value on plot back to just after slope
+    
+* pseudoRsq
+    - improve Tjur NA message, and show it only when verbosity > 1
 
 
 ### Other modified files:
