@@ -1,13 +1,29 @@
+# Version 3.39
+## (Committed 2025-07-03)
+
+### Modified functions:
+
+* MillerCalib
+    - plot values: replace "slope - 1" with "slopeDiff"
+    - include 'slopeDiff' in output
+
+
+### Other modified files:
+
+* varImp.Rd
+    - mention Shapley values in See Also
+    
+
 # Version 3.38
 ## (Committed 2025-06-29)
 
 ### Modified functions:
 
 * MillerCalib
-    - moved intercept value on plot back to just after slope
+    - move intercept value on plot back to just after slope
     
 * pseudoRsq
-    - improve Tjur NA message, and show it only when verbosity > 1
+    - improved Tjur NA message, and show it only when verbosity > 1
 
 
 ### Other modified files:

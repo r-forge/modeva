@@ -2,7 +2,7 @@
 \alias{pseudoRsq}
 \title{Pseudo-R-squared measures for binary-response models}
 \description{
-This function computes several pseudo R-squared statistics for binomial Generalized Linear Models, or for observations and predictions of other binary-response models.
+This function computes several pseudo R-squared statistics for a binomial Generalized Linear Model object, or for observations and predictions of any binary-response model.
 }
 \usage{
 pseudoRsq(model = NULL, obs = NULL, pred = NULL, use = "pairwise.complete.obs",
