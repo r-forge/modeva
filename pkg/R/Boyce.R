@@ -1,6 +1,6 @@
 Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width = "default", res = 100, method = "spearman", rm.dup.classes = FALSE, rm.dup.points = FALSE, pbg = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, na.rm = TRUE, verbosity = 2, ...) {
 
-  # version 1.7 (26 Dec 2024)
+  # version 1.8 (18 Sep 2025)
   
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup.points, pbg = pbg, verbosity = verbosity)
   obs <- obspred[ , "obs"]
@@ -66,17 +66,19 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
 
   to.keep <- which(!is.nan(f))  # changed from f!="NaN"
   f <- f[to.keep]
+  
+  r <- 1:length(f)  # moved up here (out of the next curly brackets) because it's used also in lines() further below
 
   if (length(f) < 2) {
     b <- NA
   } else {
-    r <- 1:length(f)
+    # r <- 1:length(f)
     if (rm.dup.classes) {
       r <- c(1:length(f))[f != c(f[-1], TRUE)]
     }
     b <- cor(f[r], vec.mov[to.keep][r], method = method)
   }
-
+  
   HS <- apply(interval, 1, sum) / 2
   if (length(n.bins) == 1 & is.na(n.bins)) {
     HS[length(HS)] <- HS[length(HS)] - 1

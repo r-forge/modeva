@@ -1,5 +1,21 @@
+# Version 3.40 -> CRAN
+## (Committed 2025-09-19)
+
+### Modified functions:
+
+* varImp
+    - add required 'n.trees' and 'newdata' args to predict() call for GBM models
+    - replace predict() with gam::predict.Gam() to fix bug with GAM models when interfering packages/objects are loaded
+
+* Boyce
+    - moved 'r <-' upward to fix bug for edge cases with very few unique pred values
+
+* evaluate (benefiting threshMeasures)
+    - convert a, b, c and d to numeric to avoid integer overflow when large numbers (seen in https://github.com/benjjneb/dada2/issues/1747#issuecomment-1579180381)
+
+
 # Version 3.39
-## (Committed 2025-07-03)
+## (Committed 2025-07-03) -> CRAN
 
 ### Modified functions:
 
@@ -88,17 +104,16 @@
 ### Other modified files:
 
 * AUC.Rd
-- mention Swets AUC-ROC interpretation thresholds
+    - mention Swets AUC-ROC interpretation thresholds
 
 * RsqGLM.Rd
 - mention McFadden R-squared interpretation thresholds
 
 * threshMeasures.Rd
-- mention prevalence dependence and add reference on TSS
+    - mention prevalence dependence and add reference on TSS
 
 * VarImp.Rd
-- mention {vip} and other packages in See Also and References
-
+    - mention {vip} and other packages in See Also and References
 
 
 # Version 3.34
