@@ -20,15 +20,15 @@ plot.values = TRUE, plot.digits = 3, na.rm = TRUE, verbosity = 2,
   \item{n.bins}{number of classes or bins (e.g. 10) in which to group the 'pred' values, or a vector with the bin thresholds. If \code{n.bins = NA} (the default), a moving window is used (see next parameters), so as to compute the "continuous Boyce index" (Hirzel et al. 2006).}
   \item{bin.width}{width of the moving window (if n.bins = NA), in the units of 'pred' (e.g. 0.1). By default, it is 1/10th of the 'pred' range.}
   \item{res}{resolution of the moving window (if n.bins = NA). By default it is 100 focals, providing 100 moving bins).}
-  \item{method}{argument to be passed to \code{\link{cor}} indicating which correlation coefficient to use. The default is \code{'spearman'} as per Boyce et al. (2002), but \code{'pearson'} and \code{'kendall'} can also be used.}
+  \item{method}{argument to be passed to \code{\link{cor}} indicating which correlation coefficient to use. The default is \code{'spearman'} as per Boyce et al. (2002), but \code{'pearson'} and \code{'kendall'} could be more informative in many cases.}
   \item{rm.dup.classes}{Logical, default FALSE. If \code{TRUE} (as in 'ecospat::ecospat.boyce') and if there are different bins with the same predicted/expected ratio, only one of each is used to compute the correlation (see Examples).}
-  \item{rm.dup.points}{if \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
-  \item{pbg}{logical value to pass to \code{\link{inputMunch}} indicating whether to use presence/background (rather than presence/absence) data. Default FALSE.}
-  \item{plot}{logical, whether or not to plot the predicted/expected ratio against the median prediction of each bin. Defaults to TRUE.}
-  \item{plot.lines}{logical, whether or not to add lines connecting the points in the plot (if plot=TRUE). Defaults to TRUE.}
-  \item{plot.values}{logical, whether or not to show in the plot the value of the Boyce index. Defaults to TRUE.}
+  \item{rm.dup.points}{Logical (default FALSE); if \code{TRUE} and if 'pred' is a SpatRaster and if there are >1 points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}.}
+  \item{pbg}{logical (default FALSE) to pass to \code{\link{inputMunch}} indicating whether to use presence/background (rather than presence/absence) data.}
+  \item{plot}{logical (default TRUE), whether or not to plot the predicted/expected ratio against the median prediction of each bin.}
+  \item{plot.lines}{logical (default TRUE), whether or not to add lines connecting the points in the plot (if plot=TRUE).}
+  \item{plot.values}{logical (default TRUE), whether or not to show in the plot the value of the Boyce index.}
   \item{plot.digits}{number of digits to which the value in the plot should be \code{\link{round}}ed (if 'plot' and 'plot.values' are TRUE). Defaults to 3.}
-    \item{na.rm}{Logical value indicating if missing values should be removed from computations. The default is TRUE.}
+    \item{na.rm}{Logical (default TRUE) value indicating if missing values should be removed from computations.}
     \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{\dots}{some additional arguments can be passed to \code{\link{plot}}, e.g. 'main' or 'xlim'.}
 }
@@ -57,7 +57,7 @@ Boyce, M.S., P.R. Vernier, S.E. Nielsen & F.K.A. Schmiegelow (2002) Evaluating r
 Hirzel, A.H., G. Le Lay, V. Helfer, C. Randin & A. Guisan (2006) Evaluating the ability of habitat suitability models to predict species presences. Ecological Modelling 199: 142-152
 }
 \seealso{
-\code{\link{MillerCalib}}; \code{\link{HLfit}}; \code{ecospat::ecospat.boyce}; \code{enmSdmX::evalContBoyce}
+\code{\link{Miller}}; \code{\link{HLfit}}; \code{ecospat::ecospat.boyce}; \code{enmSdmX::evalContBoyce}
 }
 \examples{
 # load sample models:

@@ -14,7 +14,7 @@ modEvAmethods <- function(fun) {
 
   else if (fun == "similarity") return(c("Jaccard", "Sorensen"))
 
-  else if (fun == "getBins") return(c("round.prob", "prob.bins", "size.bins", "n.bins", "quantiles"))
+  else if (fun == "getBins") return(c("round.prob", "prob.bins", "size.bins", "n.bins", "quantiles", "mov.bins"))
 
   else if (fun == "optiThresh") return(c("each", "preval", "0.5", "maxKappa", "minSensSpecDiff", "maxSensSpecSum", "maxTSS", "maxJaccard", "maxSorensen"))
 

@@ -41,7 +41,7 @@ Weisberg, S. (1980) Applied Linear Regression. Wiley, New York
 A. Marcia Barbosa, with parts of code from 'dismo::calc.deviance' by John R. Leathwick and Jane Elith
 }
 \seealso{
-\code{\link{plotGLM}}, \code{\link{RsqGLM}}, \code{dismo::calc.deviance}
+\code{\link{plotGLM}}, \code{\link{pseudoRsq}}, \code{dismo::calc.deviance}
 }
 \examples{
 # load sample models:

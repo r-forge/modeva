@@ -8,9 +8,10 @@ Get continuous predicted values into bins according to specific criteria.
 }
 \usage{
 getBins(model = NULL, obs = NULL, pred = NULL, id = NULL, 
-bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15,
-min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE,
-verbosity = 2, na.rm = TRUE, rm.dup = FALSE)
+bin.method, n.bins = ifelse(bin.method != "mov.bins", 10, 100), 
+fixed.bin.size = FALSE, min.bin.size = 15,
+min.prob.interval = 0.1, bin.width = "default", quantile.type = 7, 
+simplif = FALSE, verbosity = 2, na.rm = TRUE, rm.dup = FALSE)
 }
 \arguments{
   \item{model}{a binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments instead of 'model'.}
@@ -21,12 +22,13 @@ verbosity = 2, na.rm = TRUE, rm.dup = FALSE)
   \item{n.bins}{the number of bins in which to divide the data.}
   \item{fixed.bin.size}{logical, whether all bins should have (approximally) the same size.}
   \item{min.bin.size}{integer value defining the minimum number of observations to include in each bin. The default is 15, the minimum required for accurate comparisons within bins (Jovani & Tella 2006, Jimenez-Valverde et al. 2013).}
+  \item{bin.width}{width of the moving window (if method = "mov.bins"), in the units of 'pred' (e.g. 0.1). By default, it is 1/10th of the 'pred' range.}
   \item{min.prob.interval}{minimum range of probability values in each bin. The default is 0.1.}
   \item{quantile.type}{argument to pass to \code{\link{quantile}} specifying the algorithm to use if bin.method = "quantiles". The default is 7 (the \code{\link{quantile}} default in R), but check out other types, e.g. 3 (used by SAS), 6 (used by Minitab and SPSS) or 5 (appropriate for deciles, which correspond to the default n.bins = 10).}
   \item{simplif}{logical, whether to calculate a faster, simplified version (used internally in other functions). The default is FALSE.}
-  \item{verbosity}{integer specifying the amount of messages or warnings to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
+  \item{verbosity}{integer specifying the amount of console messages or warnings to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{na.rm}{logical argument indicating whether to remove (with a warning saying how many) rows with NA in any of the 'obs' or 'pred' values. The default is TRUE, as some 'bin.method' options will fail if there are NAs.}
-    \item{rm.dup}{If \code{TRUE} and if 'pred' is a SpatRaster and if there are repeated points within the same pixel, a maximum of one point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
+    \item{rm.dup}{If \code{TRUE} and 'pred' is a SpatRaster and there are >1 points in the same pixel, a maximum of 1 point per pixel is used to compute the presences. See examples in \code{\link{ptsrast2obspred}}. The default is FALSE.}
 }
 \details{
 Mind that different \code{bin.method}s can lead to visibly different results regarding the bins and any operations that depend on them (such as \code{\link{HLfit}}). Currently available \code{bin.method}s are:
@@ -43,8 +45,8 @@ Mind that different \code{bin.method}s can lead to visibly different results reg
 }
 \value{
 The output of \code{getBins} is a list with the following components:
-\item{prob.bin}{the first and last value of each bin}
-\item{bins.table}{a data frame with the sample size, number of presences, number of absences, prevalence, mean and median probability, and the difference between predicted and observed values (mean probability - observed prevalence) in each bin.}
+\item{prob.bin}{the bin in which each observation falls.}
+\item{bins.table}{a data frame with the sample size, number of presences, number of absences, prevalence, mean and median probability, and the difference between predicted and observed values (mean probability minus observed prevalence) in each bin.}
 \item{N}{the total number of observations in the analysis.}
 \item{n.bins}{the total number of bins obtained.}
 }

@@ -33,7 +33,7 @@ Kenney J.F. & Keeping E.S. (1962) Root Mean Square. "Mathematics of Statistics",
 A. Marcia Barbosa
 }
 \seealso{
-\code{\link{RMSE}}, \code{\link{plotGLM}}, \code{\link{RsqGLM}}, \code{Dsquared}
+\code{\link{RMSE}}, \code{\link{plotGLM}}, \code{\link{pseudoRsq}}, \code{Dsquared}
 }
 \examples{
 # load sample models:

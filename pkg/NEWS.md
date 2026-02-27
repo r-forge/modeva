@@ -1,4 +1,25 @@
-# Version 3.41
+# Version 3.42
+#### (Committed 2026-02-27)
+
+### New functions:
+
+* poMeasures
+    - experimental, under.review
+
+
+### Modified functions:
+
+* MillerCalib
+    - renamed to Miller
+
+
+### Other modified files:
+
+* CITATION
+    - add citation of package with self-updating version and year
+
+    
+# Version 3.41 -> CRAN
 ## (Committed 2026-01-08)
 
 ### Modified functions:

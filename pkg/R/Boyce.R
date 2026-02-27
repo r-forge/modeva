@@ -6,7 +6,7 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
   obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
 
-  if (all(obs == 0)) warning("No presences available, so there are no observed proportions of presences to compare with expected values.")
+  if (all(obs == 0)) warning("No presences available, so there are no observed proportions of presences to compare with expected proportions.")
   if (all(obs == 1)) warning("All observations are presences, so the proportion of presences is constant across bins.")
 
   # to match the original 'ecospat::ecospat.boyce' arguments:
@@ -30,7 +30,7 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
     fit <- na.omit(terra::values(fit))
   }
 
-  # the remainder of the function is slightly modified (where noted) from 'ecospat::ecospat.boyce':
+  # the remainder of the function is modified (where noted) from 'ecospat::ecospat.boyce':
 
   boycei <- function(interval, obs, fit) {
     pi <- sum(as.numeric(obs >= interval[1] & obs <= interval[2])) / length(obs)
@@ -106,7 +106,7 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
 
     bin.N <- boycei.result[to.keep, 1]  # my add
     small_bins <- which(bin.N < 30)  # my add
-    if (length(small_bins) > 0) warning ("Some bins (plotted in red) have less than 30 values, so their result may not be meaningful (see 'bin.N' column in console output). Consider increasing 'bin.width'.")
+    if (length(small_bins) > 0) warning ("Some bins (plotted in red) have fewer than 30 values, so their result may not be meaningful (see 'bin.N' column in console output). Consider increasing 'bin.width'.")
     points(HS[r][small_bins], f[r][small_bins], pch = 17, cex = 0.7, col = "red")  # my add
 
     # if (plot.values) text(x = max(HS), y = diff(range(f)) / 10, paste("B =", round(b, plot.digits)), adj = 1)  # my add
@@ -114,7 +114,7 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
     # if (plot.values) text(x = mean(HS), y = diff(range(f)) / 10, paste("B =", round(b, plot.digits)), adj = 0.5)  # my add
   }
 
-  # the following is different from 'ecospat.boyce':
+  # the following differs from 'ecospat.boyce':
   return(list(bins = data.frame(bin.N = boycei.result[to.keep, 1],
                                 bin.min = interval[to.keep, 1],
                                 bin.max = interval[to.keep, 2],

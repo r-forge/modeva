@@ -38,9 +38,9 @@ Lawson, C.R., Hodgson, J.A., Wilson, R.J., Richards, S.A., 2013. Prevalence, thr
 A. Marcia Barbosa
 }
 \seealso{
-\code{\link{logLik}}, \code{\link{MillerCalib}}, \code{\link{HLfit}},
+\code{\link{logLik}}, \code{\link{Miller}}, \code{\link{HLfit}},
 \code{\link{Boyce}}, \code{\link{RMSE}}, \code{\link{Dsquared}},
-\code{\link{RsqGLM}}
+\code{\link{pseudoRsq}}
 }
 \examples{
 # load sample models:

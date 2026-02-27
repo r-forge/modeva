@@ -67,7 +67,7 @@ A. Marcia Barbosa
 The 4 lines of code from "observed" to "p.value" were adapted from the 'hosmerlem' function available at http://www.stat.sc.edu/~hitchcock/diseaseoutbreakRexample704.txt. The plotting code was loosely based on the \code{calibration.plot} function in package \pkg{PresenceAbsence}. \code{HLfit} still needs some code simplification, and may fail for some datasets and binning methods. Fixes are being applied. Feedback is welcome.
 }
 \seealso{
-\code{\link{getBins}}, \code{\link{MillerCalib}}
+\code{\link{getBins}}, \code{\link{Miller}}
 }
 \examples{
 # load sample models:

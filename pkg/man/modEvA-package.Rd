@@ -10,8 +10,8 @@ The modEvA package can analyse species distribution models and evaluate their pe
 \tabular{ll}{
 Package: \tab modEvA\cr
 Type: \tab Package\cr
-Version: \tab 3.41\cr
-Date: \tab 2026-01-08\cr
+Version: \tab 3.42\cr
+Date: \tab 2026-02-27\cr
 License: \tab GPL-3\cr
 }
 }
@@ -62,8 +62,8 @@ optiPair(model = mod, measures = c("Sensitivity", "Specificity"))
 Boyce(model = mod)
 Dsquared(model = mod)
 HLfit(model = mod, bin.method = "quantiles")
-MillerCalib(model = mod)
-RsqGLM(model = mod)
+Miller(model = mod)
+pseudoRsq(model = mod)
 
 # calculate a bunch of evaluation measures for a set of models:
 multModEv(models = rotif.mods$models[1:4], thresh = "preval",

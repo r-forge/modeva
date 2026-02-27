@@ -20,7 +20,7 @@ pbg = FALSE, verbosity = 2)
   \item{verbosity}{integer value indicating the amount of messages to display. Defaults to 2, for the maximum amount of messages.}
 }
 \value{
-This function returns a two-column data frame containing the 'obs' and 'pred' values, or an error message if inputs are not as required.
+This function returns a data frame containing the 'obs' and 'pred' values, or an error message if inputs are not as required.
 }
 \author{
 A. Marcia Barbosa

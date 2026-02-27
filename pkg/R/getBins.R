@@ -1,22 +1,25 @@
 getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
-                     bin.method, n.bins = 10, fixed.bin.size = FALSE, min.bin.size = 15,
-                     min.prob.interval = 0.1, quantile.type = 7, simplif = FALSE, 
+                     bin.method, 
+                     n.bins = ifelse(bin.method != "mov.bins", 10, 100), 
+                     fixed.bin.size = FALSE, min.bin.size = 15, 
+                     min.prob.interval = 0.1, bin.width = "default", 
+                     quantile.type = 7, simplif = FALSE,
                      verbosity = 2, na.rm = TRUE, rm.dup = FALSE)  {
   
-  # version 2.8 (19 Nov 2022)
+  # version 3.0 (26 Feb 2026)
   
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)  
-  obs <- obspred[ , "obs"]
+  if ("obs" %in% names(obspred)) obs <- obspred[ , "obs"]
   pred <- obspred[ , "pred"]
   
-  stopifnot(length(obs) == length(pred), 
+  stopifnot(is.null(obs) || length(obs) == length(pred), 
             # !(NA %in% obs), 
             # !(NA %in% pred), 
             obs %in% c(0, 1), 
             #pred >= 0, 
             #pred <= 1, 
             is.null(id) | length(id) == length(pred), 
-            n.bins >= 2, 
+            # n.bins >= 2, 
             min.bin.size >= 0, 
             min.prob.interval > 0, 
             min.prob.interval < 1)
@@ -27,7 +30,57 @@ getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
   N <- length(obs)
   bin.method0 <- bin.method
   
-  if (bin.method == "round.prob" ) {
+  
+  if (bin.method == "mov.bins") {
+    # using some code from 'ecospat::ecospat.boyce', with corrections after https://github.com/ecospat/ecospat/issues/99 and https://github.com/plantarum/ecospat/commit/0c542d51e074d570cb7fb14e4b6dac8b6c2dc432::
+    min.pred <- min(pred)
+    max.pred <- max(pred)
+    if (length(n.bins) == 1) {
+      if (is.na(n.bins)) {
+        if (bin.width == "default") {
+          bin.width <- (max.pred - min.pred) / 10
+        }
+        vec.mov <- seq(from = min.pred, to = max.pred - bin.width, length = n.bins)
+        bins <- cbind(vec.mov, vec.mov + bin.width)
+      } else {
+        vec.mov <- seq(from = min.pred, to = max.pred, length.out = n.bins)
+        bins <- cbind(vec.mov, c(vec.mov[-1], max.pred))
+      }
+    } else {
+      vec.mov <- c(min.pred, sort(n.bins[!n.bins > max.pred | n.bins < min.pred]))
+      bins <- cbind(vec.mov, c(vec.mov[-1], max.pred))
+    }
+    bins <- as.data.frame(bins)
+    names(bins) <- c("min", "max")
+    
+    in_bin <- lapply(seq_len(nrow(bins)), function(i) {
+      pred >= bins$min[i] & pred <= bins$max[i]
+    })  # index of pred values falling within each bin
+    
+    bins$N <- sapply(in_bin, function(idx) sum(idx))
+    if ("obs" %in% names(obspred)) {
+      bins$N.pres <- sapply(in_bin, function(idx) sum(obs[idx] == 1))
+      bins$N.abs <- sapply(in_bin, function(idx) sum(obs[idx] == 0))
+      bins$prevalence <- bins$N.pres / bins$N
+    } else {
+      bins$N.pres <- bins$N.abs <- bins$prevalence <- NA
+    }
+    bins$mean.prob <- sapply(in_bin, function(idx) mean(pred[idx]))
+    bins$median.prob <- sapply(in_bin, function(idx) median(pred[idx]))
+    if ("obs" %in% names(obspred)) {
+      bins$difference <- bins$mean.prob - bins$prevalence
+    }
+    bins$max.poss.diff <- ifelse(bins$mean.prob < 0.5, 1 - bins$mean.prob, bins$mean.prob)
+    if ("obs" %in% names(obspred)) {
+      bins$adj.diff <- abs(bins$difference - bins$max.poss.diff)
+    bins$overpred <- apply(bins[, c("prevalence", "mean.prob")], MARGIN = 1, max)
+    bins$underpred <- apply(bins[, c("prevalence", "mean.prob")], MARGIN = 1, min)
+    }
+    
+    return(list(bins.table = bins))
+  }  # end if mov.bins
+
+  else  if (bin.method == "round.prob" ) {
     if (verbosity > 1) message("Arguments n.bins, fixed.bin.size and min.bin.size are ignored by this bin.method.")
     prob.bin <- round(pred, digits = nchar(min.prob.interval) - 2)
   }
@@ -87,7 +140,7 @@ getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
   bins.table <- bins.table[bins.table$N > 0, ]
   
   if (min(as.data.frame(bins.table)$N) < 15)
-    if (verbosity > 0) warning("There is at least one bin with less than 15 values, for which comparisons may not be meaningful; consider using a bin.method that allows defining a minimum bin size")
+    if (verbosity > 0) warning("There is at least one bin with fewer than 15 values, for which comparisons may not be meaningful; consider using a bin.method that allows defining a minimum bin size")
   
   n.bins <- nrow(bins.table)
   list(prob.bin = prob.bin, bins.table = bins.table, N = N, n.bins = n.bins)

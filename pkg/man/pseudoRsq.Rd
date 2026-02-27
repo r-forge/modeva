@@ -42,7 +42,7 @@ Nagelkerke, N.J.D. (1991) A note on a general definition of the coefficient of d
 Tjur T. (2009) Coefficients of determination in logistic regression models - a new proposal: the coefficient of discrimination. The American Statistician, 63: 366-372.
 }
 \author{A. Marcia Barbosa}
-\seealso{\code{\link{Dsquared}}, \code{\link{AUC}}, \code{\link{threshMeasures}}, \code{\link{HLfit}}, \code{\link{MillerCalib}}}
+\seealso{\code{\link{Dsquared}}, \code{\link{AUC}}, \code{\link{threshMeasures}}, \code{\link{HLfit}}, \code{\link{Miller}}}
 \examples{
 # load sample models:
 data(rotif.mods)
