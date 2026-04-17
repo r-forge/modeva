@@ -17,8 +17,8 @@ importFrom("Kendall",
 importFrom("stats",
            "aggregate", "approx", "approxfun", "as.formula", "binomial",
            "complete.cases", "cor", "cor.test", "density", "family", "glm", 
-           "integrate", "lm", "logLik", "median", "na.omit", "pchisq", "qf", 
-           "quantile", "qnorm", "resid", "runif", "sd", "xtabs", "fitted", 
+           "integrate", "ks.test", "lm", "logLik", "median", "na.omit", "pchisq", 
+           "qf", "quantile", "qnorm", "resid", "runif", "sd", "xtabs", "fitted", 
            "predict", "wilcox.test")
 
 importFrom("terra",

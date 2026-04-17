@@ -1,6 +1,6 @@
-poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.width = "default", method = "spearman", rm.dup.classes = NA, rm.dup.points = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, cex.values = 1, plot.digits = 3, main = c("Moving-binned predictions", "Unbinned predictions"), na.rm = TRUE, verbosity = 2, ...) {
+poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.width = "default", method = "spearman", rm.dup.classes = NA, rm.dup.points = FALSE, simplif = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, cex.values = 1, plot.digits = 3, main = c("Presence-only bin-based", "Presence-only density-based"), na.rm = TRUE, verbosity = 2, ...) {
   
-  # version 1.0 (27 Feb 2026)
+  # version 1.2 (6 Apr 2026)
   
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup.points, pbg = FALSE, verbosity = verbosity)
   if ("obs" %in% names(obspred)) obs <- obspred[ , "obs"]
@@ -9,7 +9,7 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
   
   if (!is.null(obs)) pred <- pred[obs == 1]
   if (length(pred) == 0) {
-    warning("No presences available. Returning NULL.")
+    warning("No presences available in 'obs'; returning NULL.")
     return(NULL)
   }
   
@@ -54,14 +54,14 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
   
   # DK <- ks.test(pred, rand, alternative = "greater")
   # DW <- wilcox.test(pred, rand, alternative = "greater")
-  W <- stats::wilcox.test(pred, mu = 0.5, alternative = "greater", digits.rank = 7)
+  # W <- stats::wilcox.test(pred, mu = 0.5, alternative = "greater", digits.rank = 7)
   # DS <- moments::agostino.test(pred, alternative = "greater")
   
   # normalize W using rank-biserial correlation (sample-size-independent magnitude):
   N <- length(pred)
   # Wstar <- as.numeric(W$statistic) / (N * (N + 1) / 2)
   # PODS <- 2 * Wstar - 1
-  PODS <- effectsize::rank_biserial(W)
+  PODS <- effectsize::rank_biserial(pred, mu = 0.5)
   
   
   if (plot) {
@@ -76,13 +76,13 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
          xlim = c(0, 1),
          main = main[1], 
          xlab = "Bin mean", ylab = "N observations", 
-         col = "royalblue", pch = 20, cex = 0.3,
+         col = "steelblue4", pch = 19, cex = 0.4,
          cex.axis = cex.values, ...)
-    lines(bins$mean.prob, bins$N, col = "steelblue4", lwd = 0.6)
-    lines(bins_noNA$mean.prob, bins_noNA$N, col = "lightgrey", lwd = 0.5)
+    lines(bins$mean.prob, bins$N, col = "slategray4", lwd = 0.6)
+    lines(bins_noNA$mean.prob, bins_noNA$N, col = "slategray3", lwd = 0.5)
     
     # reference (null) line:
-    # abline(h = length(pred_in) / nrow(bins), col = "darkgrey", lty = "dashed")
+    # abline(h = length(pred_in) / nrow(bins), col = "slategray4", lty = "dashed")
     
     # Sen's slope line (deprecated):
     # abline(a = median(bins$N - POS$estimates * bins$mean.prob, na.rm = TRUE), 
@@ -97,6 +97,8 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
       text(x = 0, y = max(bins$N, na.rm = TRUE), 
            labels = paste0("bPOGI = ", format(round(bPOGI$estimate, plot.digits), nsmall = 3), 
                            "\n(p = ", format(bPOGI$p.value, digits = plot.digits, scientific = TRUE), ")",
+                           "\n\n",
+                           "N = ", N,
                            "\n\n",
                            "Nbins = ", Nbins
                            # "POT = ", format(round(POT$tau, plot.digits), nsmall = 3),
@@ -114,7 +116,7 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
     # plot(dens_pred, col = "royalblue", lwd = 2,
     # plot(pred, fhat, 
     plot(dens_pred$x, dens_pred$y, 
-         col = "royalblue", pch = 20, cex = 0.2, 
+         col = "steelblue4", pch = 19, cex = 0.2, 
          xlim = c(0, 1), ylim = dens_ylim, #zero.line = FALSE,
          main = main[length(main)],
          xlab = "Predicted value", ylab = "Density",
@@ -122,8 +124,8 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
     )
     
     # reference lines:
-    # lines(dens_rand, col = "darkgrey", lty = "dashed")
-    abline(v = 0.5, col = "darkgrey", lty = "dashed")
+    # lines(dens_rand, col = "grey", lty = "dashed")
+    abline(v = 0.5, col = "lightblue3", lty = "dashed")
     
     # Sen's slope (median pairwise slope):
     # slopes <- outer(fhat, fhat, "-") / outer(pred, pred, "-")
@@ -138,16 +140,18 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
            paste0("dPOGI = ", format(round(dPOGI$estimate, plot.digits), nsmall = 3), 
                   "\n(p = ", format(dPOGI$p.value, digits = plot.digits, scientific = TRUE), ")",
                   "\n\n",
-                  "PODS = ", round(PODS$r_rank_biserial, plot.digits), " [", round(PODS$CI_low, plot.digits), ", ", round(PODS$CI_high, plot.digits), "]",
-                  "\n(Wp = ", format(W$p.value, digits = plot.digits, scientific = TRUE), ")",
+                  "PODS = ", round(PODS$r_rank_biserial, plot.digits), "\n[", round(PODS$CI_low, plot.digits), ", ", round(PODS$CI_high, plot.digits), "]",
+                  # "\n(Wp = ", format(W$p.value, digits = plot.digits, scientific = TRUE), ")",
                   # "\n",
                   # "DS = ", round(DS$statistic["skew"], plot.digits)
                   "\n\n",
-                  "N = ", N 
+                  "N = ", N
            ),
            adj = c(0, 1), cex = cex.values)
     }  # end if plot vals
   }  # end if plot
   
-  return(list(bins = bins, Nbins = Nbins, bPOGI = bPOGI, dPOGI = dPOGI, W = W, PODS = PODS, N = N))
+  if (simplif) return(t(data.frame(bPOGI = bPOGI$estimate, dPOGI = dPOGI$estimate, PODS = PODS$r_rank_biserial)))
+  
+  list(bins = bins, Nbins = Nbins, bPOGI = bPOGI, dPOGI = dPOGI, PODS = PODS, N = N)
 }

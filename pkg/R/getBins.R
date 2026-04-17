@@ -6,7 +6,7 @@ getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
                      quantile.type = 7, simplif = FALSE,
                      verbosity = 2, na.rm = TRUE, rm.dup = FALSE)  {
   
-  # version 3.0 (26 Feb 2026)
+  # version 3.1 (8 Apr 2026)
   
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup, verbosity = verbosity)  
   if ("obs" %in% names(obspred)) obs <- obspred[ , "obs"]
@@ -32,7 +32,7 @@ getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
   
   
   if (bin.method == "mov.bins") {
-    # using some code from 'ecospat::ecospat.boyce', with corrections after https://github.com/ecospat/ecospat/issues/99 and https://github.com/plantarum/ecospat/commit/0c542d51e074d570cb7fb14e4b6dac8b6c2dc432::
+    # using some code from 'ecospat::ecospat.boyce', with corrections after https://github.com/ecospat/ecospat/issues/99 and https://github.com/plantarum/ecospat/commit/0c542d51e074d570cb7fb14e4b6dac8b6c2dc432:
     min.pred <- min(pred)
     max.pred <- max(pred)
     if (length(n.bins) == 1) {
@@ -43,8 +43,10 @@ getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
         vec.mov <- seq(from = min.pred, to = max.pred - bin.width, length = n.bins)
         bins <- cbind(vec.mov, vec.mov + bin.width)
       } else {
-        vec.mov <- seq(from = min.pred, to = max.pred, length.out = n.bins)
-        bins <- cbind(vec.mov, c(vec.mov[-1], max.pred))
+        # vec.mov <- seq(from = min.pred, to = max.pred, length.out = n.bins)
+        # bins <- cbind(vec.mov, c(vec.mov[-1], max.pred))
+        vec.mov <- seq(from = min.pred, to = max.pred, length.out = n.bins + 1)
+        bins <- data.frame(vec.mov[-length(vec.mov)], vec.mov[-1])
       }
     } else {
       vec.mov <- c(min.pred, sort(n.bins[!n.bins > max.pred | n.bins < min.pred]))

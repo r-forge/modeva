@@ -1,4 +1,4 @@
-AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = "auto", FPR.limits = c(0, 1), curve = "ROC", pbg = FALSE, method = NULL, plot = TRUE, diag = TRUE, diag.col = "lightblue3", diag.lty = 2, curve.col = "darkblue", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto", cex.lab = 0.9, ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
+AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = "auto", FPR.limits = c(0, 1), curve = "ROC", pbg = FALSE, method = NULL, plot = TRUE, diag = TRUE, diag.col = "lightblue3", diag.lty = 2, curve.col = "steelblue4", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto", cex.lab = 0.9, ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
   
   # version 3.4 (4 Mar 2025)
   
@@ -168,7 +168,7 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     if (ticks == TRUE) axis(1, at = xx, labels = NA, tick = TRUE, tck = 0.03, col = NA, col.ticks = "blue")
     
     if (plot.values) {
-      if (curve == "ROC") text(0.5, 0.05, substitute(paste(AUC == a), list(a = round(AUC, plot.digits))))
+      if (curve == "ROC") text(1, 0, adj = c(1, 0), substitute(paste(AUC == a), list(a = round(AUC, plot.digits))))
       #if (curve == "PR") text(1, 1, adj = 1, substitute(paste(expression('AUC'['PR']) == a), list(a = round(AUC, plot.digits))))
       if (curve == "PR") text(0.5, 0.1, substitute(paste('AUC'['PR'] == a), list(a = round(AUC, plot.digits))))
     }  # end if plot.values
