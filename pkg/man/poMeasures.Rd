@@ -3,7 +3,7 @@
 \title{Strictly presence-only measures of model evaluation}
 
 \description{
-THIS FUNCTION IS EXPERIMENTAL AND IMPLEMENTS METHODS THAT ARE STILL UNDER SCIENTIFIC REVIEW. It computes a set of truly presence-only bin-dependent and bin-independent evaluation metrics for model predictions. The function evaluates how the continuous predicted values (at presence sites only) relate to the number or density of observed presences, using correlation-based measures and distributional comparisons. Optional diagnostic plots are also produced.
+THIS FUNCTION IS EXPERIMENTAL AND IMPLEMENTS METHODS THAT ARE STILL UNDER SCIENTIFIC REVIEW. It computes a set of truly presence-only evaluation metrics for model predictions, including bin-dependent and bin-independent approaches. The function evaluates how the continuous predicted values (at presence sites only) relate to the number or density of observed presences, using correlation-based measures and distributional comparisons. Optional diagnostic plots are also produced.
 }
 
 \usage{
@@ -49,13 +49,6 @@ THIS FUNCTION IS EXPERIMENTAL AND IMPLEMENTS METHODS THAT ARE STILL UNDER SCIENT
   \item{verbosity}{integer specifying the amount of console messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{\dots}{(if plot=TRUE) additional graphical parameters that can be passed to \code{plot()}.}
 }
-
-\details{
-  This function evaluates model predictions using strictly presence-only data, as described by Barbosa (submitted).
-  
-  When \code{pred} is a \code{SpatRaster}, presence coordinates must be supplied via \code{obs} as a \code{SpatVector} or a two-column coordinate matrix/data frame.
-}
-
 \value{
   A list with the following components:
     
@@ -67,10 +60,6 @@ THIS FUNCTION IS EXPERIMENTAL AND IMPLEMENTS METHODS THAT ARE STILL UNDER SCIENT
   \item{N}{Number of predicted values (at presence sites if 'obs' provided).}
   
   If \code{plot = TRUE}, two diagnostic plots are also produced.
-}
-
-\references{
-Barbosa A.M. (under review) Strictly presence-only measures for evaluating gradient consistency in species distribution model predictions.
 }
 
 \seealso{
@@ -100,4 +89,3 @@ poMeasures(obs = obs, pred = pred)
 # 'obs' can also be a table of presence point coordinates
 # and 'pred' a SpatRaster of predicted values
 }
-

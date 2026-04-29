@@ -1,6 +1,6 @@
-AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = "auto", FPR.limits = c(0, 1), curve = "ROC", pbg = FALSE, method = NULL, plot = TRUE, diag = TRUE, diag.col = "lightblue3", diag.lty = 2, curve.col = "steelblue4", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto", cex.lab = 0.9, ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
+AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval = "auto", FPR.limits = c(0, 1), curve = "ROC", partial = FALSE, max.omiss = 0.05, pbg = FALSE, method = NULL, plot = TRUE, diag = TRUE, diag.col = "lightblue3", diag.lty = 2, curve.col = "steelblue4", curve.lty = 1, curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE, grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto", cex.lab = 0.9, ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...) {
   
-  # version 3.4 (4 Mar 2025)
+  # version 3.5 (24 Apr 2026)
   
   if (all.equal(FPR.limits, c(0, 1)) != TRUE) stop ("Sorry, 'FPR.limits' not yet implemented. Please use default values.")
   
@@ -24,6 +24,19 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     curve %in% c("ROC", "PR"),
     is.null(method) || (length(method) == 1 && method %in% c("rank", "trapezoid", "integrate"))
   )
+  
+  if (partial && (max.omiss <= 0 || max.omiss >= 1)) {
+    stop("'max.omiss' must be between 0 and 1.")
+  }
+  
+  if (partial && curve != "ROC") {
+    warning("Partial AUC with omission is not designed for PR curves.")
+  }
+  
+  if (partial) {
+    if (!is.null(method) && method == "rank") warning("Partial AUC not implemented for method='rank'; using 'trapezoid' instead")
+    method <- "trapezoid"
+  }
   
   if (interval == "auto"){
     # interval <- round(0.01 - (abs(mean(pred) - 0.5) * 0.018), 3)  # makes interval range between 0.001 and 0.01, proportionally to how close mean(pred) is to 0.5
@@ -104,6 +117,20 @@ AUC <- function(model = NULL, obs = NULL, pred = NULL, simplif = FALSE, interval
     #if (length(xx) != nrow(xy))  warning(paste(abs(length(xx) - nrow(xy)), "non-finite value(s) omitted from area calculation."))
     xx <- xy$xx
     yy <- xy$yy
+    
+    
+    if (partial) {
+      omission <- 1 - sensitivity  # valid for ROC; harmless for PR
+      keep <- omission <= max.omiss
+      
+      if (any(keep)) {
+        xx <- xx[keep]
+        yy <- yy[keep]
+      } else {
+        warning("No thresholds satisfy 'max.omiss'")
+      }
+    }
+    
     # next line adapted from https://stackoverflow.com/a/22418496:
     AUC <- sum(diff(xx) * (yy[-1] + yy[-length(yy)]) / 2)
     AUC <- -AUC  # euze

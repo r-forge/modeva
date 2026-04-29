@@ -1,4 +1,27 @@
-# Version 3.43 -> CRAN
+# Version 3.44
+#### (Committed 2026-04-29)
+
+### Modified functions:
+
+* evaluate (affecting threshMeasures)
+    - fix bug in SEDI computation
+    - add AVI and CVI
+    - non-finite measures also in plot
+
+* modEvAmethods
+    - add AVI and CVI for threshMeasures
+
+* threshMeasures
+    - add SEDI to (optionally) standardized measures
+
+
+### Other modified files:
+
+* threshMeasures.Rd
+    - list, define and cite output measures
+
+
+# Version 3.43
 #### (Committed 2026-04-17)
 
 ### Modified functions:

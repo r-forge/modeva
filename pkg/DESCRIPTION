@@ -1,8 +1,8 @@
 Package: modEvA
 Type: Package
 Title: Model Evaluation and Analysis
-Version: 3.43
-Date: 2026-04-17
+Version: 3.44
+Date: 2026-04-29
 Authors@R: c(person(given = c("A.", "Marcia"),
                       family = "Barbosa",
                       role = c("aut", "cre"),

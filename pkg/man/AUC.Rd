@@ -8,10 +8,10 @@ This function calculates the Area Under the Curve of the receiver operating char
 }
 \usage{
 AUC(model = NULL, obs = NULL, pred = NULL, simplif = FALSE,
-interval = "auto", FPR.limits = c(0, 1), curve = "ROC", pbg = FALSE,
-method = NULL, plot = TRUE, diag = TRUE, diag.col = "lightblue3",
-diag.lty = 2, curve.col = "steelblue4", curve.lty = 1, curve.lwd = 2,
-plot.values = TRUE, plot.digits = 3, plot.preds = FALSE,
+interval = "auto", FPR.limits = c(0, 1), curve = "ROC", partial = FALSE, 
+max.omiss = 0.05, pbg = FALSE, method = NULL, plot = TRUE, diag = TRUE, 
+diag.col = "lightblue3", diag.lty = 2, curve.col = "steelblue4", curve.lty = 1,
+curve.lwd = 2, plot.values = TRUE, plot.digits = 3, plot.preds = FALSE,
 grid = FALSE, grid.lty = 1, xlab = "auto", ylab = "auto", cex.lab = 0.9,
 ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...)
 }
@@ -22,6 +22,8 @@ ticks = FALSE, na.rm = TRUE, rm.dup = FALSE, verbosity = 2, ...)
   \item{simplif}{logical value (default FALSE) indicating whether to use a faster version that returns only the AUC value (and the plot if 'plot = TRUE'). Used internally by other functions in the package.}
   \item{FPR.limits}{(NOT YET IMPLEMENTED) numerical vector of length 2 indicating the limits of false positive rate between which to calculate a partial AUC. The default is c(0, 1), for considering the whole AUC. Pending implementation. Meanwhile, you can try e.g. the \code{roc} function in the \pkg{pROC} package.}
   \item{curve}{character indicating whether to compute the "ROC" (receiver operating charateristic) or the "PR" (precision-recall) curve.}
+  \item{partial}{[EXPERIMENTAL, UNDER CONSTRUCTION!] (if curve="ROC") logical value (default FALSE) indicating whether to compute a (standardized) partial AUC under a given omission threshold (Peterson et al. 2008).}
+  \item{max.omiss}{(if partial=TRUE and curve="ROC") numeric value between 0 and 1 (default 0.05) defining the threshold omission rate for the partial AUC.}
   \item{pbg}{logical value to pass to \code{\link{inputMunch}} indicating whether to use presence/background (rather than presence/absence) data. Default FALSE.}
   \item{interval}{interval of threshold values at which to compute and plot the true- and false-positive rates. Can be a (preferably small) numeric value between 0 and 1; or the new default "auto", which will be either 0.01 (old default) or 0.001, depending on whether 'pred' does or doesn't have values in all thirds of the [0, 1] range. Larger intervals provide faster computation, but may generate innacurate curves especially if 'pred' has too few values towards one of the extremes (e.g. towards 1). Note that, if method = "rank" (the default if curve = "ROC"), 'interval' does not affect the obtained AUC value (although it can visually affect the size of the plotted curve, especially when there are very few 'pred' values towards 0 or towards 1), as the AUC is calculated with the Mann-Whitney-Wilcoxon statistic and is therefore threshold-independent. If method != "rank" (or, by extension, if curve = "PR" -- see 'method' argument), smaller 'interval' values will provide more accurate AUC values. Smaller 'interval' values also improve the output 'meanPrecision', as this is averaged across all threshold values.}
   \item{method}{character indicating with which method to calculate the AUC value. Available options are "rank" (the default and most accurate, but implemented only if curve = "ROC") and "trapezoid" (the default if curve = "PR"). The latter may be computed more accurately if 'interval' is smaller (see 'interval' argument).}

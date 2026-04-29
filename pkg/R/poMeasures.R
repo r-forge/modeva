@@ -64,6 +64,11 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
   PODS <- effectsize::rank_biserial(pred, mu = 0.5)
   
   
+  # POAVI <- sum(pred > thresh) / length(pred)  # pred has only presences here
+  # poavi0 <- sum(pred) / length(pred)  # NOT RIGHT YET!
+  # POCVI <- poavi0 - POAVI
+  # pending: ADD 'thresh' ARGUMENT
+  
   if (plot) {
     
     # plotting parameters:

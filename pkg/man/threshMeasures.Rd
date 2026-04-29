@@ -4,7 +4,7 @@
 Threshold-based measures of model evaluation
 }
 \description{
-This function calculates a number of measures (described in Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013; Wunderlich et al. 2019) for evaluating the classification accuracy of a species distribution (or ecological niche, or bioclimatic envelope) model against observed presence-(pseudo)absence data, upon the choice of a threshold value above which the model is considered to predict that the species should be present.
+This function calculates a number of measures for evaluating the classification accuracy of a species distribution (or ecological niche, or bioclimatic envelope) model against observed presence-(pseudo)absence data, or against presence-background data, upon the choice of a threshold value above which the model is considered to predict the species to be present.
 }
 \usage{
 threshMeasures(model = NULL, obs = NULL, pred = NULL, thresh,
@@ -25,7 +25,7 @@ verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
   \item{plot.type}{character value indicating the type of plot to produce (if plot=TRUE). Can be "\code{\link{lollipop}}" (the default) or "\code{\link{barplot}}".}
     \item{ylim}{either a numeric vector of length 2 specifying the limits (minimum, maximum) for the y axis; or "auto" to fit the y axis to the existing minimum and maximum values; or "auto0" (the new default) to fit the top of the y axis to the maximum existing values, and the bottom to zero or the minimum existing value (whichever is lower).}
   \item{plot.ordered}{logical, whether to plot the measures in decreasing order rather than in input order. Defaults to FALSE.}
-  \item{standardize}{logical, whether to change measures that may range between -1 and +1 (namely kappa and TSS) to their corresponding value in the 0-to-1 scale (skappa and sTSS), so that they can compare directly to other measures (see \code{\link{standard01}}). The default is TRUE, but a message is displayed to inform the user about it.}
+  \item{standardize}{logical, whether to change measures that may range between -1 and +1 (namely kappa, TSS, ORSS and SEDI) to their corresponding value in the 0-to-1 scale (skappa and sTSS), so that they can compare directly to other measures (see \code{\link{standard01}}). The default is TRUE, but a message is displayed to inform the user about it.}
   \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{interval}{Numeric value, used if 'thresh' is a threshold optimization method such as "maxKappa" or "maxTSS", indicating the interval between the thresholds to test. The default is 0.01. Smaller values may provide more precise results but take longer to compute.}
   \item{quant}{Numeric value indicating the proportion of presences to discard if thresh="MTP" (minimum training presence). With the default value 0, MTP will be the threshold at which all observed presences are classified as such; with e.g. quant=0.05, MTP will be the threshold at which 5\% presences will be classified as absences.}
@@ -38,7 +38,7 @@ The metrics implemented in this function are based on the confusion (or continge
 
 The threshold value can be chosen according to a number of criteria (see e.g. Liu et al. 2005, 2013; Jimenez-Valverde & Lobo 2007; Nenzen & Araujo 2011). You can choose a fixed numeric value, or set 'thresh' to "preval" (species' prevalence or proportion of presences \bold{in the data input to this function}), or calculate optimal threshold values according to different criteria with the \code{\link{getThreshold}} function (see also \code{\link{optiThresh}} and \code{\link{optiPair}}). If you are using "environmental favourability" as input 'pred' data (Real et al. 2006; see 'Fav' function in R package \pkg{fuzzySim}), then the 0.5 threshold equates to using training prevalence in presence probability as given by logistic regression (GLM with binomial error distribution and logit link function).
 
-While most of these threshold-based measures range from 0 to 1, some of them (such as kappa and TSS) may range from -1 to 1 (Allouche et al. 2006), so their raw scores are not directly comparable. 'threshMeasures' includes an option (used by default) to standardize these measures to 0-1 (Barbosa 2015) using the \code{\link{standard01}} function, so that you obtain the standardized versions skappa and sTSS.
+While most of these threshold-based measures range from 0 to 1, some of them (such as kappa, TSS, ORSS and SEDI) may range from -1 to 1 (Allouche et al. 2006), so their raw scores are not directly comparable. 'threshMeasures' includes an option (used by default) to standardize these measures to the [0, 1] scale (Barbosa 2015) using the \code{\link{standard01}} function, so that you obtain the standardized versions skappa, sTSS, sORSS and sSEDI.
 
 This function can also be used to calculate the agreement between different presence-absence (or other types of binary) data, as e.g. Barbosa et al. (2012) did for comparing mammal distribution data from atlas and range maps. Notice, however, that some of these measures, such as TSS or NMI, are not symmetrical (obs vs. pred is different from pred vs. obs).
 
@@ -46,11 +46,36 @@ Note that most of these metrics are correlated with the species' prevalence (pro
 }
 \value{
 If 'simplif=TRUE', the output is a numeric matrix with the name and value of each measure. If 'simplif=FALSE' (the default), the ouptut is a list with the following components:
-  \item{N}{the number of observations (records) in the analysis.}
-  \item{Prevalence}{the prevalence (proportion of presences) in 'obs'.}
-  \item{Threshold}{the threshold value used to calculate the 'measures'.}
-  \item{ConfusionMatrix}{the confusion matrix obtained with the used threshold.}
-  \item{ThreshMeasures}{a numeric matrix with the name and value of each measure.}
+  \item{N}{the number of observations (records) in the analysis}
+  \item{Prevalence}{the prevalence (proportion of presences) in 'obs'}
+  \item{Threshold}{the threshold value used to calculate the 'measures'}
+  \item{ConfusionMatrix}{the confusion matrix obtained with the used threshold}
+  \item{ThreshMeasures}{a numeric matrix with the name and value of each of the measures (described in Fielding & Bell 1997 and/or Liu et al. 2011, except where otherwise stated), including:
+    \itemize{
+      \item{CCR: Correct Classification Rate}
+      \item{Misclass: Misclassification (i.e. incorrect classification) rate}
+      \item{Sensitivity: proportion of recorded presences correctly predicted as such, i.e. true positive rate}
+      \item{Specificity: proportion of absences correctly predicted as such, i.e. true negative rate}
+      \item{Omission: Proportion of missed presences, i.e. proportion of recorded presences incorrectly predicted as absences}
+      \item{Commission: Proportion of over-predicted presences, i.e. proportion of absences incorrectly predicted as presences}
+      \item{Precision: Proportion of predicted presences actually recorded as presences}
+      \item{Recall: same as sensitivity (they are both here to match the terminology familiar to different audiences)}
+      \item{PPP: Positive Predictive Power; same as precision (they are both here to match the terminology familiar to different audiences)}
+      \item{NPP: Negative Predictive Power, i.e. proportion of predicted absences actually recorded as absences}
+      \item{UPR: Under-Prediction Rate (Barbosa et al., 2013)}
+      \item{OPR: Over-Prediction Rate (Barbosa et al., 2013)}
+      \item{PPI: Potential Presence Increment (Barbosa et al., 2013)}
+      \item{PAI: Potential Absence Increment (Barbosa et al., 2013)}
+      \item{kappa: Cohen's kappa, optionally standardized to 'skappa' to fit the [0, 1] scale}
+      \item{TSS: True Skill Statistic (Allouche et al. 2006), optionally standardized to 'sTSS' to fit the [0, 1] scale}
+      \item{NMI: Normalized Mutual Information (Forbes, 1995)}
+      \item{F1score: harmonic mean of precision and recall}
+      \item{ORSS: Odds Ratio Skill Score (Wunderlich et al., 2019), optionally standardized to 'sORSS' to fit the [0, 1] scale}
+      \item{SEDI: Symmetric Extremal Dependence Index (Wunderlich et al., 2019), optionally standardized to 'sSEDI' to fit the [0, 1] scale}
+      \item{AVI: Absolute Validation Index (Hirzel & Arlettaz, 2003; computed as in Guisan et al., 2017)}
+      \item{CVI: Contrast Validation Index (Hirzel & Arlettaz, 2003; computed as in Guisan et al., 2017)}
+}
+}
 }
 \references{
 Allouche O., Tsoar A. & Kadmon R. (2006) Assessing the accuracy of species distribution models: prevalence, kappa and the true skill statistic (TSS). Journal of Applied Ecology 43: 1223-1232.
@@ -62,6 +87,12 @@ Barbosa A.M., Estrada A., Marquez A.L., Purvis A. & Orme C.D.L. (2012) Atlas ver
 Barbosa A.M., Real R., Munoz A.R. & Brown J.A. (2013) New measures for assessing model equilibrium and prediction mismatch in species distribution models. Diversity and Distributions 19: 1333-1338
 
 Fielding A.H. & Bell J.F. (1997) A review of methods for the assessment of prediction errors in conservation presence/absence models. Environmental Conservation 24: 38-49
+
+Forbes, A.D. (1995) Classification-algorithm evaluation: five performance measures based on confusion matrices. Journal of Clinical Monitoring, 11: 189-206
+
+Guisan, A., Zimmermann, N.E., Thuiller, W. (2017) Measuring Model Accuracy: Which Metrics to Use?, in: Habitat Suitability and Distribution Models: With Applications in R, Ecology, Biodiversity and Conservation. Cambridge University Press, Cambridge, pp. 241-269. https://doi.org/10.1017/9781139028271.022
+
+Hirzel, A.H. & Arlettaz, R. (2003) Modeling habitat suitability for complex species distributions by environmental-distance geometric mean. Environ Manage 32, 614-623. https://doi.org/10.1007/s00267-003-0040-3
 
 Jimenez-Valverde A. & Lobo J.M. (2007) Threshold criteria for conversion of probability of species presence to either-or presence-absence. Acta Oecologica 31: 361-369
 
@@ -83,9 +114,7 @@ Wunderlich R.F., Lin Y.-P., Anthony J., Petway J.R. (2019) Two alternative evalu
 A. Marcia Barbosa
 }
 \note{
-"Sensitivity" is the same as "Recall", and "PPP" (positive predictive power) is the same as "Precision". They are both here to match the terminology familiar to different audiences.
-
-Some of the implemented measures (like NMI, UPR, OPR, PPP, NPP) cannot be calculated for thresholds at which there are zeros in the confusion matrix, so they can produce NaN values.
+Some of the implemented measures (e.g. NMI, UPR, OPR, PPP, NPP) cannot be calculated for thresholds at which there are zeros in the confusion matrix, so they can produce NaN values.
 }
 \seealso{
 \code{\link{similarity}}, \code{\link{optiThresh}}, \code{\link{optiPair}}, \code{\link{AUC}}
