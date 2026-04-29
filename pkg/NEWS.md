@@ -5,14 +5,14 @@
 
 * evaluate (affecting threshMeasures)
     - fix bug in SEDI computation
-    - add AVI and CVI
-    - non-finite measures also in plot
 
 * modEvAmethods
     - add AVI and CVI for threshMeasures
 
 * threshMeasures
+    - add AVI and CVI
     - add SEDI to (optionally) standardized measures
+    - non-finite measures also in plot
 
 
 ### Other modified files:
