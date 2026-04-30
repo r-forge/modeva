@@ -72,8 +72,6 @@ If 'simplif=TRUE', the output is a numeric matrix with the name and value of eac
       \item{F1score: harmonic mean of precision and recall}
       \item{ORSS: Odds Ratio Skill Score (Wunderlich et al., 2019), optionally standardized to 'sORSS' to fit the [0, 1] scale}
       \item{SEDI: Symmetric Extremal Dependence Index (Wunderlich et al., 2019), optionally standardized to 'sSEDI' to fit the [0, 1] scale}
-      \item{AVI: Absolute Validation Index (Hirzel & Arlettaz, 2003; computed as in Guisan et al., 2017)}
-      \item{CVI: Contrast Validation Index (Hirzel & Arlettaz, 2003; computed as in Guisan et al., 2017)}
 }
 }
 }
@@ -90,7 +88,7 @@ Fielding A.H. & Bell J.F. (1997) A review of methods for the assessment of predi
 
 Forbes, A.D. (1995) Classification-algorithm evaluation: five performance measures based on confusion matrices. Journal of Clinical Monitoring, 11: 189-206
 
-Guisan, A., Zimmermann, N.E., Thuiller, W. (2017) Measuring Model Accuracy: Which Metrics to Use?, in: Habitat Suitability and Distribution Models: With Applications in R, Ecology, Biodiversity and Conservation. Cambridge University Press, Cambridge, pp. 241-269. https://doi.org/10.1017/9781139028271.022
+Guisan, A., Thuiller, W. & Zimmermann, N.E. (2017) Measuring Model Accuracy: Which Metrics to Use?, in: Habitat Suitability and Distribution Models: With Applications in R, Ecology, Biodiversity and Conservation. Cambridge University Press, Cambridge, pp. 241-269. https://doi.org/10.1017/9781139028271.022
 
 Hirzel, A.H. & Arlettaz, R. (2003) Modeling habitat suitability for complex species distributions by environmental-distance geometric mean. Environ Manage 32, 614-623. https://doi.org/10.1007/s00267-003-0040-3
 
@@ -114,7 +112,7 @@ Wunderlich R.F., Lin Y.-P., Anthony J., Petway J.R. (2019) Two alternative evalu
 A. Marcia Barbosa
 }
 \note{
-Some of the implemented measures (e.g. NMI, UPR, OPR, PPP, NPP) cannot be calculated for thresholds at which there are zeros in the confusion matrix, so they can produce NaN values.
+Some of the implemented measures (e.g. NMI, UPR, OPR, PPP, NPP) cannot be calculated for thresholds at which there are zeros in (some parts of) the confusion matrix, so they can produce NaN values.
 }
 \seealso{
 \code{\link{similarity}}, \code{\link{optiThresh}}, \code{\link{optiPair}}, \code{\link{AUC}}

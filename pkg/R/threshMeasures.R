@@ -66,9 +66,11 @@ threshMeasures <- function(model = NULL, obs = NULL, pred = NULL, thresh, measur
     a <- b <- c <- d <- N <- NA
   }
   
-  non_confumat_measures <- intersect(c("AVI", "CVI"), measures)
   Nmeasures <- length(measures)
   measureValues <- as.vector(rep(NA, Nmeasures), mode = "numeric")
+  # non_confumat_measures <- intersect(c("AVI", "CVI"), measures)
+  # non_confumat_measures <- intersect(c("AVI_HA", "CVI_HA", "AVI_GTZ", "CVI_GTZ"), measures)  # Hirzel+Arlettaz vs. Guisan+Thuiller+Zimmermann
+  non_confumat_measures <- NULL
   
   for (i in 1:Nmeasures) {
     if (measures[i] == "AUC") measureValues[i] <- AUC(obs = obs, pred = pred, simplif = TRUE)
