@@ -4,7 +4,7 @@ modEvAmethods <- function(fun) {
   if (fun %in% c("threshMeasures", "multModEv")) {
     thresh.measures <- c("CCR", "Misclass", "Sensitivity", "Specificity", "Omission", "Commission", "Precision", "Recall", "PPP", "NPP", "UPR", "OPR", "PPI", "PAI", "kappa", "TSS", "NMI", "F1score", "OddsRatio", "ORSS", "SEDI")
     # thresh.measures <- c("CCR", "Misclass", "Sensitivity", "Specificity", "Omission", "Commission", "Precision", "Recall", "PPP", "NPP", "UPR", "OPR", "PPI", "PAI", "kappa", "TSS", "NMI", "F1score", "OddsRatio", "ORSS", "SEDI", "AVI", "CVI")
-
+    
     if (fun == "threshMeasures") return(thresh.measures)
 
     else if (fun == "multModEv") {

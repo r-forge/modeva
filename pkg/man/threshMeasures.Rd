@@ -34,7 +34,7 @@ verbosity = 2, interval = 0.01, quant = 0, na.rm = TRUE, rm.dup = FALSE, ...)
   \item{\dots}{additional arguments to be passed to the \code{\link{plot}} function.}
 }
 \details{
-The metrics implemented in this function are based on the confusion (or contingency) matrix, and they are described in dedicated publications (Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013; Wunderlich et al. 2019). All of them require a threshold value to separate continuous into binary predictions.
+The metrics implemented in this function are based on the confusion (or contingency) matrix, and they are described in dedicated publications (e.g. Fielding & Bell 1997; Liu et al. 2011; Barbosa et al. 2013; Wunderlich et al. 2019). All of them require a threshold value to separate continuous into binary predictions.
 
 The threshold value can be chosen according to a number of criteria (see e.g. Liu et al. 2005, 2013; Jimenez-Valverde & Lobo 2007; Nenzen & Araujo 2011). You can choose a fixed numeric value, or set 'thresh' to "preval" (species' prevalence or proportion of presences \bold{in the data input to this function}), or calculate optimal threshold values according to different criteria with the \code{\link{getThreshold}} function (see also \code{\link{optiThresh}} and \code{\link{optiPair}}). If you are using "environmental favourability" as input 'pred' data (Real et al. 2006; see 'Fav' function in R package \pkg{fuzzySim}), then the 0.5 threshold equates to using training prevalence in presence probability as given by logistic regression (GLM with binomial error distribution and logit link function).
 
