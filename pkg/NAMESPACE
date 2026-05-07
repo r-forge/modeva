@@ -11,9 +11,6 @@ importFrom("graphics",
 importFrom("grDevices",
            "adjustcolor", "rgb")
 
-importFrom("Kendall",
-           "MannKendall")
-
 importFrom("stats",
            "aggregate", "approx", "approxfun", "as.formula", "binomial",
            "complete.cases", "cor", "cor.test", "density", "family", "glm", 
@@ -26,6 +23,3 @@ importFrom("terra",
 
 importFrom("utils",
            "combn")
-
-importFrom("trend",
-           "sens.slope")

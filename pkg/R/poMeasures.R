@@ -156,7 +156,10 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
     }  # end if plot vals
   }  # end if plot
   
-  if (simplif) return(t(data.frame(bPOGI = bPOGI$estimate, dPOGI = dPOGI$estimate, PODS = PODS$r_rank_biserial)))
+  if (simplif) return(t(data.frame(bPOGI = bPOGI$estimate, 
+                                   dPOGI = dPOGI$estimate, 
+                                   PODS = PODS$r_rank_biserial, 
+                                   row.names = "Value")))
   
   list(bins = bins, Nbins = Nbins, bPOGI = bPOGI, dPOGI = dPOGI, PODS = PODS, N = N)
 }
