@@ -11,8 +11,8 @@ This metric is designed for evaluating model predictions against presence/backgr
 \usage{Boyce(model = NULL, obs = NULL, pred = NULL, n.bins = NA,
 bin.width = "default", res = 100, method = "spearman", rm.dup.classes = FALSE,
 rm.dup.points = FALSE, pbg = FALSE, simplif = FALSE, plot = TRUE, 
-plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, na.rm = TRUE, 
-verbosity = 2, ...)}
+plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, 
+xlim = c(0, 1), ylim = "auto", na.rm = TRUE, verbosity = 2, ...)}
 \arguments{
   \item{model}{optional binary-response model object of class "glm", "gam", "gbm", "randomForest" or "bart". If this argument is provided, 'obs' and 'pred' will be extracted with \code{\link{mod2obspred}}. Alternatively, you can input the 'obs' and 'pred' arguments (e.g. for external test data) instead of 'model'.}
   \item{obs}{alternatively to 'model' and together with 'pred', a numeric vector of observed presences (1) and absences (0) of a binary response variable. Alternatively (and if 'pred' is a 'SpatRaster'), a two-column matrix or data frame containing, respectively, the x (longitude) and y (latitude) coordinates of the presence points, in which case the 'obs' vector will be extracted with \code{\link{ptsrast2obspred}}. This argument is ignored if 'model' is provided.}
@@ -29,6 +29,8 @@ verbosity = 2, ...)}
   \item{plot.lines}{logical (default TRUE), whether or not to add lines connecting the points in the plot (if plot=TRUE).}
   \item{plot.values}{logical (default TRUE), whether or not to show in the plot the value of the Boyce index.}
   \item{plot.digits}{number of digits to which the value in the plot should be \code{\link{round}}ed (if 'plot' and 'plot.values' are TRUE). Defaults to 3.}
+    \item{xlim}{either "auto" for fitting the x axis to the existing values, or a length-2 numeric vector setting its limits. The default is c(0, 1).}
+    \item{ylim}{either "auto" (default) for fitting the y axis to the existing values, or a length-2 numeric vector setting its limits (e.g. to compare Boyce plots across different datasets).}
     \item{na.rm}{Logical (default TRUE) value indicating if missing values should be removed from computations.}
     \item{verbosity}{integer specifying the amount of messages to display. Defaults to the maximum implemented; lower numbers (down to 0) decrease the number of messages.}
   \item{\dots}{some additional arguments can be passed to \code{\link{plot}}, e.g. 'main' or 'xlim'.}

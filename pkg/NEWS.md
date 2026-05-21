@@ -1,9 +1,42 @@
+# Version 3.45 -> CRAN
+#### (Committed 2026-04-21)
+
+### Modified functions:
+
+* Miller
+    - add "MCA" output (inverse standardized slope difference)
+    - change 'plot.values' shown
+    - add 'values.col' argument
+
+* getBins
+    - show also empty bins
+
+* HLfit
+    - add 'HLI' output (inverse standardized HL index)
+    - fix error when empty bins
+    - change 'plot.values' shown
+    - add 'values.col' argument
+    - move 'simplif' code to after 'plot', so that both can be TRUE
+    - bin size red for small bins
+    - reduce bin size cex, and add transparency for overlaps
+    - change plot colours, par('mgp') and axis limits to better match other functions
+
+* Boyce
+    - add "xlim" and "ylim" arguments
+
+* AUC, Boyce, Miller
+    - format plot value to show 3 decimals even if 0
+
+* poMeasures
+    - accommodate 'pred' values outside [0, 1] (with warning)
+
+
 # Version 3.44
 #### (Committed 2026-04-29)
 
 ### Modified functions:
 
-* evaluate (affecting threshMeasures)
+* evaluate (benefiting threshMeasures)
     - fix bug in SEDI computation
 
 * threshMeasures
@@ -1078,7 +1111,7 @@
 * Boyce
     - warning emitted and points coloured red for bins with less than 30 values
 
-* standard01 (benefitting threshMeasures)
+* standard01 (benefiting threshMeasures)
     - added is.finite(score) to avoid error when NAs produced by kappa integer overflow
 
 * getThreshold, inputMunch

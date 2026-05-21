@@ -51,19 +51,14 @@ The output of \code{getBins} is a list with the following components:
 \item{bins.table}{a data frame with the sample size, number of presences, number of absences, prevalence, mean and median predicted value, and the difference between predicted and observed values (mean predicted value minus observed prevalence) in each bin.}
 \item{N}{the total number of observations in the analysis.}
 \item{n.bins}{the total number of bins obtained.}
-
-If bin.method = "mov.bins", currently the output is a list with only the 'bins.table', which includes two additional columns at the beginning, specifying the first (minimum) and last (maximum) predicted value of each bin.
 }
 \references{
 Jimenez-Valverde A., Acevedo P., Barbosa A.M., Lobo J.M. & Real R. (2013) Discrimination capacity in species distribution models depends on the representativeness of the environmental domain. Global Ecology and Biogeography 22: 508-516
 
 Jovani R. & Tella J.L. (2006) Parasite prevalence and sample size: misconceptions and solutions. Trends in Parasitology 22: 214-218
 }
-\author{
-A. Marcia Barbosa
-}
 \note{
-This function is still under development and may fail for some datasets and binning methods (e.g., ties may sometimes preclude binning under some bin.methods). Fixes and further binning methods are in preparation. Feedback is welcome.
+This function is still under development and may fail for some datasets and binning methods (e.g., ties may sometimes preclude binning under some bin.methods). Fixes and other improvements are under way. Feedback welcome!
 }
 \seealso{
 \code{\link{HLfit}}}

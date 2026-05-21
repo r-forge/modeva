@@ -1,13 +1,13 @@
 Package: modEvA
 Type: Package
 Title: Model Evaluation and Analysis
-Version: 3.44
-Date: 2026-04-29
+Version: 3.45
+Date: 2026-05-21
 Authors@R: c(person(given = c("A.", "Marcia"),
                       family = "Barbosa",
                       role = c("aut", "cre"),
                       email = "ana.marcia.barbosa@gmail.com"),
-               person(given = "Jennifer A.",
+               person(given = c("Jennifer", "A."),
                       family = "Brown",
                       role = "aut"),
                person(given = "Alberto",
@@ -30,6 +30,9 @@ Authors@R: c(person(given = c("A.", "Marcia"),
                       role = "ctb"),
                person(given = "Carola",
                       family = "Gomez-Rodriguez",
+                      role = "ctb"),
+               person(given = c("Carlos", "C."),
+                      family = "Ramos",
                       role = "ctb"),
                person(given = c("Jose", "Carlos"),
                       family = "Guerrero",

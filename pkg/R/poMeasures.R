@@ -21,6 +21,8 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
     }
   }
   
+  if (any(pred < 0 | pred > 1)) warning ("NOTE: predicted values exceed the [0, 1] interval.")
+  
   bins <- getBins(pred = pred, n.bins = n.bins, bin.width = bin.width, 
                   bin.method = "mov.bins") $ bins.table
   
@@ -47,10 +49,16 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
   
   # rand <- stats::runif(pred)
   # dens_rand <- density(rand, from = 0, to = 1)
-  dens_pred <- density(pred, from = 0, to = 1)
+  
+  # dens_pred <- density(pred, from = 0, to = 1)
+  # if (any(pred < 0 | pred > 1)) warning ("'pred' values outside the [0, 1] interval are not considered by the density-based measures.")
+  dens_pred <- density(pred,
+                       from = min(0, min(pred, na.rm = TRUE)),
+                       to = max(1, max(pred, na.rm = TRUE))
+  )
   fhat <- approx(dens_pred$x, dens_pred$y, xout = pred) $ y
 
-  dPOGI = cor.test(pred, fhat, method = method)
+  dPOGI <- cor.test(pred, fhat, method = method)
   
   # DK <- ks.test(pred, rand, alternative = "greater")
   # DW <- wilcox.test(pred, rand, alternative = "greater")
@@ -75,10 +83,13 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
     par_mgp <- par()$mgp
     on.exit(par(mgp = par_mgp))
     par(mgp = c(1.8, 0.7, 0))  # values and labels closer to axis
+    xlim <- c(min(0, min(pred, na.rm = TRUE)), 
+             max(1, max(pred, na.rm = TRUE)))
     
     # bin-dependent plot:
     plot(bins$mean.prob, bins$N, 
-         xlim = c(0, 1),
+         # xlim = c(0, 1),
+         xlim = xlim,
          main = main[1], 
          xlab = "Bin mean", ylab = "N observations", 
          col = "steelblue4", pch = 19, cex = 0.4,
@@ -99,7 +110,7 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
     # lines(xseq, yhat, lty = "dashed", col = "darkturquoise")
     
     if (plot.values) {
-      text(x = 0, y = max(bins$N, na.rm = TRUE), 
+      text(x = xlim[1], y = max(bins$N, na.rm = TRUE), 
            labels = paste0("bPOGI = ", format(round(bPOGI$estimate, plot.digits), nsmall = 3), 
                            "\n(p = ", format(bPOGI$p.value, digits = plot.digits, scientific = TRUE), ")",
                            "\n\n",
@@ -122,7 +133,7 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
     # plot(pred, fhat, 
     plot(dens_pred$x, dens_pred$y, 
          col = "steelblue4", pch = 19, cex = 0.2, 
-         xlim = c(0, 1), ylim = dens_ylim, #zero.line = FALSE,
+         xlim = xlim, ylim = dens_ylim, #zero.line = FALSE,
          main = main[length(main)],
          xlab = "Predicted value", ylab = "Density",
          cex.axis = cex.values, ...
@@ -141,7 +152,7 @@ poMeasures <- function(model = NULL, obs = NULL, pred = NULL, n.bins = 100, bin.
     #        lty = "dashed", col = "darkturquoise")
     
     if (plot.values) {
-      text(x = 0, y = dens_ylim[2], 
+      text(x = xlim[1], y = dens_ylim[2], 
            paste0("dPOGI = ", format(round(dPOGI$estimate, plot.digits), nsmall = 3), 
                   "\n(p = ", format(dPOGI$p.value, digits = plot.digits, scientific = TRUE), ")",
                   "\n\n",

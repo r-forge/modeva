@@ -1,6 +1,6 @@
-Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width = "default", res = 100, method = "spearman", rm.dup.classes = FALSE, rm.dup.points = FALSE, pbg = FALSE, simplif = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, na.rm = TRUE, verbosity = 2, ...) {
+Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width = "default", res = 100, method = "spearman", rm.dup.classes = FALSE, rm.dup.points = FALSE, pbg = FALSE, simplif = FALSE, plot = TRUE, plot.lines = TRUE, plot.values = TRUE, plot.digits = 3, xlim = c(0, 1), ylim = "auto", na.rm = TRUE, verbosity = 2, ...) {
 
-  # version 2.1 (8 Apr 2026)
+  # version 2.2 (7 May 2026)
   
   obspred <- inputMunch(model, obs, pred, na.rm = na.rm, rm.dup = rm.dup.points, pbg = pbg, verbosity = verbosity)
   obs <- obspred[ , "obs"]
@@ -96,8 +96,10 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
     on.exit(par(mgp = par_mgp))
     par(mgp = c(1.8, 0.7, 0))  # values and labels closer to axis
     
-    plot(HS, f, ylim = c(0, max(f, na.rm = TRUE)), xlab = "Prediction class", ylab = "Predicted/expected ratio", col = "slategray2", cex = 0.5, ...)  # includes duplicate P/E values; 'ylim' was my add
-    points(HS[r], f[r], pch = 19, cex = 0.4, col = "steelblue4")  # without duplicate P/E values
+    if (identical(ylim, "auto")) ylim <- c(0, max(f, na.rm = TRUE))
+    if (identical(xlim, "auto")) xlim <- c(min(HS, na.rm = TRUE), max(HS, na.rm = TRUE))
+    plot(HS, f, xlim = xlim, ylim = ylim, xlab = "Prediction class", ylab = "Predicted/expected ratio", col = "slategray2", cex = 0.4, ...)  # includes duplicate P/E values; 'ylim' was my add
+    points(HS[r], f[r], pch = 19, cex = 0.3, col = "steelblue4")  # without duplicate P/E values
     if (plot.lines) {  # my add
       lines(HS, f, col = "slategray2", lwd = 0.5)
       lines(HS[r], f[r], col = "slategray4", lwd = 0.5)
@@ -110,7 +112,7 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
     points(HS[r][small_bins], f[r][small_bins], pch = 17, cex = 0.6, col = "red2")  # my add
     
     # if (plot.values) text(x = max(HS), y = diff(range(f)) / 10, paste("B =", round(b, plot.digits)), adj = 1)  # my add
-    if (plot.values) text(x = max(HS), y = 0, paste("B =", round(b, plot.digits)), adj = c(1, 0))  # my add
+    if (plot.values) text(x = xlim[2], y = 0, paste("B =", format(round(b, digits = 3), nsmall = 3)), adj = c(1, 0))  # my add
     # if (plot.values) text(x = mean(HS), y = diff(range(f)) / 10, paste("B =", round(b, plot.digits)), adj = 0.5)  # my add
   }
   

@@ -57,7 +57,7 @@ If 'simplif=TRUE', the output is a numeric matrix with the name and value of eac
       \item{Sensitivity: proportion of recorded presences correctly predicted as such, i.e. true positive rate}
       \item{Specificity: proportion of absences correctly predicted as such, i.e. true negative rate}
       \item{Omission: Proportion of missed presences, i.e. proportion of recorded presences incorrectly predicted as absences}
-      \item{Commission: Proportion of over-predicted presences, i.e. proportion of absences incorrectly predicted as presences}
+      \item{Commission: Proportion of absences incorrectly predicted as presences}
       \item{Precision: Proportion of predicted presences actually recorded as presences}
       \item{Recall: same as sensitivity (they are both here to match the terminology familiar to different audiences)}
       \item{PPP: Positive Predictive Power; same as precision (they are both here to match the terminology familiar to different audiences)}
