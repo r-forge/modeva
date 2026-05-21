@@ -57,7 +57,8 @@ Boyce <- function(model = NULL, obs = NULL, pred = NULL, n.bins = NA, bin.width 
       # vec.mov <- seq(from = mini, to = maxi, by = (maxi - mini) / n.bins)
       # after https://github.com/ecospat/ecospat/issues/99 and https://github.com/plantarum/ecospat/commit/0c542d51e074d570cb7fb14e4b6dac8b6c2dc432:
       vec.mov <- seq(from = mini, to = maxi, length.out = n.bins)
-      interval <- cbind(vec.mov, c(vec.mov[-1], maxi))
+      # interval <- cbind(vec.mov, c(vec.mov[-1], maxi))
+      interval <- data.frame(vec.mov[-length(vec.mov)], vec.mov[-1])  # new 2026/05/21
     }
   } else {
     # vec.mov <- c(mini, sort(n.bins[!n.bins > maxi | n.bins < mini]))

@@ -43,9 +43,9 @@ getBins <- function (model = NULL, obs = NULL, pred = NULL, id = NULL,
         vec.mov <- seq(from = min.pred, to = max.pred - bin.width, length = n.bins)
         bins <- cbind(vec.mov, vec.mov + bin.width)
       } else {
-        # vec.mov <- seq(from = min.pred, to = max.pred, length.out = n.bins)
+        vec.mov <- seq(from = min.pred, to = max.pred, length.out = n.bins)
         # bins <- cbind(vec.mov, c(vec.mov[-1], max.pred))
-        vec.mov <- seq(from = min.pred, to = max.pred, length.out = n.bins + 1)
+        # vec.mov <- seq(from = min.pred, to = max.pred, length.out = n.bins + 1)
         bins <- data.frame(vec.mov[-length(vec.mov)], vec.mov[-1])
       }
     } else {
