@@ -31,16 +31,39 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     if (verbosity > 0) message ("'reorder' set to FALSE, as this version of 'flexBART' does not carry variable names, which would make it impossible to match variables with importance values. Variables are in the order in which they were provided to the 'flexBART' model, with the continuous preceding the categorical ones. Update 'flexBART' if you want the variables named and reordered.")
   }
   
-  
-  if ((inherits(model, c("Gam", "gam", "maxnet")) && imp.type == "each")) {
+  if (inherits(model, "maxnet") && imp.type == "each") {
     warning("'imp.type' changed to 'permutation', as 'each' is not implemented for this class of 'model'.")
     imp.type <- "permutation"
-  }  # this must come before glm; as gam is also class glm
-  
+  }  # keep separate to allow 'imp.type' change
   
   if (imp.type == "each") {
     
-    if (inherits(model, "glm")) {  #  && !inherits(model, "Gam")
+    if (inherits(model, c("gam", "Gam"))) {
+      warning("For GAM, this 'imp.type' uses the Chi-squared value of each smooth term, which may depend on its effective degrees of freedom (EDF) and scaling. Use with care, or consider changing 'imp.type'.")
+    }
+    
+    if (inherits(model, "Gam")) {  # before "glm" because "gam" also inherits "glm"
+      if ("gam" %in% .packages(all.available = TRUE)) {
+        metric <- ifelse(isTRUE(relative), "Relative Chi-sq value", "Absolute Chi-sq value")
+        if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
+        varimp <- summary(model)$anova[-1, "Npar Chisq"]
+        names(varimp) <- rownames(summary(model)$anova[-1, ])
+        if (isTRUE(relative)) varimp <- varimp / sum(abs(varimp))
+        ylab <- metric
+      }
+    }
+    
+    else if (inherits(model, "gam")) {  # 'mgcv' pkg
+      if ("mgcv" %in% .packages(all.available = TRUE)) {
+        metric <- ifelse(isTRUE(relative), "Relative Chi-sq value", "Absolute Chi-sq value")
+        if (verbosity > 1) cat("\nMetric:", metric, "\n\n")
+        varimp <- summary(model)$chi.sq
+        if (isTRUE(relative)) varimp <- varimp / sum(abs(varimp))
+        ylab <- metric
+      }
+    }
+    
+    else if (inherits(model, "glm")) {  #  && !inherits(model, "Gam")
       
       if (family(model)$family != "binomial")  stop ("This function is currently only implemented for binary-response models of family 'binomial'.")
       
@@ -206,8 +229,8 @@ varImp <- function(model, imp.type = "each", relative = TRUE, reorder = TRUE, gr
     if (is.null(data)) {
       data <- as.data.frame(mod2obspred(model, x.only = TRUE))
       names(data) <- gsub("s\\(|\\)", "", names(data))  # for gam models
-  }
-
+    }
+    
     # remove column attributes to avoid GAM error:
     data[] <- lapply(data, function(x) { attributes(x) <- NULL; x })
     

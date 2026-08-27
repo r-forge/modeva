@@ -40,6 +40,8 @@ The threshold value can be chosen according to a number of criteria (see e.g. Li
 
 While most of these threshold-based measures range from 0 to 1, some of them (such as kappa, TSS, ORSS and SEDI) may range from -1 to 1 (Allouche et al. 2006), so their raw scores are not directly comparable. 'threshMeasures' includes an option (used by default) to standardize these measures to the [0, 1] scale (Barbosa 2015) using the \code{\link{standard01}} function, so that you obtain the standardized versions skappa, sTSS, sORSS and sSEDI.
 
+Note that, in other disciplines such as meteorology and medicine, the TSS is also termed Hanssen and Kuipers discriminant (HKD), Peirce's skill score (PSS), or Youden's J (Youden, 1950; WWRP/WGNE Joint Working Group on Forecast Verification Research, 2017).
+
 This function can also be used to calculate the agreement between different presence-absence (or other types of binary) data, as e.g. Barbosa et al. (2012) did for comparing mammal distribution data from atlas and range maps. Notice, however, that some of these measures, such as TSS or NMI, are not symmetrical (obs vs. pred is different from pred vs. obs).
 
 Note that most of these metrics are correlated with the species' prevalence (proportion of presences) in the modelled sample, so they can over-inflate the perception of model accuracy for restricted species (as does the \code{\link{AUC}} of the ROC curve). This is the case even for metrics initially alleged to be prevalence-independent, such as TSS (Allouche et al. 2006), as was later shown for real-world data (e.g. Somodi et al. 2017). See \code{\link{similarity}} for alternative, less prevalence-dependent metrics.
@@ -106,7 +108,11 @@ Real R., Barbosa A.M. & Vargas J.M. (2006) Obtaining environmental favourability
 
 Somodi I., Lepesi N., Botta-Dukat Z. (2017) Prevalence dependence in model goodness measures with special emphasis on true skill statistics. Ecology and Evolution, 7(3):863-872. doi: 10.1002/ece3.2654
 
+WWRP/WGNE Joint Working Group on Forecast Verification Research (2017). Forecast Verification methods Across Time and Space Scales. 7th International Verification Methods Workshop, https://www.cawcr.gov.au/projects/verification/
+
 Wunderlich R.F., Lin Y.-P., Anthony J., Petway J.R. (2019) Two alternative evaluation metrics to replace the true skill statistic in the assessment of species distribution models. Nature Conservation 35: 97-116
+
+Youden, W.J. (1950) Index for rating diagnostic tests. Cancer. 3: 32-35
 }
 \author{
 A. Marcia Barbosa

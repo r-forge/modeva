@@ -1,3 +1,28 @@
+# Version 3.46
+#### (Committed 2026-08-04)
+
+### Modified functions:
+
+* varImp
+    - implement "each" for GAM (with warning)
+
+* HLfit
+    - include 'HLI' in output also when simplif = TRUE
+
+* plotCoeffs
+    - add dashed dark red abline() where coefficients = 0
+
+
+### Other modified files:
+
+* plotCoeffs.Rd
+    - improve 'model' argument description to reflect that it accommodates more classes
+    - add confint() to SeeAlso
+
+* mod2obspred.Rd
+    - mention use by fuzzySim::clampVars()
+    
+    
 # Version 3.45 -> CRAN
 #### (Committed 2026-04-21)
 

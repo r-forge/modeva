@@ -101,7 +101,7 @@ HLfit <- function (model = NULL, obs = NULL, pred = NULL, bin.method, n.bins = 1
     }  # end if plot values
   }
   
-  if (simplif) return (list(chi.sq = chi.sq, p.value = p.value, RMSE = rmse))
+  if (simplif) return (list(chi.sq = chi.sq, p.value = p.value, RMSE = rmse, HLI = hli))
   
   BinPred <- tapply(pred, bins$prob.bin, mean)
   bins.table <- data.frame(BinCenter = bin.centers, NBin = N.total, BinObs = OBS.proportion, BinPred = BinPred, BinObsCIlower = Lower, BinObsCIupper = Upper)
