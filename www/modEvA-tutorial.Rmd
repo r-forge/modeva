@@ -117,7 +117,7 @@ Dsquared(model = mod, adjust = TRUE)
 RsqGLM(model = mod, ylim = c(0, 0.4), main = "R-squared values")
 ```
 
-We can also take a look at some model calibration measures, such as **Miller's calibration statistics**, the **Continuous Boyce Index** and the **Hosmer-Lemeshow goodness-of-fit**. Note, however, that the first one is not useful for evaluating a model on the same data used for building it (the results will look perfect by definition); and that the latter two can depend strongly on the *bin.method* used for grouping the values. See `help(MillerCalib)`, `help(Boyce)` and `help(HLfit)` to find out how these measures are calculated and how their results can be interpreted.
+We can also take a look at some model calibration measures, such as **Miller's calibration statistics**, the **Continuous Boyce Index** and the **Hosmer-Lemeshow goodness-of-fit**. Note, however, that the first one is not useful for evaluating a model on the same data used for building it (the results will look perfect by definition); and that the latter two can depend strongly on the *bin.method* used for grouping the values. See `help(Miller)`, `help(Boyce)` and `help(HLfit)` to find out how these measures are calculated and how their results can be interpreted.
 
 ```{r, warning=FALSE, message=FALSE, results='hide', fig.width=3.5, fig.height=3.5}
 Miller(model = mod)
@@ -129,7 +129,7 @@ HLfit(model = mod, bin.method = "quantiles", main = "Hosmer-Lemeshow GOF, quanti
 HLfit(model = mod, bin.method = "n.bins", main = "Hosmer-Lemeshow GOF, N bins")
 ```
 
-Note the red points in the Boyce plots, which denote bins with overly small sample size, for which the comparison between median prediction and random expectation may not be meaningful.
+Notice the red triangles in the Boyce plots and the red numbers in the Hosmer-Lemeshow plots, which denote bins with overly small sample sizes, for which the comparison between median prediction and random expectation may not be meaningful.
 
 
 ## Evaluating multiple models

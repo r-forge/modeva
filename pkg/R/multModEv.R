@@ -1,6 +1,6 @@
 multModEv <-
   function(models = NULL, obs.data = NULL, pred.data = NULL, measures = modEvAmethods("multModEv"), standardize = FALSE, thresh = NULL, bin.method = NULL, verbosity = 0, ...) {
-    # version 2.4 (24 Nov 2024)
+    # version 2.5 (25 Sep 2026)
     
     #  if (Favourability == TRUE & thresh == "preval") {
     #    thresh <- 0.5
