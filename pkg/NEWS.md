@@ -1,4 +1,16 @@
-# Version 3.46
+# Version 3.47 -> CRAN
+#### (Committed 2026-09-25)
+
+### Modified functions:
+
+* varImp
+    - fix bugs when horiz = TRUE
+
+* predPlot, predDensity, varImp
+    - semi-transparent legend background, in case of overlap
+
+
+# Version 3.46 -> CRAN
 #### (Committed 2026-08-04)
 
 ### Modified functions:
@@ -10,7 +22,7 @@
     - include 'HLI' in output also when simplif = TRUE
 
 * plotCoeffs
-    - add dashed dark red abline() where coefficients = 0
+    - add dashed dark-red abline() where coefficients = 0
 
 
 ### Other modified files:

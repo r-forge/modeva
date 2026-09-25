@@ -50,5 +50,5 @@ labels <- data.frame(
 par(mar = c(3, 10, 2, 1))
 
 plotCoeffs(mod, horiz = TRUE, cex = 2, grid = FALSE, axis.lab = "Coefficients", 
-main = "Transmission", labels = labels, col = "purple")
+main = "Transmission", labels = labels, col = "darkturquoise")
 }

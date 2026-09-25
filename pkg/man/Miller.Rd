@@ -42,11 +42,11 @@ While Miller's calibration statistics were originally conceived for generalized 
 Miller's calibration slope (though not the intercept) is also adequate to assess the calibration of other predictions related to presence probability, such as suitability and favourability (see e.g. 'Fav' function in the \pkg{fuzzySim} package). Indeed, the slope is the same for presence probability and its corresponding favourability value (see Examples, bottom).
 }
 \value{
-This function returns a list of three numeric values:
-\item{intercept}{the calibration intercept.}
-\item{slope}{the calibration slope.}
+This function returns a named list of four numeric values:
+\item{intercept}{the Miller calibration intercept.}
+\item{slope}{the Miller calibration slope.}
 \item{slopeDiff}{the absolute difference between the obtained slope and the optimal value of 1.}
-\item{MCA}{[EXPERIMENTAL, under review] Miller Calibration Alignment: a standardized, monotonic non-linear measure, bounded between 0 and 1, of how aligned (parallel) the calibration line is to the reference diagonal, i.e. how close the slope is to the optimal value of 1.}
+\item{MCA}{[EXPERIMENTAL, under review] the Miller Calibration Alignment: a standardized, monotonic non-linear measure, bounded between 0 and 1, of how aligned (parallel) the calibration line is to the reference diagonal, i.e. how close the slope is to the optimal value of 1.}
 
 If \code{plot = TRUE}, a plot will be produced with the model calibration line, optionally (if diag = TRUE) over the reference diagonal, and also optionally (if plot.values = TRUE) with output values printed on it.
 }
