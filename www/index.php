@@ -103,8 +103,6 @@ echo $contents; } ?>
 
 <p>Naman S.M., Rosenfeld J.S., Kiffney P.M., Richardson J.S. (2018) The energetic consequences of habitat structure for forest stream salmonids. <i>Journal of Animal Ecology</i>, DOI: 10.1111/1365-2656.12845</p>
 
-<p>Romero D., Olivero J., Real R. & Guerrero J.C. (2019) Applying fuzzy logic to assess the biogeographical risk of dengue in South America. <i>Parasites & Vectors</i>, 12: 428. DOI: 10.1186/s13071-019-3691-5</p>
-
 <p>Waterhouse M., Baxter C., Duarte Romero B., Mcleod D.S.A., English D.R., Armstrong B.K., Clarke M.W., Ebeling P.R., Hartel G., Kimlin M.G., O’connell R.L., Pham H., Harris R.M.R., Van Der Pols J.C., Venn A.J., Webb P.M., Whiteman D.C. & Neale R.E. (2020). Predicting deseasonalised serum 25 hydroxy vitamin D concentrations in the D-Health Trial: an analysis using boosted regression trees. MedRxiv, 2020.08.23.20180422. https://doi.org/10.1101/2020.08.23.20180422</p>
 <br />
 

@@ -1,3 +1,15 @@
+# Version 3.48
+#### (Committed 2026-09-  )
+
+### Modified functions:
+
+* plotGLM
+    - change plot colours to match other functions
+    
+* multModEv
+    - add plot=FALSE to HLfit() call
+
+
 # Version 3.47 -> CRAN
 #### (Committed 2026-09-25)
 

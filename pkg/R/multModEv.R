@@ -106,7 +106,7 @@ multModEv <-
       
       if (any(measures %in% c("HL", "HL.p"))) {
         for (m in 1:n.models) {
-          HL <- HLfit(obs = obs.data[ , m], pred = pred.data[ , m], bin.method = bin.method, simplif = TRUE, verbosity = verbosity, ...)
+          HL <- HLfit(obs = obs.data[ , m], pred = pred.data[ , m], bin.method = bin.method, simplif = TRUE, plot = FALSE, verbosity = verbosity, ...)
           if ("HL" %in% measures)  results[m, "HL"] <- HL$chi.sq
           if ("HL.p" %in% measures)  results[m, "HL.p"] <- HL$p.value
           if ("RMSE" %in% measures)  results[m, "RMSE"] <- HL$RMSE

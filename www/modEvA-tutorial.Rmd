@@ -1,7 +1,7 @@
 ---
 title: 'Model evaluation and analysis: the *modEvA* R package in a nutshell'
 author: "A. Marcia Barbosa (https://modtools.wordpress.com)"
-date: "updated 11 Jul 2023"
+date: "updated 25 Sep 2026"
 output: html_document
 ---
 
@@ -120,7 +120,7 @@ RsqGLM(model = mod, ylim = c(0, 0.4), main = "R-squared values")
 We can also take a look at some model calibration measures, such as **Miller's calibration statistics**, the **Continuous Boyce Index** and the **Hosmer-Lemeshow goodness-of-fit**. Note, however, that the first one is not useful for evaluating a model on the same data used for building it (the results will look perfect by definition); and that the latter two can depend strongly on the *bin.method* used for grouping the values. See `help(MillerCalib)`, `help(Boyce)` and `help(HLfit)` to find out how these measures are calculated and how their results can be interpreted.
 
 ```{r, warning=FALSE, message=FALSE, results='hide', fig.width=3.5, fig.height=3.5}
-MillerCalib(model = mod)
+Miller(model = mod)
 
 Boyce(model = mod, bin.method = "quantiles", main = "Boyce index, default")
 Boyce(model = mod, bin.width = 0.2, main = "Boyce index, 0.2-size bins")
